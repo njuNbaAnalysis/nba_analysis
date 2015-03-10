@@ -10,7 +10,7 @@ public class PlayerPointComparator implements Comparator {
 		PlayerVo p1 = (PlayerVo) op1;
 		PlayerVo p2 = (PlayerVo) op2;
 
-		// 按年龄排序
+		// 按得分排序
 		return (p1.getPoint() - p2.getPoint());
 	}
 
