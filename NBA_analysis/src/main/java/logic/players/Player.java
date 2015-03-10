@@ -1,5 +1,6 @@
 package logic.players;
 
+import java.awt.image.BufferedImage;
 import java.util.Date;
 
 public class Player {
@@ -12,6 +13,8 @@ public class Player {
 	private int age;
 	private int experience;    //打了几年球
 	private String school;
+	private BufferedImage portart;
+	private BufferedImage action;
 	
 	
 	//not raw data
@@ -94,6 +97,13 @@ public class Player {
     }
     public String getSchool() {
         return school;
+    }
+    public BufferedImage getPortart() {
+        return portart;
+    }
+
+    public BufferedImage getAction() {
+        return action;
     }
     
     
@@ -185,5 +195,7 @@ public class Player {
     public double getShootingEfficiency() {
         return shootingEfficiency;
     }
+
+
 	
 }
