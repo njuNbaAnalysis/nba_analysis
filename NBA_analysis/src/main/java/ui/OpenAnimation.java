@@ -9,14 +9,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-public class OpenAnimation2 {
+public class OpenAnimation {
 	AnimationFrame gameFrame;
-	public DisplayJPanel2 j;
+	public DisplayJPanel j;
 	int x;
 	int y;
 	Image image = null;
 	
-	public OpenAnimation2(AnimationFrame gameFrame,int x,int y) {
+	public OpenAnimation(AnimationFrame gameFrame,int x,int y) {
 	this.gameFrame=gameFrame;
 	this.x=x;
 	this.y=y;
@@ -24,7 +24,7 @@ public class OpenAnimation2 {
 	
 		
 		try{
-			BufferedImage image0 = ImageIO.read(new FileInputStream("open"+File.separator+"HOME.png"));
+			BufferedImage image0 = ImageIO.read(new FileInputStream("image"+File.separator+"entrance.png"));
 			image = image0;
 		}catch(IOException e){
 			System.out.print(e);
@@ -34,19 +34,16 @@ public class OpenAnimation2 {
 	
 
 	public void animation(){
-		j = new DisplayJPanel2(image);
+		j = new DisplayJPanel(image);
+		j.setOpaque(false);
 		gameFrame.lp.add(j, new Integer(300));
-		j.setSize(600*2/3, 368*2/3);
+		
+		j.setSize(901, 649);
 		j.setLocation(x,y);
 		j.setVisible(true);
-		j.setOpaque(false);
+		
 		
 		new Thread(j).start();
-		
-		
-		
-		
-	
 
 	}
 		

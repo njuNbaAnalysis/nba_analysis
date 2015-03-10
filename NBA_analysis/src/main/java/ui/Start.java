@@ -11,14 +11,12 @@ public class Start {
     	try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO �Զ���ɵ� catch ��
 			e.printStackTrace();
 		}
     	animation.dispose();
     	try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
-			// TODO �Զ���ɵ� catch ��
 			e.printStackTrace();
 		}
     	
