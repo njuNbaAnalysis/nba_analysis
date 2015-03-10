@@ -16,27 +16,32 @@ public class Player {
 	
 	//not raw data
 	private String team;   //current team
-	private int gamePlayed;//测试
-	private int gameStarted;//发大水
-	private int rebounds;
-	private int assists;
-	private int minutes;
+	private int gamePlayed;//出场次数 
+	private int gameStarted;//首发次数
+	private int rebounds;//总篮板数
+	private int assists;//总助攻数 
+	private int minutes;//总上场分钟数
 	
-	private double fieldGoalsPercentage;
-	private double threePointersPercentage;
-	private double freeThrowsPercentage;
 	
-	private int offenseRebounds;
-	private int defenseRebounds;
-	private int steals;
-	private int blockShots;
-	private int turnOver;
-	private int fouls;
-	private int points;
+	private double fieldGoalsPercentage;//总投篮命中率
+	private double threePointersPercentage;//三分命中率
+	private double freeThrowsPercentage;//罚球命中率
+	private double trueShootingPercentage;//真实投篮命中率
 	
-	private int efficiency;
-	private int gmsc;
 	
+	private int offenseRebounds;//总进攻篮板
+	private int defenseRebounds;//总防守篮板
+	private int steals;//总罚球数
+	private int blockShots;//总盖帽数
+	private int turnOver;//总失误数
+	private int fouls;//总犯规数
+	private int points;//总得分数
+	
+	private double efficiency;//效率值
+	private double gmsc;//gmsc效率值
+	
+	
+
 	
     public Player(String name, int number, char position, int[] height, int weight, Date birthday, int age,
             int experience, String school) {
