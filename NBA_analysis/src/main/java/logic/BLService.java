@@ -7,7 +7,7 @@ import logic.players.Player;
 import logic.teams.Team;
 
 public interface BLService {
-	public ArrayList<Player> getAllPlayers();          //�õ����е���Ա
-	public ArrayList<Team> getAllTeams();				//�õ����е����
-	public ArrayList<Match> getAllMatches();			//�õ����еı���
+	public ArrayList<Player> getAllPlayers();          
+	public ArrayList<Team> getAllTeams();				
+	public ArrayList<Match> getAllMatches();			
 }
