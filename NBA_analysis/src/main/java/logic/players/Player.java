@@ -17,7 +17,7 @@ public class Player {
 	//not raw data
 	private String team;   //current team
 	private int gamePlayed;//测试
-	private int gameStarted;
+	private int gameStarted;//发大水
 	private int rebounds;
 	private int assists;
 	private int minutes;
