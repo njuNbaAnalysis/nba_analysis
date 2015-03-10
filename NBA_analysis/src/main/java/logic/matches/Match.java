@@ -1,5 +1,8 @@
 package logic.matches;
 
-public class Match {
+import java.util.Date;
 
+public class Match {
+    private Date date;
+    //private 
 }
