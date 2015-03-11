@@ -1,6 +1,10 @@
 package ui;
 
+
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -21,16 +25,26 @@ import javax.swing.table.DefaultTableModel;
 
 public class TeamRankTablePanel extends JPanel implements MouseListener {
 
-	private static ImageIcon headBar;
-	private static ImageIcon filter;
-
+	private static Image headBar;
+	private static Image filter;
+	
 	private JLabel headLabel;
 	private JLabel filertLabel;
 	private PlayerJTable playerTable;
 	private DefaultTableModel model;
 
 	public void paintComponent(Graphics g) {
-
+		g.setColor(new Color(30, 81,140));
+		g.fillRect(0, 0, 2000, 50);
+		g.setColor(new Color(87, 89,91));
+	    g.fillRect(0, 50, 2000, 66);
+		g.drawImage(headBar, 0, 0, this);
+        g.drawImage(filter, 0, 50, this);
+      
+       
+        g.setFont(new Font("STHUPO", Font.PLAIN, 40*2/3));
+        
+        
 	}
 
 	public void setLookAndFeel() {
@@ -70,12 +84,10 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 			e.printStackTrace();
 		}
 
-		headBar = new ImageIcon(bufferHeadBar);
-		filter = new ImageIcon(bufferedFilter);
+		headBar = bufferHeadBar;
+		filter = bufferedFilter;
 
-		headLabel = new JLabel(headBar);
-		filertLabel = new JLabel(filter);
-
+		
 		/*
 		 * headLabel.setSize(800, 50); headLabel.setVisible(true);
 		 * this.add(headLabel); filertLabel.setSize(800, 66);
@@ -85,8 +97,8 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 		JPanel tableP = new JPanel();
 		tableP.setSize(800, 600);
 		tableP.setLayout(new BoxLayout(tableP, BoxLayout.Y_AXIS));
-		tableP.add(headLabel);
-		tableP.add(filertLabel);
+		this.add(Box.createVerticalStrut(116));
+		
 		
 		
 				

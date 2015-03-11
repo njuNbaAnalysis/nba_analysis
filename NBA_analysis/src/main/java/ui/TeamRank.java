@@ -35,7 +35,7 @@ public class TeamRank extends JFrame {
 	public TeamRank() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		System.out.println((int)screenSize.getWidth()+"");
+		System.out.println((int)screenSize.getWidth()+" "+(int)screenSize.getHeight());
 		setBounds(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
 		contentPane = new TeamRankTablePanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
