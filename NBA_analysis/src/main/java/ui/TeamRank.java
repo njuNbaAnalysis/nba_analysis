@@ -1,7 +1,9 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -12,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 public class TeamRank extends JFrame {
 
 	private JPanel contentPane;
-
+	private Dimension screenSize ;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -32,7 +34,9 @@ public class TeamRank extends JFrame {
 	 */
 	public TeamRank() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 750);
+	    screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		System.out.println((int)screenSize.getWidth()+"");
+		setBounds(0, 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
 		contentPane = new TeamRankTablePanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

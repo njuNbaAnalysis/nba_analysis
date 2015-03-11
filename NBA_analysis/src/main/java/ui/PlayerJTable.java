@@ -130,7 +130,7 @@ public class PlayerJTable extends JTable {
 //		tc.setPreferredWidth(c.getPreferredSize().width);
 //		}
 		for (int column = 0; column < this.getColumnCount(); column++) {
-			int width = 50; // Min width
+			int width = 100; // Min width
 			for (int row = 0; row < this.getRowCount(); row++) {
 				TableCellRenderer renderer = this.getCellRenderer(row, column);
 				Component comp = this.prepareRenderer(renderer, row, column);
