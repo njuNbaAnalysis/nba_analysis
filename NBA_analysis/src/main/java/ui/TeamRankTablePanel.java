@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -18,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-
 public class TeamRankTablePanel extends JPanel implements MouseListener {
 
 	private static ImageIcon headBar;
@@ -26,7 +26,7 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 
 	private JLabel headLabel;
 	private JLabel filertLabel;
-	private JTable table;
+	private PlayerJTable playerTable;
 	private DefaultTableModel model;
 
 	public void paintComponent(Graphics g) {
@@ -56,9 +56,8 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 	public TeamRankTablePanel() {
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setLookAndFeel();
-		
-		
+		//setLookAndFeel();
+
 		BufferedImage bufferHeadBar = null;
 		BufferedImage bufferedFilter = null;
 
@@ -76,20 +75,19 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 
 		headLabel = new JLabel(headBar);
 		filertLabel = new JLabel(filter);
-		
-		/*headLabel.setSize(800, 50);
-		headLabel.setVisible(true);
-		this.add(headLabel);
-		filertLabel.setSize(800, 66);
-		filertLabel.setVisible(true);
-		this.add(filertLabel);*/
-		
+
+		/*
+		 * headLabel.setSize(800, 50); headLabel.setVisible(true);
+		 * this.add(headLabel); filertLabel.setSize(800, 66);
+		 * filertLabel.setVisible(true); this.add(filertLabel);
+		 */
+
 		JPanel tableP = new JPanel();
 		tableP.setSize(800, 600);
 		tableP.setLayout(new BoxLayout(tableP, BoxLayout.Y_AXIS));
 		tableP.add(headLabel);
 		tableP.add(filertLabel);
-		
+
 		Object[][] cellData = { { "", "", "", "", "", "", "", "", "" },
 				{ "", "", "", "", "", "", "", "", "" },
 				{ "", "", "", "", "", "", "", "", "" },
@@ -106,25 +104,44 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 				{ "", "", "", "", "", "", "", "", "" },
 				{ "", "", "", "", "", "", "", "", "" } };
 
-		String[] columnNames = { "排名", "球队", "场数", "%", "3分%", "罚球%", "进攻篮板",
-				"防守篮板", "场均助攻" };
+		/*
+		 * String[] columnNames = { "排名", "球队", "场数", "%", "3分%", "罚球%", "进攻篮板",
+		 * "防守篮板", "场均助攻" };
+		 */
+		String[] columnNames = { "排名", "球员", "球队", "参赛场数", "篮板数", "助攻数",
+				"在场时间", "投篮命中率", "三分命中率", "罚球命中率", "进攻数", "防守数", "抢断数", "盖帽数",
+				"失误数", "犯规数", " 得分", "效率", "GmSc 效率值", "真实命中率", "投篮效率", "篮板率",
+				"进攻篮板率", "防守篮板率", "助攻率", "抢断率", "盖帽率", "失误率", "使用率" };
 		model = new DefaultTableModel(cellData, columnNames) {
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
-
-		table = new JTable(model);
-		table.setSize(800, 600);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		ArrayList<File> list = new ArrayList<File>();
+		File f1 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Aaron Brooks.png");
+		File f2 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Aaron Gray.png");
+		File f3 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Adonis Thomas.png");
+		File f4 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Al Harrington.png");
+		list.add(f1);
+		list.add(f2);
+		list.add(f3);
+		list.add(f4);
+		playerTable = new PlayerJTable(list);
+		playerTable.setModel(model);
+		
+		String [] a = new String [4];
+		playerTable.refresh(a);
+		
+		//playerTable.setSize(1200, 1000);
+		playerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		JScrollPane jspane = new JScrollPane();
-		jspane.setViewportView(table);
-		this.add(table);
-		//tableP.add(jspane);
-		
-		// this.add(Box.createVerticalStrut(10)); 
+		jspane.setViewportView(playerTable);
+		//this.add(playerTable);
+		// tableP.add(jspane);
+
+		// this.add(Box.createVerticalStrut(10));
 		this.add(tableP);
-		
+		this.add(jspane);
 
 	}
 
