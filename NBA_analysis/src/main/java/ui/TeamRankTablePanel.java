@@ -118,10 +118,10 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 			}
 		};
 		ArrayList<File> list = new ArrayList<File>();
-		File f1 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Aaron Brooks.png");
-		File f2 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Aaron Gray.png");
-		File f3 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Adonis Thomas.png");
-		File f4 = new File("C:\\Users\\zgw\\Desktop\\CSEIII\\CSEData\\players\\portrait\\Al Harrington.png");
+		File f1 = new File("Data\\players\\portrait\\Aaron Brooks.png");
+		File f2 = new File("Data\\players\\portrait\\Aaron Gray.png");
+		File f3 = new File("Data\\players\\portrait\\Adonis Thomas.png");
+		File f4 = new File("Data\\players\\portrait\\Al Harrington.png");
 		list.add(f1);
 		list.add(f2);
 		list.add(f3);
