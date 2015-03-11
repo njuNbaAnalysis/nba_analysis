@@ -20,7 +20,7 @@ public class Player {
 	//not raw data
 	//以***结尾的说明此项数据不需要存储
 	private String team;   //current team
-	private String region;//在哪个分区***
+	private String division;//在哪个分区***
 	private int gamePlayed;//出场次数 
 	private int gameStarted;//首发次数
 	
@@ -111,8 +111,8 @@ public class Player {
     public String getTeam() {
         return team;
     }
-    public String getRegion() {
-        return region;
+    public String getDivision() {
+        return division;
     }
     public int getGamePlayed() {
         return gamePlayed;
