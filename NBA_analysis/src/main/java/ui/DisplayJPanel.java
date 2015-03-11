@@ -22,6 +22,7 @@ public class DisplayJPanel extends JPanel implements Runnable {
 	public DisplayJPanel(Image image){
     	this.image = image;
     	
+    	
     }
 
 	public void run() {
