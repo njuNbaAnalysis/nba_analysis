@@ -87,7 +87,9 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 		tableP.setLayout(new BoxLayout(tableP, BoxLayout.Y_AXIS));
 		tableP.add(headLabel);
 		tableP.add(filertLabel);
-
+		
+		
+				
 		Object[][] cellData = { { "", "", "", "", "", "", "", "", "" },
 				{ "", "", "", "", "", "", "", "", "" },
 				{ "", "", "", "", "", "", "", "", "" },
@@ -117,6 +119,11 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 				return false;
 			}
 		};
+		playerTable = new PlayerJTable();
+		playerTable.setModel(model);
+		
+		
+		//传给playertable图片文件数组
 		ArrayList<File> list = new ArrayList<File>();
 		File f1 = new File("Data\\players\\portrait\\Aaron Brooks.png");
 		File f2 = new File("Data\\players\\portrait\\Aaron Gray.png");
@@ -125,10 +132,12 @@ public class TeamRankTablePanel extends JPanel implements MouseListener {
 		list.add(f1);
 		list.add(f2);
 		list.add(f3);
-		list.add(f4);
-		playerTable = new PlayerJTable(list);
-		playerTable.setModel(model);
+		list.add(f4);	
+		playerTable.setImageList(list);	
 		
+		
+		
+		//刷新数据
 		String [] a = new String [4];
 		playerTable.refresh(a);
 		
