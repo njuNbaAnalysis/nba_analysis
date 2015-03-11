@@ -7,7 +7,7 @@ public class Start {
 	
 	
 	public static void main(String[] args){
-    	/*AnimationFrame animation = new AnimationFrame();
+    	AnimationFrame animation = new AnimationFrame();
     	try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -18,7 +18,7 @@ public class Start {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}*/
+		}
     	
        TeamRank start = new TeamRank();
        start.setVisible(true);
