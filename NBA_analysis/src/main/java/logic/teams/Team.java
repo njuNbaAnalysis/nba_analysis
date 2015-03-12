@@ -61,7 +61,6 @@ public class Team {
         this.logo = logo;
     }
 
-
     public String getName() {
         return name;
     }
@@ -100,8 +99,14 @@ public class Team {
     public BufferedImage getLogo() {
         return logo;
     }
-
-
+    
+    public void setLogo(BufferedImage logo) {
+        this.logo = logo;
+    }
+    
+    
+    
+    //now raw data
     public ArrayList<String> getPlayerList() {
         return playerList;
     }
@@ -350,4 +355,7 @@ public class Team {
     public void setAssistsPercentage(double assistsPercentage) {
         this.assistsPercentage = assistsPercentage;
     }
+
+
+
 }
