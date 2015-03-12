@@ -16,6 +16,12 @@ public class PlayerReader {
     private ArrayList<Player> playerList = new ArrayList<Player>();
     private static String dataPath = "Data/players/";
     
+    public void init(){
+        playerList = readPlayers();
+    }
+    
+    
+    
     //对应字符串不存在即返回空字符串
     //如果date不存在则返回null
     //球衣号如果为N/A，则此项返回-1
@@ -25,8 +31,9 @@ public class PlayerReader {
         File infoFile = new File(dataPath + "info");
         String[] infoList = infoFile.list();
 
-        readText(infoList);
-//        readImage();
+        readText(infoList); 
+        readImage();
+        //readImageParallel();
         
         double now = System.currentTimeMillis();
         System.out.println(now - current);
@@ -35,7 +42,7 @@ public class PlayerReader {
     }
     
     //将textData存入playerList中
-    public void readText(String[] infoList){
+    private void readText(String[] infoList){
         for(String token:infoList){
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(new File(dataPath + "info/" + token)));
@@ -109,7 +116,33 @@ public class PlayerReader {
         }
     }
     
-    public void readImage(){
+    public void readAction(){
+        for(Player token:playerList){
+            String name = token.getName();
+            
+            Image image = null;
+            try {//
+                image = ImageIO.read(new File(dataPath + "action/" + name + ".png"));
+                token.setAction(image);
+            } catch (IOException e) {
+            }
+        }
+    }
+    
+    public void readPortrait(){
+        for(Player token:playerList){
+            String name = token.getName();
+            
+            Image image = null;
+            try {//
+                image = ImageIO.read(new File(dataPath + "portrait/" + name + ".png"));
+                token.setPortrait(image);
+            } catch (IOException e) {
+            }
+        }
+    }
+    
+    private void readImage(){
         for(Player token:playerList){
             String name = token.getName();
             
@@ -125,9 +158,8 @@ public class PlayerReader {
             } catch (IOException e) {
             }
         }
-        
-
     }
+ 
     
     //readText中用来一步一步读取
     //如果空置则返回空字符串
@@ -206,21 +238,14 @@ public class PlayerReader {
             return new Date(year,month,day);
         }
     }
+
+
+
     
-    public static void main(String[] args){
-/*        PlayerReader reader = new PlayerReader();
-        reader.readPlayers();*/
-        
-/*        for(Player token:reader.playerList){
-            System.out.println(token.getBirthday().getMonth());
-        }*/
-        
-        String s = ";1;";
-        String[] a = s.split(";");
-        for(String token:a){
-            System.out.println(a[2]);
-        }
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
     }
+
     
     
 }

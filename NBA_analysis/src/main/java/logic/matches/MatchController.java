@@ -2,13 +2,17 @@ package logic.matches;
 
 import java.util.ArrayList;
 
+import data.DataController;
+import data.DataService;
+
 public class MatchController {
-	ArrayList<Match> matchList = null;
+	private ArrayList<Match> matchList = null;
 	private static MatchController matchController = null;
+	private DataService dataService;
 	
 	private MatchController(){
-		//initialize matchList,
-		
+	    dataService = DataController.getInstance();
+	    init();
 	}
 	
 	public static MatchController getInstance(){
@@ -18,6 +22,10 @@ public class MatchController {
 		else{
 			return new MatchController();
 		}
+	}
+	
+	public void init(){
+	    matchList = dataService.getAllMatches();
 	}
 	
 	

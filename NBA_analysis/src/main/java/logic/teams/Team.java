@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import util.SvgImage;
+
 public class Team {
     //raw data
 	private String name;                        //球队名
@@ -13,7 +15,7 @@ public class Team {
 	private String division;
 	private String homeCourt;              //主场
 	private int setUpTime;           //建立时间
-	private Image logo;					//队标
+	private SvgImage logo;					//队标
 	
 
     //not raw data
@@ -50,7 +52,7 @@ public class Team {
 
 	
     public Team(String name, String abbreviation, String location, char conference, String division, String homeCourt,
-            int setUpTime, BufferedImage logo) {
+            int setUpTime, SvgImage logo) {
         super();
         this.name = name;
         this.abbreviation = abbreviation;
@@ -97,11 +99,11 @@ public class Team {
     }
 
 
-    public Image getLogo() {
+    public SvgImage getLogo() {
         return logo;
     }
     
-    public void setLogo(Image logo) {
+    public void setLogo(SvgImage logo) {
         this.logo = logo;
     }
     

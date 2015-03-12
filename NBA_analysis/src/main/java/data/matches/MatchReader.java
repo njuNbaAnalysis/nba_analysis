@@ -139,6 +139,7 @@ public class MatchReader {
 
 	
 	}
+
 	public ArrayList<Match> getMatchList(){
 		return listOfMatches;
 	}

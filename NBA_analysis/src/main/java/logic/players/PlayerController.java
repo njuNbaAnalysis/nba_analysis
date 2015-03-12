@@ -2,16 +2,17 @@ package logic.players;
 
 import java.util.ArrayList;
 
-import logic.matches.Match;
-import logic.matches.MatchController;
+import data.DataController;
+import data.DataService;
 
 public class PlayerController {
-    ArrayList<Player> playerList = null;
+    private ArrayList<Player> playerList = null;
     private static PlayerController playerController = null;
+    private DataService dataService;
     
     private PlayerController(){
-        //initialize matchList,
-        
+        dataService = DataController.getInstance();
+        init();
     }
     
     public static PlayerController getInstance(){
@@ -26,5 +27,9 @@ public class PlayerController {
     public ArrayList<Player> getAllPlayers(){
         
         return playerList;
+    }
+    
+    public void init(){
+        playerList = dataService.getAllPlayers();
     }
 }

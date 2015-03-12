@@ -1,26 +1,32 @@
 package data.teams;
 
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import logic.teams.Team;
 
 import org.apache.batik.transcoder.Transcoder;
+import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 
+import util.SvgImage;
+
 public class TeamReader {
     private ArrayList<Team> teamList = new ArrayList<Team>();
     private static String dataPath = "Data/teams/";
+    
+    public void init(){
+        teamList = readTeams();
+    }
     
     public ArrayList<Team> readTeams(){
         double current = System.currentTimeMillis();
@@ -28,7 +34,7 @@ public class TeamReader {
         File file = new File(dataPath + "teams");
 
         readText(file);
-        readImage();
+        //readImage();
         
         double now = System.currentTimeMillis();
         System.out.println(now - current);
@@ -71,33 +77,76 @@ public class TeamReader {
     }
     
     public void readImage(){
+        String path = System.getProperty("user.dir");
+        
+        File file = new File("Data/teams");
+        String[] list = file.list();
         
         for(Team token:teamList){
-            String name = token.getName();
+            if(!token.getName().contains(".svg")) continue;
             
-            Image image = null;
-            try {//
-                image = ImageIO.read(new File(dataPath + name + ".svg"));
+            String name = token.getName();
+            SvgImage image = null;
+            try {
+                image = new SvgImage(new URL("file:///" + path + "/Data/teams/" + token));
                 token.setLogo(image);
             } catch (IOException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+        
     }
     
-    public Image convert2PNG(String path){ 
-        Image image = null;
+    public void convert2PNG(String path){ 
         Transcoder transcoder = new PNGTranscoder(); 
-        //TranscoderInput input = new TranscoderInput(new FileInputStream(new File(path))); 
-        //TranscoderOutput output = new TranscoderOutput(out); 
-        //transcoder.transcode(input, output); 
-        //image = ImageIO.read
-        return null; 
+        TranscoderInput input;
+        try {
+            input = new TranscoderInput(new FileInputStream(new File(path + ".svg")));
+            FileOutputStream out = new FileOutputStream(new File(path + ".png"));
+            TranscoderOutput output = new TranscoderOutput(out); 
+            transcoder.transcode(input, output); 
+            
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (TranscoderException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } 
     }  
     
-    
     public static void main(String[] args){
-        TeamReader reader = new TeamReader();
-        reader.readTeams();
+/*        TeamReader reader = new TeamReader();
+        reader.convert2PNG("Data/teams/ATL");*/
+        
+        //System.out.println(a.getAbsolutePath());
+        long current = System.currentTimeMillis();
+
+        
+
+
+
+        long now = System.currentTimeMillis();
+        System.out.println(now - current);
+        
+/*        JFrame frame = new JFrame("test");
+        frame.setSize(500, 500);
+        ImageIcon icon = new ImageIcon();
+        JLabel label = new JLabel();
+        icon.setImage(image.getImage(500, 500));
+        
+        label.setIcon(icon);
+        frame.add(label);
+        frame.setVisible(true);*/
+    }
+
+    public ArrayList<Team> getTeamList() {
+        return teamList;
     }
 }
