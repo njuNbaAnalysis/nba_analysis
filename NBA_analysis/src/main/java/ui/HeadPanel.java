@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 public class HeadPanel extends JPanel {
 	JButton average;
 	JButton total;
-	JButton submit;
 	int width;
 	int height;
 
@@ -38,6 +37,7 @@ public class HeadPanel extends JPanel {
 		average.setBackground(new Color(42, 108, 182));
 		average.setText("平均");
 		average.setBounds(width*3/5, height*1/8,width*1/20, height*6/8);
+		average.setFocusPainted(false);
 		average.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -53,6 +53,7 @@ public class HeadPanel extends JPanel {
 		total.setBackground(new Color(26, 71, 123));		
 		total.setText("总数");
 		total.setBounds(width*13/20, height*1/8,width*1/20, height*6/8);
+		total.setFocusPainted(false);
 		total.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {

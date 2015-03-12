@@ -43,6 +43,7 @@ public class SelectPanel extends JPanel {
 		submit.setBounds(width*5/8, height*11/20,width*1/4, height*7/20);
 		submit.setForeground(null);
 		submit.setContentAreaFilled(false);
+		submit.setFocusPainted(false);
 		submit.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent e) {
@@ -54,7 +55,7 @@ public class SelectPanel extends JPanel {
 		submit.addMouseListener(new MouseAdapter(){
 	        public void mouseEntered(MouseEvent e){
 	        	submit.setContentAreaFilled(true);
-	        	submit.setBackground(new Color(87, 89,91));
+	        	submit.setBackground(new Color(148,148,148));
 	        }
 	        
 	        public void mouseExited(MouseEvent e){
