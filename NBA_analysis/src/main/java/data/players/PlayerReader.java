@@ -26,7 +26,7 @@ public class PlayerReader {
         String[] infoList = infoFile.list();
 
         readText(infoList);
-        readImage();
+//        readImage();
         
         double now = System.currentTimeMillis();
         System.out.println(now - current);
