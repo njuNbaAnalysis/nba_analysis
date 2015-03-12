@@ -9,11 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import data.matches.MatchMistake.Kind;
 import logic.matches.Match;
 import logic.matches.RecordOfPlayer;
 
 public class MatchReader {
-	public ArrayList<Match> read() {
+	public ArrayList<Match> readMatches() {
 		ArrayList<Match> listOfMatches = new ArrayList<Match>();
 
 		double current = System.currentTimeMillis();
@@ -59,6 +60,7 @@ public class MatchReader {
 							pointsList.add(temp);
 						}
 					}
+					ArrayList<MatchMistake> ListOfMistake = new ArrayList<MatchMistake>();
 					// 初始化主场球队信息：
 					ArrayList<RecordOfPlayer> firstRecordList = new ArrayList<RecordOfPlayer>();
 					data = br.readLine();// 可以在这里校验球队数据是否出错
@@ -67,7 +69,8 @@ public class MatchReader {
 						if (str.length == 1)
 							break;
 						int[] num = new int[str.length];
-						if ((str[2].equals("")) || (str[2].equals("null"))||(str[2].equals("None"))) {
+						if ((str[2].equals("")) || (str[2].equals("null"))
+								|| (str[2].equals("None"))) {
 							num[2] = -1;
 						} else {
 							String[] temp = str[2].split(":");
@@ -75,11 +78,14 @@ public class MatchReader {
 									+ Integer.parseInt(temp[1]);
 						}
 						for (int i = 3; i < str.length; i++) {
-							if ((str[i].equals("")) || (str[i].equals("null"))||(str[i].equals("None")))
+							if ((str[i].equals("")) || (str[i].equals("null"))
+									|| (str[i].equals("None")))
 								num[i] = 0;
 							else
 								num[i] = Integer.parseInt(str[i]);
 						}
+						// 判断是否有脏数据
+						dealMistake(str[0], num, ListOfMistake);
 						RecordOfPlayer temp = new RecordOfPlayer(str[0],
 								str[1], num[2], num[3], num[4], num[5], num[6],
 								num[7], num[8], num[9], num[10], num[11],
@@ -94,7 +100,8 @@ public class MatchReader {
 						if (str.length != 18)
 							break;
 						int[] num = new int[str.length];
-						if ((str[2].equals("")) || (str[2].equals("null"))||(str[2].equals("None")))
+						if ((str[2].equals("")) || (str[2].equals("null"))
+								|| (str[2].equals("None")))
 							num[2] = -1;
 						else {
 							String[] temp = str[2].split(":");
@@ -102,7 +109,8 @@ public class MatchReader {
 									* Integer.parseInt(temp[1]);
 						}
 						for (int i = 3; i < str.length; i++) {
-							if ((str[i].equals("")) || (str[i].equals("null"))||(str[i].equals("None")))
+							if ((str[i].equals("")) || (str[i].equals("null"))
+									|| (str[i].equals("None")))
 								num[i] = 0;
 							else
 								num[i] = Integer.parseInt(str[i]);
@@ -114,8 +122,11 @@ public class MatchReader {
 								num[17]);
 						secondRecordList.add(temp);
 					}
+					if (ListOfMistake.size() == 0)
+						ListOfMistake = null;
 					listOfMatches.add(new Match(date, teams, points,
-							pointsList, firstRecordList, secondRecordList));
+							pointsList, firstRecordList, secondRecordList,
+							ListOfMistake));
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -126,5 +137,28 @@ public class MatchReader {
 		System.out.println(now - current);
 
 		return listOfMatches;
+	}
+
+	private void dealMistake(String name, int[] num,
+			ArrayList<MatchMistake> ListOfMistake) {     //剩余的错误放在逻辑中判断！！！
+		if (num[9] + num[10] != num[11])
+			ListOfMistake.add(new MatchMistake(name, Kind.REBOUNDS));
+		boolean b = false;
+		if (num[3] > num[4]) {
+			ListOfMistake.add(new MatchMistake(name, Kind.FIELD_GOAL));
+			b = true;
+		}
+		if (num[5] > num[6]) {
+			ListOfMistake.add(new MatchMistake(name, Kind.THREE_POINTER));
+			b = true;
+		}
+		if (num[7] > num[8]) {
+			ListOfMistake.add(new MatchMistake(name, Kind.FREE_THROW));
+			b = true;
+		}
+		if (!b) {
+			if (((num[3] - num[5]) * 2 + num[5] * 3 + num[7]) != num[17])
+				ListOfMistake.add(new MatchMistake(name, Kind.POINT));
+		}
 	}
 }

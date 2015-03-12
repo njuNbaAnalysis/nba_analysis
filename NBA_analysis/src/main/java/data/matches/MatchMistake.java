@@ -1,7 +1,7 @@
 package data.matches;
 
 public class MatchMistake {
-	int postion = -1;
+	String name = null;
 	Kind kind = Kind.NULL;
 	enum Kind{
 		NULL,FIELD_GOAL                //出手错误：即出手命中次数大于出手次数
@@ -11,4 +11,8 @@ public class MatchMistake {
 		,REBOUNDS				       //罚球错误
 	}
 	
+	public MatchMistake(String name,Kind kind){
+		this.name = name;
+		this.kind = kind;
+	}
 }
