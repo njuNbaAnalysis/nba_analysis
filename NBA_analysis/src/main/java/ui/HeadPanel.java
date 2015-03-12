@@ -1,12 +1,9 @@
 package ui;
 
 import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -39,6 +36,8 @@ public class HeadPanel extends JPanel {
 				height * 6 / 8);
 		average.setBorder(null);
 		average.setFocusPainted(false);
+		average.setForeground(Color.white);
+		average.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15));
 		average.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -57,6 +56,8 @@ public class HeadPanel extends JPanel {
 				height * 6 / 8);
 		total.setBorder(null);
 		total.setFocusPainted(false);
+		total.setForeground(Color.white);
+		total.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15));
 		total.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -76,13 +77,14 @@ public class HeadPanel extends JPanel {
 
 	private void ChangeActionPerformed(ActionEvent e) {
 
-		if (e.getSource().equals(average)) {
+		if ((JButton) e.getSource() == (average)) {
+			average.setBackground(new Color(42, 108, 182));
+			total.setBackground(new Color(26, 71, 123));
+
+		} else if ((JButton) e.getSource() == (total)) {
 			total.setBackground(new Color(42, 108, 182));
 			average.setBackground(new Color(26, 71, 123));
 
-		} else if ((JButton) e.getSource() == (average)) {
-			average.setBackground(new Color(42, 108, 182));
-			total.setBackground(new Color(26, 71, 123));
 		}
 		this.validate();
 		this.repaint();

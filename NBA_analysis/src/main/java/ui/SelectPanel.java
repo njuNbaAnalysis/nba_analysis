@@ -47,6 +47,7 @@ public class SelectPanel extends JPanel {
 		submit.setForeground(null);
 		submit.setContentAreaFilled(false);
 		submit.setFocusPainted(false);
+		submit.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,15));
 		submit.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent e) {
@@ -77,8 +78,6 @@ public class SelectPanel extends JPanel {
 		location.setBounds(width/4, height/10, width/8, height*7/20);
 		location.setBackground(new Color(69,69,69));
 		location.setUI(new BasicComboBoxUI());
-		location.setForeground(Color.white);
-		//location.setBorder(BorderFactory.createEmptyBorder());
 		this.add(location);
 		
 		union = new SelectJComboBox<String>();
@@ -88,8 +87,6 @@ public class SelectPanel extends JPanel {
 		union.setBounds(width/2, height/10, width/8, height*7/20);
 		union.setBackground(new Color(69,69,69));
 		union.setUI(new BasicComboBoxUI());
-		union.setForeground(Color.white);
-		//union.setBorder(BorderFactory.createEmptyBorder());
 		this.add(union);
 		
 		depend = new SelectJComboBox<String>();
@@ -108,9 +105,7 @@ public class SelectPanel extends JPanel {
 		depend.addItem("罚球");
 		depend.addItem("两双");
 		depend.setBounds(width*3/4, height/10, width/8, height*7/20);
-		union.setUI(new BasicComboBoxUI());
-		depend.setForeground(Color.white);
-		//depend.setBorder(BorderFactory.createEmptyBorder());
+		depend.setUI(new BasicComboBoxUI());
 		this.add(depend);
 	}
 
@@ -124,7 +119,6 @@ public class SelectPanel extends JPanel {
 	private class SelectJComboBox<T> extends JComboBox<T>{
 		SelectJComboBox(){
 			this.setBackground(new Color(69,69,69));
-			this.setUI(new BasicComboBoxUI());
 			this.setForeground(Color.white);
 			this.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,15));
 
