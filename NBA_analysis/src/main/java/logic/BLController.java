@@ -58,4 +58,10 @@ public class BLController implements BLService{
         return progress;
     }
 
+    public static void main(){
+        BLController v = BLController.getInstance();
+        while(BLController.progress != 9){
+            
+        }
+    }
 }

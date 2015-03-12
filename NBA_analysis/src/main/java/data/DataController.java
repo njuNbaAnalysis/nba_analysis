@@ -39,18 +39,15 @@ public class DataController implements DataService{
     }
 
 	public ArrayList<Player> getAllPlayers() {
-		PlayerReader reader = new PlayerReader();
-		return reader.getPlayerList();
+		return playerReader.getPlayerList();
 	}
 
 	public ArrayList<Team> getAllTeams() {
-	    TeamReader reader = new TeamReader();
-        return reader.getTeamList();
+        return teamReader.getTeamList();
 	}
 
 	public ArrayList<Match> getAllMatches() {
-        MatchReader reader = new MatchReader();
-        return reader.getMatchList();
+        return matchReader.getMatchList();
 	}
 
 }
