@@ -27,12 +27,13 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 	private static Image headBar;
 	private static Image filter;
-	
-	private JLabel headLabel;
-	private JLabel filertLabel;
+	private int width;
+	private int height;
+
 	private PlayerJTable playerTable;
 	private DefaultTableModel model;
 	private SelectPanel selectPanel;
+	private HeadPanel headPanel;
 
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(30, 81,140));
@@ -69,8 +70,10 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 	}
 
 	public PlayerStatTablePanel(int width, int height) {
-
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.width = width;
+		this.height = height;
+		setLayout(null);
+		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//setLookAndFeel();
 
 		BufferedImage bufferHeadBar = null;
@@ -99,10 +102,16 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 //		tableP.setSize(800, 600);
 //		tableP.setLayout(new BoxLayout(tableP, BoxLayout.Y_AXIS));
 		
+		headPanel = new HeadPanel(width,50);
+		headPanel.setBounds(0, 0, width, 50);
+		this.add(headPanel);
 		
-		
-		selectPanel = new SelectPanel(width,height/8);
+		selectPanel = new SelectPanel(width,66);
 		this.add(selectPanel);
+		selectPanel.setBounds(0, 50, width, 66);
+		
+		this.addMouseListener(this);
+		
 		
 	//	this.add(Box.createVerticalStrut(116));
 		
@@ -162,6 +171,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		playerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		JScrollPane jspane = new JScrollPane();
 		jspane.setViewportView(playerTable);
+		jspane.setBounds(0, 116, width, height-116);
 		//this.add(playerTable);
 		// tableP.add(jspane);
 
@@ -175,7 +185,8 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 	
 
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO 自动生成的方法存根
+		System.out.println(headPanel.getX()+" "+headPanel.getY());
+		System.out.println(selectPanel.getX()+" "+selectPanel.getY());
 
 	}
 

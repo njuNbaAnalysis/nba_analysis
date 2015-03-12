@@ -23,7 +23,7 @@ public class SelectPanel extends JPanel {
 
 	public SelectPanel(int width, int height) {
 		this.setOpaque(false);
-		this.setLayout(new GridLayout(2,6));
+		this.setLayout(null);
 		this.width = width;
 		this.height = height;
 		setLabel();
@@ -40,7 +40,7 @@ public class SelectPanel extends JPanel {
 		
 		submit = new JButton();
 		submit.setText("提交");
-		//submit.setBounds(width*4/5, height*2/3,width*1/6, height*1/4);
+		submit.setBounds(width*5/8, height*11/20,width*1/4, height*7/20);
 		submit.setForeground(null);
 		submit.setContentAreaFilled(false);
 		submit.addActionListener(new ActionListener() {
@@ -70,12 +70,14 @@ public class SelectPanel extends JPanel {
 		location.addItem("中锋");
 		location.addItem("后卫");
 		location.addItem("前锋");
+		location.setBounds(width/4, height/10, width/8, height*7/20);
 		this.add(location);
 		
 		union = new JComboBox<String>();
 		union.addItem("全部联盟");
 		union.addItem("东部");
 		union.addItem("西部");
+		union.setBounds(width/2, height/10, width/8, height*7/20);
 		this.add(union);
 		
 		depend = new JComboBox<String>();
@@ -93,6 +95,7 @@ public class SelectPanel extends JPanel {
 		depend.addItem("三分");
 		depend.addItem("罚球");
 		depend.addItem("两双");
+		depend.setBounds(width*3/4, height/10, width/8, height*7/20);
 		this.add(depend);
 	}
 
