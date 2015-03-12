@@ -1,4 +1,4 @@
-package dataMatches.test;
+package dataPlayers.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -8,10 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import data.matches.MatchReader;
+import data.players.PlayerReader;
 
-
-public class DataOfMatchesTest {
+public class DataOfPlayersTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -30,8 +29,8 @@ public class DataOfMatchesTest {
     
     @Test
     public void testReader() {
-       MatchReader teamRead = new MatchReader();
-       boolean result = (teamRead.readMatches()!=null);
+       PlayerReader teamRead = new PlayerReader();
+       boolean result = (teamRead.readPlayers()!=null);
        assertTrue(result);
     }
 }
