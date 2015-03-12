@@ -57,7 +57,11 @@ public class BLController implements BLService{
     }
 
     public static void main(String[] args){
+        long current = System.currentTimeMillis();
+        
         BLController v = BLController.getInstance();
+        
+        
         Thread thread1 = new Thread(){
             public void run(){
                 while(BLController.progress != 6){
@@ -73,5 +77,15 @@ public class BLController implements BLService{
             }
         };
         thread1.start();
+        
+        
+        try {
+            thread1.join();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        long now = System.currentTimeMillis();
+        System.out.println(now - current);
     }
 }
