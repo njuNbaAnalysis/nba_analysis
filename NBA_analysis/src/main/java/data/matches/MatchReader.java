@@ -14,16 +14,17 @@ import logic.matches.Match;
 import logic.matches.RecordOfPlayer;
 
 public class MatchReader {
-	public ArrayList<Match> readMatches() {
-		ArrayList<Match> listOfMatches = new ArrayList<Match>();
-
+	private ArrayList<Match> listOfMatches = new ArrayList<Match>();
+	
+	public void init() {
+		
 		double current = System.currentTimeMillis();
 
 		File file = new File("Data/matches");
 		String[] list = file.list();
 
 		for (String token : list) {
-			try {//
+			try {
 				BufferedReader br = new BufferedReader(new FileReader(new File(
 						"Data/matches/" + token)));
 				String data = br.readLine();
@@ -136,6 +137,9 @@ public class MatchReader {
 		double now = System.currentTimeMillis();
 		System.out.println(now - current);
 
+	
+	}
+	public ArrayList<Match> getMatchList(){
 		return listOfMatches;
 	}
 

@@ -30,8 +30,9 @@ public class DataOfMatchesTest {
     
     @Test
     public void testReader() {
-       MatchReader teamRead = new MatchReader();
-       boolean result = (teamRead.readMatches()!=null);
+       MatchReader matchRead = new MatchReader();
+       matchRead.init();
+       boolean result = (matchRead.getMatchList()!=null);
        assertTrue(result);
     }
 }
