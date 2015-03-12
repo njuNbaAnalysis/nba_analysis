@@ -20,7 +20,7 @@ public class MenuPanel extends JPanel {
 	private int height;
 	private int heightOfHead = 116;
 	private static Image logo;
-	int selectedNumber=-1;
+	int selectedNumber = -1;
 
 	ImageIcon playerIcon;
 	ImageIcon playerIconD;
@@ -32,7 +32,11 @@ public class MenuPanel extends JPanel {
 	ImageIcon teamStatisticsIconD;
 	ImageIcon statisticsIcon;
 	ImageIcon statisticsIconD;
-
+	ImageIcon playerIconB;
+	ImageIcon teamIconB;
+	ImageIcon playerStatisticsIconB;
+	ImageIcon teamStatisticsIconB;
+	ImageIcon statisticsIconB;
 	JButton statistics;
 	JButton player;
 	JButton team;
@@ -66,7 +70,11 @@ public class MenuPanel extends JPanel {
 		BufferedImage bufferTeamStatD = null;
 		BufferedImage bufferStat = null;
 		BufferedImage bufferStatD = null;
-
+		BufferedImage bufferPlayerB = null;
+		BufferedImage bufferTeamB = null;
+		BufferedImage bufferplayerStatB = null;
+		BufferedImage bufferTeamStatB = null;
+		BufferedImage bufferStatB = null;
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
@@ -90,6 +98,17 @@ public class MenuPanel extends JPanel {
 					+ "tongji_l.png"));
 			bufferStatD = ImageIO.read(new File("image" + File.separator
 					+ "tongji_d.png"));
+			bufferPlayerB = ImageIO.read(new File("image" + File.separator
+					+ "qiuyuan_b.png"));
+			bufferTeamB = ImageIO.read(new File("image" + File.separator
+					+ "qiudui_b.png"));
+			bufferplayerStatB = ImageIO.read(new File("image" + File.separator
+					+ "qiuyuantongji_b.png"));
+			bufferTeamStatB = ImageIO.read(new File("image" + File.separator
+					+ "qiuduitongji_b.png"));
+			bufferStatB = ImageIO.read(new File("image" + File.separator
+					+ "tongji_b.png"));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,6 +125,12 @@ public class MenuPanel extends JPanel {
 		statisticsIcon = new ImageIcon(bufferStat);
 		statisticsIconD = new ImageIcon(bufferStatD);
 
+		playerIconB = new ImageIcon(bufferPlayerB);
+		teamIconB = new ImageIcon(bufferTeamB);
+		playerStatisticsIconB = new ImageIcon(bufferplayerStatB);
+		teamStatisticsIconB = new ImageIcon(bufferTeamStatB);
+		statisticsIconB = new ImageIcon(bufferStatB);
+
 	}
 
 	public void initButton() {
@@ -117,7 +142,7 @@ public class MenuPanel extends JPanel {
 		statistics.setBorderPainted(false);
 		statistics.setIcon(statisticsIcon);
 		MouseHandle statListener = new MouseHandle(statisticsIconD,
-				statisticsIcon, 0);
+				statisticsIcon, statisticsIconB, 0);
 		statistics.addMouseListener(statListener);
 		this.add(statistics);
 
@@ -128,7 +153,7 @@ public class MenuPanel extends JPanel {
 		playerStat.setBorderPainted(false);
 		playerStat.setIcon(playerStatisticsIcon);
 		MouseHandle playerStatListener = new MouseHandle(playerStatisticsIconD,
-				playerStatisticsIcon, 1);
+				playerStatisticsIcon, playerStatisticsIconB, 1);
 		playerStat.addMouseListener(playerStatListener);
 		this.add(playerStat);
 
@@ -139,7 +164,7 @@ public class MenuPanel extends JPanel {
 		teamStat.setBorderPainted(false);
 		teamStat.setIcon(teamStatisticsIcon);
 		MouseHandle teamStatListener = new MouseHandle(teamStatisticsIconD,
-				teamStatisticsIcon, 2);
+				teamStatisticsIcon, teamStatisticsIconB, 2);
 		teamStat.addMouseListener(teamStatListener);
 		this.add(teamStat);
 
@@ -149,7 +174,8 @@ public class MenuPanel extends JPanel {
 		player.setContentAreaFilled(false);
 		player.setBorderPainted(false);
 		player.setIcon(playerIcon);
-		MouseHandle playerListener = new MouseHandle(playerIconD, playerIcon, 3);
+		MouseHandle playerListener = new MouseHandle(playerIconD, playerIcon,
+				playerIconB, 3);
 		player.addMouseListener(playerListener);
 		this.add(player);
 
@@ -159,23 +185,25 @@ public class MenuPanel extends JPanel {
 		team.setContentAreaFilled(false);
 		team.setBorderPainted(false);
 		team.setIcon(teamIcon);
-		MouseHandle teamListener = new MouseHandle(teamIconD, teamIcon, 4);
+		MouseHandle teamListener = new MouseHandle(teamIconD, teamIcon,
+				teamIconB, 4);
 		team.addMouseListener(teamListener);
 		this.add(team);
 
 	}
 
-	
-	
 	class MouseHandle extends MouseAdapter {
 
 		ImageIcon newIcon;
 		ImageIcon oldIcon;
+		ImageIcon selIcon;
 		int type;
 
-		public MouseHandle(ImageIcon newIm, ImageIcon oldIm, int x) {
+		public MouseHandle(ImageIcon newIm, ImageIcon oldIm,
+				ImageIcon selectIm, int x) {
 			newIcon = newIm;
 			oldIcon = oldIm;
+			selIcon = selectIm;
 			type = x;
 
 		}
@@ -183,7 +211,7 @@ public class MenuPanel extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (selectedNumber != type) {
-				((JButton) e.getSource()).setIcon(newIcon);
+				((JButton) e.getSource()).setIcon(selIcon);
 				clearImage(selectedNumber);
 				selectedNumber = type;
 			}
@@ -191,7 +219,9 @@ public class MenuPanel extends JPanel {
 
 		public void mouseEntered(MouseEvent e) {
 
-			((JButton) e.getSource()).setIcon(newIcon);
+			if (selectedNumber != type) {
+				((JButton) e.getSource()).setIcon(newIcon);
+			}
 		}
 
 		public void mouseExited(MouseEvent e) {
@@ -206,20 +236,25 @@ public class MenuPanel extends JPanel {
 		}
 	}
 
-	private void clearImage(int type){
-		switch(type){
-		case 0:statistics.setIcon(statisticsIcon);
-				break;
-		case 1:playerStat.setIcon(playerStatisticsIcon);
-				break;
-		case 2:teamStat.setIcon(teamStatisticsIcon);
-				break;
-		case 3:player.setIcon(playerIcon);
-				break;
-		case 4:team.setIcon(teamIcon);
-				break;
+	private void clearImage(int type) {
+		switch (type) {
+		case 0:
+			statistics.setIcon(statisticsIcon);
+			break;
+		case 1:
+			playerStat.setIcon(playerStatisticsIcon);
+			break;
+		case 2:
+			teamStat.setIcon(teamStatisticsIcon);
+			break;
+		case 3:
+			player.setIcon(playerIcon);
+			break;
+		case 4:
+			team.setIcon(teamIcon);
+			break;
 		}
-		
+
 	}
 
 }
