@@ -55,10 +55,22 @@ public class BLController implements BLService{
         return progress;
     }
 
-    public static void main(){
+    public static void main(String[] args){
         BLController v = BLController.getInstance();
-        while(BLController.progress != 9){
-            
-        }
+        Thread thread1 = new Thread(){
+            public void run(){
+                while(BLController.progress != 9){
+                    System.out.println(BLController.progress);
+                    System.out.println("now::::::::      " + BLController.progress / 9.0 * 100 + "%");
+                    try {
+                        this.sleep(100);
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread1.start();
     }
 }
