@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import logic.BLController;
 import logic.teams.Team;
 
 import org.apache.batik.transcoder.Transcoder;
@@ -26,6 +27,15 @@ public class TeamReader {
     
     public void init(){
         teamList = readTeams();
+        BLController.progress ++;
+        
+        Thread thread1 = new Thread(){
+            public void run(){
+                readTeams();
+                BLController.progress ++;
+            }
+        };
+        thread1.start();
     }
     
     public ArrayList<Team> readTeams(){

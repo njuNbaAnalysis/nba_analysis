@@ -10,6 +10,7 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
+import logic.BLController;
 import logic.players.Player;
 
 public class PlayerReader {
@@ -18,6 +19,22 @@ public class PlayerReader {
     
     public void init(){
         playerList = readPlayers();
+        BLController.progress ++;
+        
+        Thread thread1 = new Thread(){
+            public void run(){
+                readAction();
+                BLController.progress ++;
+            }
+        };
+        Thread thread2 = new Thread(){
+            public void run(){
+                readPortrait();
+                BLController.progress ++;
+            }
+        };
+        thread1.start();
+        thread2.start();
     }
     
     
@@ -32,7 +49,7 @@ public class PlayerReader {
         String[] infoList = infoFile.list();
 
         readText(infoList); 
-        readImage();
+        //readImage();
         //readImageParallel();
         
         double now = System.currentTimeMillis();

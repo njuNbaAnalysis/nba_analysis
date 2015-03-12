@@ -11,6 +11,8 @@ import logic.teams.TeamController;
 
 public class BLController implements BLService{
     private static BLController blController = null;
+    public static int progress = 0;
+    public static int maxProgress = 9;
     
     private MatchController matchController = null;
     private PlayerController playerController = null;
@@ -49,5 +51,11 @@ public class BLController implements BLService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public int getProgress() {
+        // TODO Auto-generated method stub
+        return progress;
+    }
 
 }

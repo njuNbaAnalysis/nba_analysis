@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import data.matches.MatchMistake.Kind;
+import logic.BLController;
 import logic.matches.Match;
 import logic.matches.RecordOfPlayer;
 
@@ -137,7 +138,7 @@ public class MatchReader {
 		double now = System.currentTimeMillis();
 		System.out.println(now - current);
 
-	
+		BLController.progress ++;
 	}
 
 	public ArrayList<Match> getMatchList(){
