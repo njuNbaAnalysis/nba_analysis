@@ -1,5 +1,6 @@
 package logic.teams;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ public class Team {
 	private String division;
 	private String homeCourt;              //主场
 	private int setUpTime;           //建立时间
-	private BufferedImage logo;					//队标
+	private Image logo;					//队标
 	
 
     //not raw data
@@ -96,11 +97,11 @@ public class Team {
     }
 
 
-    public BufferedImage getLogo() {
+    public Image getLogo() {
         return logo;
     }
     
-    public void setLogo(BufferedImage logo) {
+    public void setLogo(Image logo) {
         this.logo = logo;
     }
     

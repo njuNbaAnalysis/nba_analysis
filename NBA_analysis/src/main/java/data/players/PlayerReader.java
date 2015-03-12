@@ -124,9 +124,6 @@ public class PlayerReader {
                 token.setPortrait(image);
             } catch (IOException e) {
             }
-            
-            
-            
         }
         
 
@@ -211,12 +208,18 @@ public class PlayerReader {
     }
     
     public static void main(String[] args){
-        PlayerReader reader = new PlayerReader();
-        reader.readPlayers();
+/*        PlayerReader reader = new PlayerReader();
+        reader.readPlayers();*/
         
 /*        for(Player token:reader.playerList){
             System.out.println(token.getBirthday().getMonth());
         }*/
+        
+        String s = ";1;";
+        String[] a = s.split(";");
+        for(String token:a){
+            System.out.println(a[2]);
+        }
     }
     
     
