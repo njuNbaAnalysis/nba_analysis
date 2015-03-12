@@ -37,11 +37,14 @@ public class MenuPanel extends JPanel {
 	ImageIcon playerStatisticsIconB;
 	ImageIcon teamStatisticsIconB;
 	ImageIcon statisticsIconB;
+	ImageIcon exitIcon;
+	ImageIcon exitIconR;
 	JButton statistics;
 	JButton player;
 	JButton team;
 	JButton playerStat;
 	JButton teamStat;
+	JButton exit;
 
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(31, 31, 31));
@@ -75,6 +78,8 @@ public class MenuPanel extends JPanel {
 		BufferedImage bufferplayerStatB = null;
 		BufferedImage bufferTeamStatB = null;
 		BufferedImage bufferStatB = null;
+		BufferedImage bufferExit = null;
+		BufferedImage bufferExitR = null;
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
@@ -108,6 +113,11 @@ public class MenuPanel extends JPanel {
 					+ "qiuduitongji_b.png"));
 			bufferStatB = ImageIO.read(new File("image" + File.separator
 					+ "tongji_b.png"));
+			bufferExit = ImageIO.read(new File("image" + File.separator
+					+ "exit_l.png"));
+			bufferExitR = ImageIO.read(new File("image" + File.separator
+					+ "exit_r.png"));
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -124,7 +134,9 @@ public class MenuPanel extends JPanel {
 		teamStatisticsIconD = new ImageIcon(bufferTeamStatD);
 		statisticsIcon = new ImageIcon(bufferStat);
 		statisticsIconD = new ImageIcon(bufferStatD);
-
+		exitIcon = new ImageIcon(bufferExit);
+		exitIconR = new ImageIcon(bufferExitR);
+		
 		playerIconB = new ImageIcon(bufferPlayerB);
 		teamIconB = new ImageIcon(bufferTeamB);
 		playerStatisticsIconB = new ImageIcon(bufferplayerStatB);
@@ -190,6 +202,17 @@ public class MenuPanel extends JPanel {
 		team.addMouseListener(teamListener);
 		this.add(team);
 
+		exit = new JButton();
+		exit.setSize(width, 25);
+		exit.setLocation(0,  height-80);
+		exit.setContentAreaFilled(false);
+		exit.setBorderPainted(false);
+		exit.setIcon(exitIcon);
+		MouseHandle exitStatListener = new MouseHandle(exitIconR,
+				exitIcon, exitIconR, 5);
+		exit.addMouseListener(exitStatListener);
+		this.add(exit);
+		
 	}
 
 	class MouseHandle extends MouseAdapter {
@@ -214,6 +237,10 @@ public class MenuPanel extends JPanel {
 				((JButton) e.getSource()).setIcon(selIcon);
 				clearImage(selectedNumber);
 				selectedNumber = type;
+			}
+			
+			if(type==5){
+				System.exit(0);
 			}
 		}
 
