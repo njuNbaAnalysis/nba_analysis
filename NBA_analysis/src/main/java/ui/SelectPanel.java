@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +43,7 @@ public class SelectPanel extends JPanel {
 		
 		submit = new JButton();
 		submit.setText("提交");
-		submit.setBounds(width*5/8, height*11/20,width*1/4, height*7/20);
+		submit.setBounds(width*11/16, height*11/20,width*1/6, height*7/20);
 		submit.setForeground(null);
 		submit.setContentAreaFilled(false);
 		submit.setFocusPainted(false);
@@ -125,7 +126,8 @@ public class SelectPanel extends JPanel {
 			this.setBackground(new Color(69,69,69));
 			this.setUI(new BasicComboBoxUI());
 			this.setForeground(Color.white);
-			
+			this.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,15));
+
 		}
 	}
 	
