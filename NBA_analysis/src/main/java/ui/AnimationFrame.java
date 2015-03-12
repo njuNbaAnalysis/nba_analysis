@@ -18,7 +18,7 @@ public class AnimationFrame  extends JFrame{
        
         
         this.setTitle("Papers&Tapes");
-        this.setLocation((width - 901) / 2, (height - 649) / 2);
+        this.setLocation((width - 901) / 2+1920, (height - 649) / 2);
         this.setResizable(false);
         this.setUndecorated(true);
         this.setVisible(true);
