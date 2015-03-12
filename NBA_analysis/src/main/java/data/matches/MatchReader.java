@@ -67,18 +67,15 @@ public class MatchReader {
 						if (str.length == 1)
 							break;
 						int[] num = new int[str.length];
-						if (str[2] == "")
-							num[2] = 0;// 缺省置为零
-						else {
+						if ((str[2].equals("")) || (str[2].equals("null"))||(str[2].equals("None"))) {
+							num[2] = -1;
+						} else {
 							String[] temp = str[2].split(":");
-							System.out.println(str[2]);
-							System.out.println(token);
-							System.out.println(temp[0]+"----"+temp[1]);
-							num[2] = Integer.parseInt(temp[0])
-									*60 + Integer.parseInt(temp[1]);
+							num[2] = Integer.parseInt(temp[0]) * 60
+									+ Integer.parseInt(temp[1]);
 						}
 						for (int i = 3; i < str.length; i++) {
-							if (str[i] == "")
+							if ((str[i].equals("")) || (str[i].equals("null"))||(str[i].equals("None")))
 								num[i] = 0;
 							else
 								num[i] = Integer.parseInt(str[i]);
@@ -97,15 +94,15 @@ public class MatchReader {
 						if (str.length != 18)
 							break;
 						int[] num = new int[str.length];
-						if (str[2] == "")
-							num[2] = 0;// 缺省置为零
+						if ((str[2].equals("")) || (str[2].equals("null"))||(str[2].equals("None")))
+							num[2] = -1;
 						else {
 							String[] temp = str[2].split(":");
 							num[2] = Integer.parseInt(temp[0])
 									* Integer.parseInt(temp[1]);
 						}
 						for (int i = 3; i < str.length; i++) {
-							if (str[i] == "")
+							if ((str[i].equals("")) || (str[i].equals("null"))||(str[i].equals("None")))
 								num[i] = 0;
 							else
 								num[i] = Integer.parseInt(str[i]);
