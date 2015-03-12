@@ -6,12 +6,12 @@ import java.util.Date;
 public class Player {
 	private String name;
 	private int number;    //球衣号
-	private char position;
+	private String position;   //G,G-F 类似格式
 	private int[] height;   //int[0]: foot,int[1]: inch
 	private int weight;
 	private Date birthday; //year,month,day
 	private int age;
-	private int experience;    //打了几年球
+	private int experience;    //打了几年球，取值可能为R，如果为R则存储0
 	private String school;
 	private BufferedImage portart;
 	private BufferedImage action;
@@ -56,7 +56,7 @@ public class Player {
 	private double shootingEfficiency;//投篮效率
 
 
-    public Player(String name, int number, char position, int[] height, int weight, Date birthday, int age,
+    public Player(String name, int number, String position, int[] height, int weight, Date birthday, int age,
             int experience, String school) {
         super();
         this.name = name;
@@ -77,7 +77,7 @@ public class Player {
     public int getNumber() {
         return number;
     }
-    public char getPosition() {
+    public String getPosition() {
         return position;
     }
     public int[] getHeight() {
