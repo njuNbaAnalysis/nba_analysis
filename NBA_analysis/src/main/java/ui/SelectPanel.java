@@ -7,17 +7,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 
 
 public class SelectPanel extends JPanel {
 	JButton submit;
-	JComboBox<String> location;
-	JComboBox<String>  union;
-	JComboBox<String>  depend;
+	SelectJComboBox<String> location;
+	SelectJComboBox<String>  union;
+	SelectJComboBox<String>  depend;
 	int width;
 	int height;
 
@@ -66,22 +68,30 @@ public class SelectPanel extends JPanel {
 	}
 
 	private void setComboBox() {
-		location = new JComboBox<String>();
+		location = new SelectJComboBox<String>();
 		location.addItem("全部位置");
 		location.addItem("中锋");
 		location.addItem("后卫");
 		location.addItem("前锋");
 		location.setBounds(width/4, height/10, width/8, height*7/20);
+		location.setBackground(new Color(69,69,69));
+		location.setUI(new BasicComboBoxUI());
+		location.setForeground(Color.white);
+		//location.setBorder(BorderFactory.createEmptyBorder());
 		this.add(location);
 		
-		union = new JComboBox<String>();
+		union = new SelectJComboBox<String>();
 		union.addItem("全部联盟");
 		union.addItem("东部");
 		union.addItem("西部");
 		union.setBounds(width/2, height/10, width/8, height*7/20);
+		union.setBackground(new Color(69,69,69));
+		union.setUI(new BasicComboBoxUI());
+		union.setForeground(Color.white);
+		//union.setBorder(BorderFactory.createEmptyBorder());
 		this.add(union);
 		
-		depend = new JComboBox<String>();
+		depend = new SelectJComboBox<String>();
 		depend.addItem("得分");
 		depend.addItem("篮板");
 		depend.addItem("助攻");
@@ -97,6 +107,9 @@ public class SelectPanel extends JPanel {
 		depend.addItem("罚球");
 		depend.addItem("两双");
 		depend.setBounds(width*3/4, height/10, width/8, height*7/20);
+		union.setUI(new BasicComboBoxUI());
+		depend.setForeground(Color.white);
+		//depend.setBorder(BorderFactory.createEmptyBorder());
 		this.add(depend);
 	}
 
@@ -105,6 +118,15 @@ public class SelectPanel extends JPanel {
 		this.validate();
 		this.repaint();
 
+	}
+	
+	private class SelectJComboBox<T> extends JComboBox<T>{
+		SelectJComboBox(){
+			this.setBackground(new Color(69,69,69));
+			this.setUI(new BasicComboBoxUI());
+			this.setForeground(Color.white);
+			this.set
+		}
 	}
 	
 }
