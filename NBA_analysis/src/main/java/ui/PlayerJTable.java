@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -41,7 +44,12 @@ public class PlayerJTable extends JTable {
 		// 设置表头的文字颜色
 		tableH.setForeground(new Color(255, 255, 255));
 		// this.refresh();
-
+		Dimension size = tableH.getPreferredSize();
+		size.height = 40;
+		tableH.setPreferredSize(size);
+		
+		this.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+	
 	}
 
 	public void setImageList(ArrayList<File> portraitsList) {
