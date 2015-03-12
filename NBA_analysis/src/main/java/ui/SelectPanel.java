@@ -125,7 +125,7 @@ public class SelectPanel extends JPanel {
 			this.setBackground(new Color(69,69,69));
 			this.setUI(new BasicComboBoxUI());
 			this.setForeground(Color.white);
-			this.set
+			
 		}
 	}
 	
