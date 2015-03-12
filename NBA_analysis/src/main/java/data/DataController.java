@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import logic.matches.Match;
 import logic.players.Player;
 import logic.teams.Team;
+import data.players.PlayerReader;
 
 public class DataController implements DataService{
 
 	public ArrayList<Player> getAllPlayers() {
-		// TODO Auto-generated method stub
-		return null;
+		PlayerReader reader = new PlayerReader();
+		return reader.readPlayers();
 	}
 
 	public ArrayList<Team> getAllTeams() {

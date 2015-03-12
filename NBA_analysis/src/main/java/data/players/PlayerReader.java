@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import logic.players.Player;
 
 public class PlayerReader {
-    public ArrayList<Player> read(){
+    public ArrayList<Player> readPlayers(){
         return null;
     }
 }
