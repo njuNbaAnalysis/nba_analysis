@@ -25,6 +25,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class PlayerJTable extends JTable {
 	private ArrayList<File> portraitsList;
@@ -34,6 +36,9 @@ public class PlayerJTable extends JTable {
 
 	public PlayerJTable() {
 		super();
+		
+
+		
 		this.setShowGrid(false);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
@@ -46,6 +51,8 @@ public class PlayerJTable extends JTable {
 		// 设置表头的文字颜色
 		tableH.setForeground(new Color(255, 255, 255));
 		// this.refresh();
+		
+		
 
 	}
 
@@ -60,10 +67,10 @@ public class PlayerJTable extends JTable {
 
 		for (int i = 0; i < o.length; i++) {
 			// 添加数据到表格
-			s[0] = "a";
-			s[1] = "b";
-			s[2] = "c";
-			s[3] = "d";
+			s[0] = i+"";
+			s[1] = i+"";
+			s[2] = i+"";
+			s[3] = i+"";
 
 			tableModel.addRow(s);
 
@@ -169,5 +176,20 @@ public class PlayerJTable extends JTable {
 		}
 
 	}
+	
+	public void setTableHeaderColor(Color c)
+    {
+		
+		TableColumn column;
+		for (int columnIndex = 0; columnIndex < this.getColumnCount(); columnIndex++) {
+			  column = this.getTableHeader().getColumnModel().getColumn(columnIndex);
+			  DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+			  cellRenderer.setBackground(c);
+			  column.setHeaderRenderer(cellRenderer);
+		}
+		
+       
+    }
+	
 
 }

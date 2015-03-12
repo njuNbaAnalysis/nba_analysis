@@ -22,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
@@ -106,15 +108,19 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		headPanel.setBounds(0, 0, width, 50);
 		this.add(headPanel);
 		
+
 		selectPanel = new SelectPanel(width,66);
 		this.add(selectPanel);
+
 		selectPanel.setBounds(0, 50, width, 66);
 		
+		this.add(Box.createVerticalStrut(116));
+
 		this.addMouseListener(this);
 		
 		
 	//	this.add(Box.createVerticalStrut(116));
-		
+
 				
 		Object[][] cellData = { { "", "", "", "", "", "", "", "", "" },
 				{ "", "", "", "", "", "", "", "", "" },
@@ -147,7 +153,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		};
 		playerTable = new PlayerJTable();
 		playerTable.setModel(model);
-		
+		playerTable.setRowSorter(new TableRowSorter<TableModel>(model)); 
 		
 		//传给playertable图片文件数组
 		ArrayList<File> list = new ArrayList<File>();
@@ -169,6 +175,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		
 		//playerTable.setSize(1200, 1000);
 		playerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		playerTable.setTableHeaderColor(new Color(158,158,158));
 		JScrollPane jspane = new JScrollPane();
 		jspane.setViewportView(playerTable);
 		jspane.setBounds(0, 116, width, height-116);
