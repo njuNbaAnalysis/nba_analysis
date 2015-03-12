@@ -10,11 +10,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-
-
 public class HeadPanel extends JPanel {
 	JButton average;
 	JButton total;
+	boolean selected = true;
 	int width;
 	int height;
 
@@ -33,48 +32,55 @@ public class HeadPanel extends JPanel {
 	}
 
 	private void setButton() {
-		JButton average = new JButton();
+		average = new JButton();
 		average.setBackground(new Color(42, 108, 182));
 		average.setText("平均");
-		average.setBounds(width*3/5, height*1/8,width*1/20, height*6/8);
+		average.setBounds(width * 3 / 5, height * 1 / 8, width * 1 / 20,
+				height * 6 / 8);
+		average.setBorder(null);
 		average.setFocusPainted(false);
 		average.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				selected = true;
 				ChangeActionPerformed(e);
 
 			}
 
 		});
 		this.add(average);
-		
-		
-		JButton total = new JButton();
-		total.setBackground(new Color(26, 71, 123));		
+
+		total = new JButton();
+		total.setBackground(new Color(26, 71, 123));
 		total.setText("总数");
-		total.setBounds(width*13/20, height*1/8,width*1/20, height*6/8);
+		total.setBounds(width * 13 / 20, height * 1 / 8, width * 1 / 20,
+				height * 6 / 8);
+		total.setBorder(null);
 		total.setFocusPainted(false);
 		total.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				selected = false;
 				ChangeActionPerformed(e);
 
 			}
 
 		});
 		this.add(total);
-		
+
 	}
 
 	private void setComboBox() {
-		
+
 	}
 
 	private void ChangeActionPerformed(ActionEvent e) {
-		if (e.getSource() == average) {
+
+		if (e.getSource().equals(average)) {
 			total.setBackground(new Color(42, 108, 182));
 			average.setBackground(new Color(26, 71, 123));
-		} else if (e.getSource() == total) {
+
+		} else if ((JButton) e.getSource() == (average)) {
 			average.setBackground(new Color(42, 108, 182));
 			total.setBackground(new Color(26, 71, 123));
 		}
