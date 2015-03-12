@@ -20,7 +20,7 @@ public class Start {
 			e.printStackTrace();
 		}
     	*/
-       TeamRank start = new TeamRank();
+       MainFrame start = new MainFrame();
        start.setVisible(true);
     }
 }
