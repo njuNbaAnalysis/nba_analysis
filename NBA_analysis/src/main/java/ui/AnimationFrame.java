@@ -5,12 +5,14 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
+import logic.BLController;
+
 public class AnimationFrame  extends JFrame{
 	 public JLayeredPane lp = null;
-	 
+	 public BLController bl =null;
 	@SuppressWarnings("restriction")
-	public AnimationFrame() {
-		
+	public AnimationFrame(BLController bl) {
+		this.bl = bl;
 		lp = this.getLayeredPane();
 		int height = Toolkit.getDefaultToolkit().getScreenSize().height;
 	    int width = Toolkit.getDefaultToolkit().getScreenSize().width;

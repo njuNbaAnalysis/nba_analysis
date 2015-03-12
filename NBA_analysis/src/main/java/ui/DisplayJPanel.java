@@ -6,12 +6,14 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
+import logic.BLController;
+
 public class DisplayJPanel extends JPanel implements Runnable {
 	
 	private static final long serialVersionUID = 1903514087174132006L;
 	Image image =null;
 	int progress=0;
-	
+	BLController bl =null;
 	public void paintComponent(Graphics g){ 
 		    
     		g.drawImage(image, 0, 0, this);  
@@ -19,14 +21,18 @@ public class DisplayJPanel extends JPanel implements Runnable {
 			g.fillRect(0, 628, progress, 20);
    	}
     	
-	public DisplayJPanel(Image image){
+	public DisplayJPanel(Image image, BLController bl){
     	this.image = image;
-    	
+    	this.bl = bl;
     	
     }
 
 	public void run() {
-		while(progress++<=901){
+		while(progress<=bl.getProgress()*100-1||bl.getProgress()<6){
+			//System.out.println(progress+" "+bl.getProgress()*100);
+			if(progress<=bl.getProgress()*100-1){
+				progress++;
+			}
 			repaint();
 			try {
 				Thread.sleep(3);
