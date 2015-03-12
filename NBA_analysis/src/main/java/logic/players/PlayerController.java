@@ -20,7 +20,8 @@ public class PlayerController {
             return playerController;
         }
         else{
-            return new PlayerController();
+        	playerController = new PlayerController();
+            return playerController;
         }
     }
     

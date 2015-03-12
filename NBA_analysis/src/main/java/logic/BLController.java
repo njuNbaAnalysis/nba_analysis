@@ -29,7 +29,8 @@ public class BLController implements BLService{
             return blController;
         }
         else{
-            return new BLController();
+        	blController = new BLController();
+            return blController;
         }
     }
     
@@ -59,7 +60,7 @@ public class BLController implements BLService{
         BLController v = BLController.getInstance();
         Thread thread1 = new Thread(){
             public void run(){
-                while(BLController.progress != 9){
+                while(BLController.progress != 6){
                     System.out.println(BLController.progress);
                     System.out.println("now::::::::      " + BLController.progress / 9.0 * 100 + "%");
                     try {

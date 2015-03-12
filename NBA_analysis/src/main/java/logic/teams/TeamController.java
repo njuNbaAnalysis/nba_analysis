@@ -21,7 +21,8 @@ public class TeamController {
             return teamController;
         }
         else{
-            return new TeamController();
+        	teamController =  new TeamController();
+            return teamController;
         }
     }
     

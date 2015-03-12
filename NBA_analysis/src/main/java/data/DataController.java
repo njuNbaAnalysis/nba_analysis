@@ -30,7 +30,8 @@ public class DataController implements DataService{
             return dataController;
         }
         else{
-            return new DataController();
+        	dataController = new DataController();
+            return dataController;
         }
     }
     

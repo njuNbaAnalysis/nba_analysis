@@ -20,7 +20,8 @@ public class MatchController {
 			return matchController;
 		}
 		else{
-			return new MatchController();
+			matchController = new MatchController();
+			return matchController;
 		}
 	}
 	
