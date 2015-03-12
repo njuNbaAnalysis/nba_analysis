@@ -1,18 +1,25 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.plaf.ComboBoxUI;
+import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.metal.MetalComboBoxButton;
 
 
 
@@ -44,8 +51,9 @@ public class SelectPanel extends JPanel {
 		submit = new JButton();
 		submit.setText("提交");
 		submit.setBounds(width*11/16, height*11/20,width*1/6, height*7/20);
-		submit.setForeground(null);
+		submit.setForeground(Color.white);
 		submit.setContentAreaFilled(false);
+		submit.setBorder(BorderFactory.createLineBorder(new Color(69,69,69),2));
 		submit.setFocusPainted(false);
 		submit.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,15));
 		submit.addActionListener(new ActionListener() {
@@ -105,7 +113,8 @@ public class SelectPanel extends JPanel {
 		depend.addItem("罚球");
 		depend.addItem("两双");
 		depend.setBounds(width*3/4, height/10, width/8, height*7/20);
-		depend.setUI(new BasicComboBoxUI());
+		depend.setUI(ColorArrowUI.createUI(depend));
+		//depend.setUI(new BasicComboBoxUI());
 		this.add(depend);
 	}
 
@@ -121,8 +130,27 @@ public class SelectPanel extends JPanel {
 			this.setBackground(new Color(69,69,69));
 			this.setForeground(Color.white);
 			this.setFont(new Font("微软雅黑",Font.CENTER_BASELINE,15));
+//			JComboBox combo = new JComboBox();
+//			combo.setUI(ColorArrowUI.createUI(combo));
+			//changeArrow();
 
 		}
+		
 	}
 	
+	
+}
+class ColorArrowUI extends BasicComboBoxUI {
+
+    public static ComboBoxUI createUI(JComponent c) {
+        return new ColorArrowUI();
+    }
+
+    @Override 
+    protected JButton createArrowButton() {
+        return new BasicArrowButton(
+            BasicArrowButton.SOUTH,
+            new Color(69,69,69), new Color(69,69,69), 
+            new Color(158, 158, 158), new Color(69,69,69));
+    }
 }

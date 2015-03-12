@@ -8,16 +8,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -25,8 +19,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 public class PlayerJTable extends JTable {
 	private ArrayList<File> portraitsList;
@@ -36,9 +28,7 @@ public class PlayerJTable extends JTable {
 
 	public PlayerJTable() {
 		super();
-		
 
-		
 		this.setShowGrid(false);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
@@ -51,8 +41,6 @@ public class PlayerJTable extends JTable {
 		// 设置表头的文字颜色
 		tableH.setForeground(new Color(255, 255, 255));
 		// this.refresh();
-		
-		
 
 	}
 
@@ -67,10 +55,10 @@ public class PlayerJTable extends JTable {
 
 		for (int i = 0; i < o.length; i++) {
 			// 添加数据到表格
-			s[0] = i+"";
-			s[1] = i+"";
-			s[2] = i+"";
-			s[3] = i+"";
+			s[0] = i + "";
+			s[1] = i + "";
+			s[2] = i + "";
+			s[3] = i + "";
 
 			tableModel.addRow(s);
 
@@ -143,6 +131,7 @@ public class PlayerJTable extends JTable {
 			else
 				setBackground(new Color(246, 246, 246));
 
+			// 设置图片
 			if (column == 1) {
 				BufferedImage bi;
 				try {
@@ -176,20 +165,18 @@ public class PlayerJTable extends JTable {
 		}
 
 	}
-	
-	public void setTableHeaderColor(Color c)
-    {
-		
+
+	public void setTableHeaderColor(Color c) {
+
 		TableColumn column;
 		for (int columnIndex = 0; columnIndex < this.getColumnCount(); columnIndex++) {
-			  column = this.getTableHeader().getColumnModel().getColumn(columnIndex);
-			  DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
-			  cellRenderer.setBackground(c);
-			  column.setHeaderRenderer(cellRenderer);
+			column = this.getTableHeader().getColumnModel()
+					.getColumn(columnIndex);
+			DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+			cellRenderer.setBackground(c);
+			column.setHeaderRenderer(cellRenderer);
 		}
-		
-       
-    }
-	
+
+	}
 
 }
