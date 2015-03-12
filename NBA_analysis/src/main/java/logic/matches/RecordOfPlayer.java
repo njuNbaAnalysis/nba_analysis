@@ -3,7 +3,7 @@ package logic.matches;
 //每一个球队的记录
 public class RecordOfPlayer{
     private String playerName;
-    private char position;
+    private String position;
     private int minutes;    //在场时间
     private int fieldGoals; //投篮命中数
     private int fieldAttempts;//投篮出手数
@@ -21,7 +21,7 @@ public class RecordOfPlayer{
     private int fauls;//犯规数
     private int points;//个人得分
     
-    public RecordOfPlayer(String playerName, char position, int minutes, int fieldGoals, int fieldAttempts,
+    public RecordOfPlayer(String playerName, String position, int minutes, int fieldGoals, int fieldAttempts,
             int threePoints, int threePointAttemps, int freeThrows, int freeThrowAttemps, int offensiveRebounds,
             int defensiveRebounds, int rebounds, int assists, int steals, int blocks, int turnOver, int fauls,
             int points) {
@@ -50,7 +50,7 @@ public class RecordOfPlayer{
         return playerName;
     }
 
-    public char getPosition() {
+    public String getPosition() {
         return position;
     }
 

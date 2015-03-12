@@ -9,19 +9,17 @@ public class Match {
     private String[] teams;//对阵队伍 2容量的teams数组
     private int[] points;//比分 2容量
     private ArrayList<int[]> pointsList;//每一节的比分，可能会有加时赛
-    private BufferedImage teamLogo;//球队标志
     
     private ArrayList<RecordOfPlayer> firstRecordList;  //主场记录
     private ArrayList<RecordOfPlayer> secondRecordList; //客场记录
     
-    public Match(Date date, String[] teams, int[] points, ArrayList<int[]> pointsList, BufferedImage teamLogo,
+    public Match(Date date, String[] teams, int[] points, ArrayList<int[]> pointsList, 
             ArrayList<RecordOfPlayer> firstRecordList, ArrayList<RecordOfPlayer> secondRecordList) {
         super();
         this.date = date;
         this.teams = teams;
         this.points = points;
         this.pointsList = pointsList;
-        this.teamLogo = teamLogo;
         this.firstRecordList = firstRecordList;
         this.secondRecordList = secondRecordList;
     }
@@ -36,9 +34,6 @@ public class Match {
     }
     public ArrayList<int[]> getPointsList() {
         return pointsList;
-    }
-    public BufferedImage getTeamLogo() {
-        return teamLogo;
     }
     public ArrayList<RecordOfPlayer> getFirstRecordList() {
         return firstRecordList;
