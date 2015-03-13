@@ -34,12 +34,7 @@ public class PlayerController {
     public void init(){
         playerList = dataService.getAllPlayers();
         
-        Thread computeThread = new Thread(){
-            public void run(){
-                computeData();
-            }
-        };
-        computeThread.start();
+        computeData();
     }
     
     //对Player数据进一步计算

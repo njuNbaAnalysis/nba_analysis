@@ -20,8 +20,8 @@ public class BLController implements BLService{
     
     private BLController(){
         matchController = MatchController.getInstance();
-        playerController = PlayerController.getInstance();
         teamController = TeamController.getInstance();
+        playerController = PlayerController.getInstance();
     }
     
     public static BLController getInstance(){
