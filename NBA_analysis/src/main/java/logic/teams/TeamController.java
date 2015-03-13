@@ -54,7 +54,7 @@ public class TeamController {
             parseRecordList(token,0);
             parseRecordList(token,1);
             
-            postProcessing(token);
+            crossAssign(token);
         }
         
         BLController.progress ++;
@@ -75,6 +75,10 @@ public class TeamController {
     private void parseRecordList(Match match,int num){
         String teamName = match.getTeams()[num];
         Team team = getTeam(teamName);
+        
+        team.setPoints(team.getPoints() + match.getPoints()[num]);
+        team.setNumOfMatches(team.getNumOfMatches() + 1);
+        
         //getRecordList&if win,plus one
         ArrayList<RecordOfPlayer> recordList = null;
         if(num == 0){
@@ -91,8 +95,6 @@ public class TeamController {
             }
         }
         
-        team.setNumOfMatches(team.getNumOfMatches() + 1);
-        
         for(RecordOfPlayer token:recordList){
             team.setFieldGoalAttemps(team.getFieldGoalAttemps() + token.getFieldAttempts());
             team.setFieldGoalHits(team.getFieldGoalHits() + token.getFieldGoals());
@@ -108,7 +110,7 @@ public class TeamController {
             team.setBlockShots(team.getBlockShots() + token.getBlocks());
             team.setTurnOver(team.getTurnOver() + token.getThreePoints());
             team.setFouls(team.getFouls() + token.getFauls());
-            team.setPoints(team.getPoints() + token.getPoints());
+            
             
             //向teamList中加入球员
             String name = token.getPlayerName();
@@ -119,32 +121,54 @@ public class TeamController {
         
     }
 
-    //涉及进攻防守回合的属性赋值
-    private void postProcessing(Match match){
+    //交叉属性赋值
+    private void crossAssign(Match match){
         Team team1 = getTeam(match.getTeams()[0]);
         Team team2 = getTeam(match.getTeams()[1]);
         
-        team1.setOffensiveRounds(team1.getFieldGoalAttemps() + 0.4 * team1.getFieldGoalAttemps() - 1.07 * 
+        //进攻防守回合累加赋值
+        double incrementOfOffensiveRounds1 = team1.getFieldGoalAttemps() + 0.4 * team1.getFieldGoalAttemps() - 1.07 * 
                 (1.0 * team1.getOffensiveRebounds() + team2.getDefensiveRebounds()) * (team1.getFieldGoalAttemps() 
                         + team1.getFieldGoalAttemps() - team1.getFieldGoalHits() - team1.getFieldGoalHits()) 
-                        + 1.07 * team1.getTurnOver());
-                        
-        team2.setOffensiveRounds(team2.getFieldGoalAttemps() + 0.4 * team2.getFieldGoalAttemps() - 1.07 * 
+                        + 1.07 * team1.getTurnOver();
+        double incrementOfOffensiveRounds2 = team2.getFieldGoalAttemps() + 0.4 * team2.getFieldGoalAttemps() - 1.07 * 
                 (1.0 * team2.getOffensiveRebounds() + team1.getDefensiveRebounds()) * (team2.getFieldGoalAttemps() 
                         + team2.getFieldGoalAttemps() - team2.getFieldGoalHits() - team2.getFieldGoalHits()) 
-                        + 1.07 * team2.getTurnOver());  
+                        + 1.07 * team2.getTurnOver();
         
+        team1.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds1);
+        team1.setDefensiveRounds(team1.getDefensiveRounds() + incrementOfOffensiveRounds2);
+        team2.setOffensiveRounds(team2.getOffensiveRounds() + incrementOfOffensiveRounds2);  
+        team2.setDefensiveRounds(team2.getDefensiveRounds() + incrementOfOffensiveRounds2);
+        
+        //对手各种属性累加赋值，
+        team1.setPointsRival(team1.getPointsRival() + match.getPoints()[1]);
+        team2.setPointsRival(team2.getPointsRival() + match.getPoints()[0]);
+        for(RecordOfPlayer token:match.getFirstRecordList()){
+            team2.setFieldGoalAttempsRival(team2.getFieldGoalAttempsRival() + token.getFieldAttempts());
+            team2.setThreePointerAttemptsRival(team2.getThreePointerAttemptsRival() + token.getFreeThrowAttemps());
+            team2.setOffenseReboundsRival(team2.getOffenseReboundsRival() + token.getOffensiveRebounds());
+            team2.setDefenseReboundsRival(team2.getDefenseReboundsRival() + token.getDefensiveRebounds());
+        }
+        for(RecordOfPlayer token:match.getSecondRecordList()){
+            team1.setFieldGoalAttempsRival(team1.getFieldGoalAttempsRival() + token.getFieldAttempts());
+            team1.setThreePointerAttemptsRival(team1.getThreePointerAttemptsRival() + token.getFreeThrowAttemps());
+            team1.setOffenseReboundsRival(team1.getOffenseReboundsRival() + token.getOffensiveRebounds());
+            team1.setDefenseReboundsRival(team1.getDefenseReboundsRival() + token.getDefensiveRebounds());
+        }
+        
+        //各种效率计算
         team1.setOffenseEfficiency(team1.getPoints() * 1.0 / team1.getOffensiveRounds() / 100);
         team2.setOffenseEfficiency(team2.getPoints() * 1.0 / team2.getOffensiveRounds() / 100);
         
-        team1.setDefenseEfficiency(1.0 * team2.getPoints() / team2.getOffensiveRounds() / 100);
-        team2.setDefenseEfficiency(1.0 * team1.getPoints() / team1.getOffensiveRounds() / 100);
+        team1.setDefenseEfficiency(1.0 * team2.getPoints() / team1.getDefensiveRounds() / 100);
+        team2.setDefenseEfficiency(1.0 * team1.getPoints() / team2.getDefensiveRounds() / 100);
         
         team1.setReboundsEfficiency(team1.getRebounds() * 1.0 / (team1.getRebounds() / team2.getRebounds()));
         team2.setReboundsEfficiency(team2.getRebounds() * 1.0 / (team2.getRebounds() / team1.getRebounds()));
         
-        team1.setStealsEfficiency(1.0 * team1.getSteals() / team2.getOffensiveRounds() / 100);
-        team2.setStealsEfficiency(1.0 * team2.getSteals() / team1.getOffensiveRounds() / 100);
+        team1.setStealsEfficiency(1.0 * team1.getSteals() / team1.getDefensiveRounds() / 100);
+        team2.setStealsEfficiency(1.0 * team2.getSteals() / team2.getDefensiveRounds() / 100);
         
         team1.setAssistsPercentage(1.0 * team1.getAssists() / team1.getOffensiveRounds() / 100);
         team2.setAssistsPercentage(1.0 * team2.getAssists() / team2.getOffensiveRounds() / 100);

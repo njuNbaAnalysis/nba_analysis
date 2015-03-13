@@ -50,7 +50,7 @@ public class Team {
 	//computeData 计算过程中用到，界面后期可能用到
 	private int pointsRival;                   //对手总得分
 	private int fieldGoalAttempsRival;         //对手投篮出手次数
-	private int threePointerAttemptsRival;          //对手三分出手次数
+	private int threePointerAttemptsRival;     //对手三分出手次数
 	private int offenseReboundsRival;          //对手总进攻篮板
 	private int defenseReboundsRival;          //对手总防守篮板 
 	
