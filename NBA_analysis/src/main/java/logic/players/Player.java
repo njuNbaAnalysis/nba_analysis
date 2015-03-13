@@ -256,9 +256,9 @@ public class Player {
 		offenseReboundsPercentage = offenseRebounds*(sumOfTime/5)/(minutes)/(sumOfoffenseRebounds+sumOfopponentoffenserebounds);
 		defenseReboundsPercentage = defenseRebounds*(sumOfTime/5)/(minutes)/(sumOfdefenseRebounds+sumOfopponentdefenseRebounds);
 		assistsPercentage = assists/(minutes/(sumOfTime/5)*(sumOffieldGoalHits+sumOffreeThrowHits)-(fieldGoalHits+freeThrowHits));//球员助攻数÷(球员上场时间÷(球队所有球员上场时间÷5)×球队总进球数-球员进球数) 
-		stealsPercentage = 0;//球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
-		blockShotsPercentage = 0;//球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数 
-		turnOverPercentage = 0;//：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
+		stealsPercentage = steals*(sumOfTime/5)/minutes/(team.getDefensiveRounds());//球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
+		blockShotsPercentage = blockShots*(sumOfTime/5)/minutes/(team.getFieldGoalAttempsRival()-team.getThreePointerAttemptsRival());//球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数 
+		turnOverPercentage = turnOver/((fieldGoalAttempts-threePointerAttempts)+0.44*fieldGoalAttempts+turnOver);//：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
 		usage = (fieldGoalAttempts+0.44*freeThrowAttempts)*(sumOfTime/5)/(minutes)/(sumOffieldGoalAttempts+0.44*sumOffreeThrowAttempts+sumOfturnOver);
 		//		： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
 //				上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
