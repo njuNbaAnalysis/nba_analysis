@@ -168,7 +168,7 @@ public class MenuPanel extends JPanel {
 	public void initButton() {
 
 		statistics = new JButton();
-		statistics.setSize(width, 30);
+		statistics.setSize( width, width*3/20);
 		statistics.setLocation(0, heightOfHead + 50);
 		statistics.setContentAreaFilled(false);
 		statistics.setBorderPainted(false);
@@ -179,7 +179,7 @@ public class MenuPanel extends JPanel {
 		this.add(statistics);
 
 		playerStat = new JButton();
-		playerStat.setSize(width, 25);
+		playerStat.setSize(width, width/8);
 		playerStat.setLocation(0, heightOfHead + 85);
 		playerStat.setContentAreaFilled(false);
 		playerStat.setBorderPainted(false);
@@ -190,7 +190,7 @@ public class MenuPanel extends JPanel {
 		this.add(playerStat);
 
 		teamStat = new JButton();
-		teamStat.setSize(width, 25);
+		teamStat.setSize(width, width/8);
 		teamStat.setLocation(0, heightOfHead + 110);
 		teamStat.setContentAreaFilled(false);
 		teamStat.setBorderPainted(false);
@@ -201,7 +201,7 @@ public class MenuPanel extends JPanel {
 		this.add(teamStat);
 
 		player = new JButton();
-		player.setSize(width, 30);
+		player.setSize(width, width*3/20);
 		player.setLocation(0, heightOfHead + 160);
 		player.setContentAreaFilled(false);
 		player.setBorderPainted(false);
@@ -212,7 +212,7 @@ public class MenuPanel extends JPanel {
 		this.add(player);
 
 		team = new JButton();
-		team.setSize(width, 30);
+		team.setSize(width, width*3/20);
 		team.setLocation(0, heightOfHead + 200);
 		team.setContentAreaFilled(false);
 		team.setBorderPainted(false);
@@ -223,7 +223,7 @@ public class MenuPanel extends JPanel {
 		this.add(team);
 
 		exit = new JButton();
-		exit.setSize(width, 25);
+		exit.setSize(width, width*3/20);
 		exit.setLocation(0,  height-80);
 		exit.setContentAreaFilled(false);
 		exit.setBorderPainted(false);
