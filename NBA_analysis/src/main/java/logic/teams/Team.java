@@ -39,7 +39,7 @@ public class Team {
 
 	
 	//后期
-    private int rebounds;                       //篮板数
+    //private int rebounds;                       //篮板数
 	private double threePointersPercentage;     //三分命中率
 	private double freeThrowsPercentage;        //罚球命中率
 	private double winningPercentage;       	//胜率
@@ -57,7 +57,7 @@ public class Team {
 	private int numOfVictory;
 	private int fieldGoalHits;
 	private int pointsRival;                   //对手总得分
-	private int reboundsRival;                 //对手总篮板
+	//private int reboundsRival;                 //对手总篮板
 	private int offenseReboundsRival;          //对手总进攻篮板
 	private int defenseReboundsRival;          //对手总防守篮板 
 	
@@ -169,7 +169,7 @@ public class Team {
 
 
     public int getRebounds() {
-        return rebounds;
+        return offensiveRebounds + defensiveRebounds;
     }
 
 
@@ -293,11 +293,6 @@ public class Team {
     }
 
 
-    public void setRebounds(int rebounds) {
-        this.rebounds = rebounds;
-    }
-
-
     public void setOffensiveRebounds(int offensiveRebounds) {
         this.offensiveRebounds = offensiveRebounds;
     }
@@ -389,7 +384,23 @@ public class Team {
     }
 
     public int getReboundsRival() {
-        return reboundsRival;
+        return offenseReboundsRival + this.defenseReboundsRival;
+    }
+
+    public int getOffenseReboundsRival() {
+        return offenseReboundsRival;
+    }
+
+    public void setOffenseReboundsRival(int offenseReboundsRival) {
+        this.offenseReboundsRival = offenseReboundsRival;
+    }
+
+    public int getDefenseReboundsRival() {
+        return defenseReboundsRival;
+    }
+
+    public void setDefenseReboundsRival(int defenseReboundsRival) {
+        this.defenseReboundsRival = defenseReboundsRival;
     }
 
 

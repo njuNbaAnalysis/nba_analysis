@@ -60,7 +60,7 @@ public class TeamController {
         BLController.progress ++;
     }
     
-    //根据名字查找，如果没有找到则返回null
+    //根据名字缩写查找，如果没有找到则返回null
     public Team getTeam(String name){
         for(Team token:teamList){
             if(token.getAbbreviation().equals(name)){
@@ -71,7 +71,7 @@ public class TeamController {
     }
 
     //对某一个recordList进行处理
-    //并对team做除防守回合相关以外的后处理
+    //并对team做除进攻防守回合相关以外的后处理
     private void parseRecordList(Match match,int num){
         String teamName = match.getTeams()[num];
         Team team = getTeam(teamName);
@@ -113,14 +113,11 @@ public class TeamController {
             //向teamList中加入球员
             String name = token.getPlayerName();
             if(!team.getPlayerList().contains(name)){
-                
-                
                 team.getPlayerList().add(name);
             }
         }
         
         //对team做除，进攻防守回合相关以外的后处理
-        team.setRebounds(team.getOffensiveRebounds() + team.getDefensiveRebounds());
         team.setThreePointersPercentage(1.0 * team.getThreePointerHits() / team.getThreePointerAttempts());
         team.setFreeThrowsPercentage(1.0 * team.getFreeThrowHits() / team.getFreeThrows());
         team.setWinningPercentage(1.0 * team.getNumOfVictory() / team.getNumOfMatches());
