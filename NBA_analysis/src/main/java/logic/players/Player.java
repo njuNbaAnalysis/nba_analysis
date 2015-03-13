@@ -55,6 +55,16 @@ public class Player {
 	private double efficiency;//效率值
 	private double gmsc;//gmsc效率值
 	private double shootingEfficiency;//投篮效率
+	
+	//tempData 不用做界面显示，在计算中用到，可能用作以后的界面显示
+	private int fieldGoalHits;         //投篮命中
+	private int fieldGoalAttempts;     //投篮出手
+	private int threePointerHits;      //三分命中
+	private int threePointerAttempts;  //三分出手
+	private int freeThrowHits;         //罚球命中
+	private int freeThrowAttempts;     //罚球出手
+	
+	
 
 
     public Player(String name, int number, String position, int[] height, int weight, Date birthday, int age,

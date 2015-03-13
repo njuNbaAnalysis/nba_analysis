@@ -1,54 +1,60 @@
 package logic.teams;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import util.SvgImage;
 
 public class Team {
     //raw data
-	private String name;                        //球队名
+	private String name;                   //球队名
 	private String abbreviation;           //缩写
 	private String location;               //地区
-	private char conference;            //东部赛区or西部赛区 E,W
+	private char conference;               //东部赛区or西部赛区 E,W
 	private String division;
 	private String homeCourt;              //主场
-	private int setUpTime;           //建立时间
-	private SvgImage logo;					//队标
+	private int setUpTime;                 //建立时间
+	private SvgImage logo;				   //队标
 	
-
     //not raw data
 	private ArrayList<String> playerList;       //球员列表
+	
+	//累加
 	private int numOfMatches;                   //比赛场数
-	private int fieldGoalAttemps;                 //投篮出手次数
+	private int fieldGoalAttemps;               //投篮出手次数
 	
-	private int threePointerAttempts;                    //三分出手次数
+	private int threePointerAttempts;           //三分出手次数
 	private int threePointerHits;               //三分命中次数
+	private int freeThrows;                     //罚球出手次数
+	private int freeThrowHits;                  //罚球命中次数
+	private int offensiveRebounds;              //进攻篮板数
+	private int defensiveRebounds;              //防守篮板数
+	
+    private int assists;                        //助攻数
+    private int Steals;                         //抢断数
+    private int blockShots;                     //总盖帽数
+    private int turnOver;                       //总失误数
+    private int fouls;                          //总犯规数
+    private int points;                         //总比赛得分数
+
+	
+	//后期
+    private int rebounds;                       //篮板数
 	private double threePointersPercentage;     //三分命中率
-	
-	private int freeThrows;               //罚球出手次数
-	private int freeThrowHits;           //罚球命中次数
 	private double freeThrowsPercentage;        //罚球命中率
-	
-	private int rebounds;                       //篮板数
-	private int offensiveRebounds;             //进攻篮板数
-	private int defensiveRebounds;             //防守篮板数
-	
-	private int assists;                        //助攻数
-	private int Steals;                         //抢断数
-	private int blockShots;						//总盖帽数
-	private int turnOver;						//总失误数
-	private int fouls;							//总犯规数
-	private int points;							//总比赛得分数
-	
 	private double winningPercentage;       	//胜率
-	private int offensiveRounds;                   //进攻回合
-	private double offenseEfficiency;        //进攻效率
-	private double defenseEfficiency; 		//防守效率
-	private double reboundsEfficiency;             //篮板效率
+    private int offensiveRounds;                //进攻回合
+	private double offenseEfficiency;           //进攻效率
+	private double defenseEfficiency; 		    //防守效率
+	private double reboundsEfficiency;          //篮板效率
 	private double stealsEfficiency;			//抢断效率
-	private double assistsPercentage;             		//助攻率 
+	private double assistsPercentage;           //助攻率 
+
+	
+	//computeData 计算过程中用到，界面后期可能用到
+	private int numOfVictory;
+	
+	
 
 	
     public Team(String name, String abbreviation, String location, char conference, String division, String homeCourt,
@@ -99,8 +105,8 @@ public class Team {
     }
 
 
-    public SvgImage getLogo() {
-        return logo;
+    public Image getLogo(int width,int height) {
+        return logo.getImage(width, height);
     }
     
     public void setLogo(SvgImage logo) {
@@ -357,6 +363,14 @@ public class Team {
 
     public void setAssistsPercentage(double assistsPercentage) {
         this.assistsPercentage = assistsPercentage;
+    }
+
+    public int getNumOfVictory() {
+        return numOfVictory;
+    }
+
+    public void setNumOfVictory(int numOfVictory) {
+        this.numOfVictory = numOfVictory;
     }
 
 

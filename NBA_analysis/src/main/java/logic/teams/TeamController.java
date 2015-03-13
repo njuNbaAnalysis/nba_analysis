@@ -3,6 +3,8 @@ package logic.teams;
 import java.util.ArrayList;
 
 import logic.BLController;
+import logic.matches.Match;
+import logic.matches.RecordOfPlayer;
 import data.DataController;
 import data.DataService;
 
@@ -40,6 +42,17 @@ public class TeamController {
     
     //对team数据进一步计算
     private void computeData(){
+        ArrayList<Match> matchList = new ArrayList<Match>();
+        BLController controller = BLController.getInstance();
+        matchList = controller.getAllMatches();
+        
+        for(Match token:matchList){
+            ArrayList<RecordOfPlayer> recordList1 = token.getFirstRecordList();
+            ArrayList<RecordOfPlayer> recordList2 = token.getSecondRecordList();
+            
+            
+        }
+        
         BLController.progress ++;
     }
 }
