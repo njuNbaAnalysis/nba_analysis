@@ -58,7 +58,7 @@ public class TeamController {
     }
     
     //根据名字查找，如果没有找到则返回null
-    private Team getTeam(String name){
+    public Team getTeam(String name){
         for(Team token:teamList){
             if(token.getName().equals(name)){
                 return token;

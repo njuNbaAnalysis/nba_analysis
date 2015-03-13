@@ -64,7 +64,7 @@ public class BLController implements BLService{
         
         Thread thread1 = new Thread(){
             public void run(){
-                while(BLController.progress != 6){
+                while(BLController.progress != 9){
                     System.out.println(BLController.progress);
                     System.out.println("now::::::::      " + BLController.progress / 9.0 * 100 + "%");
                     try {
@@ -78,13 +78,14 @@ public class BLController implements BLService{
         };
         thread1.start();
         
-        
         try {
             thread1.join();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
+        
         long now = System.currentTimeMillis();
         System.out.println(now - current);
     }
