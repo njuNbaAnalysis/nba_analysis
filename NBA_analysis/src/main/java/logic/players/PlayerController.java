@@ -58,7 +58,7 @@ public class PlayerController {
 						.getTeams()[1]);
 			}
 		}
-
+		initPlayers();
 		BLController.progress++;
 	}
 
@@ -97,5 +97,18 @@ public class PlayerController {
 				break;
 			}
 		}
+	}
+	private void initPlayers(){
+		for(int i=0;i<playerList.size();i++){
+			playerList.get(i).init();
+		}
+	}
+	
+	public Player getPlayer(String name){
+		for(int i=0;i<playerList.size();i++){
+			if(playerList.get(i).getName().equals(name))
+				return playerList.get(i);
+		}
+		return null;  //没找到
 	}
 }

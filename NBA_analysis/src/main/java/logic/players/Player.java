@@ -2,6 +2,7 @@ package logic.players;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Date;
 
 import logic.teams.Team;
@@ -224,7 +225,27 @@ public class Player {
 		// 中数)+0.7×前场篮板数+0.3×后场篮板数+抢断数+0.7×助攻数+0.7×盖帽数
 		// -0.4×犯规数-失误数
 		TeamController teamcontrol = TeamController.getInstance();
+		PlayerController playercontrol = PlayerController.getInstance();
 		Team team = teamcontrol.getTeam(name);
+		location = team.getLocation();
+		ArrayList<String> playerList = team.getPlayerList();
+		int sumOfTime = 0;
+		int sumOffieldGoalAttempts = 0;
+		int sumOfrebounds = 0;
+		int sumOfturnOver = 0;
+		int sumOffreeThrowAttempts = 0;
+		int sumOffreeThrowHits = 0;
+		int sumOffieldGoalHits = 0;
+		int sumOfopponentrebounds = 0;
+		for(int i=0;i<playerList.size();i++){
+			sumOfTime += playercontrol.getPlayer(playerList.get(i)).getMinutes();
+			sumOffieldGoalAttempts+=playercontrol.getPlayer(playerList.get(i)).getFieldGoalAttempts();
+			sumOfrebounds+=playercontrol.getPlayer(playerList.get(i)).getRebounds();
+			sumOfturnOver+=playercontrol.getPlayer(playerList.get(i)).getTurnOver();
+			sumOffreeThrowAttempts+=playercontrol.getPlayer(playerList.get(i)).getFreeThrowAttempts();
+			sumOffreeThrowHits+=playercontrol.getPlayer(playerList.get(i)).getFreeThrowHits();
+			sumOffieldGoalHits +=playercontrol.getPlayer(playerList.get(i)).getFieldGoalHits();
+		}
 		reboundsPercentage = 0;// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
 
 	}
