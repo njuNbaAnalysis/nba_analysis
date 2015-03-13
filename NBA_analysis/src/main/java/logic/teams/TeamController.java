@@ -71,7 +71,7 @@ public class TeamController {
     }
 
     //对某一个recordList进行处理
-    //并对team做除进攻防守回合相关以外的后处理
+    //对不包含对手team的属性进行赋值
     private void parseRecordList(Match match,int num){
         String teamName = match.getTeams()[num];
         Team team = getTeam(teamName);
@@ -117,13 +117,9 @@ public class TeamController {
             }
         }
         
-        //对team做除，进攻防守回合相关以外的后处理
-        team.setThreePointersPercentage(1.0 * team.getThreePointerHits() / team.getThreePointerAttempts());
-        team.setFreeThrowsPercentage(1.0 * team.getFreeThrowHits() / team.getFreeThrows());
-        team.setWinningPercentage(1.0 * team.getNumOfVictory() / team.getNumOfMatches());
     }
 
-    //涉及进攻防守回合的后期处理
+    //涉及进攻防守回合的属性赋值
     private void postProcessing(Match match){
         Team team1 = getTeam(match.getTeams()[0]);
         Team team2 = getTeam(match.getTeams()[1]);

@@ -21,8 +21,9 @@ public class Team {
 	
 	//累加
 	private int numOfMatches;                   //比赛场数
+	private int numOfVictory;                  //胜利场数
 	private int fieldGoalAttemps;               //投篮出手次数
-	
+	private int fieldGoalHits;                 //投篮命中次数
 	private int threePointerAttempts;           //三分出手次数
 	private int threePointerHits;               //三分命中次数
 	private int freeThrows;                     //罚球出手次数
@@ -37,32 +38,28 @@ public class Team {
     private int fouls;                          //总犯规数
     private int points;                         //总比赛得分数
 
-	
-	//后期
-    //private int rebounds;                       //篮板数
-	private double threePointersPercentage;     //三分命中率
-	private double freeThrowsPercentage;        //罚球命中率
-	private double winningPercentage;       	//胜率
-	
 	//后期-交叉处理
     private double offensiveRounds;             //进攻回合
+    private double defensiveRounds;             //防守回合
 	private double offenseEfficiency;           //进攻效率
 	private double defenseEfficiency; 		    //防守效率
 	private double reboundsEfficiency;          //篮板效率
 	private double stealsEfficiency;			//抢断效率
 	private double assistsPercentage;           //助攻率 
-
 	
 	//computeData 计算过程中用到，界面后期可能用到
-	private int numOfVictory;
-	private int fieldGoalHits;
 	private int pointsRival;                   //对手总得分
-	//private int reboundsRival;                 //对手总篮板
+	private int fieldGoalAttempsRival;         //对手投篮出手次数
+	private int threePointerAttemptsRival;          //对手三分出手次数
 	private int offenseReboundsRival;          //对手总进攻篮板
 	private int defenseReboundsRival;          //对手总防守篮板 
 	
-	
-
+    //后期
+    //private int rebounds;                       //篮板数
+    //private double threePointersPercentage;     //三分命中率
+    //private double freeThrowsPercentage;        //罚球命中率
+    //private double winningPercentage;           //胜率
+	//private int reboundsRival;               //对手总篮板
 	
     public Team(String name, String abbreviation, String location, char conference, String division, String homeCourt,
             int setUpTime, SvgImage logo) {
@@ -149,7 +146,7 @@ public class Team {
 
 
     public double getThreePointersPercentage() {
-        return threePointersPercentage;
+        return 1.0 * threePointerHits / threePointerAttempts;
     }
 
 
@@ -164,7 +161,7 @@ public class Team {
 
 
     public double getFreeThrowsPercentage() {
-        return freeThrowsPercentage;
+        return 1.0 * freeThrowHits / freeThrows;
     }
 
 
@@ -214,7 +211,7 @@ public class Team {
 
 
     public double getWinningPercentage() {
-        return winningPercentage;
+        return numOfVictory / numOfMatches;
     }
 
 
@@ -273,11 +270,6 @@ public class Team {
     }
 
 
-    public void setThreePointersPercentage(double threePointersPercentage) {
-        this.threePointersPercentage = threePointersPercentage;
-    }
-
-
     public void setFreeThrows(int freeThrows) {
         this.freeThrows = freeThrows;
     }
@@ -285,11 +277,6 @@ public class Team {
 
     public void setFreeThrowHits(int freeThrowHits) {
         this.freeThrowHits = freeThrowHits;
-    }
-
-
-    public void setFreeThrowsPercentage(double freeThrowsPercentage) {
-        this.freeThrowsPercentage = freeThrowsPercentage;
     }
 
 
@@ -330,11 +317,6 @@ public class Team {
 
     public void setPoints(int points) {
         this.points = points;
-    }
-
-
-    public void setWinningPercentage(double winningPercentage) {
-        this.winningPercentage = winningPercentage;
     }
 
 
@@ -401,6 +383,38 @@ public class Team {
 
     public void setDefenseReboundsRival(int defenseReboundsRival) {
         this.defenseReboundsRival = defenseReboundsRival;
+    }
+
+    public double getDefensiveRounds() {
+        return defensiveRounds;
+    }
+
+    public void setDefensiveRounds(double defensiveRounds) {
+        this.defensiveRounds = defensiveRounds;
+    }
+
+    public int getPointsRival() {
+        return pointsRival;
+    }
+
+    public void setPointsRival(int pointsRival) {
+        this.pointsRival = pointsRival;
+    }
+
+    public int getFieldGoalAttempsRival() {
+        return fieldGoalAttempsRival;
+    }
+
+    public void setFieldGoalAttempsRival(int fieldGoalAttempsRival) {
+        this.fieldGoalAttempsRival = fieldGoalAttempsRival;
+    }
+
+    public int getThreePointerAttemptsRival() {
+        return threePointerAttemptsRival;
+    }
+
+    public void setThreePointerAttemptsRival(int threePointerAttemptsRival) {
+        this.threePointerAttemptsRival = threePointerAttemptsRival;
     }
 
 
