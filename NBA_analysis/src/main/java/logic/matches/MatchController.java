@@ -2,6 +2,7 @@ package logic.matches;
 
 import java.util.ArrayList;
 
+import logic.BLController;
 import data.DataController;
 import data.DataService;
 import data.matches.MatchMistake;
@@ -29,6 +30,11 @@ public class MatchController {
 	public void init() {
 		matchList = dataService.getAllMatches();
 		computeData();
+		BLController.progress ++;
+	}
+	
+	public ArrayList<Match> getAllMatches(){
+		return matchList;
 	}
 
 	private void computeData() { // 脏数据处理
