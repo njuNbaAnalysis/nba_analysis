@@ -31,7 +31,7 @@ public class Team {
 	private int defensiveRebounds;              //防守篮板数
 	
     private int assists;                        //助攻数
-    private int Steals;                         //抢断数
+    private int steals;                         //抢断数
     private int blockShots;                     //总盖帽数
     private int turnOver;                       //总失误数
     private int fouls;                          //总犯规数
@@ -43,7 +43,7 @@ public class Team {
 	private double threePointersPercentage;     //三分命中率
 	private double freeThrowsPercentage;        //罚球命中率
 	private double winningPercentage;       	//胜率
-    private int offensiveRounds;                //进攻回合
+    private double offensiveRounds;                //进攻回合
 	private double offenseEfficiency;           //进攻效率
 	private double defenseEfficiency; 		    //防守效率
 	private double reboundsEfficiency;          //篮板效率
@@ -53,6 +53,7 @@ public class Team {
 	
 	//computeData 计算过程中用到，界面后期可能用到
 	private int numOfVictory;
+	private int fieldGoalHits;
 	
 	
 
@@ -182,7 +183,7 @@ public class Team {
 
 
     public int getSteals() {
-        return Steals;
+        return steals;
     }
 
 
@@ -211,7 +212,7 @@ public class Team {
     }
 
 
-    public int getOffensiveRounds() {
+    public double getOffensiveRounds() {
         return offensiveRounds;
     }
 
@@ -307,7 +308,7 @@ public class Team {
 
 
     public void setSteals(int steals) {
-        Steals = steals;
+        steals = steals;
     }
 
 
@@ -336,7 +337,7 @@ public class Team {
     }
 
 
-    public void setOffensiveRounds(int offensiveRounds) {
+    public void setOffensiveRounds(double offensiveRounds) {
         this.offensiveRounds = offensiveRounds;
     }
 
@@ -371,6 +372,14 @@ public class Team {
 
     public void setNumOfVictory(int numOfVictory) {
         this.numOfVictory = numOfVictory;
+    }
+
+    public int getFieldGoalHits() {
+        return fieldGoalHits;
+    }
+
+    public void setFieldGoalHits(int fieldGoalHits) {
+        this.fieldGoalHits = fieldGoalHits;
     }
 
 
