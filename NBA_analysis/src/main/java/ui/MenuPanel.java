@@ -85,59 +85,60 @@ public class MenuPanel extends JPanel {
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
-			bufferLogo = this.resize(bufferLogo, width, width*29/50);
-			//System.out.println(width+" "+width*29/50);
+			System.out.println(width+" "+bufferLogo.getWidth());
+			bufferLogo = this.resize(bufferLogo, width*25/24, (width*25*29)/(50*24));
+			System.out.println(width+" "+bufferLogo.getWidth());
 			bufferPlayer = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_l.png"));
-			bufferPlayer = this.resize(bufferPlayer, width, width*3/20);
+			bufferPlayer = this.resize_B(bufferPlayer);
 			bufferPlayerD = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_d.png"));
-			bufferPlayerD = this.resize(bufferPlayerD, width, width*3/20);
+			bufferPlayerD = this.resize_B(bufferPlayerD);
 			bufferTeam = ImageIO.read(new File("image" + File.separator
 					+ "qiudui_l.png"));
-			bufferTeam = this.resize(bufferTeam, width, width*3/20);
+			bufferTeam = this.resize_B(bufferTeam);
 			bufferTeamD = ImageIO.read(new File("image" + File.separator
 					+ "qiudui_d.png"));
-			bufferTeamD = this.resize(bufferTeamD, width, width*3/20);
+			bufferTeamD = this.resize_B(bufferTeamD);
 			bufferplayerStat = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuantongji_l.png"));
-			bufferplayerStat = this.resize(bufferplayerStat, width, width/8);
+			bufferplayerStat = this.resize_S(bufferplayerStat);
 			bufferplayerStatD = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuantongji_d.png"));
-			bufferplayerStatD = this.resize(bufferplayerStatD, width, width/8);
+			bufferplayerStatD = this.resize_S(bufferplayerStatD);
 			bufferTeamStat = ImageIO.read(new File("image" + File.separator
 					+ "qiuduitongji_l.png"));
-			bufferTeamStat = this.resize(bufferTeamStat, width, width/8);
+			bufferTeamStat = this.resize_S(bufferTeamStat);
 			bufferTeamStatD = ImageIO.read(new File("image" + File.separator
 					+ "qiuduitongji_d.png"));
-			bufferTeamStatD = this.resize(bufferTeamStatD, width, width/8);
+			bufferTeamStatD = this.resize_S(bufferTeamStatD);
 			bufferStat = ImageIO.read(new File("image" + File.separator
 					+ "tongji_l.png"));
-			bufferStat = this.resize(bufferStat, width, width*3/20);
+			bufferStat = this.resize_B(bufferStat);
 			bufferStatD = ImageIO.read(new File("image" + File.separator
 					+ "tongji_d.png"));
-			bufferStatD = this.resize(bufferStatD, width, width*3/20);
+			bufferStatD = this.resize_B(bufferStatD);
 			bufferPlayerB = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_b.png"));
-			bufferPlayerB = this.resize(bufferPlayerB, width, width*3/20);
+			bufferPlayerB = this.resize_B(bufferPlayerB);
 			bufferTeamB = ImageIO.read(new File("image" + File.separator
 					+ "qiudui_b.png"));
-			bufferTeamB = this.resize(bufferTeamB, width, width*3/20);
+			bufferTeamB = this.resize_B(bufferTeamB);
 			bufferplayerStatB = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuantongji_b.png"));
-			bufferplayerStatB = this.resize(bufferplayerStatB, width, width/8);
+			bufferplayerStatB = this.resize_S(bufferplayerStatB);
 			bufferTeamStatB = ImageIO.read(new File("image" + File.separator
 					+ "qiuduitongji_b.png"));
-			bufferTeamStatB = this.resize(bufferTeamStatB, width, width/8);
+			bufferTeamStatB = this.resize_S(bufferTeamStatB);
 			bufferStatB = ImageIO.read(new File("image" + File.separator
 					+ "tongji_b.png"));
-			bufferStatB = this.resize(bufferStatB, width, width*3/20);
+			bufferStatB = this.resize_B(bufferStatB);
 			bufferExit = ImageIO.read(new File("image" + File.separator
 					+ "exit_l.png"));
-			bufferExit = this.resize(bufferExit, width, width*3/20);
+			bufferExit = this.resize_B(bufferExit);
 			bufferExitR = ImageIO.read(new File("image" + File.separator
 					+ "exit_r.png"));
-			bufferExitR = this.resize(bufferExitR, width, width*3/20);
+			bufferExitR = this.resize_B(bufferExitR);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -168,7 +169,7 @@ public class MenuPanel extends JPanel {
 	public void initButton() {
 
 		statistics = new JButton();
-		statistics.setSize( width, width*3/20);
+		statistics.setSize( width*25/24, (width*25*3)/(24*20));
 		statistics.setLocation(0, heightOfHead + 50);
 		statistics.setContentAreaFilled(false);
 		statistics.setBorderPainted(false);
@@ -179,7 +180,7 @@ public class MenuPanel extends JPanel {
 		this.add(statistics);
 
 		playerStat = new JButton();
-		playerStat.setSize(width, width/8);
+		playerStat.setSize( width*25/24, (width*25)/(24*8));
 		playerStat.setLocation(0, heightOfHead + 85);
 		playerStat.setContentAreaFilled(false);
 		playerStat.setBorderPainted(false);
@@ -190,7 +191,7 @@ public class MenuPanel extends JPanel {
 		this.add(playerStat);
 
 		teamStat = new JButton();
-		teamStat.setSize(width, width/8);
+		teamStat.setSize(width*25/24, (width*25)/(24*8));
 		teamStat.setLocation(0, heightOfHead + 110);
 		teamStat.setContentAreaFilled(false);
 		teamStat.setBorderPainted(false);
@@ -201,7 +202,7 @@ public class MenuPanel extends JPanel {
 		this.add(teamStat);
 
 		player = new JButton();
-		player.setSize(width, width*3/20);
+		player.setSize( width*25/24, (width*25*3)/(24*20));
 		player.setLocation(0, heightOfHead + 160);
 		player.setContentAreaFilled(false);
 		player.setBorderPainted(false);
@@ -212,7 +213,7 @@ public class MenuPanel extends JPanel {
 		this.add(player);
 
 		team = new JButton();
-		team.setSize(width, width*3/20);
+		team.setSize( width*25/24, (width*25*3)/(24*20));
 		team.setLocation(0, heightOfHead + 200);
 		team.setContentAreaFilled(false);
 		team.setBorderPainted(false);
@@ -223,7 +224,7 @@ public class MenuPanel extends JPanel {
 		this.add(team);
 
 		exit = new JButton();
-		exit.setSize(width, width*3/20);
+		exit.setSize( width*25/24, (width*25*3)/(24*20));
 		exit.setLocation(0,  height-80);
 		exit.setContentAreaFilled(false);
 		exit.setBorderPainted(false);
@@ -302,6 +303,18 @@ public class MenuPanel extends JPanel {
 			break;
 		}
 
+	}
+	
+	public BufferedImage resize_B(BufferedImage image){
+		double raw_width =(double)width*25/24 ;
+		return resize(image,(int)raw_width,(int)(raw_width*3/20));
+		
+	}
+	
+	public BufferedImage resize_S(BufferedImage image){
+		double raw_width =(double)width*25/24 ;
+		return resize(image,(int)raw_width,(int)(raw_width/8));
+		
 	}
 	
 	public  BufferedImage resize(BufferedImage image, int width, int height) {
