@@ -47,12 +47,36 @@ public class TeamController {
         matchList = controller.getAllMatches();
         
         for(Match token:matchList){
-            ArrayList<RecordOfPlayer> recordList1 = token.getFirstRecordList();
-            ArrayList<RecordOfPlayer> recordList2 = token.getSecondRecordList();
             
-            
+            parseRecordList(matchList,token,0);
+            parseRecordList(matchList,token,1);
         }
         
         BLController.progress ++;
+    }
+    
+    //根据名字查找，如果没有找到则返回null
+    private Team getTeam(String name){
+        for(Team token:teamList){
+            if(token.getName().equals(name)){
+                return token;
+            }
+        }
+        return null;
+    }
+
+    //对某一个recordList进行处理
+    private void parseRecordList(ArrayList<Match> matchList,Match match,int num){
+        String teamName = match.getTeams()[num];
+        Team team = getTeam(teamName);
+        ArrayList<RecordOfPlayer> recordList = null;
+        if(num == 0){
+            recordList = match.getFirstRecordList();
+        }
+        else{
+            recordList = match.getSecondRecordList();   
+        }
+        
+        
     }
 }
