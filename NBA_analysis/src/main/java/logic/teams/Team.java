@@ -17,7 +17,7 @@ public class Team {
 	private SvgImage logo;				   //队标
 	
     //not raw data
-	private ArrayList<String> playerList;       //球员列表
+	private ArrayList<String> playerList = new ArrayList<String>();       //球员列表
 	
 	//累加
 	private int numOfMatches;                   //比赛场数
@@ -43,7 +43,9 @@ public class Team {
 	private double threePointersPercentage;     //三分命中率
 	private double freeThrowsPercentage;        //罚球命中率
 	private double winningPercentage;       	//胜率
-    private double offensiveRounds;                //进攻回合
+	
+	//后期-交叉处理
+    private double offensiveRounds;             //进攻回合
 	private double offenseEfficiency;           //进攻效率
 	private double defenseEfficiency; 		    //防守效率
 	private double reboundsEfficiency;          //篮板效率
@@ -54,6 +56,10 @@ public class Team {
 	//computeData 计算过程中用到，界面后期可能用到
 	private int numOfVictory;
 	private int fieldGoalHits;
+	private int pointsRival;                   //对手总得分
+	private int reboundsRival;                 //对手总篮板
+	private int offenseReboundsRival;          //对手总进攻篮板
+	private int defenseReboundsRival;          //对手总防守篮板 
 	
 	
 
@@ -380,6 +386,10 @@ public class Team {
 
     public void setFieldGoalHits(int fieldGoalHits) {
         this.fieldGoalHits = fieldGoalHits;
+    }
+
+    public int getReboundsRival() {
+        return reboundsRival;
     }
 
 

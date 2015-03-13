@@ -21,7 +21,7 @@ public class BLController implements BLService{
     private BLController(){
         matchController = MatchController.getInstance();
         teamController = TeamController.getInstance();
-        playerController = PlayerController.getInstance();
+        //playerController = PlayerController.getInstance();
     }
     
     public static BLController getInstance(){
@@ -64,9 +64,9 @@ public class BLController implements BLService{
         
         Thread thread1 = new Thread(){
             public void run(){
-                while(BLController.progress != 9){
-                    System.out.println(BLController.progress);
-                    System.out.println("now::::::::      " + BLController.progress / 9.0 * 100 + "%");
+                while(BLController.progress != 8){
+                    //System.out.println(BLController.progress);
+                    //System.out.println("now::::::::      " + BLController.progress / 9.0 * 100 + "%");
                     try {
                         this.sleep(100);
                     } catch (InterruptedException e) {

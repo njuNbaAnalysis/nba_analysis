@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import logic.BLController;
 import logic.matches.Match;
+import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
 import data.DataController;
 import data.DataService;
@@ -32,8 +33,10 @@ public class TeamController {
     public void init(){
         teamList = dataService.getAllTeams();
         
-        
+        long current = System.currentTimeMillis();
         computeData();
+        long now = System.currentTimeMillis();
+        System.out.println("here: " + (now - current));
     }
 
     public ArrayList<Team> getAllTeams(){
@@ -43,7 +46,7 @@ public class TeamController {
     //对team数据进一步计算
     private void computeData(){
         ArrayList<Match> matchList = new ArrayList<Match>();
-        BLController controller = BLController.getInstance();
+        MatchController controller = MatchController.getInstance();
         matchList = controller.getAllMatches();
         
         for(Match token:matchList){
@@ -60,7 +63,7 @@ public class TeamController {
     //根据名字查找，如果没有找到则返回null
     public Team getTeam(String name){
         for(Team token:teamList){
-            if(token.getName().equals(name)){
+            if(token.getAbbreviation().equals(name)){
                 return token;
             }
         }
@@ -110,6 +113,8 @@ public class TeamController {
             //向teamList中加入球员
             String name = token.getPlayerName();
             if(!team.getPlayerList().contains(name)){
+                
+                
                 team.getPlayerList().add(name);
             }
         }
