@@ -54,5 +54,8 @@ public class Match {
 	public ArrayList<RecordOfPlayer> getSecondRecordList() {
 		return secondRecordList;
 	}
-
+	
+	public ArrayList<MatchMistake> getMatchMistakeList(){
+		return ListOfMistake;
+	}
 }
