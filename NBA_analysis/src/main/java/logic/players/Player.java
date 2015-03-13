@@ -4,6 +4,9 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 
+import logic.teams.Team;
+import logic.teams.TeamController;
+
 public class Player {
 	private String name;
 	private int number;    //球衣号
@@ -160,6 +163,9 @@ public class Player {
 	//not raw data
 	//以***结尾的说明此项数据不需要存储
 	private String team;   //current team
+	private String location;//地区
+
+
 	private int gamePlayed;//出场次数 
 	private int gameStarted;//首发次数
 	
@@ -203,8 +209,16 @@ public class Player {
 	private int freeThrowAttempts;     //罚球出手
 	
 	public void init(){
-		fieldGoalsPercentage = fieldGoalHits/fieldGoalAttempts;
-		threePointersPercentage = threePointerHits/threePointerAttempts;
+		
+		fieldGoalsPercentage = fieldGoalHits*1.0/fieldGoalAttempts;
+		threePointersPercentage = threePointerHits*1.0/threePointerAttempts;
+		freeThrowsPercentage = freeThrowHits*1.0/freeThrowAttempts;
+		trueShootingPercentage = points*1.0/(fieldGoalAttempts+0.44*freeThrowAttempts);//得分÷(2×(投篮出手数+0.44×罚球出手数))
+		reboundsPercentage =   (fieldGoalHits+0.5*threePointerHits)/(fieldGoalAttempts*1.0);//(投篮命中数+0.5×三分命中数)÷投篮出手数
+		
+		TeamController teamcontrol = TeamController.getInstance();
+		Team team = teamcontrol.getTeam(name);
+	//	reboundsPercentage = ;//球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板) 
 	}
 
 
@@ -376,7 +390,9 @@ public class Player {
     public double getShootingEfficiency() {
         return shootingEfficiency;
     }
-
+    public String getLocation() {
+		return location;
+	}
     
     public String toString(){
         return name + " " + 

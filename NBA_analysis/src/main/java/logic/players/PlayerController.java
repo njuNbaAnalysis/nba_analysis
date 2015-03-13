@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import logic.BLController;
 import logic.matches.Match;
+import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
 import data.DataController;
 import data.DataService;
@@ -40,8 +41,8 @@ public class PlayerController {
 	// 对Player数据进一步计算
 	private void computeData() {
 
-		BLController blController = BLController.getInstance();
-		ArrayList<Match> ListOfMatches = blController.getAllMatches();
+		MatchController matchController = MatchController.getInstance();
+		ArrayList<Match> ListOfMatches = matchController.getAllMatches();
 		for (int i = 0; i < ListOfMatches.size(); i++) {
 			Match temp = ListOfMatches.get(i);
 			ArrayList<RecordOfPlayer> ListOfPlayers1 = temp
