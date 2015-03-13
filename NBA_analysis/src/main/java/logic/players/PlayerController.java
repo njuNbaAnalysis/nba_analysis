@@ -2,6 +2,7 @@ package logic.players;
 
 import java.util.ArrayList;
 
+import logic.BLController;
 import data.DataController;
 import data.DataService;
 
@@ -32,5 +33,17 @@ public class PlayerController {
     
     public void init(){
         playerList = dataService.getAllPlayers();
+        
+        Thread computeThread = new Thread(){
+            public void run(){
+                computeData();
+            }
+        };
+        computeThread.start();
+    }
+    
+    //对Player数据进一步计算
+    private void computeData(){
+        BLController.progress ++;
     }
 }

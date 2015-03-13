@@ -2,6 +2,7 @@ package logic.teams;
 
 import java.util.ArrayList;
 
+import logic.BLController;
 import data.DataController;
 import data.DataService;
 
@@ -28,5 +29,17 @@ public class TeamController {
     
     public void init(){
         teamList = dataService.getAllTeams();
+        
+        Thread computeThread = new Thread(){
+            public void run(){
+                computeData();
+            }
+        };
+        computeThread.start();
+    }
+    
+    //对team数据进一步计算
+    private void computeData(){
+        BLController.progress ++;
     }
 }
