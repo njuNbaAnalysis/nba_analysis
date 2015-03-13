@@ -232,21 +232,29 @@ public class Player {
 		int sumOfTime = 0;
 		int sumOffieldGoalAttempts = 0;
 		int sumOfrebounds = 0;
+		int sumOfoffenseRebounds = 0;
+		int sumOfdefenseRebounds = 0;
 		int sumOfturnOver = 0;
 		int sumOffreeThrowAttempts = 0;
 		int sumOffreeThrowHits = 0;
 		int sumOffieldGoalHits = 0;
-		int sumOfopponentrebounds = 0;
+		int sumOfopponentrebounds = team.getReboundsRival();
+		int sumOfopponentoffenserebounds = 0;
+		int sumOfopponentdefenseRebounds = 0;
 		for(int i=0;i<playerList.size();i++){
 			sumOfTime += playercontrol.getPlayer(playerList.get(i)).getMinutes();
 			sumOffieldGoalAttempts+=playercontrol.getPlayer(playerList.get(i)).getFieldGoalAttempts();
 			sumOfrebounds+=playercontrol.getPlayer(playerList.get(i)).getRebounds();
+			sumOfdefenseRebounds +=playercontrol.getPlayer(playerList.get(i)).getDefenseRebounds();
+			sumOfoffenseRebounds +=playercontrol.getPlayer(playerList.get(i)).getOffenseRebounds();
 			sumOfturnOver+=playercontrol.getPlayer(playerList.get(i)).getTurnOver();
 			sumOffreeThrowAttempts+=playercontrol.getPlayer(playerList.get(i)).getFreeThrowAttempts();
 			sumOffreeThrowHits+=playercontrol.getPlayer(playerList.get(i)).getFreeThrowHits();
 			sumOffieldGoalHits +=playercontrol.getPlayer(playerList.get(i)).getFieldGoalHits();
 		}
-		reboundsPercentage = 0;// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
+		reboundsPercentage = rebounds*(sumOfTime/5)/(minutes)/(sumOfrebounds+sumOfopponentrebounds);// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
+		offenseReboundsPercentage = offenseRebounds*(sumOfTime/5)/(minutes)/(sumOfoffenseRebounds+sumOfopponentoffenserebounds);
+		defenseReboundsPercentage = 0;
 
 	}
 
