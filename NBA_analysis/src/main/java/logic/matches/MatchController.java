@@ -55,7 +55,7 @@ public class MatchController {
 							sum1+=list1.get(n).getPoints();
 						}
 						for (int n = 0; n < list2.size(); n++) {
-							sum2 +=list1.get(n).getPoints();
+							sum2 +=list2.get(n).getPoints();
 						}
 						int[] points = matchList.get(i).getPoints();
 						if(sum1==points[0]&&sum2==points[1]){

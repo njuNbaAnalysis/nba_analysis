@@ -122,4 +122,7 @@ public class RecordOfPlayer{
     public void setPoints(int points){
     	this.points = points;
     }    
+    public boolean isStarted(){
+    	return isStarted;
+    }
 }

@@ -202,7 +202,10 @@ public class Player {
 	private int freeThrowHits;         //罚球命中
 	private int freeThrowAttempts;     //罚球出手
 	
-	
+	public void init(){
+		fieldGoalsPercentage = fieldGoalHits/fieldGoalAttempts;
+		threePointersPercentage = threePointerHits/threePointerAttempts;
+	}
 
 
     public int getFieldGoalHits() {
@@ -373,8 +376,7 @@ public class Player {
     public double getShootingEfficiency() {
         return shootingEfficiency;
     }
-    
-    
+
     
     public String toString(){
         return name + " " + 
