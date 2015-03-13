@@ -66,6 +66,7 @@ public class MatchReader {
 					// 初始化主场球队信息：
 					ArrayList<RecordOfPlayer> firstRecordList = new ArrayList<RecordOfPlayer>();
 					data = br.readLine();// 可以在这里校验球队数据是否出错
+					int number = 1;
 					while ((data = br.readLine()) != null) {
 						str = data.split(";");
 						if (str.length == 1)
@@ -88,14 +89,21 @@ public class MatchReader {
 						}
 						// 判断是否有脏数据
 						dealMistake(str[0], num, ListOfMistake);
+						boolean isStarted = false;
+						if (number <= 5)
+							isStarted = true;
+						else
+							isStarted = false;
 						RecordOfPlayer temp = new RecordOfPlayer(str[0],
 								str[1], num[2], num[3], num[4], num[5], num[6],
 								num[7], num[8], num[9], num[10], num[11],
 								num[12], num[13], num[14], num[15], num[16],
-								num[17]);
+								num[17], isStarted);
 						firstRecordList.add(temp);
+						number++;
 					}
 					// 初始化客场球队信息：
+					number = 1;
 					ArrayList<RecordOfPlayer> secondRecordList = new ArrayList<RecordOfPlayer>();
 					while ((data = br.readLine()) != null) {
 						str = data.split(";");
@@ -117,11 +125,17 @@ public class MatchReader {
 							else
 								num[i] = Integer.parseInt(str[i]);
 						}
+						boolean isStarted = false;
+						if (number <= 5)
+							isStarted = true;
+						else
+							isStarted = false;
 						RecordOfPlayer temp = new RecordOfPlayer(str[0],
 								str[1], num[2], num[3], num[4], num[5], num[6],
 								num[7], num[8], num[9], num[10], num[11],
 								num[12], num[13], num[14], num[15], num[16],
-								num[17]);
+								num[17], isStarted);
+						number++;
 						secondRecordList.add(temp);
 					}
 					if (ListOfMistake.size() == 0)

@@ -20,11 +20,12 @@ public class RecordOfPlayer{
     private int turnOver;//失误数
     private int fauls;//犯规数
     private int points;//个人得分
+    private boolean isStarted;  //是否是首发出场
     
     public RecordOfPlayer(String playerName, String position, int minutes, int fieldGoals, int fieldAttempts,
             int threePoints, int threePointAttemps, int freeThrows, int freeThrowAttemps, int offensiveRebounds,
             int defensiveRebounds, int rebounds, int assists, int steals, int blocks, int turnOver, int fauls,
-            int points) {
+            int points,boolean isStarted) {
         super();
         this.playerName = playerName;
         this.position = position;
@@ -44,6 +45,7 @@ public class RecordOfPlayer{
         this.turnOver = turnOver;
         this.fauls = fauls;
         this.points = points;
+        this.isStarted = isStarted;
     }
 
     public String getPlayerName() {

@@ -18,10 +18,148 @@ public class Player {
 	private Image action;
 	
 	
+	public void setTeam(String team) {
+		this.team = team;
+	}
+
+
+	public void setGamePlayed(int gamePlayed) {
+		this.gamePlayed = gamePlayed;
+	}
+
+	public void setGameStarted(int gameStarted) {
+		this.gameStarted = gameStarted;
+	}
+
+	public void setRebounds(int rebounds) {
+		this.rebounds = rebounds;
+	}
+
+	public void setAssists(int assists) {
+		this.assists = assists;
+	}
+
+	public void setMinutes(int minutes) {
+		this.minutes = minutes;
+	}
+
+	public void setOffenseRebounds(int offenseRebounds) {
+		this.offenseRebounds = offenseRebounds;
+	}
+
+	public void setDefenseRebounds(int defenseRebounds) {
+		this.defenseRebounds = defenseRebounds;
+	}
+
+	public void setSteals(int steals) {
+		this.steals = steals;
+	}
+
+	public void setBlockShots(int blockShots) {
+		this.blockShots = blockShots;
+	}
+
+	public void setTurnOver(int turnOver) {
+		this.turnOver = turnOver;
+	}
+
+	public void setFouls(int fouls) {
+		this.fouls = fouls;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	public void setFieldGoalsPercentage(double fieldGoalsPercentage) {
+		this.fieldGoalsPercentage = fieldGoalsPercentage;
+	}
+
+	public void setThreePointersPercentage(double threePointersPercentage) {
+		this.threePointersPercentage = threePointersPercentage;
+	}
+
+	public void setFreeThrowsPercentage(double freeThrowsPercentage) {
+		this.freeThrowsPercentage = freeThrowsPercentage;
+	}
+
+	public void setTrueShootingPercentage(double trueShootingPercentage) {
+		this.trueShootingPercentage = trueShootingPercentage;
+	}
+
+	public void setReboundsPercentage(double reboundsPercentage) {
+		this.reboundsPercentage = reboundsPercentage;
+	}
+
+	public void setOffenseReboundsPercentage(double offenseReboundsPercentage) {
+		this.offenseReboundsPercentage = offenseReboundsPercentage;
+	}
+
+	public void setDefenseReboundsPercentage(double defenseReboundsPercentage) {
+		this.defenseReboundsPercentage = defenseReboundsPercentage;
+	}
+
+	public void setAssistsPercentage(double assistsPercentage) {
+		this.assistsPercentage = assistsPercentage;
+	}
+
+	public void setStealsPercentage(double stealsPercentage) {
+		this.stealsPercentage = stealsPercentage;
+	}
+
+	public void setBlockShotsPercentage(double blockShotsPercentage) {
+		this.blockShotsPercentage = blockShotsPercentage;
+	}
+
+	public void setTurnOverPercentage(double turnOverPercentage) {
+		this.turnOverPercentage = turnOverPercentage;
+	}
+
+	public void setUsage(double usage) {
+		this.usage = usage;
+	}
+
+	public void setEfficiency(double efficiency) {
+		this.efficiency = efficiency;
+	}
+
+	public void setGmsc(double gmsc) {
+		this.gmsc = gmsc;
+	}
+
+	public void setShootingEfficiency(double shootingEfficiency) {
+		this.shootingEfficiency = shootingEfficiency;
+	}
+
+	public void setFieldGoalHits(int fieldGoalHits) {
+		this.fieldGoalHits = fieldGoalHits;
+	}
+
+	public void setFieldGoalAttempts(int fieldGoalAttempts) {
+		this.fieldGoalAttempts = fieldGoalAttempts;
+	}
+
+	public void setThreePointerHits(int threePointerHits) {
+		this.threePointerHits = threePointerHits;
+	}
+
+	public void setThreePointerAttempts(int threePointerAttempts) {
+		this.threePointerAttempts = threePointerAttempts;
+	}
+
+	public void setFreeThrowHits(int freeThrowHits) {
+		this.freeThrowHits = freeThrowHits;
+	}
+
+	public void setFreeThrowAttempts(int freeThrowAttempts) {
+		this.freeThrowAttempts = freeThrowAttempts;
+	}
+
+
+
 	//not raw data
 	//以***结尾的说明此项数据不需要存储
 	private String team;   //current team
-	private String division;//在哪个分区***
 	private int gamePlayed;//出场次数 
 	private int gameStarted;//首发次数
 	
@@ -67,7 +205,31 @@ public class Player {
 	
 
 
-    public Player(String name, int number, String position, int[] height, int weight, Date birthday, int age,
+    public int getFieldGoalHits() {
+		return fieldGoalHits;
+	}
+
+	public int getFieldGoalAttempts() {
+		return fieldGoalAttempts;
+	}
+
+	public int getThreePointerHits() {
+		return threePointerHits;
+	}
+
+	public int getThreePointerAttempts() {
+		return threePointerAttempts;
+	}
+
+	public int getFreeThrowHits() {
+		return freeThrowHits;
+	}
+
+	public int getFreeThrowAttempts() {
+		return freeThrowAttempts;
+	}
+
+	public Player(String name, int number, String position, int[] height, int weight, Date birthday, int age,
             int experience, String school) {
         super();
         this.name = name;
@@ -129,9 +291,6 @@ public class Player {
     //not raw data
     public String getTeam() {
         return team;
-    }
-    public String getDivision() {
-        return division;
     }
     public int getGamePlayed() {
         return gamePlayed;
