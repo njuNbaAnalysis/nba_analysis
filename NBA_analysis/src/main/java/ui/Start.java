@@ -8,7 +8,7 @@ public class Start {
 	public static void main(String[] args) {
 		int progress = 0;
 
-		final BLController bl = BLController.getInstance();
+		/*final BLController bl = BLController.getInstance();
 
 		final AnimationFrame animation = new AnimationFrame(bl);
 
@@ -30,7 +30,7 @@ public class Start {
 				MainFrame start = new MainFrame();
 				start.setVisible(true);
 			}
-		}).start();
+		}).start();*/
 		// Thread.sleep(3000);
 
 		/*try {
@@ -40,7 +40,7 @@ public class Start {
 		}*/
 		
 		
-		/*MainFrame start = new MainFrame();
-		start.setVisible(true);*/
+		MainFrame start = new MainFrame();
+		start.setVisible(true);
 	}
 }

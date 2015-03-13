@@ -160,7 +160,7 @@ public class PlayerJTable extends JTable {
 
 		}
 
-		public BufferedImage resize(BufferedImage image, int width, int height) {
+		public  BufferedImage resize(BufferedImage image, int width, int height) {
 			BufferedImage bi = new BufferedImage(width, height,
 					BufferedImage.TRANSLUCENT);
 			Graphics2D g2d = (Graphics2D) bi.createGraphics();

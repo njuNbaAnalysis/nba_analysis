@@ -2,7 +2,9 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -83,41 +85,59 @@ public class MenuPanel extends JPanel {
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
+			bufferLogo = this.resize(bufferLogo, width, width*29/50);
+			//System.out.println(width+" "+width*29/50);
 			bufferPlayer = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_l.png"));
+			bufferPlayer = this.resize(bufferPlayer, width, width*3/20);
 			bufferPlayerD = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_d.png"));
+			bufferPlayerD = this.resize(bufferPlayerD, width, width*3/20);
 			bufferTeam = ImageIO.read(new File("image" + File.separator
 					+ "qiudui_l.png"));
+			bufferTeam = this.resize(bufferTeam, width, width*3/20);
 			bufferTeamD = ImageIO.read(new File("image" + File.separator
 					+ "qiudui_d.png"));
+			bufferTeamD = this.resize(bufferTeamD, width, width*3/20);
 			bufferplayerStat = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuantongji_l.png"));
+			bufferplayerStat = this.resize(bufferplayerStat, width, width/8);
 			bufferplayerStatD = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuantongji_d.png"));
+			bufferplayerStatD = this.resize(bufferplayerStatD, width, width/8);
 			bufferTeamStat = ImageIO.read(new File("image" + File.separator
 					+ "qiuduitongji_l.png"));
+			bufferTeamStat = this.resize(bufferTeamStat, width, width/8);
 			bufferTeamStatD = ImageIO.read(new File("image" + File.separator
 					+ "qiuduitongji_d.png"));
+			bufferTeamStatD = this.resize(bufferTeamStatD, width, width/8);
 			bufferStat = ImageIO.read(new File("image" + File.separator
 					+ "tongji_l.png"));
+			bufferStat = this.resize(bufferStat, width, width*3/20);
 			bufferStatD = ImageIO.read(new File("image" + File.separator
 					+ "tongji_d.png"));
+			bufferStatD = this.resize(bufferStatD, width, width*3/20);
 			bufferPlayerB = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_b.png"));
+			bufferPlayerB = this.resize(bufferPlayerB, width, width*3/20);
 			bufferTeamB = ImageIO.read(new File("image" + File.separator
 					+ "qiudui_b.png"));
+			bufferTeamB = this.resize(bufferTeamB, width, width*3/20);
 			bufferplayerStatB = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuantongji_b.png"));
+			bufferplayerStatB = this.resize(bufferplayerStatB, width, width/8);
 			bufferTeamStatB = ImageIO.read(new File("image" + File.separator
 					+ "qiuduitongji_b.png"));
+			bufferTeamStatB = this.resize(bufferTeamStatB, width, width/8);
 			bufferStatB = ImageIO.read(new File("image" + File.separator
 					+ "tongji_b.png"));
+			bufferStatB = this.resize(bufferStatB, width, width*3/20);
 			bufferExit = ImageIO.read(new File("image" + File.separator
 					+ "exit_l.png"));
+			bufferExit = this.resize(bufferExit, width, width*3/20);
 			bufferExitR = ImageIO.read(new File("image" + File.separator
 					+ "exit_r.png"));
-			
+			bufferExitR = this.resize(bufferExitR, width, width*3/20);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -282,6 +302,19 @@ public class MenuPanel extends JPanel {
 			break;
 		}
 
+	}
+	
+	public  BufferedImage resize(BufferedImage image, int width, int height) {
+		BufferedImage bi = new BufferedImage(width, height,
+				BufferedImage.TRANSLUCENT);
+		
+		Graphics2D g2d = (Graphics2D) bi.createGraphics();
+		g2d.addRenderingHints(new RenderingHints(
+				RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY));
+		g2d.drawImage(image, 0, 0, width, height, null);
+		g2d.dispose();
+		return bi;
 	}
 
 }
