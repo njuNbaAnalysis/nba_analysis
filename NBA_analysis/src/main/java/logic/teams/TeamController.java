@@ -32,12 +32,12 @@ public class TeamController {
     public void init(){
         teamList = dataService.getAllTeams();
         
-        Thread computeThread = new Thread(){
-            public void run(){
-                computeData();
-            }
-        };
-        computeThread.start();
+        
+        computeData();
+    }
+
+    public ArrayList<Team> getAllTeams(){
+        return teamList;
     }
     
     //对team数据进一步计算

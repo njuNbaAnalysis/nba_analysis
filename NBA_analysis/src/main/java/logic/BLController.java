@@ -42,7 +42,7 @@ public class BLController implements BLService{
 
 	public ArrayList<Team> getAllTeams() {
 		// TODO Auto-generated method stub
-		return null;
+		return teamController.getAllTeams();
 	}
 
 	public ArrayList<Match> getAllMatches() {
