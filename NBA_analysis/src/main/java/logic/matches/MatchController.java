@@ -27,6 +27,7 @@ public class MatchController {
 	
 	public void init(){
 	    matchList = dataService.getAllMatches();
+	    //脏数据处理
 	}
 	
 	
