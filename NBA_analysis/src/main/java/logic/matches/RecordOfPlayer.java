@@ -4,7 +4,7 @@ package logic.matches;
 public class RecordOfPlayer{
     private String playerName;
     private String position;
-    private int minutes;    //在场时间
+    private int minutes;    //在场时间，以秒为单位
     private int fieldGoals; //投篮命中数
     private int fieldAttempts;//投篮出手数
     private int threePoints;//三分球命中数

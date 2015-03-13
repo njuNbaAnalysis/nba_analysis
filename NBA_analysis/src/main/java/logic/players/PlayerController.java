@@ -44,6 +44,8 @@ public class PlayerController {
     
     //对Player数据进一步计算
     private void computeData(){
+        
+        
         BLController.progress ++;
     }
 }
