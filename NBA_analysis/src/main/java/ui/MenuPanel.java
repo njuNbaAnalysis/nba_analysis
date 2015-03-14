@@ -85,9 +85,9 @@ public class MenuPanel extends JPanel {
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
-			System.out.println(width+" "+bufferLogo.getWidth());
+			//System.out.println(width+" "+bufferLogo.getWidth());
 			bufferLogo = this.resize(bufferLogo, width*25/24, (width*25*29)/(50*24));
-			System.out.println(width+" "+bufferLogo.getWidth());
+			//System.out.println(width+" "+bufferLogo.getWidth());
 			bufferPlayer = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_l.png"));
 			bufferPlayer = this.resize_B(bufferPlayer);
@@ -317,7 +317,7 @@ public class MenuPanel extends JPanel {
 		
 	}
 	
-	public  BufferedImage resize(BufferedImage image, int width, int height) {
+	public static BufferedImage resize(BufferedImage image, int width, int height) {
 		BufferedImage bi = new BufferedImage(width, height,
 				BufferedImage.TRANSLUCENT);
 		

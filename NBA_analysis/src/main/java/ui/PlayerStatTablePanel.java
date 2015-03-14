@@ -39,11 +39,11 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(30, 81,140));
-		g.fillRect(0, 0, 2000, 50);
+		g.fillRect(0, 0, 2000, 50*height/(1080));
 		g.setColor(new Color(87, 89,91));
-	    g.fillRect(0, 50, 2000, 66);
+	    g.fillRect(0, 50*height/(1080), 2000, 66*height/(1080));
 		g.drawImage(headBar, 0, 0, this);
-        g.drawImage(filter, 0, 50, this);
+        g.drawImage(filter, 0, 50*height/(1080), this);
         
        
         g.setFont(new Font("STHUPO", Font.PLAIN, 40*2/3));
@@ -75,6 +75,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		this.width = width;
 		this.height = height;
 		setLayout(null);
+		System.out.println(height);
 		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//setLookAndFeel();
 
@@ -84,8 +85,12 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		try {
 			bufferHeadBar = ImageIO.read(new File("image" + File.separator
 					+ "headBar.png"));
+			System.out.println(bufferHeadBar.getHeight()+" sss"+bufferHeadBar.getWidth());
+			bufferHeadBar = MenuPanel.resize(bufferHeadBar, width*800/(1920), height*50/(1080));
+			System.out.println(bufferHeadBar.getHeight()+" sss"+bufferHeadBar.getWidth());
 			bufferedFilter = ImageIO.read(new File("image" + File.separator
 					+ "filter.png"));
+			bufferedFilter = MenuPanel.resize(bufferedFilter, width*800/(1920), height*66/(1080));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -105,16 +110,16 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 //		tableP.setLayout(new BoxLayout(tableP, BoxLayout.Y_AXIS));
 		
 		headPanel = new HeadPanel(width,50);
-		headPanel.setBounds(0, 0, width, 50);
+		headPanel.setBounds(0, 0, width, 50*height/(1080));
 		this.add(headPanel);
 		
 
-		selectPanel = new SelectPanel(width,66);
+		selectPanel = new SelectPanel(width,66*height/(1080));
 		this.add(selectPanel);
 
-		selectPanel.setBounds(0, 50, width, 66);
+		selectPanel.setBounds(0, 50*height/(1080), width, 66*height/(1080));
 		
-		this.add(Box.createVerticalStrut(116));
+		this.add(Box.createVerticalStrut(116*height/(1080)));
 
 		this.addMouseListener(this);
 		
