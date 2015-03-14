@@ -58,7 +58,8 @@ public class Team {
     //private int rebounds;                       //篮板数
     //private double threePointersPercentage;     //三分命中率
     //private double freeThrowsPercentage;        //罚球命中率
-    //private double winningPercentage;           //胜率
+	//private double fieldGoalsPercentage;           //投篮命中率
+    //private double winningPercentage;           //胜率  
 	//private int reboundsRival;               //对手总篮板
 	
     public Team(String name, String abbreviation, String location, char conference, String division, String homeCourt,
@@ -415,6 +416,10 @@ public class Team {
 
     public void setThreePointerAttemptsRival(int threePointerAttemptsRival) {
         this.threePointerAttemptsRival = threePointerAttemptsRival;
+    }
+
+    public double getFieldGoalsPercentage() {
+        return 1.0 * fieldGoalHits / fieldGoalAttemps;
     }
 
 
