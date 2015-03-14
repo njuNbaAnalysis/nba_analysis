@@ -227,6 +227,7 @@ public class Player {
 		TeamController teamcontrol = TeamController.getInstance();
 		PlayerController playercontrol = PlayerController.getInstance();
 		Team teamName = teamcontrol.getTeam(team);
+		if(teamName != null){
 		location = teamName.getLocation();
 		ArrayList<String> playerList = teamName.getPlayerList();
 		int sumOfTime = 0;
@@ -264,6 +265,7 @@ public class Player {
 		//		： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
 //				上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
 //				次数+球队所有球员失误次数) 
+		}
 	}
 
 	public int getFieldGoalHits() {
