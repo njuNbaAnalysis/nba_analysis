@@ -16,7 +16,7 @@ public class PlayerController {
 
 	private PlayerController() {
 		dataService = DataController.getInstance();
-		init();
+		playerList = dataService.getAllPlayers();
 	}
 
 	public static PlayerController getInstance() {
@@ -34,7 +34,6 @@ public class PlayerController {
 	}
 
 	public void init() {
-		playerList = dataService.getAllPlayers();
 		computeData();
 	}
 
