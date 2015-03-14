@@ -5,11 +5,11 @@ public class RecordOfPlayer{
     private String playerName;
     private String position;
     private int minutes;    //在场时间，以秒为单位
-    private int fieldGoals; //投篮命中数
-    private int fieldAttempts;//投篮出手数
-    private int threePoints;//三分球命中数
+    private int fieldGoalHits; //投篮命中数
+    private int fieldGoalAttempts;//投篮出手数
+    private int threePointHits;//三分球命中数
     private int threePointAttemps;//三分球出手数
-    private int freeThrows;//罚球命中数
+    private int freeThrowHits;//罚球命中数
     private int freeThrowAttemps;//罚球出手数
     private int offensiveRebounds;//进攻篮板数
     private int defensiveRebounds;//防守篮板数
@@ -30,11 +30,11 @@ public class RecordOfPlayer{
         this.playerName = playerName;
         this.position = position;
         this.minutes = minutes;
-        this.fieldGoals = fieldGoals;
-        this.fieldAttempts = fieldAttempts;
-        this.threePoints = threePoints;
+        this.fieldGoalHits = fieldGoals;
+        this.fieldGoalAttempts = fieldAttempts;
+        this.threePointHits = threePoints;
         this.threePointAttemps = threePointAttemps;
-        this.freeThrows = freeThrows;
+        this.freeThrowHits = freeThrows;
         this.freeThrowAttemps = freeThrowAttemps;
         this.offensiveRebounds = offensiveRebounds;
         this.defensiveRebounds = defensiveRebounds;
@@ -60,24 +60,8 @@ public class RecordOfPlayer{
         return minutes;
     }
 
-    public int getFieldGoals() {
-        return fieldGoals;
-    }
-
-    public int getFieldAttempts() {
-        return fieldAttempts;
-    }
-
-    public int getThreePoints() {
-        return threePoints;
-    }
-
     public int getThreePointAttemps() {
         return threePointAttemps;
-    }
-
-    public int getFreeThrows() {
-        return freeThrows;
     }
 
     public int getFreeThrowAttemps() {
@@ -124,5 +108,45 @@ public class RecordOfPlayer{
     }    
     public boolean isStarted(){
     	return isStarted;
+    }
+
+    public int getFieldGoalHits() {
+        return fieldGoalHits;
+    }
+
+    public void setFieldGoalHits(int fieldGoalHits) {
+        this.fieldGoalHits = fieldGoalHits;
+    }
+
+    public int getFieldGoalAttempts() {
+        return fieldGoalAttempts;
+    }
+
+    public void setFieldGoalAttempts(int fieldGoalAttempts) {
+        this.fieldGoalAttempts = fieldGoalAttempts;
+    }
+
+    public int getThreePointHits() {
+        return threePointHits;
+    }
+
+    public void setThreePointHits(int threePointHits) {
+        this.threePointHits = threePointHits;
+    }
+
+    public int getFreeThrowHits() {
+        return freeThrowHits;
+    }
+
+    public void setFreeThrowHits(int freeThrowHits) {
+        this.freeThrowHits = freeThrowHits;
+    }
+
+    public void setThreePointAttemps(int threePointAttemps) {
+        this.threePointAttemps = threePointAttemps;
+    }
+
+    public void setFreeThrowAttemps(int freeThrowAttemps) {
+        this.freeThrowAttemps = freeThrowAttemps;
     }
 }

@@ -70,14 +70,14 @@ public class PlayerController {
 				temp.setDefenseRebounds(temp.getDefenseRebounds()
 						+ record.getDefensiveRebounds());
 				temp.setFieldGoalAttempts(temp.getFieldGoalAttempts()
-						+ record.getFieldAttempts());
+						+ record.getFieldGoalAttempts());
 				temp.setFieldGoalHits(temp.getFieldGoalHits()
-						+ record.getFieldGoals());
+						+ record.getFieldGoalHits());
 				temp.setFouls(temp.getFouls() + record.getFauls());
 				temp.setFreeThrowAttempts(temp.getFreeThrowAttempts()
 						+ record.getFreeThrowAttemps());
 				temp.setFreeThrowHits(temp.getFreeThrowHits()
-						+ record.getFreeThrows());
+						+ record.getFreeThrowAttemps());
 				temp.setMinutes(temp.getMinutes() + record.getMinutes());
 				temp.setOffenseRebounds(temp.getOffenseRebounds()
 						+ record.getOffensiveRebounds());
@@ -88,7 +88,7 @@ public class PlayerController {
 				temp.setThreePointerAttempts(temp.getThreePointerAttempts()
 						+ record.getThreePointAttemps());
 				temp.setThreePointerHits(temp.getThreePointerHits()
-						+ record.getThreePoints());
+						+ record.getThreePointAttemps());
 				temp.setTurnOver(temp.getTurnOver() + record.getTurnOver());
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);

@@ -26,7 +26,7 @@ public class Team {
 	private int fieldGoalHits;                 //投篮命中次数
 	private int threePointerAttempts;           //三分出手次数
 	private int threePointerHits;               //三分命中次数
-	private int freeThrows;                     //罚球出手次数
+	private int freeThrowAttempts;                     //罚球出手次数
 	private int freeThrowHits;                  //罚球命中次数
 	private int offensiveRebounds;              //进攻篮板数
 	private int defensiveRebounds;              //防守篮板数
@@ -151,7 +151,7 @@ public class Team {
 
 
     public int getFreeThrows() {
-        return freeThrows;
+        return freeThrowAttempts;
     }
 
 
@@ -161,7 +161,7 @@ public class Team {
 
 
     public double getFreeThrowsPercentage() {
-        return 1.0 * freeThrowHits / freeThrows;
+        return 1.0 * freeThrowHits / freeThrowAttempts;
     }
 
 
@@ -271,7 +271,7 @@ public class Team {
 
 
     public void setFreeThrows(int freeThrows) {
-        this.freeThrows = freeThrows;
+        this.freeThrowAttempts = freeThrows;
     }
 
 
@@ -296,7 +296,7 @@ public class Team {
 
 
     public void setSteals(int steals) {
-        steals = steals;
+        this.steals = steals;
     }
 
 
