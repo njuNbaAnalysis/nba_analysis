@@ -242,6 +242,7 @@ public class Player {
 		int sumOfopponentoffenserebounds = teamName.getOffenseReboundsRival();
 		int sumOfopponentdefenseRebounds = teamName.getDefenseReboundsRival();
 		for(int i=0;i<playerList.size();i++){
+			if(playercontrol.getPlayer(playerList.get(i)) == null)  continue; //如果有血球员打了比赛，但是没有该球员的数据
 			sumOfTime += playercontrol.getPlayer(playerList.get(i)).getMinutes();
 			sumOffieldGoalAttempts+=playercontrol.getPlayer(playerList.get(i)).getFieldGoalAttempts();
 			sumOfrebounds+=playercontrol.getPlayer(playerList.get(i)).getRebounds();
