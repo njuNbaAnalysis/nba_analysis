@@ -74,8 +74,8 @@ public class PlayerController {
 				temp.setFieldGoalHits(temp.getFieldGoalHits()
 						+ record.getFieldGoals());
 				temp.setFouls(temp.getFouls() + record.getFauls());
-				temp.setFreeThrowAttempts(temp.getFieldGoalAttempts()
-						+ record.getThreePointAttemps());
+				temp.setFreeThrowAttempts(temp.getFreeThrowAttempts()
+						+ record.getFreeThrowAttemps());
 				temp.setFreeThrowHits(temp.getFreeThrowHits()
 						+ record.getFreeThrows());
 				temp.setMinutes(temp.getMinutes() + record.getMinutes());

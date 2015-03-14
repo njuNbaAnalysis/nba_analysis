@@ -506,12 +506,12 @@ public class Player {
 		return turnOver*1.0/gamePlayed;
 	}
 	public double getAverageMinutes(){
-		return minutes*1.0/gamePlayed;
+		return minutes*1.0/gamePlayed/60;
 	}
-	public double getAverageEfficency(){
+	public double getAverageEfficiency(){
 		return efficiency*1.0/gamePlayed;
 	}
-	public double getAverageGmScEfficency(){
+	public double getAverageGmSc(){
 		return gmsc*1.0/gamePlayed;
 	}
 	public double getAverageFouls(){
