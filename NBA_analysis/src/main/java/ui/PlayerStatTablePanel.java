@@ -183,7 +183,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		playerTable.setTableHeaderColor(new Color(158,158,158));
 		JScrollPane jspane = new JScrollPane();
 		jspane.setViewportView(playerTable);
-		jspane.setBounds(0, 116, width, height-116);
+		jspane.setBounds(0, 116*height/(1080), width, height-116*height/(1080));
 		//this.add(playerTable);
 		// tableP.add(jspane);
 
