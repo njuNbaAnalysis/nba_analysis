@@ -484,4 +484,42 @@ public class Player {
 
 	}
 
+	public double getAverageRebounds(){
+		return rebounds*1.0/gamePlayed;
+	}
+	public double getAverageOffenseRebounds(){
+		return offenseRebounds*1.0/gamePlayed;
+	}
+	public double getAverageDefenseRebounds(){
+		return defenseRebounds*1.0/gamePlayed;
+	}
+	public double getAverageAssists(){
+		return assists*1.0/gamePlayed;
+	}
+	public double getAverageBlockShots(){
+		return blockShots*1.0/gamePlayed;
+	}
+	public double getAverageSteals(){
+		return steals*1.0/gamePlayed;
+	}
+	public double getAverageTurnOver(){
+		return turnOver*1.0/gamePlayed;
+	}
+	public double getAverageMinutes(){
+		return minutes*1.0/gamePlayed;
+	}
+	public double getAverageEfficency(){
+		return efficiency*1.0/gamePlayed;
+	}
+	public double getAverageGmScEfficency(){
+		return gmsc*1.0/gamePlayed;
+	}
+	public double getAverageFouls(){
+		return fouls*1.0/gamePlayed;
+	}
+	public double getAveragePoints(){
+		return points*1.0/gamePlayed;
+	}
+	
+
 }
