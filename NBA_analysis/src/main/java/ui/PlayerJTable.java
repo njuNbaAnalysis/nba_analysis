@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
 import logic.players.Player;
 
 public class PlayerJTable extends JTable {
-	private DecimalFormat df = new DecimalFormat("#.00");
+	private DecimalFormat df = new DecimalFormat("#0.0");
 	private ArrayList<Image> portraitsList;
 	// 设置头像大小
 	private static int portraitWidth = 70;
@@ -107,10 +107,10 @@ public class PlayerJTable extends JTable {
 		s[7] = df.format(p.getAverageMinutes()) + "";
 		s[8] = df.format(p.getAverageEfficiency()) + "";
 		s[9] = df.format(p.getAverageGmSc()) + "";
-		s[10] = df.format(p.getFieldGoalsPercentage()) + "";
+		s[10] = df.format(p.getFieldGoalsPercentage()*100) + "";
 
-		s[11] = df.format(p.getThreePointersPercentage()) + "";
-		s[12] = df.format(p.getFreeThrowsPercentage()) + "";
+		s[11] = df.format(p.getThreePointersPercentage()*100) + "";
+		s[12] = df.format(p.getFreeThrowsPercentage()*100) + "";
 		s[13] = df.format(p.getAverageOffenseRebounds()) + "";
 		s[14] = df.format(p.getAverageDefenseRebounds()) + "";
 		s[15] = df.format(p.getAverageSteals()) + "";
@@ -119,16 +119,16 @@ public class PlayerJTable extends JTable {
 		s[18] = df.format(p.getAverageFouls()) + "";
 		s[19] = df.format(p.getAveragePoints()) + "";
 
-		s[20] = df.format(p.getTrueShootingPercentage()) + "";
-		s[21] = df.format(p.getShootingEfficiency()) + "";
-		s[22] = df.format(p.getReboundsPercentage()) + "";
-		s[23] = df.format(p.getOffenseReboundsPercentage()) + "";
-		s[24] = df.format(p.getDefenseReboundsPercentage()) + "";
-		s[25] = df.format(p.getAssistsPercentage()) + "";
-		s[26] = df.format(p.getStealsPercentage()) + "";
-		s[27] = df.format(p.getBlockShotsPercentage()) + "";
-		s[28] = df.format(p.getTurnOverPercentage()) + "";
-		s[29] = df.format(p.getUsage()) + "";
+		s[20] = df.format(p.getTrueShootingPercentage()*100) + "";
+		s[21] = df.format(p.getShootingEfficiency()*100) + "";
+		s[22] = df.format(p.getReboundsPercentage()*100) + "";
+		s[23] = df.format(p.getOffenseReboundsPercentage()*100) + "";
+		s[24] = df.format(p.getDefenseReboundsPercentage()*100) + "";
+		s[25] = df.format(p.getAssistsPercentage()*100) + "";
+		s[26] = df.format(p.getStealsPercentage()*100) + "";
+		s[27] = df.format(p.getBlockShotsPercentage()*100) + "";
+		s[28] = df.format(p.getTurnOverPercentage()*100) + "";
+		s[29] = df.format(p.getUsage()*100) + "";
 		return s;
 	}
 
@@ -142,9 +142,9 @@ public class PlayerJTable extends JTable {
 		s[5] = p.getRebounds() + "";
 		s[6] = p.getAssists() + "";
 		s[7] = p.getMinutes() + "";
-		s[8] = df.format(p.getFieldGoalsPercentage()) + "";
-		s[9] = df.format(p.getThreePointersPercentage()) + "";
-		s[10] = df.format(p.getFreeThrowsPercentage()) + "";
+		s[8] = df.format(p.getFieldGoalsPercentage()*100) + "";
+		s[9] = df.format(p.getThreePointersPercentage()*100) + "";
+		s[10] = df.format(p.getFreeThrowsPercentage()*100) + "";
 		s[11] = p.getOffenseRebounds() + "";
 		s[12] = p.getDefenseRebounds() + "";
 		s[13] = p.getSteals() + "";
