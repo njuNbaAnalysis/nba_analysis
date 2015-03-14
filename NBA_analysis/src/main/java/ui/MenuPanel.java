@@ -170,7 +170,7 @@ public class MenuPanel extends JPanel {
 
 		statistics = new JButton();
 		statistics.setSize( width*25/24, (width*25*3)/(24*20));
-		statistics.setLocation(0, heightOfHead + 50);
+		statistics.setLocation(0, heightOfHead + 50*height/1080);
 		statistics.setContentAreaFilled(false);
 		statistics.setBorderPainted(false);
 		statistics.setIcon(statisticsIcon);
@@ -181,7 +181,7 @@ public class MenuPanel extends JPanel {
 
 		playerStat = new JButton();
 		playerStat.setSize( width*25/24, (width*25)/(24*8));
-		playerStat.setLocation(0, heightOfHead + 85);
+		playerStat.setLocation(0, heightOfHead + 85*height/1080);
 		playerStat.setContentAreaFilled(false);
 		playerStat.setBorderPainted(false);
 		playerStat.setIcon(playerStatisticsIcon);
@@ -192,7 +192,7 @@ public class MenuPanel extends JPanel {
 
 		teamStat = new JButton();
 		teamStat.setSize(width*25/24, (width*25)/(24*8));
-		teamStat.setLocation(0, heightOfHead + 110);
+		teamStat.setLocation(0, heightOfHead + 110*height/1080);
 		teamStat.setContentAreaFilled(false);
 		teamStat.setBorderPainted(false);
 		teamStat.setIcon(teamStatisticsIcon);
@@ -203,7 +203,7 @@ public class MenuPanel extends JPanel {
 
 		player = new JButton();
 		player.setSize( width*25/24, (width*25*3)/(24*20));
-		player.setLocation(0, heightOfHead + 160);
+		player.setLocation(0, heightOfHead + 160*height/1080);
 		player.setContentAreaFilled(false);
 		player.setBorderPainted(false);
 		player.setIcon(playerIcon);
@@ -214,7 +214,7 @@ public class MenuPanel extends JPanel {
 
 		team = new JButton();
 		team.setSize( width*25/24, (width*25*3)/(24*20));
-		team.setLocation(0, heightOfHead + 200);
+		team.setLocation(0, heightOfHead + 200*height/1080);
 		team.setContentAreaFilled(false);
 		team.setBorderPainted(false);
 		team.setIcon(teamIcon);
@@ -225,7 +225,7 @@ public class MenuPanel extends JPanel {
 
 		exit = new JButton();
 		exit.setSize( width*25/24, (width*25*3)/(24*20));
-		exit.setLocation(0,  height-80);
+		exit.setLocation(0,  height-80*height/1080);
 		exit.setContentAreaFilled(false);
 		exit.setBorderPainted(false);
 		exit.setIcon(exitIcon);
