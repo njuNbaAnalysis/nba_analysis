@@ -47,7 +47,7 @@ public class PlayerJTable extends JTable {
 		Dimension size = tableH.getPreferredSize();
 		size.height = 40;
 		tableH.setPreferredSize(size);
-		
+		tableH.setReorderingAllowed(false);
 		this.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 	
 	}
@@ -110,7 +110,7 @@ public class PlayerJTable extends JTable {
 		} catch (ClassCastException e) {
 		}
 	}
-
+	// 自动调整列宽
 	public void resizeColumnWidth() {
 
 		for (int column = 0; column < this.getColumnCount(); column++) {
@@ -173,6 +173,10 @@ public class PlayerJTable extends JTable {
 		}
 
 	}
+	
+	public boolean isCellEditable(int row, int column) {
+		return false;
+	}
 
 	public void setTableHeaderColor(Color c) {
 
@@ -186,5 +190,6 @@ public class PlayerJTable extends JTable {
 		}
 
 	}
+	
 
 }
