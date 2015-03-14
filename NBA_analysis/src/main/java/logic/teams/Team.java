@@ -423,43 +423,35 @@ public class Team {
     }
 
 	public Object getAverageOffenseRebounds() {
-		// TODO Auto-generated method stub
-		return null;
+		return 1.0 * offensiveRebounds / numOfMatches;
 	}
 
 	public Object getAverageRebounds() {
-		// TODO Auto-generated method stub
-		return null;
+		return 1.0 * this.getRebounds() / this.getNumOfMatches();
 	}
 
 	public Object getAverageAssists() {
-		// TODO Auto-generated method stub
-		return null;
+		return 1.0 * this.getAssists() / this.getNumOfMatches();
 	}
 
 	public Object getAverageTurnOver() {
-		// TODO Auto-generated method stub
-		return null;
+		return 1.0 * this.getTurnOver() / this.getNumOfMatches();
 	}
 
 	public Object getAverageSteals() {
-		// TODO Auto-generated method stub
-		return null;
+	    return 1.0 * this.getSteals() / this.getNumOfMatches();
 	}
 
 	public Object getAverageBlockShots() {
-		// TODO Auto-generated method stub
-		return null;
+	    return 1.0 * this.getBlockShots() / this.getNumOfMatches();
 	}
 
 	public Object getAverageFouls() {
-		// TODO Auto-generated method stub
-		return null;
+	    return 1.0 * this.getFouls() / this.getNumOfMatches();
 	}
 
 	public Object getAveragePoints() {
-		// TODO Auto-generated method stub
-		return null;
+	    return 1.0 * this.getPoints() / this.getNumOfMatches();
 	}
 
 
