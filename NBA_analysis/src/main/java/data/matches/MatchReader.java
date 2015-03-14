@@ -150,7 +150,7 @@ public class MatchReader {
 			}
 		}
 		double now = System.currentTimeMillis();
-		System.out.println(now - current);
+		System.out.println("matchReader:" + (now - current));
 
 		BLController.progress++;
 	}

@@ -127,15 +127,14 @@ public class TeamController {
         Team team2 = getTeam(match.getTeams()[1]);
         
         //进攻防守回合累加赋值
-        double incrementOfOffensiveRounds1 = team1.getFieldGoalAttemps() + 0.4 * team1.getFieldGoalAttemps() - 1.07 * 
-                (1.0 * team1.getOffensiveRebounds() + team2.getDefensiveRebounds()) * (team1.getFieldGoalAttemps() 
-                        + team1.getFieldGoalAttemps() - team1.getFieldGoalHits() - team1.getFieldGoalHits()) 
-                        + 1.07 * team1.getTurnOver();
-        double incrementOfOffensiveRounds2 = team2.getFieldGoalAttemps() + 0.4 * team2.getFieldGoalAttemps() - 1.07 * 
-                (1.0 * team2.getOffensiveRebounds() + team1.getDefensiveRebounds()) * (team2.getFieldGoalAttemps() 
-                        + team2.getFieldGoalAttemps() - team2.getFieldGoalHits() - team2.getFieldGoalHits()) 
-                        + 1.07 * team2.getTurnOver();
-        
+        double incrementOfOffensiveRounds1 = team1.getFieldGoalAttemps() + 0.4 * team1.getFreeThrows() - 1.07 * 
+                (1.0 * team1.getOffensiveRebounds() / (team1.getOffensiveRebounds() + team2.getDefensiveRebounds())
+                        * (team1.getFieldGoalAttemps() + team1.getFreeThrows() - team1.getFieldGoalHits() - team1.getFreeThrowHits())
+                        + 1.07 * team1.getTurnOver());
+        double incrementOfOffensiveRounds2 = team2.getFieldGoalAttemps() + 0.4 * team2.getFreeThrows() - 1.07 * 
+                (1.0 * team2.getOffensiveRebounds() / (team2.getOffensiveRebounds() + team1.getDefensiveRebounds())
+                        * (team2.getFieldGoalAttemps() + team2.getFreeThrows() - team2.getFieldGoalHits() - team2.getFreeThrowHits())
+                        + 1.07 * team2.getTurnOver());
         team1.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds1);
         team1.setDefensiveRounds(team1.getDefensiveRounds() + incrementOfOffensiveRounds2);
         team2.setOffensiveRounds(team2.getOffensiveRounds() + incrementOfOffensiveRounds2);  

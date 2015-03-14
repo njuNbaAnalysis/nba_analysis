@@ -53,7 +53,7 @@ public class PlayerReader {
         //readImageParallel();
         
         double now = System.currentTimeMillis();
-        System.out.println(now - current);
+        System.out.println("playerReader" + (now - current));
         
         return playerList;
     }
