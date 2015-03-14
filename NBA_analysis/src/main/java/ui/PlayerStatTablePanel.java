@@ -33,7 +33,6 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 	private static Image filter;
 	private int width;
 	private int height;
-	
 
 	private PlayerJTable playerTable;
 	private DefaultTableModel model;
@@ -42,14 +41,6 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 	private BLService bl;
 
-	private static String[] averageColumn = { "排名", "球员", "球队", "场数", "先发",
-			"篮板", "助攻", "在场时间", "效率", "GmSc 效率值", "投篮命中率%", "三分命中率%", "罚球命中率%",
-			"进攻数", "防守数", "抢断数", "盖帽数", "失误数", "犯规数", " 得分", "真实命中率%", "投篮效率%",
-			"篮板率%", "进攻篮板率%", "防守篮板率%", "助攻率%", "抢断率%", "盖帽率%", "失误率%", "使用率%" };
-	private static String[] totalColumn = { "排名", "球员", "球队", "场数", "先发", "篮板",
-			"助攻", "在场时间", "投篮命中率%", "三分命中率%", "罚球命中率%", "进攻数", "防守数", "抢断数",
-			"盖帽数", "失误数", "犯规数", " 得分" };
-	
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(30, 81, 140));
 		g.fillRect(0, 0, 2000, 50 * height / (1080));
@@ -115,8 +106,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 		this.add(Box.createVerticalStrut(116 * height / (1080)));
 
-
-		headPanel = new HeadPanel(width, 50* height / (1080), this);
+		headPanel = new HeadPanel(width, 50 * height / (1080), this);
 		headPanel.setBounds(0, 0, width, 50 * height / (1080));
 		this.add(headPanel);
 
@@ -131,38 +121,23 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		 */
 
 		playerTable = new PlayerJTable();
-		
-		
+
 		JScrollPane jspane = new JScrollPane();
 		jspane.setViewportView(playerTable);
-		jspane.setBounds(0, 116 * height / (1080), width*9/10, height - 116 * height
-				/ (1080));
+		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
+				* height / (1080));
 		this.add(jspane);
 		refresh();
 	}
 
 	public void refresh() {
 
-		String[] columnNames;
-		Comparator c;
-		
-		if (headPanel.getSelected()) {
-			columnNames = averageColumn;
-			c = new PlayerPointComparator();
-			
-		} else {
-			columnNames = totalColumn;
-			c = new PlayerAveragePointComparator();
-		}
-		model = new DefaultTableModel(null, columnNames);
-		playerTable.setModel(model);
-
-		playerTable.setRowSorter(new TableRowSorter<TableModel>(model));
+		// playerTable.setRowSorter(new TableRowSorter<TableModel>(model));
 
 		// 刷新数据
 		ArrayList<Player> pList = bl.getAllPlayers();
-		Collections.sort(pList,c);
-		//pList.sort(c);
+
+		// pList.sort(c);
 		playerTable.refresh(pList, headPanel.getSelected());
 	}
 
