@@ -141,7 +141,7 @@ public class PlayerJTable extends JTable {
 		s[4] = p.getGameStarted() + "";
 		s[5] = p.getRebounds() + "";
 		s[6] = p.getAssists() + "";
-		s[7] = p.getMinutes() + "";
+		s[7] = p.getMinutes()/60 + "";
 		s[8] = df.format(p.getFieldGoalsPercentage()*100) + "";
 		s[9] = df.format(p.getThreePointersPercentage()*100) + "";
 		s[10] = df.format(p.getFreeThrowsPercentage()*100) + "";
