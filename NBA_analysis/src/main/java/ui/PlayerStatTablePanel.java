@@ -116,7 +116,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		this.add(Box.createVerticalStrut(116 * height / (1080)));
 
 
-		headPanel = new HeadPanel(width, 50, this);
+		headPanel = new HeadPanel(width, 50* height / (1080), this);
 		headPanel.setBounds(0, 0, width, 50 * height / (1080));
 		this.add(headPanel);
 
