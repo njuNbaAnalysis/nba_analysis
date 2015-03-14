@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 import javax.imageio.ImageIO;
@@ -160,6 +161,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 		// 刷新数据
 		ArrayList<Player> pList = bl.getAllPlayers();
+		Collections.sort(pList,c);
 		//pList.sort(c);
 		playerTable.refresh(pList, headPanel.getSelected());
 	}
