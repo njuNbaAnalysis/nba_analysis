@@ -53,11 +53,13 @@ public class PlayerJTable extends JTable {
 		// 设置表头的文字颜色
 		tableH.setForeground(new Color(255, 255, 255));
 		// this.refresh();
-		Dimension size = tableH.getPreferredSize();
-		size.height = 40;
-		tableH.setPreferredSize(size);
-		tableH.setReorderingAllowed(false);
-		
+//		Dimension size = tableH.getPreferredSize();
+//		size.width = 200;
+//		size.height = 40;
+//		tableH.setPreferredSize(size);
+		//tableH.setReorderingAllowed(false);
+		//this.getTableHeader().setPreferredSize(new Dimension(this.getTableHeader().getPreferredSize().width,40));
+		this.getTableHeader().setPreferredSize(new Dimension(10000,40));
 		this.setTableHeaderColor(new Color(158,158,158));
 	}
 
