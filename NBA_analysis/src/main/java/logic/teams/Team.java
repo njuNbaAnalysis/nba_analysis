@@ -422,6 +422,46 @@ public class Team {
         return 1.0 * fieldGoalHits / fieldGoalAttemps;
     }
 
+	public Object getAverageOffenseRebounds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getAverageRebounds() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getAverageAssists() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getAverageTurnOver() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getAverageSteals() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getAverageBlockShots() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getAverageFouls() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getAveragePoints() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }
