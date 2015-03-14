@@ -134,7 +134,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		
 		JScrollPane jspane = new JScrollPane();
 		jspane.setViewportView(playerTable);
-		jspane.setBounds(0, 116 * height / (1080), width, height - 116 * height
+		jspane.setBounds(0, 116 * height / (1080), width*9/10, height - 116 * height
 				/ (1080));
 		this.add(jspane);
 		refresh();
@@ -160,7 +160,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 		// 刷新数据
 		ArrayList<Player> pList = bl.getAllPlayers();
-		pList.sort(c);
+		//pList.sort(c);
 		playerTable.refresh(pList, headPanel.getSelected());
 	}
 
