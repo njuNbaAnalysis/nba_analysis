@@ -47,18 +47,20 @@ public class MenuPanel extends JPanel {
 	JButton playerStat;
 	JButton teamStat;
 	JButton exit;
-
+	PlayerStatTablePanel teamRankTablePanel;
+	
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(31, 31, 31));
 		g.fillRect(0, 0, width, height);
 		g.drawImage(logo, 0, 0, this);
 	}
 
-	public MenuPanel(int width, int height) {
+	public MenuPanel(int width, int height, PlayerStatTablePanel teamRankTablePanel) {
 		setLayout(null);
 		this.width = width / 10;
 		this.height = height;
 		this.heightOfHead = 116*height/(1080);
+		this.teamRankTablePanel = teamRankTablePanel;
 		loadImage();
 		initButton();
 	}
@@ -252,6 +254,8 @@ public class MenuPanel extends JPanel {
 
 		}
 
+		
+
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (selectedNumber != type) {
@@ -260,6 +264,13 @@ public class MenuPanel extends JPanel {
 				selectedNumber = type;
 			}
 			
+			if(type==1){
+				//球员统计
+			}
+			if(type==2){
+				//球队统计
+				
+			}
 			if(type==5){
 				System.exit(0);
 			}
