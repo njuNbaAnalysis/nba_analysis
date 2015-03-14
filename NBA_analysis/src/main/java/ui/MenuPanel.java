@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 public class MenuPanel extends JPanel {
 	private int width;
 	private int height;
-	private int heightOfHead = 116*height/(1080);
+	private int heightOfHead ;
 	private static Image logo;
 	int selectedNumber = -1;
 
@@ -58,7 +58,7 @@ public class MenuPanel extends JPanel {
 		setLayout(null);
 		this.width = width / 10;
 		this.height = height;
-
+		this.heightOfHead = 116*height/(1080);
 		loadImage();
 		initButton();
 	}
