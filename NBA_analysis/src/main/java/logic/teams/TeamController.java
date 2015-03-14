@@ -68,7 +68,8 @@ public class TeamController {
     }
     
     //根据名字缩写查找，如果没有找到则返回null
-    public Team getTeam(String name){
+    
+    public synchronized Team getTeam(String name){
         for(Team token:teamList){
             if(token.getAbbreviation().equals(name)){
                 return token;
