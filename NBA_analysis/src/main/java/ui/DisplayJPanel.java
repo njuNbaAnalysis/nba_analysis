@@ -28,7 +28,7 @@ public class DisplayJPanel extends JPanel implements Runnable {
     }
 
 	public void run() {
-		while(progress<=bl.getProgress()*100-1||bl.getProgress()<6){
+		while(progress<=bl.getProgress()*100-1||bl.getProgress()<9){
 			//System.out.println(progress+" "+bl.getProgress()*100);
 			if(progress<=bl.getProgress()*100-1){
 				progress++;

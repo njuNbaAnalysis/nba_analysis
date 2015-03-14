@@ -11,28 +11,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logic.BLController;
+
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Dimension screenSize ;
+	BLController bl;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
+	 * @param bl 
 	 */
-	public MainFrame() {
+	public MainFrame(BLController bl) {
+		this.bl=bl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 	    screenSize = Toolkit.getDefaultToolkit().getScreenSize();

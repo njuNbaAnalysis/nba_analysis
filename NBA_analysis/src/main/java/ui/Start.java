@@ -8,7 +8,7 @@ public class Start {
 	public static void main(String[] args) {
 		int progress = 0;
 
-		/*final BLController bl = BLController.getInstance();
+		final BLController bl = BLController.getInstance();
 
 		final AnimationFrame animation = new AnimationFrame(bl);
 
@@ -16,7 +16,7 @@ public class Start {
 
 			@Override
 			public void run() {
-				while (bl.getProgress() < 6) {
+				while (bl.getProgress() < 9) {
 					System.out.println(bl.getProgress());
 				}
 				try {
@@ -27,10 +27,11 @@ public class Start {
 				System.out.println("sssss");
 				animation.dispose();
 				
-				MainFrame start = new MainFrame();
+				MainFrame start = new MainFrame(bl);
 				start.setVisible(true);
 			}
-		}).start();*/
+		}).start();
+		
 		// Thread.sleep(3000);
 
 		/*try {
@@ -40,7 +41,7 @@ public class Start {
 		}*/
 		
 		
-		MainFrame start = new MainFrame();
-		start.setVisible(true);
+		/*MainFrame start = new MainFrame();
+		start.setVisible(true);*/
 	}
 }
