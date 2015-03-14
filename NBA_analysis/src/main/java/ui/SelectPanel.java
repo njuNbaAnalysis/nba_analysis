@@ -1,13 +1,8 @@
 package ui;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,19 +14,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer.UIResource;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.plaf.ComboBoxUI;
-import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicComboBoxUI;
-import javax.swing.plaf.metal.MetalComboBoxButton;
 
 public class SelectPanel extends JPanel {
 	JButton submit;
@@ -41,7 +30,7 @@ public class SelectPanel extends JPanel {
 	int width;
 	int height;
 
-	public SelectPanel(int width, int height) {
+	public SelectPanel(int width, int height, PlayerStatTablePanel playerStatTablePanel) {
 		this.setOpaque(false);
 		this.setLayout(null);
 		this.width = width;

@@ -5,11 +5,14 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -23,17 +26,23 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import logic.players.Player;
+
 public class PlayerJTable extends JTable {
-	private ArrayList<File> portraitsList;
+	private DecimalFormat df = new DecimalFormat("#.00");
+	private ArrayList<Image> portraitsList;
 	// 设置头像大小
 	private static int portraitWidth = 70;
 	private static int portraitHeigft = 60;
 
 	public PlayerJTable() {
 		super();
-
+		this.portraitsList = new ArrayList<Image>();
 		this.setShowGrid(false);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		this.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
 
 		// 获得表头
 		JTableHeader tableH = null;
@@ -48,27 +57,30 @@ public class PlayerJTable extends JTable {
 		size.height = 40;
 		tableH.setPreferredSize(size);
 		tableH.setReorderingAllowed(false);
-		this.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-	
+		
+		this.setTableHeaderColor(new Color(158,158,158));
 	}
 
-	public void setImageList(ArrayList<File> portraitsList) {
+	public void setImageList(ArrayList<Image> portraitsList) {
 		this.portraitsList = portraitsList;
 	}
 
-	public void refresh(Object[] o) {
+	public void refresh(ArrayList<Player> list, boolean selected) {
 		DefaultTableModel tableModel = (DefaultTableModel) this.getModel();
 		tableModel.setRowCount(0);// 清除原有行
-		Object[] s = o;
+		portraitsList = new ArrayList<Image>();
 
-		for (int i = 0; i < o.length; i++) {
+		for (int i = 0; i < list.size(); i++) {
+			String[] s = null;
+			if (selected) {
+				s = getAverageDataRow(list.get(i), i);
+			} else {
+				s = getTotalDataRow(list.get(i), i);
+			}
 			// 添加数据到表格
-			s[0] = i + "";
-			s[1] = i + "";
-			s[2] = i + "";
-			s[3] = i + "";
 
 			tableModel.addRow(s);
+			portraitsList.add(list.get(i).getPortrait());
 
 		}
 
@@ -79,6 +91,68 @@ public class PlayerJTable extends JTable {
 		this.resizeColumnWidth();
 		this.validate();
 		this.repaint();
+
+	}
+
+	private String[] getAverageDataRow(Player p, int i) {
+
+		String[] s = new String[30];
+		s[0] = (i+1) + "";
+		s[1] = p.getName() + "";
+		s[2] = p.getTeam() + "";
+		s[3] = p.getGamePlayed() + "";
+		s[4] = p.getGameStarted() + "";
+		s[5] = df.format(p.getAverageRebounds()) + "";
+		s[6] = df.format(p.getAverageAssists()) + "";
+		s[7] = df.format(p.getAverageMinutes()) + "";
+		s[8] = df.format(p.getAverageEfficiency()) + "";
+		s[9] = df.format(p.getAverageGmSc()) + "";
+		s[10] = df.format(p.getFieldGoalsPercentage()) + "";
+
+		s[11] = df.format(p.getThreePointersPercentage()) + "";
+		s[12] = df.format(p.getFreeThrowsPercentage()) + "";
+		s[13] = df.format(p.getAverageOffenseRebounds()) + "";
+		s[14] = df.format(p.getAverageDefenseRebounds()) + "";
+		s[15] = df.format(p.getAverageSteals()) + "";
+		s[16] = df.format(p.getAverageBlockShots()) + "";
+		s[17] = df.format(p.getAverageTurnOver()) + "";
+		s[18] = df.format(p.getAverageFouls()) + "";
+		s[19] = df.format(p.getAveragePoints()) + "";
+
+		s[20] = df.format(p.getTrueShootingPercentage()) + "";
+		s[21] = df.format(p.getShootingEfficiency()) + "";
+		s[22] = df.format(p.getReboundsPercentage()) + "";
+		s[23] = df.format(p.getOffenseReboundsPercentage()) + "";
+		s[24] = df.format(p.getDefenseReboundsPercentage()) + "";
+		s[25] = df.format(p.getAssistsPercentage()) + "";
+		s[26] = df.format(p.getStealsPercentage()) + "";
+		s[27] = df.format(p.getBlockShotsPercentage()) + "";
+		s[28] = df.format(p.getTurnOverPercentage()) + "";
+		s[29] = df.format(p.getUsage()) + "";
+		return s;
+	}
+
+	private String[] getTotalDataRow(Player p, int i) {
+		String[] s = new String[18];
+		s[0] = (i+1) + "";
+		s[1] = p.getName() + "";
+		s[2] = p.getTeam() + "";
+		s[3] = p.getGamePlayed() + "";
+		s[4] = p.getGameStarted() + "";
+		s[5] = p.getRebounds() + "";
+		s[6] = p.getAssists() + "";
+		s[7] = p.getMinutes() + "";
+		s[8] = df.format(p.getFieldGoalsPercentage()) + "";
+		s[9] = df.format(p.getThreePointersPercentage()) + "";
+		s[10] = df.format(p.getFreeThrowsPercentage()) + "";
+		s[11] = p.getOffenseRebounds() + "";
+		s[12] = p.getDefenseRebounds() + "";
+		s[13] = p.getSteals() + "";
+		s[14] = p.getRebounds() + "";
+		s[15] = p.getTurnOver() + "";
+		s[16] = p.getFouls() + "";
+		s[17] = p.getPoints() + "";
+		return s;
 
 	}
 
@@ -110,6 +184,7 @@ public class PlayerJTable extends JTable {
 		} catch (ClassCastException e) {
 		}
 	}
+
 	// 自动调整列宽
 	public void resizeColumnWidth() {
 
@@ -131,7 +206,12 @@ public class PlayerJTable extends JTable {
 				boolean isSelected, boolean hasFocus, int row, int column) {
 
 			// 设置内容居中
-			setHorizontalAlignment(SwingConstants.CENTER);
+			if(column==1){
+				setHorizontalAlignment(SwingConstants.LEFT);
+			}else{
+				setHorizontalAlignment(SwingConstants.CENTER);
+			}
+			
 
 			// 设置奇偶行的背景色，可在此根据需要进行修改
 			if (row % 2 == 0)
@@ -141,17 +221,10 @@ public class PlayerJTable extends JTable {
 
 			// 设置图片
 			if (column == 1) {
-				BufferedImage bi;
-				try {
-					bi = ImageIO.read(portraitsList.get(row));
-					ImageIcon icon = new ImageIcon(resize(bi, portraitWidth,
-							portraitHeigft));
-					setIcon(icon);
-					// setText("String");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+				ImageIcon icon = new ImageIcon(resize(portraitsList.get(row),
+						portraitWidth, portraitHeigft));
+				setIcon(icon);
 
 			}
 
@@ -160,7 +233,11 @@ public class PlayerJTable extends JTable {
 
 		}
 
-		public  BufferedImage resize(BufferedImage image, int width, int height) {
+		public BufferedImage resize(Image image, int width, int height) {
+			/*if (image instanceof BufferedImage) {
+				return (BufferedImage) image;
+			}*/
+
 			BufferedImage bi = new BufferedImage(width, height,
 					BufferedImage.TRANSLUCENT);
 			Graphics2D g2d = (Graphics2D) bi.createGraphics();
@@ -173,7 +250,7 @@ public class PlayerJTable extends JTable {
 		}
 
 	}
-	
+
 	public boolean isCellEditable(int row, int column) {
 		return false;
 	}
@@ -190,6 +267,5 @@ public class PlayerJTable extends JTable {
 		}
 
 	}
-	
 
 }

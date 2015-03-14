@@ -1,6 +1,5 @@
 package ui;
 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,7 +9,9 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -25,30 +26,44 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import compare.PlayerAveragePointComparator;
+import compare.PlayerPointComparator;
+import logic.BLService;
+import logic.players.Player;
+
 public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 	private static Image headBar;
 	private static Image filter;
 	private int width;
 	private int height;
+	
 
 	private PlayerJTable playerTable;
 	private DefaultTableModel model;
 	private SelectPanel selectPanel;
 	private HeadPanel headPanel;
 
+	private BLService bl;
+
+	private static String[] averageColumn = { "排名", "球员", "球队", "场数", "先发",
+			"篮板", "助攻", "在场时间", "效率", "GmSc 效率值", "投篮命中率", "三分命中率", "罚球命中率",
+			"进攻数", "防守数", "抢断数", "盖帽数", "失误数", "犯规数", " 得分", "真实命中率", "投篮效率",
+			"篮板率", "进攻篮板率", "防守篮板率", "助攻率", "抢断率", "盖帽率", "失误率", "使用率" };
+	private static String[] totalColumn = { "排名", "球员", "球队", "场数", "先发", "篮板",
+			"助攻", "在场时间", "投篮命中率", "三分命中率", "罚球命中率", "进攻数", "防守数", "抢断数",
+			"盖帽数", "失误数", "犯规数", " 得分" };
+	
 	public void paintComponent(Graphics g) {
-		g.setColor(new Color(30, 81,140));
-		g.fillRect(0, 0, 2000, 50*height/(1080));
-		g.setColor(new Color(87, 89,91));
-	    g.fillRect(0, 50*height/(1080), 2000, 66*height/(1080));
+		g.setColor(new Color(30, 81, 140));
+		g.fillRect(0, 0, 2000, 50 * height / (1080));
+		g.setColor(new Color(87, 89, 91));
+		g.fillRect(0, 50 * height / (1080), 2000, 66 * height / (1080));
 		g.drawImage(headBar, 0, 0, this);
-        g.drawImage(filter, 0, 50*height/(1080), this);
-        
-       
-        g.setFont(new Font("STHUPO", Font.PLAIN, 40*2/3));
-        
-        
+		g.drawImage(filter, 0, 50 * height / (1080), this);
+
+		g.setFont(new Font("STHUPO", Font.PLAIN, 40 * 2 / 3));
+
 	}
 
 	public void setLookAndFeel() {
@@ -71,13 +86,13 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		}
 	}
 
-	public PlayerStatTablePanel(int width, int height) {
+	public PlayerStatTablePanel(int width, int height, BLService bl) {
 		this.width = width;
 		this.height = height;
+		this.bl = bl;
 		setLayout(null);
-		System.out.println(height);
-		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		//setLookAndFeel();
+		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		// setLookAndFeel();
 
 		BufferedImage bufferHeadBar = null;
 		BufferedImage bufferedFilter = null;
@@ -85,12 +100,16 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		try {
 			bufferHeadBar = ImageIO.read(new File("image" + File.separator
 					+ "headBar.png"));
-			System.out.println(bufferHeadBar.getHeight()+" sss"+bufferHeadBar.getWidth());
-			bufferHeadBar = MenuPanel.resize(bufferHeadBar, width*800/(1920), height*50/(1080));
-			System.out.println(bufferHeadBar.getHeight()+" sss"+bufferHeadBar.getWidth());
+			System.out.println(bufferHeadBar.getHeight() + " sss"
+					+ bufferHeadBar.getWidth());
+			bufferHeadBar = MenuPanel.resize(bufferHeadBar,
+					width * 800 / (1920), height * 50 / (1080));
+			System.out.println(bufferHeadBar.getHeight() + " sss"
+					+ bufferHeadBar.getWidth());
 			bufferedFilter = ImageIO.read(new File("image" + File.separator
 					+ "filter.png"));
-			bufferedFilter = MenuPanel.resize(bufferedFilter, width*800/(1920), height*66/(1080));
+			bufferedFilter = MenuPanel.resize(bufferedFilter,
+					width * 800 / (1920), height * 66 / (1080));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,107 +117,59 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		headBar = bufferHeadBar;
 		filter = bufferedFilter;
 
-		
-		/*
-		 * headLabel.setSize(800, 50); headLabel.setVisible(true);
-		 * this.add(headLabel); filertLabel.setSize(800, 66);
-		 * filertLabel.setVisible(true); this.add(filertLabel);
-		 */
+		this.add(Box.createVerticalStrut(116 * height / (1080)));
 
-//		JPanel tableP = new JPanel();
-//		tableP.setSize(800, 600);
-//		tableP.setLayout(new BoxLayout(tableP, BoxLayout.Y_AXIS));
-		
-		headPanel = new HeadPanel(width,50);
-		headPanel.setBounds(0, 0, width, 50*height/(1080));
+
+		headPanel = new HeadPanel(width, 50, this);
+		headPanel.setBounds(0, 0, width, 50 * height / (1080));
 		this.add(headPanel);
-		
 
-		selectPanel = new SelectPanel(width,66*height/(1080));
+		selectPanel = new SelectPanel(width, 66 * height / (1080), this);
+		selectPanel.setBounds(0, 50 * height / (1080), width,
+				66 * height / (1080));
 		this.add(selectPanel);
-
-		selectPanel.setBounds(0, 50*height/(1080), width, 66*height/(1080));
-		
-		this.add(Box.createVerticalStrut(116*height/(1080)));
-
-		this.addMouseListener(this);
-		
-		
-	//	this.add(Box.createVerticalStrut(116));
-
-				
-		Object[][] cellData = { { "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" },
-				{ "", "", "", "", "", "", "", "", "" } };
 
 		/*
 		 * String[] columnNames = { "排名", "球队", "场数", "%", "3分%", "罚球%", "进攻篮板",
 		 * "防守篮板", "场均助攻" };
 		 */
-		String[] columnNames = { "排名", "球员", "球队", "参赛场数", "篮板数", "助攻数",
-				"在场时间", "投篮命中率", "三分命中率", "罚球命中率", "进攻数", "防守数", "抢断数", "盖帽数",
-				"失误数", "犯规数", " 得分", "效率", "GmSc 效率值", "真实命中率", "投篮效率", "篮板率",
-				"进攻篮板率", "防守篮板率", "助攻率", "抢断率", "盖帽率", "失误率", "使用率" };
-		model = new DefaultTableModel(cellData, columnNames) {
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
+
 		playerTable = new PlayerJTable();
-		playerTable.setModel(model);
-		playerTable.setRowSorter(new TableRowSorter<TableModel>(model)); 
-		
-		//传给playertable图片文件数组
-		ArrayList<File> list = new ArrayList<File>();
-		File f1 = new File("Data\\players\\portrait\\Aaron Brooks.png");
-		File f2 = new File("Data\\players\\portrait\\Aaron Gray.png");
-		File f3 = new File("Data\\players\\portrait\\Adonis Thomas.png");
-		File f4 = new File("Data\\players\\portrait\\Al Harrington.png");
-		list.add(f1);
-		list.add(f2);
-		list.add(f3);
-		list.add(f4);	
-		playerTable.setImageList(list);	
 		
 		
-		
-		//刷新数据
-		String [] a = new String [4];
-		playerTable.refresh(a);
-		
-		//playerTable.setSize(1200, 1000);
-		playerTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		playerTable.setTableHeaderColor(new Color(158,158,158));
 		JScrollPane jspane = new JScrollPane();
 		jspane.setViewportView(playerTable);
-		jspane.setBounds(0, 116*height/(1080), width, height-116*height/(1080));
-		//this.add(playerTable);
-		// tableP.add(jspane);
-
-		// this.add(Box.createVerticalStrut(10));
-//		this.add(tableP);
-		
+		jspane.setBounds(0, 116 * height / (1080), width, height - 116 * height
+				/ (1080));
 		this.add(jspane);
-
+		refresh();
 	}
 
-	
+	public void refresh() {
+
+		String[] columnNames;
+		Comparator c;
+		
+		if (headPanel.getSelected()) {
+			columnNames = averageColumn;
+			c = new PlayerPointComparator();
+			
+		} else {
+			columnNames = totalColumn;
+			c = new PlayerAveragePointComparator();
+		}
+		model = new DefaultTableModel(null, columnNames);
+		playerTable.setModel(model);
+
+		playerTable.setRowSorter(new TableRowSorter<TableModel>(model));
+
+		// 刷新数据
+		ArrayList<Player> pList = bl.getAllPlayers();
+		pList.sort(c);
+		playerTable.refresh(pList, headPanel.getSelected());
+	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		System.out.println(headPanel.getX()+" "+headPanel.getY());
-		System.out.println(selectPanel.getX()+" "+selectPanel.getY());
 
 	}
 
