@@ -50,12 +50,19 @@ public class TeamController {
         matchList = controller.getAllMatches();
         
         for(Match token:matchList){
-            
             parseRecordList(token,0);
             parseRecordList(token,1);
-            
-            crossAssign(token);
         }
+        
+        for(Match token:matchList){
+            computeRounds(token);//进攻防守回合赋值
+        }
+        
+        for(Match token:matchList){
+            computeRival(token);    //对手各种属性
+        }
+        
+        computeEfficiency(teamList);
         
         BLController.progress ++;
     }
@@ -121,24 +128,43 @@ public class TeamController {
         
     }
 
-    //交叉属性赋值
-    private void crossAssign(Match match){
+    //进攻防守回合赋值
+    private void computeRounds(Match match){
+        ArrayList<RecordOfPlayer> recordList1 = match.getFirstRecordList();
+        ArrayList<RecordOfPlayer> recordList2 = match.getSecondRecordList();
+        
         Team team1 = getTeam(match.getTeams()[0]);
         Team team2 = getTeam(match.getTeams()[1]);
         
         //进攻防守回合累加赋值
-        double incrementOfOffensiveRounds1 = team1.getFieldGoalAttemps() + 0.4 * team1.getFreeThrows() - 1.07 * 
-                (1.0 * team1.getOffensiveRebounds() / (team1.getOffensiveRebounds() + team2.getDefensiveRebounds())
-                        * (team1.getFieldGoalAttemps() + team1.getFreeThrows() - team1.getFieldGoalHits() - team1.getFreeThrowHits())
-                        + 1.07 * team1.getTurnOver());
-        double incrementOfOffensiveRounds2 = team2.getFieldGoalAttemps() + 0.4 * team2.getFreeThrows() - 1.07 * 
-                (1.0 * team2.getOffensiveRebounds() / (team2.getOffensiveRebounds() + team1.getDefensiveRebounds())
-                        * (team2.getFieldGoalAttemps() + team2.getFreeThrows() - team2.getFieldGoalHits() - team2.getFreeThrowHits())
-                        + 1.07 * team2.getTurnOver());
-        team1.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds1);
-        team1.setDefensiveRounds(team1.getDefensiveRounds() + incrementOfOffensiveRounds2);
-        team2.setOffensiveRounds(team2.getOffensiveRounds() + incrementOfOffensiveRounds2);  
-        team2.setDefensiveRounds(team2.getDefensiveRounds() + incrementOfOffensiveRounds2);
+        for(RecordOfPlayer record:recordList1){
+            double incrementOfOffensiveRounds1 = record.getFieldAttempts() + 0.4 * record.getFreeThrowAttemps() - 1.07 * 
+                    (1.0 * record.getOffensiveRebounds() / (record.getOffensiveRebounds() + record.getDefensiveRebounds())
+                            * (record.getFieldAttempts() + record.getFreeThrowAttemps() - record.getFieldGoals() - team1.getFreeThrowHits())
+                            + 1.07 * record.getTurnOver());
+            System.out.println(incrementOfOffensiveRounds1);
+            team1.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds1);
+            team2.setDefensiveRounds(team2.getDefensiveRounds() + incrementOfOffensiveRounds1);
+        }
+        
+        for(RecordOfPlayer record:recordList2){
+            double incrementOfOffensiveRounds2 = record.getFieldAttempts() + 0.4 * record.getFreeThrowAttemps() - 1.07 * 
+                    (1.0 * record.getOffensiveRebounds() / (record.getOffensiveRebounds() + record.getDefensiveRebounds())
+                            * (record.getFieldAttempts() + record.getFreeThrowAttemps() - record.getFieldGoals() - team1.getFreeThrowHits())
+                            + 1.07 * record.getTurnOver());
+            System.out.println(incrementOfOffensiveRounds2);
+            team2.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds2);
+            team1.setDefensiveRounds(team2.getDefensiveRounds() + incrementOfOffensiveRounds2);
+        }
+        
+        
+
+    }
+    
+    //对对方各种属性赋值
+    private void computeRival(Match match){
+        Team team1 = getTeam(match.getTeams()[0]);
+        Team team2 = getTeam(match.getTeams()[1]);
         
         //对手各种属性累加赋值，
         team1.setPointsRival(team1.getPointsRival() + match.getPoints()[1]);
@@ -155,21 +181,16 @@ public class TeamController {
             team1.setOffenseReboundsRival(team1.getOffenseReboundsRival() + token.getOffensiveRebounds());
             team1.setDefenseReboundsRival(team1.getDefenseReboundsRival() + token.getDefensiveRebounds());
         }
-        
-        //各种效率计算
-        team1.setOffenseEfficiency(team1.getPoints() * 1.0 / team1.getOffensiveRounds() / 100);
-        team2.setOffenseEfficiency(team2.getPoints() * 1.0 / team2.getOffensiveRounds() / 100);
-        
-        team1.setDefenseEfficiency(1.0 * team2.getPoints() / team1.getDefensiveRounds() / 100);
-        team2.setDefenseEfficiency(1.0 * team1.getPoints() / team2.getDefensiveRounds() / 100);
-        
-        team1.setReboundsEfficiency(team1.getRebounds() * 1.0 / (team1.getRebounds() / team2.getRebounds()));
-        team2.setReboundsEfficiency(team2.getRebounds() * 1.0 / (team2.getRebounds() / team1.getRebounds()));
-        
-        team1.setStealsEfficiency(1.0 * team1.getSteals() / team1.getDefensiveRounds() / 100);
-        team2.setStealsEfficiency(1.0 * team2.getSteals() / team2.getDefensiveRounds() / 100);
-        
-        team1.setAssistsPercentage(1.0 * team1.getAssists() / team1.getOffensiveRounds() / 100);
-        team2.setAssistsPercentage(1.0 * team2.getAssists() / team2.getOffensiveRounds() / 100);
+    }
+
+    //对每个球队计算各种效率
+    private void computeEfficiency(ArrayList<Team> teamList){
+        for(Team team:teamList){
+            team.setOffenseEfficiency(team.getPoints() * 1.0 / team.getOffensiveRounds() / 100);
+            team.setDefenseEfficiency(1.0 * team.getPoints() / team.getDefensiveRounds() / 100);
+            team.setReboundsEfficiency(team.getRebounds() * 1.0 / (team.getRebounds() + team.getReboundsRival()));
+            team.setStealsEfficiency(1.0 * team.getSteals() / team.getDefensiveRounds() / 100);
+            team.setAssistsPercentage(1.0 * team.getAssists() / team.getOffensiveRounds() / 100);
+        }
     }
 }
