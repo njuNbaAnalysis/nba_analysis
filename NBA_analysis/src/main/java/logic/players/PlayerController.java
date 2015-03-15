@@ -77,7 +77,7 @@ public class PlayerController {
 				temp.setFreeThrowAttempts(temp.getFreeThrowAttempts()
 						+ record.getFreeThrowAttemps());
 				temp.setFreeThrowHits(temp.getFreeThrowHits()
-						+ record.getFreeThrowAttemps());
+						+ record.getFreeThrowHits());
 				temp.setMinutes(temp.getMinutes() + record.getMinutes());
 				temp.setOffenseRebounds(temp.getOffenseRebounds()
 						+ record.getOffensiveRebounds());
@@ -88,7 +88,7 @@ public class PlayerController {
 				temp.setThreePointerAttempts(temp.getThreePointerAttempts()
 						+ record.getThreePointAttemps());
 				temp.setThreePointerHits(temp.getThreePointerHits()
-						+ record.getThreePointAttemps());
+						+ record.getThreePointHits());
 				temp.setTurnOver(temp.getTurnOver() + record.getTurnOver());
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);
