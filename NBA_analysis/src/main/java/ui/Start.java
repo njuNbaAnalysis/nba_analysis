@@ -17,13 +17,19 @@ public class Start {
 			@Override
 			public void run() {
 				while (bl.getProgress() < 9) {
-					System.out.println(bl.getProgress());
+					//System.out.println(bl.getProgress());
+					//System.out.println("11");
+				    
+				    try {
+	                    Thread.sleep(300);
+	                } catch (InterruptedException e) {
+	                    e.printStackTrace();
+	                }
+				    
 				}
-				try {
-					Thread.sleep(300);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				
+				
+				
 				System.out.println("sssss");
 				animation.dispose();
 				
