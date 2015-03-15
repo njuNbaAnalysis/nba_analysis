@@ -37,7 +37,7 @@ public class TeamJTable extends StatJTable {
 		s[4] = df.format(t.getThreePointersPercentage() * 100) + "";
 		s[5] = df.format(t.getFreeThrowsPercentage() * 100) + "";
 		s[6] = df.format(t.getAverageOffenseRebounds()) + "";
-		s[7] = df.format(t.getAverageOffenseRebounds()) + "";
+		s[7] = df.format(t.getAverageDefenseRebounds()) + "";
 		s[8] = df.format(t.getAverageRebounds()) + "";
 		s[9] = df.format(t.getAverageAssists()) + "";
 		s[10] = df.format(t.getAverageTurnOver()) + "";
