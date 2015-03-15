@@ -97,10 +97,11 @@ public class TeamReader {
         for(Team token:teamList){
             //if(!token.getName().contains(".svg")) continue;
             
-            String name = token.getName();
+            String abbreviation = token.getAbbreviation();
+            System.out.println("球队名字： " + token.getName());
             SvgImage image = null;
             try {
-                image = new SvgImage(new URL("file:///" + path + "/Data/teams/" + token + ".svg"));
+                image = new SvgImage(new URL("file:///" + path + "/Data/teams/" + abbreviation + ".svg"));
                 token.setLogo(image);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
