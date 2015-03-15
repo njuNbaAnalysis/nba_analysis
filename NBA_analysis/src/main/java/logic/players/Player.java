@@ -258,10 +258,8 @@ public class Player {
 		offenseReboundsPercentage = offenseRebounds*(sumOfTime*1.0/5)/(minutes)/(sumOfoffenseRebounds+sumOfopponentoffenserebounds);
 		defenseReboundsPercentage = defenseRebounds*(sumOfTime*1.0/5)/(minutes)/(sumOfdefenseRebounds+sumOfopponentdefenseRebounds);
 		assistsPercentage = assists/(minutes/(sumOfTime*1.0/5)*(sumOffieldGoalHits+sumOffreeThrowHits)-(fieldGoalHits+freeThrowHits));//球员助攻数÷(球员上场时间÷(球队所有球员上场时间÷5)×球队总进球数-球员进球数) 
-		System.out.println("steals: "+steals);
-		System.out.println("精工回合："+teamName.getDefensiveRounds());
+
 		stealsPercentage = 1.0*steals*(sumOfTime*1.0/5)/minutes/(teamName.getDefensiveRounds());//球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
-		System.out.println("stealsPercentage: "+steals);
 		blockShotsPercentage = blockShots*(sumOfTime/5)/minutes/(teamName.getFieldGoalAttempsRival()-teamName.getThreePointerAttemptsRival());//球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数 
 		turnOverPercentage = turnOver/((fieldGoalAttempts-threePointerAttempts)+0.44*fieldGoalAttempts+turnOver);//：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
 		usage = (fieldGoalAttempts+0.44*freeThrowAttempts)*(sumOfTime/5)/(minutes)/(sumOffieldGoalAttempts+0.44*sumOffreeThrowAttempts+sumOfturnOver);
@@ -488,39 +486,75 @@ public class Player {
 	}
 
 	public double getAverageRebounds(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return rebounds*1.0/gamePlayed;
 	}
 	public double getAverageOffenseRebounds(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return offenseRebounds*1.0/gamePlayed;
 	}
 	public double getAverageDefenseRebounds(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return defenseRebounds*1.0/gamePlayed;
 	}
 	public double getAverageAssists(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return assists*1.0/gamePlayed;
 	}
 	public double getAverageBlockShots(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return blockShots*1.0/gamePlayed;
 	}
 	public double getAverageSteals(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return steals*1.0/gamePlayed;
 	}
 	public double getAverageTurnOver(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return turnOver*1.0/gamePlayed;
 	}
 	public double getAverageMinutes(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return minutes*1.0/gamePlayed/60;
 	}
 	public double getAverageEfficiency(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return efficiency*1.0/gamePlayed;
 	}
 	public double getAverageGmSc(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return gmsc*1.0/gamePlayed;
 	}
 	public double getAverageFouls(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return fouls*1.0/gamePlayed;
 	}
 	public double getAveragePoints(){
+		if(gamePlayed==0){
+			return 0;
+		}
 		return points*1.0/gamePlayed;
 	}
 	
