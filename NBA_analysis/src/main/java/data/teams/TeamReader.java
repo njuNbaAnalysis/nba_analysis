@@ -26,18 +26,20 @@ public class TeamReader {
     private static String dataPath = "Data/teams/";
     
     public void init(){
-        teamList = readTeams();
+        File file = new File(dataPath + "teams");
+        readText(file);
         BLController.progress ++;
         
         Thread thread1 = new Thread(){
             public void run(){
-                readTeams();
+                readImage();
                 BLController.progress ++;
             }
         };
         thread1.start();
     }
     
+    @Deprecated
     public ArrayList<Team> readTeams(){
         double current = System.currentTimeMillis();
         
