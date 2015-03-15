@@ -216,11 +216,13 @@ public class TeamController {
     //对每个球队计算各种效率
     private void computeEfficiency(ArrayList<Team> teamList){
         for(Team team:teamList){
-            team.setOffenseEfficiency(team.getPoints() * 1.0 * team.getOffensiveRounds() / 100);
-            team.setDefenseEfficiency(1.0 * team.getPoints() * team.getDefensiveRounds() / 100);
+            team.setOffenseEfficiency(team.getPoints() * 1.0 / team.getOffensiveRounds() * 100);
+            team.setDefenseEfficiency(1.0 * team.getPoints() / team.getDefensiveRounds() * 100);
+            System.out.println("本队篮板: " + team.getRebounds());
+            System.out.println("对手篮板: " + team.getReboundsRival());
             team.setReboundsEfficiency(team.getRebounds() * 1.0 / (team.getRebounds() + team.getReboundsRival()));
-            team.setStealsEfficiency(1.0 * team.getSteals() * team.getDefensiveRounds() / 100);
-            team.setAssistsPercentage(1.0 * team.getAssists() * team.getOffensiveRounds() / 100);
+            team.setStealsEfficiency(1.0 * team.getSteals() / team.getDefensiveRounds() * 100);
+            team.setAssistsPercentage(1.0 * team.getAssists() / team.getOffensiveRounds() * 100);
         }
     }
 }

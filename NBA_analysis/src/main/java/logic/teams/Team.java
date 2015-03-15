@@ -213,7 +213,7 @@ public class Team {
 
 
     public double getWinningPercentage() {
-        return numOfVictory / numOfMatches;
+        return 1.0 * numOfVictory / numOfMatches;
     }
 
 
