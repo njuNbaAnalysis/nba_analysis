@@ -95,12 +95,12 @@ public class TeamReader {
         String[] list = file.list();
         
         for(Team token:teamList){
-            if(!token.getName().contains(".svg")) continue;
+            //if(!token.getName().contains(".svg")) continue;
             
             String name = token.getName();
             SvgImage image = null;
             try {
-                image = new SvgImage(new URL("file:///" + path + "/Data/teams/" + token));
+                image = new SvgImage(new URL("file:///" + path + "/Data/teams/" + token + ".svg"));
                 token.setLogo(image);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
