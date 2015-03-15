@@ -455,6 +455,11 @@ public class Team {
 	    return 1.0 * this.getPoints() / this.getNumOfMatches();
 	}
 
+	public double getAverageDefenseRebounds() {
+		// TODO Auto-generated method stub
+		return 1.0 * defensiveRebounds / numOfMatches;
+	}
+
 
 
 }
