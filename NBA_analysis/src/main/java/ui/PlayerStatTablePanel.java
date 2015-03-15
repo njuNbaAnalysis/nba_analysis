@@ -16,8 +16,10 @@ import java.util.Comparator;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -34,14 +36,17 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 	private int width;
 	private int height;
 
-	private PlayerJTable playerTable;
+	private StatJTable statTable;
 	private DefaultTableModel model;
 	private SelectPanel selectPanel;
 	private HeadPanel headPanel;
+	private JScrollPane jspane;
 
 	private BLService bl;
+	private int type;
 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		g.setColor(new Color(30, 81, 140));
 		g.fillRect(0, 0, 2000, 50 * height / (1080));
 		g.setColor(new Color(87, 89, 91));
@@ -77,6 +82,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
+		this.type = 1;
 		setLayout(null);
 		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		// setLookAndFeel();
@@ -104,7 +110,7 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		headBar = bufferHeadBar;
 		filter = bufferedFilter;
 
-		this.add(Box.createVerticalStrut(116 * height / (1080)));
+
 
 		headPanel = new HeadPanel(width, 50 * height / (1080), this);
 		headPanel.setBounds(0, 0, width, 50 * height / (1080));
@@ -115,30 +121,37 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 				66 * height / (1080));
 		this.add(selectPanel);
 
-		/*
-		 * String[] columnNames = { "排名", "球队", "场数", "%", "3分%", "罚球%", "进攻篮板",
-		 * "防守篮板", "场均助攻" };
-		 */
-
-		playerTable = new PlayerJTable();
-
-		JScrollPane jspane = new JScrollPane();
-		jspane.setViewportView(playerTable);
+		jspane = new JScrollPane();
 		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
 				* height / (1080));
+		
+		refreshTable(type);
+
 		this.add(jspane);
-		refresh();
+		this.validate();
+		this.repaint();
+
 	}
 
+	public void refreshTable(int type) {
+		//jspane.removeAll();
+		if (type == 1) {
+		
+			statTable = new PlayerJTable(bl);
+		} else if (type == 2) {
+			statTable = new TeamJTable(bl);
+		}
+		statTable.setBounds(200, 200, 800, 600);
+		jspane.setViewportView(statTable);
+		refresh();
+		
+		
+
+	}
+
+
 	public void refresh() {
-
-		// playerTable.setRowSorter(new TableRowSorter<TableModel>(model));
-
-		// 刷新数据
-		ArrayList<Player> pList = bl.getAllPlayers();
-
-		// pList.sort(c);
-		playerTable.refresh(pList, headPanel.getSelected());
+		statTable.refresh(headPanel.getSelected());
 	}
 
 	public void mouseClicked(MouseEvent arg0) {

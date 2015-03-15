@@ -265,10 +265,10 @@ public class MenuPanel extends JPanel {
 			}
 			
 			if(type==1){
-				//球员统计
+				teamRankTablePanel.refreshTable(type);
 			}
 			if(type==2){
-				//球队统计
+				teamRankTablePanel.refreshTable(type);
 				
 			}
 			if(type==5){

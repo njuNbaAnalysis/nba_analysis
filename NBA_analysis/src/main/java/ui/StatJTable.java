@@ -26,9 +26,10 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import logic.BLService;
 import logic.players.Player;
 
-public class StatJTable extends JTable {
+public abstract class StatJTable extends JTable {
 	protected DecimalFormat df = new DecimalFormat("#0.0");
 	protected ArrayList<Image> imageList;
 	// 设置头像大小
@@ -173,5 +174,8 @@ public class StatJTable extends JTable {
 		}
 
 	}
+
+	abstract public void refresh(boolean selected);
+	
 
 }

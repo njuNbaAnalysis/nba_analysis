@@ -17,14 +17,14 @@ public class Start {
 			@Override
 			public void run() {
 				while (bl.getProgress() < 9) {
-					System.out.println(bl.getProgress());
+					//System.out.println(bl.getProgress());
 				}
 				try {
 					Thread.sleep(300);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				System.out.println("sssss");
+				//System.out.println("sssss");
 				animation.dispose();
 				
 				MainFrame start = new MainFrame(bl);
@@ -41,7 +41,7 @@ public class Start {
 		}*/
 		
 		
-		/*MainFrame start = new MainFrame();
-		start.setVisible(true);*/
+		MainFrame start = new MainFrame(null);
+		start.setVisible(true);
 	}
 }

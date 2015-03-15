@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import compare.PlayerAveragePointComparator;
 import compare.PlayerPointComparator;
+import logic.BLService;
 import logic.players.Player;
 
 public class PlayerJTable extends StatJTable {
@@ -19,12 +20,15 @@ public class PlayerJTable extends StatJTable {
 	private static String[] totalColumn = { "排名", "球员", "球队", "场数", "先发", "篮板",
 			"助攻", "在场时间", "投篮命中率%", "三分命中率%", "罚球命中率%", "进攻数", "防守数", "抢断数",
 			"盖帽数", "失误数", "犯规数", " 得分" };
+	private ArrayList<Player> list;
+	public PlayerJTable(BLService bl){
+		list = bl.getAllPlayers();
+	}
 
-	public void refresh(ArrayList<Player> list, boolean selected) {
-		
-		Comparator c;
-		
-		
+	public void refresh(boolean selected) {
+
+		Comparator<Player> c;
+
 		String[] columnNames;
 		if (selected) {
 			columnNames = averageColumn;
@@ -33,14 +37,12 @@ public class PlayerJTable extends StatJTable {
 		} else {
 			columnNames = totalColumn;
 			c = new PlayerPointComparator();
-			//c = new PlayerAveragePointComparator();
 		}
-		DefaultTableModel model = new DefaultTableModel(null, columnNames);
-		Collections.sort(list,c);
-		//this.setModel(model);
+		
+		DefaultTableModel model = new DefaultTableModel(null, columnNames);	
+		
+		Collections.sort(list, c);
 
-		//DefaultTableModel tableModel = (DefaultTableModel) this.getModel();
-		//tableModel.setRowCount(0);// 清除原有行
 		imageList = new ArrayList<Image>();
 
 		for (int i = 0; i < list.size(); i++) {
@@ -64,7 +66,7 @@ public class PlayerJTable extends StatJTable {
 		this.resizeColumnWidth();
 		this.validate();
 		this.repaint();
-
+		System.out.println("JTable"+this.getWidth()+this.getHeight());
 	}
 
 	private String[] getAverageDataRow(Player p, int i) {
@@ -91,6 +93,7 @@ public class PlayerJTable extends StatJTable {
 		s[17] = df.format(p.getAverageTurnOver()) + "";
 		s[18] = df.format(p.getAverageFouls()) + "";
 		s[19] = df.format(p.getAveragePoints()) + "";
+		//System.out.println("得分："+p.getAveragePoints());
 
 		s[20] = df.format(p.getTrueShootingPercentage() * 100) + "";
 		s[21] = df.format(p.getShootingEfficiency() * 100) + "";
@@ -128,4 +131,6 @@ public class PlayerJTable extends StatJTable {
 		return s;
 
 	}
+
+
 }
