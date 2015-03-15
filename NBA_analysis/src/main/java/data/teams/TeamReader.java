@@ -98,7 +98,6 @@ public class TeamReader {
             //if(!token.getName().contains(".svg")) continue;
             
             String abbreviation = token.getAbbreviation();
-            System.out.println("球队名字： " + token.getName());
             SvgImage image = null;
             try {
                 image = new SvgImage(new URL("file:///" + path + "/Data/teams/" + abbreviation + ".svg"));
