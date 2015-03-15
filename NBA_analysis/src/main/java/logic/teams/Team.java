@@ -111,6 +111,7 @@ public class Team {
 
 
     public Image getLogo(int width,int height) {
+    	System.out.println(logo==null);
         return logo.getImage(width, height);
     }
     
@@ -422,35 +423,35 @@ public class Team {
         return 1.0 * fieldGoalHits / fieldGoalAttemps;
     }
 
-	public Object getAverageOffenseRebounds() {
+	public double getAverageOffenseRebounds() {
 		return 1.0 * offensiveRebounds / numOfMatches;
 	}
 
-	public Object getAverageRebounds() {
+	public double getAverageRebounds() {
 		return 1.0 * this.getRebounds() / this.getNumOfMatches();
 	}
 
-	public Object getAverageAssists() {
+	public double getAverageAssists() {
 		return 1.0 * this.getAssists() / this.getNumOfMatches();
 	}
 
-	public Object getAverageTurnOver() {
+	public double getAverageTurnOver() {
 		return 1.0 * this.getTurnOver() / this.getNumOfMatches();
 	}
 
-	public Object getAverageSteals() {
+	public double getAverageSteals() {
 	    return 1.0 * this.getSteals() / this.getNumOfMatches();
 	}
 
-	public Object getAverageBlockShots() {
+	public double getAverageBlockShots() {
 	    return 1.0 * this.getBlockShots() / this.getNumOfMatches();
 	}
 
-	public Object getAverageFouls() {
+	public double getAverageFouls() {
 	    return 1.0 * this.getFouls() / this.getNumOfMatches();
 	}
 
-	public Object getAveragePoints() {
+	public double getAveragePoints() {
 	    return 1.0 * this.getPoints() / this.getNumOfMatches();
 	}
 
