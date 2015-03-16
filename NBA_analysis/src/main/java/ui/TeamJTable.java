@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Image;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,7 +50,8 @@ public class TeamJTable extends StatJTable {
 		s[16] = df.format(t.getOffensiveRounds());
 		s[17] = df.format(t.getOffenseEfficiency()) + "";
 		s[18] = df.format(t.getDefenseEfficiency()) + "";
-		s[19] = df.format(t.getReboundsEfficiency()) + "";
+		DecimalFormat df1 =  new DecimalFormat("#0.000");
+		s[19] = df1.format(t.getReboundsEfficiency()) + "";
 		s[20] = df.format(t.getStealsEfficiency()) + "";
 		s[21] = df.format(t.getAssistsPercentage()) + "";
 		return s;

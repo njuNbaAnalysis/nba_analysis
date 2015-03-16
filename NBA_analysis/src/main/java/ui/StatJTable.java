@@ -57,6 +57,7 @@ public abstract class StatJTable extends JTable {
 		this.getTableHeader().setPreferredSize(new Dimension(10000,40));
 		this.setTableHeaderColor(new Color(158,158,158));
 		this.getTableHeader().setReorderingAllowed(false);
+		this.setAutoCreateRowSorter(true);
 	}
 
 	public void setImageList(ArrayList<Image> portraitsList) {
