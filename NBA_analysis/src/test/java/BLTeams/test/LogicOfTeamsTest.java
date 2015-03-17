@@ -1,10 +1,8 @@
-package DataTeam.test;
+package BLTeams.test;
 
 import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-
-import logic.matches.Match;
+import logic.players.PlayerController;
+import logic.teams.TeamController;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,11 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import data.matches.MatchReader;
-import data.players.PlayerReader;
-import data.teams.TeamReader;
-
-public class DataOfTeamsTest {
+public class LogicOfTeamsTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -34,18 +28,19 @@ public class DataOfTeamsTest {
 	}
 
 	@Test
-	public void testReader() {
-		TeamReader teamRead = new TeamReader();
-		boolean result = (teamRead.readTeams() != null);
+	public void testGet() {
+		TeamController teamcontrol = TeamController.getInstance();
+		boolean result = (teamcontrol. getAllTeams()!= null);
 		assertTrue(result);
 	}
+
 	@Test
-	public void testReaderImage() {
-		TeamReader teamRead = new TeamReader();
+	public void testInit() {
+		TeamController teamcontrol = TeamController.getInstance();
 		boolean result = false;
 
 		try {
-			teamRead.readImage();
+			teamcontrol.init();
 			result = true;
 		} catch (Exception e) {
 			result = false;
@@ -53,18 +48,11 @@ public class DataOfTeamsTest {
 
 		assertTrue(result);
 	}
+	
 	@Test
-	public void testReaderFile() {
-		TeamReader teamRead = new TeamReader();
-		boolean result = false;
-
-		try {
-			teamRead.readText(new File(""));
-			result = true;
-		} catch (Exception e) {
-			result = false;
-		}
-
+	public void testgetTeam() {
+		TeamController teamcontrol = TeamController.getInstance();
+		boolean result = (teamcontrol. getTeam("")== null);
 		assertTrue(result);
 	}
 }

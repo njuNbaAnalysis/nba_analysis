@@ -1,6 +1,8 @@
-package dataPlayers.test;
+package BLMatches.test;
 
 import static org.junit.Assert.assertTrue;
+import logic.matches.MatchController;
+import logic.teams.TeamController;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,9 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import data.players.PlayerReader;
-
-public class DataOfPlayersTest {
+public class LogicOfMatchesTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -28,19 +28,19 @@ public class DataOfPlayersTest {
 	}
 
 	@Test
-	public void testReader() {
-		PlayerReader PlayerRead = new PlayerReader();
-		boolean result = (PlayerRead.readPlayers() != null);
+	public void testGet() {
+		MatchController matchcontrol = MatchController.getInstance();
+		boolean result = (matchcontrol. getAllMatches()!= null);
 		assertTrue(result);
 	}
 
 	@Test
-	public void testReaderAction() {
-		PlayerReader PlayerRead = new PlayerReader();
+	public void testInit() {
+		MatchController matchcontrol = MatchController.getInstance();
 		boolean result = false;
 
 		try {
-			PlayerRead.readAction();
+			matchcontrol.init();
 			result = true;
 		} catch (Exception e) {
 			result = false;
@@ -49,18 +49,4 @@ public class DataOfPlayersTest {
 		assertTrue(result);
 	}
 	
-	@Test
-	public void testReaderImage() {
-		PlayerReader PlayerRead = new PlayerReader();
-		boolean result = false;
-
-		try {
-			PlayerRead.readPortrait();
-			result = true;
-		} catch (Exception e) {
-			result = false;
-		}
-
-		assertTrue(result);
-	}
 }
