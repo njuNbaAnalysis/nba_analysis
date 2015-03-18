@@ -205,14 +205,35 @@ public class Player {
 	private int freeThrowAttempts; // 罚球出手
 
 	public void init() {
+		if (fieldGoalAttempts != 0) {
+			fieldGoalsPercentage = fieldGoalHits * 1.0 / fieldGoalAttempts;
+		} else {
+			fieldGoalsPercentage = 0;
+		}
+		if (threePointerAttempts != 0) {
+			threePointersPercentage = threePointerHits * 1.0
+					/ threePointerAttempts;
+		} else {
+			threePointersPercentage = 0;
+		}
+		if (freeThrowAttempts != 0) {
+			freeThrowsPercentage = freeThrowHits * 1.0 / freeThrowAttempts;
+		} else {
+			freeThrowsPercentage = 0;
+		}
+		if (fieldGoalAttempts != 0 || freeThrowAttempts != 0) {
+			trueShootingPercentage = points * 1.0
+					/ (fieldGoalAttempts + 0.44 * freeThrowAttempts);// 得分÷(2×(投篮出手数+0.44×罚球出手数))
+		} else {
+			trueShootingPercentage = 0;
+		}
+		if (fieldGoalAttempts != 0) {
+			shootingEfficiency = (fieldGoalHits + 0.5 * threePointerHits)
+					/ (fieldGoalAttempts * 1.0);// (投篮命中数+0.5×三分命中数)÷投篮出手数
+		} else {
+			shootingEfficiency = 0;
+		}
 
-		fieldGoalsPercentage = fieldGoalHits * 1.0 / fieldGoalAttempts;
-		threePointersPercentage = threePointerHits * 1.0 / threePointerAttempts;
-		freeThrowsPercentage = freeThrowHits * 1.0 / freeThrowAttempts;
-		trueShootingPercentage = points * 1.0
-				/ (fieldGoalAttempts + 0.44 * freeThrowAttempts);// 得分÷(2×(投篮出手数+0.44×罚球出手数))
-		shootingEfficiency = (fieldGoalHits + 0.5 * threePointerHits)
-				/ (fieldGoalAttempts * 1.0);// (投篮命中数+0.5×三分命中数)÷投篮出手数
 		efficiency = (rebounds + points + blockShots + steals)
 				- (fieldGoalAttempts + threePointerAttempts + freeThrowAttempts
 						- fieldGoalHits - threePointerHits - freeThrowHits)
@@ -227,45 +248,74 @@ public class Player {
 		TeamController teamcontrol = TeamController.getInstance();
 		PlayerController playercontrol = PlayerController.getInstance();
 		Team teamName = teamcontrol.getTeam(team);
-		if(teamName != null){
-		location = teamName.getLocation();
-		ArrayList<String> playerList = teamName.getPlayerList();
-		double sumOfTime = 0;
-		int sumOffieldGoalAttempts = 0;
-		int sumOfrebounds = 0;
-		int sumOfoffenseRebounds = 0;
-		int sumOfdefenseRebounds = 0;
-		int sumOfturnOver = 0;
-		int sumOffreeThrowAttempts = 0;
-		int sumOffreeThrowHits = 0;
-		int sumOffieldGoalHits = 0;
-		int sumOfopponentrebounds = teamName.getReboundsRival();
-		int sumOfopponentoffenserebounds = teamName.getOffenseReboundsRival();
-		int sumOfopponentdefenseRebounds = teamName.getDefenseReboundsRival();
-		for(int i=0;i<playerList.size();i++){
-			if(playercontrol.getPlayer(playerList.get(i)) == null)  continue; //如果有血球员打了比赛，但是没有该球员的数据
-			sumOfTime += playercontrol.getPlayer(playerList.get(i)).getMinutes();
-			sumOffieldGoalAttempts+=playercontrol.getPlayer(playerList.get(i)).getFieldGoalAttempts();
-			sumOfrebounds+=playercontrol.getPlayer(playerList.get(i)).getRebounds();
-			sumOfdefenseRebounds +=playercontrol.getPlayer(playerList.get(i)).getDefenseRebounds();
-			sumOfoffenseRebounds +=playercontrol.getPlayer(playerList.get(i)).getOffenseRebounds();
-			sumOfturnOver+=playercontrol.getPlayer(playerList.get(i)).getTurnOver();
-			sumOffreeThrowAttempts+=playercontrol.getPlayer(playerList.get(i)).getFreeThrowAttempts();
-			sumOffreeThrowHits+=playercontrol.getPlayer(playerList.get(i)).getFreeThrowHits();
-			sumOffieldGoalHits +=playercontrol.getPlayer(playerList.get(i)).getFieldGoalHits();
-		}
-		reboundsPercentage = rebounds*(sumOfTime*1.0/5)/(minutes)/(sumOfrebounds+sumOfopponentrebounds);// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
-		offenseReboundsPercentage = offenseRebounds*(sumOfTime*1.0/5)/(minutes)/(sumOfoffenseRebounds+sumOfopponentoffenserebounds);
-		defenseReboundsPercentage = defenseRebounds*(sumOfTime*1.0/5)/(minutes)/(sumOfdefenseRebounds+sumOfopponentdefenseRebounds);
-		assistsPercentage = assists/(minutes/(sumOfTime*1.0/5)*(sumOffieldGoalHits+sumOffreeThrowHits)-(fieldGoalHits+freeThrowHits));//球员助攻数÷(球员上场时间÷(球队所有球员上场时间÷5)×球队总进球数-球员进球数) 
+		if (teamName != null) {
+			location = teamName.getLocation();
+			ArrayList<String> playerList = teamName.getPlayerList();
+			double sumOfTime = 0;
+			int sumOffieldGoalAttempts = 0;
+			int sumOfrebounds = 0;
+			int sumOfoffenseRebounds = 0;
+			int sumOfdefenseRebounds = 0;
+			int sumOfturnOver = 0;
+			int sumOffreeThrowAttempts = 0;
+			int sumOffreeThrowHits = 0;
+			int sumOffieldGoalHits = 0;
+			int sumOfopponentrebounds = teamName.getReboundsRival();
+			int sumOfopponentoffenserebounds = teamName
+					.getOffenseReboundsRival();
+			int sumOfopponentdefenseRebounds = teamName
+					.getDefenseReboundsRival();
+			for (int i = 0; i < playerList.size(); i++) {
+				if (playercontrol.getPlayer(playerList.get(i)) == null)
+					continue; // 如果有血球员打了比赛，但是没有该球员的数据
+				sumOfTime += playercontrol.getPlayer(playerList.get(i))
+						.getMinutes();
+				sumOffieldGoalAttempts += playercontrol.getPlayer(
+						playerList.get(i)).getFieldGoalAttempts();
+				sumOfrebounds += playercontrol.getPlayer(playerList.get(i))
+						.getRebounds();
+				sumOfdefenseRebounds += playercontrol.getPlayer(
+						playerList.get(i)).getDefenseRebounds();
+				sumOfoffenseRebounds += playercontrol.getPlayer(
+						playerList.get(i)).getOffenseRebounds();
+				sumOfturnOver += playercontrol.getPlayer(playerList.get(i))
+						.getTurnOver();
+				sumOffreeThrowAttempts += playercontrol.getPlayer(
+						playerList.get(i)).getFreeThrowAttempts();
+				sumOffreeThrowHits += playercontrol
+						.getPlayer(playerList.get(i)).getFreeThrowHits();
+				sumOffieldGoalHits += playercontrol
+						.getPlayer(playerList.get(i)).getFieldGoalHits();
+			}
+			reboundsPercentage = rebounds * (sumOfTime * 1.0 / 5) / (minutes)
+					/ (sumOfrebounds + sumOfopponentrebounds);// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
+			offenseReboundsPercentage = offenseRebounds * (sumOfTime * 1.0 / 5)
+					/ (minutes)
+					/ (sumOfoffenseRebounds + sumOfopponentoffenserebounds);
+			defenseReboundsPercentage = defenseRebounds * (sumOfTime * 1.0 / 5)
+					/ (minutes)
+					/ (sumOfdefenseRebounds + sumOfopponentdefenseRebounds);
+			assistsPercentage = assists
+					/ (minutes / (sumOfTime * 1.0 / 5)
+							* (sumOffieldGoalHits + sumOffreeThrowHits) - (fieldGoalHits + freeThrowHits));// 球员助攻数÷(球员上场时间÷(球队所有球员上场时间÷5)×球队总进球数-球员进球数)
 
-		stealsPercentage = 1.0*steals*(sumOfTime*1.0/5)/minutes/(teamName.getDefensiveRounds());//球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
-		blockShotsPercentage = blockShots*(sumOfTime/5)/minutes/(teamName.getFieldGoalAttempsRival()-teamName.getThreePointerAttemptsRival());//球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数 
-		turnOverPercentage = turnOver/((fieldGoalAttempts-threePointerAttempts)+0.44*fieldGoalAttempts+turnOver);//：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
-		usage = (fieldGoalAttempts+0.44*freeThrowAttempts)*(sumOfTime/5)/(minutes)/(sumOffieldGoalAttempts+0.44*sumOffreeThrowAttempts+sumOfturnOver);
-		//		： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
-//				上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
-//				次数+球队所有球员失误次数) 
+			stealsPercentage = 1.0 * steals * (sumOfTime * 1.0 / 5) / minutes
+					/ (teamName.getDefensiveRounds());// 球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
+			blockShotsPercentage = blockShots
+					* (sumOfTime / 5)
+					/ minutes
+					/ (teamName.getFieldGoalAttempsRival() - teamName
+							.getThreePointerAttemptsRival());// 球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数
+			turnOverPercentage = turnOver
+					/ ((fieldGoalAttempts - threePointerAttempts) + 0.44
+							* fieldGoalAttempts + turnOver);// ：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
+			usage = (fieldGoalAttempts + 0.44 * freeThrowAttempts)
+					* (sumOfTime / 5)
+					/ (minutes)
+					/ (sumOffieldGoalAttempts + 0.44 * sumOffreeThrowAttempts + sumOfturnOver);
+			// ： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
+			// 上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
+			// 次数+球队所有球员失误次数)
 		}
 	}
 
@@ -485,78 +535,88 @@ public class Player {
 
 	}
 
-	public double getAverageRebounds(){
-		if(gamePlayed==0){
+	public double getAverageRebounds() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return rebounds*1.0/gamePlayed;
+		return rebounds * 1.0 / gamePlayed;
 	}
-	public double getAverageOffenseRebounds(){
-		if(gamePlayed==0){
+
+	public double getAverageOffenseRebounds() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return offenseRebounds*1.0/gamePlayed;
+		return offenseRebounds * 1.0 / gamePlayed;
 	}
-	public double getAverageDefenseRebounds(){
-		if(gamePlayed==0){
+
+	public double getAverageDefenseRebounds() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return defenseRebounds*1.0/gamePlayed;
+		return defenseRebounds * 1.0 / gamePlayed;
 	}
-	public double getAverageAssists(){
-		if(gamePlayed==0){
+
+	public double getAverageAssists() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return assists*1.0/gamePlayed;
+		return assists * 1.0 / gamePlayed;
 	}
-	public double getAverageBlockShots(){
-		if(gamePlayed==0){
+
+	public double getAverageBlockShots() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return blockShots*1.0/gamePlayed;
+		return blockShots * 1.0 / gamePlayed;
 	}
-	public double getAverageSteals(){
-		if(gamePlayed==0){
+
+	public double getAverageSteals() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return steals*1.0/gamePlayed;
+		return steals * 1.0 / gamePlayed;
 	}
-	public double getAverageTurnOver(){
-		if(gamePlayed==0){
+
+	public double getAverageTurnOver() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return turnOver*1.0/gamePlayed;
+		return turnOver * 1.0 / gamePlayed;
 	}
-	public double getAverageMinutes(){
-		if(gamePlayed==0){
+
+	public double getAverageMinutes() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return minutes*1.0/gamePlayed/60;
+		return minutes * 1.0 / gamePlayed / 60;
 	}
-	public double getAverageEfficiency(){
-		if(gamePlayed==0){
+
+	public double getAverageEfficiency() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return efficiency*1.0/gamePlayed;
+		return efficiency * 1.0 / gamePlayed;
 	}
-	public double getAverageGmSc(){
-		if(gamePlayed==0){
+
+	public double getAverageGmSc() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return gmsc*1.0/gamePlayed;
+		return gmsc * 1.0 / gamePlayed;
 	}
-	public double getAverageFouls(){
-		if(gamePlayed==0){
+
+	public double getAverageFouls() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return fouls*1.0/gamePlayed;
+		return fouls * 1.0 / gamePlayed;
 	}
-	public double getAveragePoints(){
-		if(gamePlayed==0){
+
+	public double getAveragePoints() {
+		if (gamePlayed == 0) {
 			return 0;
 		}
-		return points*1.0/gamePlayed;
+		return points * 1.0 / gamePlayed;
 	}
-	
 
 }
