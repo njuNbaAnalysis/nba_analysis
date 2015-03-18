@@ -111,8 +111,9 @@ public final class SvgImage {
             scaleX = scaleY = width/bounds.getWidth();
             height = (int) (scaleY * bounds.getHeight());
         }else{
-            scaleX = width/bounds.getWidth();
-            scaleY = height/bounds.getHeight();
+            //changed by lionel233
+            scaleX = width/((bounds.getWidth() + bounds.getHeight()) / 1.5);
+            scaleY = height/((bounds.getWidth() + bounds.getHeight()) / 1.5);
         }
         
         // Paint svg into image buffer
