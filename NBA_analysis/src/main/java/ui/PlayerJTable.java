@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
+import compare.PlayerAssistsComp;
+import compare.PlayerBlockShotsComp;
 import compare.PlayerBlockShotsPercentageComp;
 import compare.PlayerAssistsPercentageComp;
 import compare.PlayerAverageAssistsComp;
@@ -23,22 +25,29 @@ import compare.PlayerAveragePointsComp;
 import compare.PlayerAverageReboundsComp;
 import compare.PlayerAverageStealsComp;
 import compare.PlayerAverageTurnOverComp;
+import compare.PlayerDefenseReboundsComp;
 import compare.PlayerDefenseReboundsPercentageComp;
 import compare.PlayerEfficiencyComp;
 import compare.PlayerFieldGoalsPercentageComp;
+import compare.PlayerFoulsComp;
 import compare.PlayerFreeThrowsPercentageComp;
 import compare.PlayerGamePlayedComp;
 import compare.PlayerGameStartedComp;
 import compare.PlayerGmScComp;
 import compare.PlayerMinutesComp;
 import compare.PlayerNameComp;
+import compare.PlayerOffenseReboundsComp;
 import compare.PlayerOffenseReboundsPercentageComp;
 import compare.PlayerPointsComp;
+import compare.PlayerReboundsComp;
 import compare.PlayerReboundsPercentageComp;
 import compare.PlayerShootingEfficiencyComp;
+import compare.PlayerStealsComp;
 import compare.PlayerStealsPercentageComp;
+import compare.PlayerTeamNameComp;
 import compare.PlayerThreePointersPercentageComp;
 import compare.PlayerTrueShootingPercentageComp;
+import compare.PlayerTurnOverComp;
 import compare.PlayerTurnOverPercentageComp;
 import compare.PlayerUsageComp;
 import logic.players.Player;
@@ -64,15 +73,13 @@ public class PlayerJTable extends StatJTable {
 
 	public void refresh(boolean selected, Comparator c) {
 
-		
+		this.selected = selected;
 
 		String[] columnNames;
 		if (selected) {
 			columnNames = averageColumn;
 			if (c == null) {
 				c = new PlayerAveragePointsComp();
-			}else{
-				System.out.println("传完之后:"+ c.getClass());
 			}
 
 		} else {
@@ -85,9 +92,7 @@ public class PlayerJTable extends StatJTable {
 		
 		
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
-
 		Collections.sort(list, c);
-		System.out.println("排序"+ c.getClass());
 		imageList = new ArrayList<Image>();
 
 		for (int i = 0; i < list.size(); i++) {
@@ -169,7 +174,7 @@ public class PlayerJTable extends StatJTable {
 		s[11] = p.getOffenseRebounds() + "";
 		s[12] = p.getDefenseRebounds() + "";
 		s[13] = p.getSteals() + "";
-		s[14] = p.getRebounds() + "";
+		s[14] = p.getBlockShots() + "";
 		s[15] = p.getTurnOver() + "";
 		s[16] = p.getFouls() + "";
 		s[17] = p.getPoints() + "";
@@ -186,97 +191,159 @@ public class PlayerJTable extends StatJTable {
 			int i = columnAtPoint(e.getPoint());
 			int j = convertColumnIndexToModel(i);
 			System.out.println(j);
-			switch (j) {
-			case 1:
-				c = new PlayerNameComp();
-				break;
-			case 3:
-				c = new PlayerGamePlayedComp();
-				break;
-			case 4:
-				c = new PlayerGameStartedComp();
-				break;
-			case 5:
-				c = new PlayerAverageReboundsComp();
-				break;
-			case 6:
-				c = new PlayerAverageAssistsComp();
-				break;
-			case 7:
-				c = new PlayerMinutesComp();
-				break;
-			case 8:
-				c = new PlayerEfficiencyComp();
-				break;
-			case 9:
-				c = new PlayerGmScComp();
-				break;
-			case 10:
-				c = new PlayerFieldGoalsPercentageComp();
-				break;
-			case 11:
-				c = new PlayerThreePointersPercentageComp();
-				break;
-			case 12:
-				c = new PlayerFreeThrowsPercentageComp();
-				break;
-			case 13:
-				c = new PlayerAverageOffenseReboundsComp();
-				break;
-			case 14:
-				c = new PlayerAverageDefenseReboundsComp();
-				break;
-			case 15:
-				c = new PlayerAverageStealsComp();
-				break;
-			case 16:
-				c = new PlayerAverageBlockShotsComp();
-				break;
-			case 17:
-				c = new PlayerAverageTurnOverComp();
-				break;
-			case 18:
-				c = new PlayerAverageFoulsComp();
-				break;
-			case 19:
-				c = new PlayerAveragePointsComp();
-				break;
-			case 20:
-				c = new PlayerTrueShootingPercentageComp();
-				break;
-			case 21:
-				c = new PlayerShootingEfficiencyComp();
-				break;
-			case 22:
-				c = new PlayerReboundsPercentageComp();
-				break;
-			case 23:
-				c = new PlayerOffenseReboundsPercentageComp();
-				break;
-			case 24:
-				c = new PlayerDefenseReboundsPercentageComp();
-				break;
-			case 25:
-				c = new PlayerAssistsPercentageComp();
-				break;
-			case 26:
-				c = new PlayerStealsPercentageComp();
-				break;
-			case 27:
-				c = new PlayerBlockShotsPercentageComp();
-				break;
-			case 28:
-				c = new PlayerTurnOverPercentageComp();
-				break;
-			case 29:
-				c = new PlayerUsageComp();
-				break;
-			default:
-				c = new PlayerAveragePointsComp();
+			if(selected){
+				switch (j) {
+				case 1:
+					c = new PlayerNameComp();
+					break;
+				case 3:
+					c = new PlayerGamePlayedComp();
+					break;
+				case 4:
+					c = new PlayerGameStartedComp();
+					break;
+				case 5:
+					c = new PlayerAverageReboundsComp();
+					break;
+				case 6:
+					c = new PlayerAverageAssistsComp();
+					break;
+				case 7:
+					c = new PlayerMinutesComp();
+					break;
+				case 8:
+					c = new PlayerEfficiencyComp();
+					break;
+				case 9:
+					c = new PlayerGmScComp();
+					break;
+				case 10:
+					c = new PlayerFieldGoalsPercentageComp();
+					break;
+				case 11:
+					c = new PlayerThreePointersPercentageComp();
+					break;
+				case 12:
+					c = new PlayerFreeThrowsPercentageComp();
+					break;
+				case 13:
+					c = new PlayerAverageOffenseReboundsComp();
+					break;
+				case 14:
+					c = new PlayerAverageDefenseReboundsComp();
+					break;
+				case 15:
+					c = new PlayerAverageStealsComp();
+					break;
+				case 16:
+					c = new PlayerAverageBlockShotsComp();
+					break;
+				case 17:
+					c = new PlayerAverageTurnOverComp();
+					break;
+				case 18:
+					c = new PlayerAverageFoulsComp();
+					break;
+				case 19:
+					c = new PlayerAveragePointsComp();
+					break;
+				case 20:
+					c = new PlayerTrueShootingPercentageComp();
+					break;
+				case 21:
+					c = new PlayerShootingEfficiencyComp();
+					break;
+				case 22:
+					c = new PlayerReboundsPercentageComp();
+					break;
+				case 23:
+					c = new PlayerOffenseReboundsPercentageComp();
+					break;
+				case 24:
+					c = new PlayerDefenseReboundsPercentageComp();
+					break;
+				case 25:
+					c = new PlayerAssistsPercentageComp();
+					break;
+				case 26:
+					c = new PlayerStealsPercentageComp();
+					break;
+				case 27:
+					c = new PlayerBlockShotsPercentageComp();
+					break;
+				case 28:
+					c = new PlayerTurnOverPercentageComp();
+					break;
+				case 29:
+					c = new PlayerUsageComp();
+					break;
+				default:
+					c = new PlayerAveragePointsComp();
 
+				}
+			}else{
+				switch (j) {
+				case 1:
+					c = new PlayerNameComp();
+					break;
+				case 2:
+					c = new PlayerTeamNameComp();
+					break;
+				case 3:
+					c = new PlayerGamePlayedComp();
+					break;
+				case 4:
+					c = new PlayerGameStartedComp();
+					break;
+				case 5:
+					c = new PlayerReboundsComp();
+					break;
+				case 6:
+					c = new PlayerAssistsComp();
+					break;
+				case 7:
+					c = new PlayerMinutesComp();
+					break;
+				
+				case 8:
+					c = new PlayerFieldGoalsPercentageComp();
+					break;
+				case 9:
+					c = new PlayerThreePointersPercentageComp();
+					break;
+				case 10:
+					c = new PlayerFreeThrowsPercentageComp();
+					break;
+				case 11:
+					c = new PlayerOffenseReboundsComp();
+					break;
+				case 12:
+					c = new PlayerDefenseReboundsComp();
+					break;
+				case 13:
+					c = new PlayerStealsComp();
+					break;
+				case 14:
+					c = new PlayerBlockShotsComp();
+					break;
+				case 15:
+					c = new PlayerTurnOverComp();
+					break;
+				case 16:
+					c = new PlayerFoulsComp();
+					break;
+				case 17:
+					c = new PlayerPointsComp();
+					break;
+				
+				default:
+					c = new PlayerPointsComp();
+
+				}
 			}
+			
 			System.out.println("c:"+c.getClass());
-			refresh(true, c);
+			refresh(selected, c);
 			
 		}
 
