@@ -148,7 +148,12 @@ public class Team {
 
 
     public double getThreePointersPercentage() {
-        return 1.0 * threePointerHits / threePointerAttempts;
+        if(threePointerAttempts == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * threePointerHits / threePointerAttempts;
+        }
     }
 
 
@@ -163,7 +168,12 @@ public class Team {
 
 
     public double getFreeThrowsPercentage() {
-        return 1.0 * freeThrowHits / freeThrowAttempts;
+        if(freeThrowAttempts == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * freeThrowHits / freeThrowAttempts;
+        }
     }
 
 
@@ -213,7 +223,12 @@ public class Team {
 
 
     public double getWinningPercentage() {
-        return 1.0 * numOfVictory / numOfMatches;
+        if(numOfMatches == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * numOfVictory / numOfMatches;
+        }
     }
 
 
@@ -420,46 +435,92 @@ public class Team {
     }
 
     public double getFieldGoalsPercentage() {
-        return 1.0 * fieldGoalHits / fieldGoalAttemps;
+        if(fieldGoalAttemps == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * fieldGoalHits / fieldGoalAttemps;
+        }
     }
 
 	public double getAverageOffenseRebounds() {
-		return 1.0 * offensiveRebounds / numOfMatches;
+	    if(numOfMatches == 0){
+	        return 0;
+	    }
+	    else{
+	        return 1.0 * offensiveRebounds / numOfMatches;
+	    }
 	}
 
 	public double getAverageRebounds() {
-		return 1.0 * this.getRebounds() / this.getNumOfMatches();
+	    if(this.getNumOfMatches() == 0){
+	        return 0;
+	    }
+	    else{
+	        return 1.0 * this.getRebounds() / this.getNumOfMatches();
+	    }
 	}
 
 	public double getAverageAssists() {
-		return 1.0 * this.getAssists() / this.getNumOfMatches();
+	    if(this.getNumOfMatches() == 0){
+	        return 0;
+	    }
+	    else{
+	        return 1.0 * this.getAssists() / this.getNumOfMatches();
+	    }
 	}
 
 	public double getAverageTurnOver() {
-		return 1.0 * this.getTurnOver() / this.getNumOfMatches();
+	    if(this.getNumOfMatches() == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * this.getTurnOver() / this.getNumOfMatches();
+        }
 	}
 
 	public double getAverageSteals() {
-	    return 1.0 * this.getSteals() / this.getNumOfMatches();
+	    if(this.getNumOfMatches() == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * this.getSteals() / this.getNumOfMatches();
+        }
 	}
 
 	public double getAverageBlockShots() {
-	    return 1.0 * this.getBlockShots() / this.getNumOfMatches();
+	    if(this.getNumOfMatches() == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * this.getBlockShots() / this.getNumOfMatches();
+        }
 	}
 
 	public double getAverageFouls() {
-	    return 1.0 * this.getFouls() / this.getNumOfMatches();
+	    if(this.getNumOfMatches() == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * this.getFouls() / this.getNumOfMatches();
+        }
 	}
 
 	public double getAveragePoints() {
-	    return 1.0 * this.getPoints() / this.getNumOfMatches();
+	    if(this.getNumOfMatches() == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * this.getPoints() / this.getNumOfMatches();
+        }
 	}
 
 	public double getAverageDefenseRebounds() {
-		// TODO Auto-generated method stub
-		return 1.0 * defensiveRebounds / numOfMatches;
+	    if(numOfMatches == 0){
+            return 0;
+        }
+        else{
+            return 1.0 * defensiveRebounds / numOfMatches;
+        }
 	}
-
-
-
 }
