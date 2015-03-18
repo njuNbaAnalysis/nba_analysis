@@ -117,7 +117,9 @@ public class PlayerStatTablePanel extends JPanel {
 		this.add(selectPanel);
 
 		jspane = new JScrollPane();
-		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
+//		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
+//				* height / (1080));
+		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 200
 				* height / (1080));
 		
 		refreshTable(type);

@@ -38,6 +38,8 @@ public abstract class StatJTable extends JTable {
 	// 设置头像大小
 	protected int portraitWidth;
 	protected int portraitHeight;
+	//选中平均还是总数
+	protected boolean selected;
 
 	public StatJTable() {
 		super();

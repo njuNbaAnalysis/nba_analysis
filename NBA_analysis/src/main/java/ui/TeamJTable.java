@@ -39,6 +39,7 @@ import compare.PlayerThreePointersPercentageComp;
 import compare.PlayerTrueShootingPercentageComp;
 import compare.PlayerTurnOverPercentageComp;
 import compare.PlayerUsageComp;
+import compare.TeamAssistsComp;
 import compare.TeamAssistsPercentageComp;
 import compare.TeamAverageAssistsComp;
 import compare.TeamAverageBlockShotsComp;
@@ -47,16 +48,29 @@ import compare.TeamAveragePointsComp;
 import compare.TeamAverageReboundsComp;
 import compare.TeamAverageStealsComp;
 import compare.TeamAverageTurnOverComp;
+import compare.TeamBlockShotsComp;
 import compare.TeamDefenseEfficiencyComp;
+import compare.TeamDefenseReboundsComp;
+import compare.TeamFieldGoalAttemptsComp;
+import compare.TeamFieldGoalHitsComp;
 import compare.TeamFieldGoalsPercentageComp;
+import compare.TeamFoulsComp;
+import compare.TeamFreeThrowAttemptsComp;
+import compare.TeamFreeThrowHitsComp;
 import compare.TeamFreeThrowsPercentageComp;
 import compare.TeamNameComp;
 import compare.TeamOffenseEfficiencyComp;
+import compare.TeamOffenseReboundsComp;
 import compare.TeamOffenseRoundsComp;
 import compare.TeamPointsComp;
+import compare.TeamReboundsComp;
 import compare.TeamReboundsEfficiencyComp;
+import compare.TeamStealsComp;
 import compare.TeamStealsEfficiencyComp;
+import compare.TeamThreePointersAttemptsComp;
+import compare.TeamThreePointersHitsComp;
 import compare.TeamThreePointersPercentageComp;
+import compare.TeamTurnOversComp;
 import compare.TeamWinPercentageComp;
 import logic.teams.Team;
 
@@ -133,7 +147,7 @@ public class TeamJTable extends StatJTable {
 
 	@Override
 	public void refresh(boolean selected, Comparator c) {
-		// Comparator<Team> c;
+		this.selected = selected;
 
 		String[] columnNames;
 		if (selected) {
@@ -148,10 +162,9 @@ public class TeamJTable extends StatJTable {
 			c = new TeamWinPercentageComp();
 		}
 		Collections.sort(list, c);
-		
+
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 
-		
 		imageList = new ArrayList<Image>();
 
 		for (int i = 0; i < list.size(); i++) {
@@ -186,76 +199,135 @@ public class TeamJTable extends StatJTable {
 			Comparator c = null;
 			int i = columnAtPoint(e.getPoint());
 			int j = convertColumnIndexToModel(i);
-			System.out.println(j);
-			switch (j) {
-			case 1:
-				c = new TeamNameComp();
-				break;
+			if (selected) {
+				switch (j) {
+				case 1:
+					c = new TeamNameComp();
+					break;
 
-			case 3:
-				c = new TeamFieldGoalsPercentageComp();
-				break;
-			case 4:
-				c = new TeamThreePointersPercentageComp();
-				break;
-			case 5:
-				c = new TeamFreeThrowsPercentageComp();
-				break;
-			case 6:
-				c = new TeamOffenseRoundsComp();
-				break;
-			case 7:
-				c = new TeamDefenseEfficiencyComp();
-				break;
-			case 8:
-				c = new TeamAverageReboundsComp();
-				break;
-			case 9:
-				c = new TeamAverageAssistsComp();
-				break;
-			case 10:
-				c = new TeamAverageTurnOverComp();
-				break;
-			case 11:
-				c = new TeamAverageStealsComp();
-				break;
-			case 12:
-				c = new TeamAverageBlockShotsComp();
-				break;
-			case 13:
-				c = new TeamAverageFoulsComp();
-				break;
-			case 14:
-				c = new TeamAveragePointsComp();
-				break;
-			case 15:
-				c = new TeamWinPercentageComp();
-				break;
-			case 16:
-				c = new TeamOffenseRoundsComp();
-				break;
-			case 17:
-				c = new TeamOffenseEfficiencyComp();
-				break;
-			case 18:
-				c = new TeamDefenseEfficiencyComp();
-				break;
-			case 19:
-				c = new TeamReboundsEfficiencyComp();
-				break;
-			case 20:
-				c = new TeamStealsEfficiencyComp();
-				break;
-			case 21:
-				c = new TeamAssistsPercentageComp();
-				break;
+				case 3:
+					c = new TeamFieldGoalsPercentageComp();
+					break;
+				case 4:
+					c = new TeamThreePointersPercentageComp();
+					break;
+				case 5:
+					c = new TeamFreeThrowsPercentageComp();
+					break;
+				case 6:
+					c = new TeamOffenseReboundsComp();
+					break;
+				case 7:
+					c = new TeamDefenseReboundsComp();
+					break;
+				case 8:
+					c = new TeamAverageReboundsComp();
+					break;
+				case 9:
+					c = new TeamAverageAssistsComp();
+					break;
+				case 10:
+					c = new TeamAverageTurnOverComp();
+					break;
+				case 11:
+					c = new TeamAverageStealsComp();
+					break;
+				case 12:
+					c = new TeamAverageBlockShotsComp();
+					break;
+				case 13:
+					c = new TeamAverageFoulsComp();
+					break;
+				case 14:
+					c = new TeamAveragePointsComp();
+					break;
+				case 15:
+					c = new TeamWinPercentageComp();
+					break;
+				case 16:
+					c = new TeamOffenseRoundsComp();
+					break;
+				case 17:
+					c = new TeamOffenseEfficiencyComp();
+					break;
+				case 18:
+					c = new TeamDefenseEfficiencyComp();
+					break;
+				case 19:
+					c = new TeamReboundsEfficiencyComp();
+					break;
+				case 20:
+					c = new TeamStealsEfficiencyComp();
+					break;
+				case 21:
+					c = new TeamAssistsPercentageComp();
+					break;
 
-			default:
-				c = new TeamWinPercentageComp();
+				default:
+					c = new TeamWinPercentageComp();
 
+				}
+			} else {
+
+				switch (j) {
+				case 1:
+					c = new TeamNameComp();
+					break;
+
+				case 3:
+					c = new TeamFieldGoalHitsComp();
+					break;
+				case 4:
+					c = new TeamFieldGoalAttemptsComp();
+					break;
+				case 5:
+					c = new TeamThreePointersHitsComp();
+					break;
+				case 6:
+					c = new TeamThreePointersAttemptsComp();
+					break;
+				case 7:
+					c = new TeamFreeThrowHitsComp();
+					break;
+				case 8:
+					c = new TeamFreeThrowAttemptsComp();
+					break;
+				case 9:
+					c = new TeamOffenseReboundsComp();
+					break;
+				case 10:
+					c = new TeamDefenseReboundsComp();
+					break;
+				case 11:
+					c = new TeamReboundsComp();
+					break;
+				case 12:
+					c = new TeamAssistsComp();
+					break;
+				case 13:
+					c = new TeamStealsComp();
+					break;
+				case 14:
+					c = new TeamBlockShotsComp();
+					break;
+				case 15:
+					c = new TeamTurnOversComp();
+					break;
+				case 16:
+					c = new TeamFoulsComp();
+					break;
+				case 17:
+					c = new TeamPointsComp();
+					break;
+				default:
+					c = new TeamWinPercentageComp();
+
+				}
 			}
-			//System.out.println("c:" + c.getClass());
-			refresh(true, c);
+			System.out.println(j);
+
+			// System.out.println("c:" + c.getClass());
+			refresh(selected, c);
 
 		}
 
