@@ -24,12 +24,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import compare.PlayerAveragePointComparator;
-import compare.PlayerPointComparator;
-import logic.BLService;
+import compare.PlayerAveragePointsComp;
+import compare.PlayerPointsComp;
 import logic.players.Player;
 
-public class PlayerStatTablePanel extends JPanel implements MouseListener {
+public class PlayerStatTablePanel extends JPanel {
 
 	private static Image headBar;
 	private static Image filter;
@@ -84,8 +83,6 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		this.bl = bl;
 		this.type = 1;
 		setLayout(null);
-		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		// setLookAndFeel();
 
 		BufferedImage bufferHeadBar = null;
 		BufferedImage bufferedFilter = null;
@@ -93,12 +90,10 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 		try {
 			bufferHeadBar = ImageIO.read(new File("image" + File.separator
 					+ "headBar.png"));
-			System.out.println(bufferHeadBar.getHeight() + " sss"
-					+ bufferHeadBar.getWidth());
+		
 			bufferHeadBar = MenuPanel.resize(bufferHeadBar,
 					width * 800 / (1920), height * 50 / (1080));
-			System.out.println(bufferHeadBar.getHeight() + " sss"
-					+ bufferHeadBar.getWidth());
+		
 			bufferedFilter = ImageIO.read(new File("image" + File.separator
 					+ "filter.png"));
 			bufferedFilter = MenuPanel.resize(bufferedFilter,
@@ -133,16 +128,19 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 	}
 
-	public void refreshTable(int type) {
-		//jspane.removeAll();
-		if (type == 1) {
+	public void refreshTable(int t) {
 		
-			statTable = new PlayerJTable(bl);
-		} else if (type == 2) {
-			statTable = new TeamJTable(bl);
+		if ((t == 1&&type!=t&&statTable!=null)||statTable==null) {
+		
+			statTable = new PlayerJTable(bl,800, 600);
+			statTable.setBounds(200, 200, 800, 600);
+			jspane.setViewportView(statTable);
+		} else if (t == 2&&type!=t) {
+			statTable = new TeamJTable(bl,800, 600);
+			statTable.setBounds(200, 200, 800, 600);
+			jspane.setViewportView(statTable);
 		}
-		statTable.setBounds(200, 200, 800, 600);
-		jspane.setViewportView(statTable);
+		type = t;
 		refresh();
 		
 		
@@ -151,31 +149,9 @@ public class PlayerStatTablePanel extends JPanel implements MouseListener {
 
 
 	public void refresh() {
-		statTable.refresh(headPanel.getSelected());
+		statTable.refresh(headPanel.getSelected(),null);
 	}
 
-	public void mouseClicked(MouseEvent arg0) {
 
-	}
-
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO 自动生成的方法存根
-
-	}
-
-	public void mouseExited(MouseEvent arg0) {
-		// TODO 自动生成的方法存根
-
-	}
-
-	public void mousePressed(MouseEvent arg0) {
-		// TODO 自动生成的方法存根
-
-	}
-
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO 自动生成的方法存根
-
-	}
 
 }

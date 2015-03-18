@@ -12,9 +12,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.DefaultRowSorter;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -25,16 +27,17 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
-import logic.BLService;
 import logic.players.Player;
 
 public abstract class StatJTable extends JTable {
 	protected DecimalFormat df = new DecimalFormat("#0.0");
 	protected ArrayList<Image> imageList;
 	// 设置头像大小
-	protected static int portraitWidth = 70;
-	protected static int portraitHeigft = 60;
+	protected int portraitWidth;
+	protected int portraitHeight;
 
 	public StatJTable() {
 		super();
@@ -54,11 +57,19 @@ public abstract class StatJTable extends JTable {
 		// 设置表头的文字颜色
 		tableH.setForeground(new Color(255, 255, 255));
 
-		this.getTableHeader().setPreferredSize(new Dimension(10000,40));
+		tableH.setPreferredSize(new Dimension(10000,40));
+		
+		tableH.setReorderingAllowed(false);
+		
+		
+		
 		this.setTableHeaderColor(new Color(158,158,158));
-		this.getTableHeader().setReorderingAllowed(false);
-		this.setAutoCreateRowSorter(true);
+
+
+		
 	}
+ 
+
 
 	public void setImageList(ArrayList<Image> portraitsList) {
 		this.imageList = portraitsList;
@@ -133,7 +144,7 @@ public abstract class StatJTable extends JTable {
 			if (column == 1) {
 
 				ImageIcon icon = new ImageIcon(resize(imageList.get(row),
-						portraitWidth, portraitHeigft));
+						portraitWidth, portraitHeight));
 				setIcon(icon);
 
 			}
@@ -177,7 +188,7 @@ public abstract class StatJTable extends JTable {
 
 	}
 
-	abstract public void refresh(boolean selected);
+	abstract public void refresh(boolean selected,Comparator c);
 	
 
 }

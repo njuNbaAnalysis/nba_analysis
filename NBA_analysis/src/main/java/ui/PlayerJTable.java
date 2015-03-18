@@ -1,15 +1,46 @@
 package ui;
 
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
-import compare.PlayerAveragePointComparator;
-import compare.PlayerPointComparator;
-import logic.BLService;
+import compare.PlayerBlockShotsPercentageComp;
+import compare.PlayerAssistsPercentageComp;
+import compare.PlayerAverageAssistsComp;
+import compare.PlayerAverageBlockShotsComp;
+import compare.PlayerAverageDefenseReboundsComp;
+import compare.PlayerAverageFoulsComp;
+import compare.PlayerAverageOffenseReboundsComp;
+import compare.PlayerAveragePointsComp;
+import compare.PlayerAverageReboundsComp;
+import compare.PlayerAverageStealsComp;
+import compare.PlayerAverageTurnOverComp;
+import compare.PlayerDefenseReboundsPercentageComp;
+import compare.PlayerEfficiencyComp;
+import compare.PlayerFieldGoalsPercentageComp;
+import compare.PlayerFreeThrowsPercentageComp;
+import compare.PlayerGamePlayedComp;
+import compare.PlayerGameStartedComp;
+import compare.PlayerGmScComp;
+import compare.PlayerMinutesComp;
+import compare.PlayerNameComp;
+import compare.PlayerOffenseReboundsPercentageComp;
+import compare.PlayerPointsComp;
+import compare.PlayerReboundsPercentageComp;
+import compare.PlayerShootingEfficiencyComp;
+import compare.PlayerStealsPercentageComp;
+import compare.PlayerThreePointersPercentageComp;
+import compare.PlayerTrueShootingPercentageComp;
+import compare.PlayerTurnOverPercentageComp;
+import compare.PlayerUsageComp;
 import logic.players.Player;
 
 public class PlayerJTable extends StatJTable {
@@ -21,28 +52,42 @@ public class PlayerJTable extends StatJTable {
 			"助攻", "在场时间", "投篮命中率%", "三分命中率%", "罚球命中率%", "进攻数", "防守数", "抢断数",
 			"盖帽数", "失误数", "犯规数", " 得分" };
 	private ArrayList<Player> list;
-	public PlayerJTable(BLService bl){
+
+	public PlayerJTable(BLService bl, int i, int j) {
+		super();
 		list = bl.getAllPlayers();
+		this.portraitWidth = i*70/800;
+		this.portraitHeight = j*80/800;
+		this.getTableHeader().addMouseListener(new MouseHandle());
+
 	}
 
-	public void refresh(boolean selected) {
+	public void refresh(boolean selected, Comparator c) {
 
-		Comparator<Player> c;
+		
 
 		String[] columnNames;
 		if (selected) {
 			columnNames = averageColumn;
-			c = new PlayerAveragePointComparator();
+			if (c == null) {
+				c = new PlayerAveragePointsComp();
+			}else{
+				System.out.println("传完之后:"+ c.getClass());
+			}
 
 		} else {
 			columnNames = totalColumn;
-			c = new PlayerPointComparator();
+			if (c == null) {
+				c = new PlayerPointsComp();
+			}
+
 		}
 		
-		DefaultTableModel model = new DefaultTableModel(null, columnNames);	
 		
-		Collections.sort(list, c);
+		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 
+		Collections.sort(list, c);
+		System.out.println("排序"+ c.getClass());
 		imageList = new ArrayList<Image>();
 
 		for (int i = 0; i < list.size(); i++) {
@@ -66,7 +111,7 @@ public class PlayerJTable extends StatJTable {
 		this.resizeColumnWidth();
 		this.validate();
 		this.repaint();
-		System.out.println("JTable"+this.getWidth()+this.getHeight());
+
 	}
 
 	private String[] getAverageDataRow(Player p, int i) {
@@ -93,7 +138,7 @@ public class PlayerJTable extends StatJTable {
 		s[17] = df.format(p.getAverageTurnOver()) + "";
 		s[18] = df.format(p.getAverageFouls()) + "";
 		s[19] = df.format(p.getAveragePoints()) + "";
-		//System.out.println("得分："+p.getAveragePoints());
+		// System.out.println("得分："+p.getAveragePoints());
 
 		s[20] = df.format(p.getTrueShootingPercentage() * 100) + "";
 		s[21] = df.format(p.getShootingEfficiency() * 100) + "";
@@ -132,5 +177,109 @@ public class PlayerJTable extends StatJTable {
 
 	}
 
+	private class MouseHandle extends MouseAdapter {
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+			Comparator c = null;
+			int i = columnAtPoint(e.getPoint());
+			int j = convertColumnIndexToModel(i);
+			System.out.println(j);
+			switch (j) {
+			case 1:
+				c = new PlayerNameComp();
+				break;
+			case 3:
+				c = new PlayerGamePlayedComp();
+				break;
+			case 4:
+				c = new PlayerGameStartedComp();
+				break;
+			case 5:
+				c = new PlayerAverageReboundsComp();
+				break;
+			case 6:
+				c = new PlayerAverageAssistsComp();
+				break;
+			case 7:
+				c = new PlayerMinutesComp();
+				break;
+			case 8:
+				c = new PlayerEfficiencyComp();
+				break;
+			case 9:
+				c = new PlayerGmScComp();
+				break;
+			case 10:
+				c = new PlayerFieldGoalsPercentageComp();
+				break;
+			case 11:
+				c = new PlayerThreePointersPercentageComp();
+				break;
+			case 12:
+				c = new PlayerFreeThrowsPercentageComp();
+				break;
+			case 13:
+				c = new PlayerAverageOffenseReboundsComp();
+				break;
+			case 14:
+				c = new PlayerAverageDefenseReboundsComp();
+				break;
+			case 15:
+				c = new PlayerAverageStealsComp();
+				break;
+			case 16:
+				c = new PlayerAverageBlockShotsComp();
+				break;
+			case 17:
+				c = new PlayerAverageTurnOverComp();
+				break;
+			case 18:
+				c = new PlayerAverageFoulsComp();
+				break;
+			case 19:
+				c = new PlayerAveragePointsComp();
+				break;
+			case 20:
+				c = new PlayerTrueShootingPercentageComp();
+				break;
+			case 21:
+				c = new PlayerShootingEfficiencyComp();
+				break;
+			case 22:
+				c = new PlayerReboundsPercentageComp();
+				break;
+			case 23:
+				c = new PlayerOffenseReboundsPercentageComp();
+				break;
+			case 24:
+				c = new PlayerDefenseReboundsPercentageComp();
+				break;
+			case 25:
+				c = new PlayerAssistsPercentageComp();
+				break;
+			case 26:
+				c = new PlayerStealsPercentageComp();
+				break;
+			case 27:
+				c = new PlayerBlockShotsPercentageComp();
+				break;
+			case 28:
+				c = new PlayerTurnOverPercentageComp();
+				break;
+			case 29:
+				c = new PlayerUsageComp();
+				break;
+			default:
+				c = new PlayerAveragePointsComp();
+
+			}
+			System.out.println("c:"+c.getClass());
+			refresh(true, c);
+			
+		}
+
+	}
 
 }
