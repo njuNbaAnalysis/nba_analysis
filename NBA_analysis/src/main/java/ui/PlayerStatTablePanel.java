@@ -119,7 +119,7 @@ public class PlayerStatTablePanel extends JPanel {
 		jspane = new JScrollPane();
 //		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
 //				* height / (1080));
-		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 200
+		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 150
 				* height / (1080));
 		
 		refreshTable(type);
@@ -151,7 +151,7 @@ public class PlayerStatTablePanel extends JPanel {
 
 
 	public void refresh() {
-		statTable.refresh(headPanel.getSelected(),null);
+		statTable.refresh(headPanel.getSelected(),null,true);
 	}
 
 

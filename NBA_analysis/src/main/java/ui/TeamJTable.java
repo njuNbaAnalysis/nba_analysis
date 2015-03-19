@@ -146,7 +146,7 @@ public class TeamJTable extends StatJTable {
 	}
 
 	@Override
-	public void refresh(boolean selected, Comparator c) {
+	public void refresh(boolean selected, Comparator c,boolean order) {
 		this.selected = selected;
 
 		String[] columnNames;
@@ -166,20 +166,37 @@ public class TeamJTable extends StatJTable {
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 
 		imageList = new ArrayList<Image>();
+		
+		if(order){
+			for (int i = 0; i < list.size(); i++) {
+				String[] s = null;
+				if (selected) {
+					s = getAverageDataRow(list.get(i), i);
+				} else {
+					s = getTotalDataRow(list.get(i), i);
+				}
+				// 添加数据到表格
 
-		for (int i = 0; i < list.size(); i++) {
-			String[] s = null;
-			if (selected) {
-				s = getAverageDataRow(list.get(i), i);
-			} else {
-				s = getTotalDataRow(list.get(i), i);
+				model.addRow(s);
+				imageList.add(list.get(i).getLogo(portraitWidth, portraitHeight));
+
 			}
-			// 添加数据到表格
+		}else{
+			for (int i = list.size()-1; i >=0; i--) {
+				String[] s = null;
+				if (selected) {
+					s = getAverageDataRow(list.get(i), i);
+				} else {
+					s = getTotalDataRow(list.get(i), i);
+				}
+				// 添加数据到表格
 
-			model.addRow(s);
-			imageList.add(list.get(i).getLogo(portraitWidth, portraitHeight));
+				model.addRow(s);
+				imageList.add(list.get(i).getLogo(portraitWidth, portraitHeight));
 
+			}
 		}
+		
 
 		// 更新表格
 		this.setModel(model);
@@ -325,10 +342,13 @@ public class TeamJTable extends StatJTable {
 				}
 			}
 			System.out.println(j);
-
+			
+			
 			// System.out.println("c:" + c.getClass());
-			refresh(selected, c);
-
+		
+			
+			refreshBySelectedColumn(j,c);
+			
 		}
 
 	}

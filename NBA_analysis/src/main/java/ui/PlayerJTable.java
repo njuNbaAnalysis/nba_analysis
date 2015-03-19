@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -61,6 +62,8 @@ public class PlayerJTable extends StatJTable {
 			"助攻", "在场时间", "投篮命中率%", "三分命中率%", "罚球命中率%", "进攻数", "防守数", "抢断数",
 			"盖帽数", "失误数", "犯规数", " 得分" };
 	private ArrayList<Player> list;
+	
+	
 
 	public PlayerJTable(BLService bl, int i, int j) {
 		super();
@@ -70,8 +73,13 @@ public class PlayerJTable extends StatJTable {
 		this.getTableHeader().addMouseListener(new MouseHandle());
 
 	}
-
-	public void refresh(boolean selected, Comparator c) {
+	 /**
+     *刷新方法
+     * @param selected 平均数还是总数，平均数==true，总数==false
+     * @param c 比较类，参见compare包
+     * @param order 顺序还是逆序，顺序==true，逆序==false
+     */
+	public void refresh(boolean selected, Comparator c, boolean order) {
 
 		this.selected = selected;
 
@@ -94,20 +102,37 @@ public class PlayerJTable extends StatJTable {
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 		Collections.sort(list, c);
 		imageList = new ArrayList<Image>();
+		
+		if(order){
+			for (int i = 0; i < list.size(); i++) {
+				String[] s = null;
+				if (selected) {
+					s = getAverageDataRow(list.get(i), i);
+				} else {
+					s = getTotalDataRow(list.get(i), i);
+				}
+				// 添加数据到表格
 
-		for (int i = 0; i < list.size(); i++) {
-			String[] s = null;
-			if (selected) {
-				s = getAverageDataRow(list.get(i), i);
-			} else {
-				s = getTotalDataRow(list.get(i), i);
+				model.addRow(s);
+				imageList.add(list.get(i).getPortrait());
+
 			}
-			// 添加数据到表格
+		}else{
+			for (int i = list.size()-1; i >=0; i--) {
+				String[] s = null;
+				if (selected) {
+					s = getAverageDataRow(list.get(i), i);
+				} else {
+					s = getTotalDataRow(list.get(i), i);
+				}
+				// 添加数据到表格
 
-			model.addRow(s);
-			imageList.add(list.get(i).getPortrait());
+				model.addRow(s);
+				imageList.add(list.get(i).getPortrait());
 
+			}
 		}
+		
 
 		// 更新表格
 		this.setModel(model);
@@ -343,10 +368,12 @@ public class PlayerJTable extends StatJTable {
 			}
 			
 			System.out.println("c:"+c.getClass());
-			refresh(selected, c);
+			refreshBySelectedColumn(j,c);
 			
 		}
 
 	}
+
+	
 
 }

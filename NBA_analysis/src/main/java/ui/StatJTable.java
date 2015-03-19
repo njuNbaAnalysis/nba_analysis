@@ -40,6 +40,10 @@ public abstract class StatJTable extends JTable {
 	protected int portraitHeight;
 	//选中平均还是总数
 	protected boolean selected;
+	//选中列号
+	protected int selectColumn = -1;
+	
+	protected boolean clicked = false;
 
 	public StatJTable() {
 		super();
@@ -189,8 +193,17 @@ public abstract class StatJTable extends JTable {
 		}
 
 	}
-
-	abstract public void refresh(boolean selected,Comparator c);
+	protected void refreshBySelectedColumn(int j, Comparator c) {
+		refresh(selected, c,(j==selectColumn&&clicked)||(j!=selectColumn));
+		if(selectColumn == j){
+			clicked = !clicked;
+		}else{
+			clicked = false;
+		}
+		selectColumn = j;
+		
+	}
+	abstract public void refresh(boolean selected,Comparator c,boolean order);
 	
 
 }
