@@ -72,6 +72,7 @@ import compare.TeamThreePointersHitsComp;
 import compare.TeamThreePointersPercentageComp;
 import compare.TeamTurnOversComp;
 import compare.TeamWinPercentageComp;
+import logic.BLService;
 import logic.teams.Team;
 
 public class TeamJTable extends StatJTable {

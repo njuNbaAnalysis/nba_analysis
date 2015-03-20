@@ -3,6 +3,8 @@ package ui;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import logic.BLService;
+
 public class ContentPanel extends JPanel {
 	private MenuPanel menu;
 	private PlayerStatTablePanel teamRankTablePanel;

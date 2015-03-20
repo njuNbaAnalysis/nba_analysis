@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logic.BLController;
+import logic.BLService;
 
 public class MainFrame extends JFrame {
 
