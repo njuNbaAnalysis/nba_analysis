@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import compare.PalyerScreening;
 import compare.PlayerAveragePointsComp;
 import compare.PlayerPointsComp;
 import logic.BLService;
@@ -118,8 +119,7 @@ public class PlayerStatTablePanel extends JPanel {
 		this.add(selectPanel);
 
 		jspane = new JScrollPane();
-//		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
-//				* height / (1080));
+
 		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 150
 				* height / (1080));
 		
@@ -153,6 +153,11 @@ public class PlayerStatTablePanel extends JPanel {
 
 	public void refresh() {
 		statTable.refresh(headPanel.getSelected(),null,true);
+	}
+
+	public void refreshBySelect(PalyerScreening palyerSelect) {
+		statTable.refreshByScreening(palyerSelect);
+		
 	}
 
 

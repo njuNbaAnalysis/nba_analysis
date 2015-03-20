@@ -1,4 +1,4 @@
-package ui;
+ package ui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,6 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
+import compare.PalyerScreening;
+
 public class SelectPanel extends JPanel {
 	JButton submit;
 	SelectJComboBox<String> location;
@@ -29,12 +31,15 @@ public class SelectPanel extends JPanel {
 	SelectJComboBox<String> depend;
 	int width;
 	int height;
+	
+	private PlayerStatTablePanel playerStatTablePanel;
 
 	public SelectPanel(int width, int height, PlayerStatTablePanel playerStatTablePanel) {
 		this.setOpaque(false);
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
+		this.playerStatTablePanel =  playerStatTablePanel;
 		setLabel();
 		setComboBox();
 		setButton();
@@ -74,6 +79,10 @@ public class SelectPanel extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				submit.setContentAreaFilled(false);
 			}
+			public void mousePressed(MouseEvent e) {
+				System.out.println((String)location.getSelectedItem()+(String)union.getSelectedItem()+(String)depend.getSelectedItem());
+				playerStatTablePanel.refreshBySelect(new PalyerScreening((String)location.getSelectedItem(),(String)union.getSelectedItem(),(String)depend.getSelectedItem()));
+			}
 		});
 		this.add(submit);
 	}
@@ -86,7 +95,6 @@ public class SelectPanel extends JPanel {
 		location.addItem("前锋");
 		location.setBounds(width / 4, height / 10, width / 8, height * 7 / 20);
 		location.setBackground(new Color(69, 69, 69));
-		// location.setUI(new BasicComboBoxUI());
 		location.setUI(ColorArrowUI.createUI(location));
 		this.add(location);
 
@@ -94,9 +102,15 @@ public class SelectPanel extends JPanel {
 		union.addItem("全部联盟");
 		union.addItem("东部");
 		union.addItem("西部");
+		union.addItem("东南分区");
+		union.addItem("中央分区");
+		union.addItem("大西洋分区");
+		union.addItem("太平洋分区");
+		union.addItem("西北分区");
+		union.addItem("西南分区");
+		
 		union.setBounds(width / 2, height / 10, width / 8, height * 7 / 20);
 		union.setBackground(new Color(69, 69, 69));
-		// union.setUI(new BasicComboBoxUI());
 		union.setUI(ColorArrowUI.createUI(union));
 		this.add(union);
 
