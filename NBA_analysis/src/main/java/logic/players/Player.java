@@ -209,6 +209,14 @@ public class Player {
 	private int  doubledouble ;// 两双
 	private int   threedouble ;//三双
 
+	public int getDoubledouble() {
+		return doubledouble;
+	}
+
+	public int getThreedouble() {
+		return threedouble;
+	}
+
 	public void init() {
 		if (fieldGoalAttempts != 0) {
 			fieldGoalsPercentage = fieldGoalHits * 1.0 / fieldGoalAttempts;
