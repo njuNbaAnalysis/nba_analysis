@@ -367,6 +367,14 @@ public class Player {
 		}
 	}
 
+	public int getPRA() {
+		return PRA;
+	}
+
+	public double getPRAaverage() {
+		return PRAaverage;
+	}
+
 	public String getDivision() {
 		return division;
 	}
