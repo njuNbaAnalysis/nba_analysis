@@ -33,6 +33,14 @@ public class Player {
 		this.gameStarted = gameStarted;
 	}
 
+	public void setDoubledouble(int doubledouble) {
+		this.doubledouble = doubledouble;
+	}
+
+	public void setThreedouble(int threedouble) {
+		this.threedouble = threedouble;
+	}
+
 	public void setRebounds(int rebounds) {
 		this.rebounds = rebounds;
 	}
@@ -208,6 +216,24 @@ public class Player {
 	
 	private int  doubledouble ;// 两双
 	private int   threedouble ;//三双
+	private int    fourdouble ;//四双
+	private int    fivedouble ;//五双
+
+	public int getFourdouble() {
+		return fourdouble;
+	}
+
+	public void setFourdouble(int fourdouble) {
+		this.fourdouble = fourdouble;
+	}
+
+	public int getFivedouble() {
+		return fivedouble;
+	}
+
+	public void setFivedouble(int fivedouble) {
+		this.fivedouble = fivedouble;
+	}
 
 	public int getDoubledouble() {
 		return doubledouble;
