@@ -26,6 +26,7 @@ import javax.swing.table.TableRowSorter;
 
 import compare.PlayerAveragePointsComp;
 import compare.PlayerPointsComp;
+import logic.BLService;
 import logic.players.Player;
 
 public class PlayerStatTablePanel extends JPanel {

@@ -51,6 +51,7 @@ import compare.PlayerTrueShootingPercentageComp;
 import compare.PlayerTurnOverComp;
 import compare.PlayerTurnOverPercentageComp;
 import compare.PlayerUsageComp;
+import logic.BLService;
 import logic.players.Player;
 
 public class PlayerJTable extends StatJTable {
