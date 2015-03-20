@@ -205,6 +205,9 @@ public class Player {
 	private int threePointerAttempts; // 三分出手
 	private int freeThrowHits; // 罚球命中
 	private int freeThrowAttempts; // 罚球出手
+	
+	private int  doubledouble ;// 两双
+	private int   threedouble ;//三双
 
 	public void init() {
 		if (fieldGoalAttempts != 0) {
