@@ -85,6 +85,8 @@ public class TeamReader {
             e.printStackTrace();
         }
         
+        correctDivision();
+        
         return ;
     }
     
@@ -160,5 +162,61 @@ public class TeamReader {
 
     public ArrayList<Team> getTeamList() {
         return teamList;
+    }
+
+    //通过对分区所属赛区的学习修正少数赛区不正确的球队
+    private void correctDivision(){
+        ArrayList<DivisionConferencePair> pairList = new ArrayList<DivisionConferencePair>();
+        
+        //study process
+        for(Team token:teamList){
+            //如果为空，
+            if(pairList.isEmpty()){
+                pairList.add(new DivisionConferencePair(token.getDivision(),token.getConference(),1));
+            }
+            //如果不为空，则看情况加入对或对原有对+1
+            else{
+                boolean isFound = false;
+                for(DivisionConferencePair pair:pairList){
+                    if(pair.isRelatedTo(token)){
+                        pair.setNumber(pair.getNumber() + 1);
+                        isFound = true;
+                        break;
+                        //System.out.println("if");
+                    }
+                }
+                if(!isFound){
+                    pairList.add(new DivisionConferencePair(token.getDivision(),token.getConference(),1));
+                }
+            }
+        }
+        
+        //debug
+/*        System.out.println("size: " + pairList.size());
+        for(DivisionConferencePair pair:pairList){
+            System.out.println(pair);
+        }*/
+        
+        //correct process
+        for(Team token:teamList){
+            int currentNumber = 0;
+            char currentConference = '\0';
+            
+            //遍历每一个分区赛区对，将分区所对应的赛区最频繁情况作为正确赛区
+            for(DivisionConferencePair pair:pairList){
+                if(pair.getDivision().equals(token.getDivision())){
+                    if(pair.getNumber() > currentNumber){
+                        currentConference = pair.getConference();
+                        currentNumber = pair.getNumber();
+                    }
+                }
+            }
+            token.setConference(currentConference);
+        }
+        
+        //debug
+/*        for(Team team:teamList){
+            System.out.println(team.getName() + "      " + team.getConference());
+        }*/
     }
 }
