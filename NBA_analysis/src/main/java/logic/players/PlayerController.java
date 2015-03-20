@@ -93,6 +93,16 @@ public class PlayerController {
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
+				int flag = 0;//用于计算两双或三双
+				if(record.getAssists()>=10) flag++;
+				if(record.getBlocks()>=10) flag++;
+				if(record.getPoints()>=10) flag++;
+				if(record.getSteals()>=10) flag++;
+				if(record.getRebounds()>=10) flag++;
+				if(flag==2) temp.setThreedouble(temp.getDoubledouble() + 1);
+				if(flag==3) temp.setDoubledouble(temp.getThreedouble() + 1);
+				if(flag==4) temp.setFourdouble(temp.getFourdouble() + 1);
+				if(flag==5) temp.setFivedouble(temp.getFivedouble() + 1);
 				break;
 			}
 		}
