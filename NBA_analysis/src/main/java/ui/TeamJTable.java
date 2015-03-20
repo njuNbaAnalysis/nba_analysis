@@ -168,7 +168,7 @@ public class TeamJTable extends StatJTable {
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 
 		imageList = new ArrayList<Image>();
-		
+		int size = Math.min(showSize, list.size());
 		if(order){
 			for (int i = 0; i < showSize; i++) {
 				String[] s = null;
