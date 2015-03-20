@@ -160,7 +160,9 @@ public class Player {
 	// not raw data
 	// 以***结尾的说明此项数据不需要存储
 	private String team; // current team
-	private String location;// 地区
+	private String location;// 城市
+	private String division;//分区
+	private char conference;//分区
 
 	private int gamePlayed;// 出场次数
 	private int gameStarted;// 首发次数
@@ -250,6 +252,8 @@ public class Player {
 		Team teamName = teamcontrol.getTeam(team);
 		if (teamName != null) {
 			location = teamName.getLocation();
+			division = teamName.getDivision();
+			conference = teamName.getConference();
 			ArrayList<String> playerList = teamName.getPlayerList();
 			double sumOfTime = 0;
 			int sumOffieldGoalAttempts = 0;
@@ -317,6 +321,14 @@ public class Player {
 			// 上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
 			// 次数+球队所有球员失误次数)
 		}
+	}
+
+	public String getDivision() {
+		return division;
+	}
+
+	public char getConference() {
+		return conference;
 	}
 
 	public int getFieldGoalHits() {
