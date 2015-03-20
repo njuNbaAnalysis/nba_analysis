@@ -170,7 +170,7 @@ public class TeamJTable extends StatJTable {
 		imageList = new ArrayList<Image>();
 		int size = Math.min(showSize, list.size());
 		if(order){
-			for (int i = 0; i < showSize; i++) {
+			for (int i = 0; i < size; i++) {
 				String[] s = null;
 				if (selected) {
 					s = getAverageDataRow(list.get(i), i);
@@ -184,7 +184,7 @@ public class TeamJTable extends StatJTable {
 
 			}
 		}else{
-			for (int i = showSize-1; i >=0; i--) {
+			for (int i = size-1; i >=0; i--) {
 				String[] s = null;
 				if (selected) {
 					s = getAverageDataRow(list.get(i), i);
