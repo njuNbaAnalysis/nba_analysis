@@ -169,8 +169,8 @@ public class Player {
 	// 以***结尾的说明此项数据不需要存储
 	private String team; // current team
 	private String location;// 城市
-	private String division;//分区
-	private char conference;//分区
+	private String division;// 分区
+	private char conference;// 分区
 
 	private int gamePlayed;// 出场次数
 	private int gameStarted;// 首发次数
@@ -213,11 +213,14 @@ public class Player {
 	private int threePointerAttempts; // 三分出手
 	private int freeThrowHits; // 罚球命中
 	private int freeThrowAttempts; // 罚球出手
-	
-	private int  doubledouble ;// 两双
-	private int   threedouble ;//三双
-	private int    fourdouble ;//四双
-	private int    fivedouble ;//五双
+
+	private int doubledouble;// 两双
+	private int threedouble;// 三双
+	private int fourdouble;// 四双
+	private int fivedouble;// 五双
+
+	private int PRA; // 得分，篮板，助攻一比一比一
+	private double PRAaverage;// 场均s
 
 	public int getFourdouble() {
 		return fourdouble;
@@ -357,6 +360,10 @@ public class Player {
 			// ： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
 			// 上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
 			// 次数+球队所有球员失误次数)
+
+			PRA = points + rebounds + assists;
+			if (gamePlayed != 0)
+				PRAaverage = PRA / gamePlayed;
 		}
 	}
 
