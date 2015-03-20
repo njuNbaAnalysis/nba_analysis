@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -61,7 +62,8 @@ public class SelectPanel extends JPanel {
 		submit.setBorder(BorderFactory.createLineBorder(new Color(69, 69, 69),
 				2));
 		submit.setFocusPainted(false);
-		submit.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15));
+		System.out.println(width+""+Toolkit.getDefaultToolkit().getScreenSize().getSize());
+		submit.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15*width/1920));
 		submit.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
