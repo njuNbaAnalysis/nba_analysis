@@ -523,4 +523,8 @@ public class Team {
             return 1.0 * defensiveRebounds / numOfMatches;
         }
 	}
+
+    public void setConference(char conference) {
+        this.conference = conference;
+    }
 }
