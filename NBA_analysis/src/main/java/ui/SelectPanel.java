@@ -148,7 +148,7 @@ public class SelectPanel extends JPanel {
 		SelectJComboBox() {
 			this.setBackground(new Color(69, 69, 69));
 			this.setForeground(Color.white);
-			this.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15));
+			this.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15*width/1920));
 
 		}
 

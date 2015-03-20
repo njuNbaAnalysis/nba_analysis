@@ -39,7 +39,7 @@ public class HeadPanel extends JPanel {
 		average.setBorder(null);
 		average.setFocusPainted(false);
 		average.setForeground(Color.white);
-		average.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15));
+		average.setFont(new Font("微软雅黑", Font.CENTER_BASELINE, 15*width/1920));
 		average.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
