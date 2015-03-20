@@ -13,7 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
+import compare.PalyerScreening;
 import compare.PlayerAssistsComp;
+import compare.PlayerAveragePRAComp;
 import compare.PlayerBlockShotsComp;
 import compare.PlayerBlockShotsPercentageComp;
 import compare.PlayerAssistsPercentageComp;
@@ -28,6 +30,7 @@ import compare.PlayerAverageStealsComp;
 import compare.PlayerAverageTurnOverComp;
 import compare.PlayerDefenseReboundsComp;
 import compare.PlayerDefenseReboundsPercentageComp;
+import compare.PlayerDoubleDoubleComp;
 import compare.PlayerEfficiencyComp;
 import compare.PlayerFieldGoalsPercentageComp;
 import compare.PlayerFoulsComp;
@@ -39,6 +42,7 @@ import compare.PlayerMinutesComp;
 import compare.PlayerNameComp;
 import compare.PlayerOffenseReboundsComp;
 import compare.PlayerOffenseReboundsPercentageComp;
+import compare.PlayerPRAComp;
 import compare.PlayerPointsComp;
 import compare.PlayerReboundsComp;
 import compare.PlayerReboundsPercentageComp;
@@ -63,23 +67,26 @@ public class PlayerJTable extends StatJTable {
 			"助攻", "在场时间", "投篮命中率%", "三分命中率%", "罚球命中率%", "进攻数", "防守数", "抢断数",
 			"盖帽数", "失误数", "犯规数", " 得分" };
 	private ArrayList<Player> list;
-	
-	
 
 	public PlayerJTable(BLService bl, int i, int j) {
 		super();
 		list = bl.getAllPlayers();
-		this.portraitWidth = i*70/800;
-		this.portraitHeight = j*80/800;
+		this.portraitWidth = i * 70 / 800;
+		this.portraitHeight = j * 80 / 800;
 		this.getTableHeader().addMouseListener(new MouseHandle());
 
 	}
-	 /**
-     *刷新方法
-     * @param selected 平均数还是总数，平均数==true，总数==false
-     * @param c 比较类，参见compare包
-     * @param order 顺序还是逆序，顺序==true，逆序==false
-     */
+
+	/**
+	 * 刷新方法
+	 * 
+	 * @param selected
+	 *            平均数还是总数，平均数==true，总数==false
+	 * @param c
+	 *            比较类，参见compare包
+	 * @param order
+	 *            顺序还是逆序，顺序==true，逆序==false
+	 */
 	public void refresh(boolean selected, Comparator c, boolean order) {
 
 		this.selected = selected;
@@ -98,14 +105,15 @@ public class PlayerJTable extends StatJTable {
 			}
 
 		}
-		
-		
+
+		System.out.println(c.getClass());
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 		Collections.sort(list, c);
 		imageList = new ArrayList<Image>();
-		
-		if(order){
-			for (int i = 0; i < list.size(); i++) {
+		int size = Math.min(showSize, list.size());
+
+		if (order) {
+			for (int i = 0; i < size; i++) {
 				String[] s = null;
 				if (selected) {
 					s = getAverageDataRow(list.get(i), i);
@@ -118,8 +126,8 @@ public class PlayerJTable extends StatJTable {
 				imageList.add(list.get(i).getPortrait());
 
 			}
-		}else{
-			for (int i = list.size()-1; i >=0; i--) {
+		} else {
+			for (int i = size - 1; i >= 0; i--) {
 				String[] s = null;
 				if (selected) {
 					s = getAverageDataRow(list.get(i), i);
@@ -133,7 +141,6 @@ public class PlayerJTable extends StatJTable {
 
 			}
 		}
-		
 
 		// 更新表格
 		this.setModel(model);
@@ -212,12 +219,12 @@ public class PlayerJTable extends StatJTable {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			
+
 			Comparator c = null;
 			int i = columnAtPoint(e.getPoint());
 			int j = convertColumnIndexToModel(i);
 			System.out.println(j);
-			if(selected){
+			if (selected) {
 				switch (j) {
 				case 1:
 					c = new PlayerNameComp();
@@ -307,7 +314,7 @@ public class PlayerJTable extends StatJTable {
 					c = new PlayerAveragePointsComp();
 
 				}
-			}else{
+			} else {
 				switch (j) {
 				case 1:
 					c = new PlayerNameComp();
@@ -330,7 +337,7 @@ public class PlayerJTable extends StatJTable {
 				case 7:
 					c = new PlayerMinutesComp();
 					break;
-				
+
 				case 8:
 					c = new PlayerFieldGoalsPercentageComp();
 					break;
@@ -361,20 +368,134 @@ public class PlayerJTable extends StatJTable {
 				case 17:
 					c = new PlayerPointsComp();
 					break;
-				
+
 				default:
 					c = new PlayerPointsComp();
 
 				}
 			}
-			
-			System.out.println("c:"+c.getClass());
-			refreshBySelectedColumn(j,c);
-			
+
+			System.out.println("c:" + c.getClass());
+			refreshBySelectedColumn(j, c);
+
 		}
 
 	}
 
-	
+	@Override
+	public void refreshByScreening(PalyerScreening playerScreening) {
+		ArrayList<Player> temp = list;
+		Comparator<Player> c = null;
+		c = getComparator(playerScreening.getDepend(), this.selected);
+		list = playerScreening.screening(list);
+		refresh(this.selected, c, true);
+		list = temp;
+
+	}
+
+	private Comparator<Player> getComparator(String depend, boolean selected) {
+		Comparator<Player> c = null;
+		if (selected) {
+			switch (depend) {
+			case "得分":
+				c = new PlayerAveragePointsComp();
+				break;
+			case "篮板":
+				c = new PlayerAverageReboundsComp();
+				break;
+			case "助攻":
+				c = new PlayerAverageAssistsComp();
+				break;
+			case "得分/篮板/助攻":
+
+				c = new PlayerAveragePRAComp();
+				break;
+			case "盖帽":
+				c = new PlayerAverageBlockShotsComp();
+				break;
+			case "抢断":
+				c = new PlayerAverageStealsComp();
+				break;
+			case "犯规":
+				c = new PlayerAverageFoulsComp();
+				break;
+
+			case "失误":
+				c = new PlayerAverageTurnOverComp();
+				break;
+			case "分钟":
+				c = new PlayerMinutesComp();
+				break;
+			case "效率":
+				c = new PlayerEfficiencyComp();
+				break;
+			case "投篮":
+				c = new PlayerFieldGoalsPercentageComp();
+				break;
+
+			case "三分":
+				c = new PlayerThreePointersPercentageComp();
+				break;
+			case "罚球":
+				c = new PlayerFreeThrowsPercentageComp();
+				break;
+			case "两双":
+
+				c = new PlayerDoubleDoubleComp();
+				break;
+
+			}
+		} else {
+			switch (depend) {
+			case "得分":
+				c = new PlayerPointsComp();
+				break;
+			case "篮板":
+				c = new PlayerReboundsComp();
+				break;
+			case "助攻":
+				c = new PlayerAssistsComp();
+				break;
+			case "得分/篮板/助攻":
+
+				c = new PlayerPRAComp();
+				break;
+			case "盖帽":
+				c = new PlayerBlockShotsComp();
+				break;
+			case "抢断":
+				c = new PlayerStealsComp();
+				break;
+			case "犯规":
+				c = new PlayerFoulsComp();
+				break;
+
+			case "失误":
+				c = new PlayerTurnOverComp();
+				break;
+			case "分钟":
+				c = new PlayerMinutesComp();
+				break;
+			case "效率":
+				c = new PlayerEfficiencyComp();
+				break;
+			case "投篮":
+				c = new PlayerFieldGoalsPercentageComp();
+				break;
+
+			case "三分":
+				c = new PlayerThreePointersPercentageComp();
+				break;
+			case "罚球":
+				c = new PlayerFreeThrowsPercentageComp();
+				break;
+			case "两双":
+				c = new PlayerDoubleDoubleComp();
+				break;
+
+			}
+		}
+		return c;
+	}
 
 }

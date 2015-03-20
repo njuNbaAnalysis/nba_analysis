@@ -10,6 +10,7 @@ import java.util.Comparator;
 
 import javax.swing.table.DefaultTableModel;
 
+import compare.PalyerScreening;
 import compare.PlayerAssistsPercentageComp;
 import compare.PlayerAverageAssistsComp;
 import compare.PlayerAverageBlockShotsComp;
@@ -169,7 +170,7 @@ public class TeamJTable extends StatJTable {
 		imageList = new ArrayList<Image>();
 		
 		if(order){
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < showSize; i++) {
 				String[] s = null;
 				if (selected) {
 					s = getAverageDataRow(list.get(i), i);
@@ -183,7 +184,7 @@ public class TeamJTable extends StatJTable {
 
 			}
 		}else{
-			for (int i = list.size()-1; i >=0; i--) {
+			for (int i = showSize-1; i >=0; i--) {
 				String[] s = null;
 				if (selected) {
 					s = getAverageDataRow(list.get(i), i);
@@ -352,6 +353,12 @@ public class TeamJTable extends StatJTable {
 			
 		}
 
+	}
+
+	@Override
+	void refreshByScreening(PalyerScreening palyerSelect) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

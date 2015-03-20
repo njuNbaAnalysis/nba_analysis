@@ -30,10 +30,13 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import compare.PalyerScreening;
+
 import logic.players.Player;
 
 public abstract class StatJTable extends JTable {
 	protected DecimalFormat df = new DecimalFormat("#0.0");
+	protected int showSize = 50;
 	protected ArrayList<Image> imageList;
 	// 设置头像大小
 	protected int portraitWidth;
@@ -204,6 +207,10 @@ public abstract class StatJTable extends JTable {
 		
 	}
 	abstract public void refresh(boolean selected,Comparator c,boolean order);
+
+
+
+	abstract void refreshByScreening(PalyerScreening palyerSelect);
 	
 
 }
