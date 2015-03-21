@@ -106,7 +106,7 @@ public class PlayerJTable extends StatJTable {
 
 		}
 
-		System.out.println(c.getClass());
+		//System.out.println(c.getClass());
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 		Collections.sort(list, c);
 		imageList = new ArrayList<Image>();
@@ -223,7 +223,7 @@ public class PlayerJTable extends StatJTable {
 			Comparator c = null;
 			int i = columnAtPoint(e.getPoint());
 			int j = convertColumnIndexToModel(i);
-			System.out.println(j);
+			//System.out.println(j);
 			if (selected) {
 				switch (j) {
 				case 1:
@@ -375,7 +375,7 @@ public class PlayerJTable extends StatJTable {
 				}
 			}
 
-			System.out.println("c:" + c.getClass());
+			
 			refreshBySelectedColumn(j, c);
 
 		}
