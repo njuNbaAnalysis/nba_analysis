@@ -265,10 +265,10 @@ public class MenuPanel extends JPanel {
 			}
 			
 			if(type==1){
-				teamRankTablePanel.refreshTable(type);
+				teamRankTablePanel.refreshTablePanel(type);
 			}
 			if(type==2){
-				teamRankTablePanel.refreshTable(type);
+				teamRankTablePanel.refreshTablePanel(type);
 				
 			}
 			if(type==5){
