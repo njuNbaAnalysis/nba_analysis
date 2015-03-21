@@ -265,7 +265,7 @@ public class Player {
 		}
 		if (fieldGoalAttempts != 0 || freeThrowAttempts != 0) {
 			trueShootingPercentage = points * 1.0
-					/ (fieldGoalAttempts + 0.44 * freeThrowAttempts);// 得分÷(2×(投篮出手数+0.44×罚球出手数))
+					/ (fieldGoalAttempts + 0.44 * freeThrowAttempts)  / 2 ;// 得分÷(2×(投篮出手数+0.44×罚球出手数))
 		} else {
 			trueShootingPercentage = 0;
 		}
