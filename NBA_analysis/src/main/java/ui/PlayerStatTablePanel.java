@@ -92,10 +92,10 @@ public class PlayerStatTablePanel extends JPanel {
 		try {
 			bufferHeadBar = ImageIO.read(new File("image" + File.separator
 					+ "headBar.png"));
-		
+
 			bufferHeadBar = MenuPanel.resize(bufferHeadBar,
 					width * 800 / (1920), height * 50 / (1080));
-		
+
 			bufferedFilter = ImageIO.read(new File("image" + File.separator
 					+ "filter.png"));
 			bufferedFilter = MenuPanel.resize(bufferedFilter,
@@ -107,59 +107,59 @@ public class PlayerStatTablePanel extends JPanel {
 		headBar = bufferHeadBar;
 		filter = bufferedFilter;
 
-
-
 		headPanel = new HeadPanel(width, 50 * height / (1080), this);
 		headPanel.setBounds(0, 0, width, 50 * height / (1080));
 		this.add(headPanel);
 
-		selectPanel = new SelectPanel(width, 66 * height / (1080), this);
-		selectPanel.setBounds(0, 50 * height / (1080), width,
-				66 * height / (1080));
-		this.add(selectPanel);
-
 		jspane = new JScrollPane();
 
-		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 150
-				* height / (1080));
-		
-		refreshTable(type);
+		refreshTablePanel(type);
 
 		this.add(jspane);
+
+	}
+
+	public void refreshTablePanel(int t) {
+
+		if ((t == 1 && type != t && statTable != null) || statTable == null) {
+
+			selectPanel = new SelectPanel(width, 66 * height / (1080), this);
+			selectPanel.setBounds(0, 50 * height / (1080), width,
+					66 * height / (1080));
+			this.add(selectPanel);
+
+			jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height
+					- 116 * height / (1080));
+
+			statTable = new PlayerJTable(bl, 800, 600);
+
+		} else if (t == 2 && type != t) {
+			
+			selectPanel.setVisible(false);
+			selectPanel = null;
+			jspane.setBounds(0, 50 * height / (1080), width * 9 / 10, height
+					- 50 * height / (1080));
+
+			statTable = new TeamJTable(bl, 800, 600);
+
+		}
+
+		statTable.setBounds(200, 200, 800, 600);
+		jspane.setViewportView(statTable);
+		type = t;
+		refresh();
 		this.validate();
 		this.repaint();
 
 	}
 
-	public void refreshTable(int t) {
-		
-		if ((t == 1&&type!=t&&statTable!=null)||statTable==null) {
-		
-			statTable = new PlayerJTable(bl,800, 600);
-			statTable.setBounds(200, 200, 800, 600);
-			jspane.setViewportView(statTable);
-		} else if (t == 2&&type!=t) {
-			statTable = new TeamJTable(bl,800, 600);
-			statTable.setBounds(200, 200, 800, 600);
-			jspane.setViewportView(statTable);
-		}
-		type = t;
-		refresh();
-		
-		
-
-	}
-
-
 	public void refresh() {
-		statTable.refresh(headPanel.getSelected(),null,true);
+		statTable.refresh(headPanel.getSelected(), null, true);
 	}
 
 	public void refreshBySelect(PalyerScreening palyerSelect) {
 		statTable.refreshByScreening(palyerSelect);
-		
+
 	}
-
-
 
 }
