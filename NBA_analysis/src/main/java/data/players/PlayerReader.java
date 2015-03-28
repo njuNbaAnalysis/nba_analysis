@@ -193,6 +193,7 @@ public class PlayerReader {
 
         String[] temp = null;
         temp = line.split("│");
+        System.out.println(temp[0] + "  " + temp[1]);
         temp = temp[1].split("║");
         return temp[0].trim();
     }
