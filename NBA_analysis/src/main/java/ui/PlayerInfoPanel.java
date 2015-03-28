@@ -3,35 +3,26 @@ package ui;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
-public class PlayerInfoPanel extends JPanel{
-	
-	
-	public PlayerInfoPanel(){
-		
-	}
-	
-	
-	public class InfoLabel extends JLabel{
-		Image portrait;
-		Image logo;
-		
-		public void paintComponent(Graphics g) {
-			g.drawImage(portrait, 0, 0, this);
-			
-		}
+import logic.BLService;
 
-		public InfoLabel(Image portrait, Image logo) {
-			super();
-			this.portrait = portrait;
-			this.logo = logo;
-		}
-		
-		
-		
-		
+public class PlayerInfoPanel extends JPanel {
+
+	
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+	
+
 	}
+
+	public PlayerInfoPanel(int width, int height, BLService bl) {
+		
+
+	}
+
 	
 }
