@@ -15,7 +15,7 @@ public class PlayerInfoPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-	
+		
 
 	}
 
