@@ -41,6 +41,7 @@ public class PlayerStatTablePanel extends JPanel {
 	private DefaultTableModel model;
 	private SelectPanel selectPanel;
 	private HeadPanel headPanel;
+	private PlayerInfoPanel playerInfoPanel;
 	private JScrollPane jspane;
 
 	private BLService bl;
@@ -111,18 +112,23 @@ public class PlayerStatTablePanel extends JPanel {
 		headPanel.setBounds(0, 0, width, 50 * height / (1080));
 		this.add(headPanel);
 
-		jspane = new JScrollPane();
+		
 
 		refreshTablePanel(type);
 
-		this.add(jspane);
+		
 
 	}
 
 	public void refreshTablePanel(int t) {
-
+		
+		
+		//此处逻辑有问题
 		if ((t == 1 && type != t && statTable != null) || statTable == null) {
-
+			if(playerInfoPanel!=null){
+				playerInfoPanel.setVisible(false);
+			}
+			jspane = new JScrollPane();
 			selectPanel = new SelectPanel(width, 66 * height / (1080), this);
 			selectPanel.setBounds(0, 50 * height / (1080), width,
 					66 * height / (1080));
@@ -132,22 +138,44 @@ public class PlayerStatTablePanel extends JPanel {
 					- 116 * height / (1080));
 
 			statTable = new PlayerJTable(bl, 800, 600);
+			statTable.setBounds(200, 200, 800, 600);
+			jspane.setViewportView(statTable);
+			refresh();
+			this.add(jspane);
 
 		} else if (t == 2 && type != t) {
+			if(playerInfoPanel!=null){
+				playerInfoPanel.setVisible(false);
+			}
 			
 			selectPanel.setVisible(false);
-			selectPanel = null;
+			//selectPanel = null;
 			jspane.setBounds(0, 50 * height / (1080), width * 9 / 10, height
 					- 50 * height / (1080));
 
 			statTable = new TeamJTable(bl, 800, 600);
+			statTable.setBounds(200, 200, 800, 600);
+			jspane.setViewportView(statTable);
+			refresh();
+			this.add(jspane);
 
+		} else if(t==3&&type != t){
+			jspane.setVisible(false);
+			//jspane =null;
+			selectPanel.setVisible(false);
+			//selectPanel = null;
+			
+			PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width-width/50,height
+					- 50 * height / (1080),bl);
+			playerInfoPanel.setBounds(0, 50 * height / (1080), width, height
+					- 50 * height / (1080));
+			playerInfoPanel.startAnimation();
+			this.add(playerInfoPanel);
 		}
 
-		statTable.setBounds(200, 200, 800, 600);
-		jspane.setViewportView(statTable);
+		
 		type = t;
-		refresh();
+		
 		this.validate();
 		this.repaint();
 
