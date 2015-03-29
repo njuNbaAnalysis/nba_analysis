@@ -287,17 +287,4 @@ public class PlayerDetailTablePanel extends JPanel {
 		}
 	}
 
-	public static void main(String[] args) {
-		PlayerDetailTablePanel p = new PlayerDetailTablePanel(null, 1500, 600);
-		JFrame f = new JFrame();
-		f.setBounds(0, 0, 1500, 600);
-		// f.setBackground(Color.white);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// PlayerDetailPanel p = new PlayerDetailPanel(null, 1280, 300);
-		f.getContentPane().setLayout(null);
-		f.setContentPane(p);
-		// f.repaint();
-		f.setVisible(true);
-		// p.go();
-	}
 }
