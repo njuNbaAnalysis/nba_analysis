@@ -135,30 +135,30 @@ public class TeamReader {
         } 
     }  
     
-    public static void main(String[] args){
-/*        TeamReader reader = new TeamReader();
-        reader.convert2PNG("Data/teams/ATL");*/
-        
-        //System.out.println(a.getAbsolutePath());
-        long current = System.currentTimeMillis();
-
-        
-
-
-
-        long now = System.currentTimeMillis();
-        System.out.println(now - current);
-        
-/*        JFrame frame = new JFrame("test");
-        frame.setSize(500, 500);
-        ImageIcon icon = new ImageIcon();
-        JLabel label = new JLabel();
-        icon.setImage(image.getImage(500, 500));
-        
-        label.setIcon(icon);
-        frame.add(label);
-        frame.setVisible(true);*/
-    }
+//    public static void main(String[] args){
+///*        TeamReader reader = new TeamReader();
+//        reader.convert2PNG("Data/teams/ATL");*/
+//        
+//        //System.out.println(a.getAbsolutePath());
+//        long current = System.currentTimeMillis();
+//
+//        
+//
+//
+//
+//        long now = System.currentTimeMillis();
+//        System.out.println(now - current);
+//        
+///*        JFrame frame = new JFrame("test");
+//        frame.setSize(500, 500);
+//        ImageIcon icon = new ImageIcon();
+//        JLabel label = new JLabel();
+//        icon.setImage(image.getImage(500, 500));
+//        
+//        label.setIcon(icon);
+//        frame.add(label);
+//        frame.setVisible(true);*/
+//    }
 
     public ArrayList<Team> getTeamList() {
         return teamList;
