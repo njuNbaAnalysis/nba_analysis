@@ -126,7 +126,7 @@ public class PlayerStatTablePanel extends JPanel {
 			selectPanel = new SelectPanel(width, 66 * height / (1080), this);
 			selectPanel.setBounds(0, 50 * height / (1080), width,
 					66 * height / (1080));
-			this.add(selectPanel);
+			//this.add(selectPanel);
 
 			jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height
 					- 116 * height / (1080));
