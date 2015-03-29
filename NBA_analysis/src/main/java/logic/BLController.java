@@ -88,6 +88,6 @@ public class BLController implements BLService{
         
         
         long now = System.currentTimeMillis();
-        System.out.println(now - current);
+        //System.out.println(now - current);
     }
 }
