@@ -18,9 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicLabelUI;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import compare.PalyerScreening;
-
 import logic.players.Player;
 
 public class PlayerDetailPanel extends JPanel {
@@ -32,8 +33,8 @@ public class PlayerDetailPanel extends JPanel {
 	private int[] barPositony;
 	private int[] barWidth;
 	private double[] barHeight;
-	private int[] now;
-	private int[] limits;
+	private double[] now;
+	private double[] limits;
 	private int barsize = 10;
 	private int threadDelay = 10;
 	
@@ -57,7 +58,12 @@ public class PlayerDetailPanel extends JPanel {
 		setLabel();
 		setButton();
 		setBarCharts();
+		
 
+	}
+	
+	public void setLimits(double [] limits){
+		this.limits = limits;
 	}
 
 	private void setButton() {
@@ -124,8 +130,8 @@ public class PlayerDetailPanel extends JPanel {
 		barPositony = new int[barsize];
 		barWidth = new int[barsize];
 		barHeight = new double[barsize];
-		limits = new int[barsize];
-		now = new int[barsize];
+		limits = new double[barsize];
+		now = new double[barsize];
 		for (int i = 0; i < barsize; i++) {
 			if (i % 2 == 0) {
 				barPositonx[i] = width * 1 / 4 + (3 * i) * width / 40 - width
@@ -150,6 +156,7 @@ public class PlayerDetailPanel extends JPanel {
 
 	}
 
+
 	public void paintComponent(Graphics g2) {
 
 		Graphics2D g = (Graphics2D) g2.create();
@@ -166,7 +173,7 @@ public class PlayerDetailPanel extends JPanel {
 					barWidth[i], (int)barHeight[i]);
 			g.setColor(Color.black);
 			g.setFont(new Font("default", Font.ROMAN_BASELINE, 15));
-			g.drawString(Integer.toString(now[i]), barPositonx[i]+5,
+			g.drawString(Integer.toString((int)now[i]), barPositonx[i]+5,
 					barPositony[i] - (int)barHeight[i] - 10);
 		}
 
