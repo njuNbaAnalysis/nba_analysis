@@ -33,15 +33,15 @@ public class MatchReader {
 					break;
 				else {
 					// 初始化时间
-					String dataOfTime = token.substring(0, 12);
-					SimpleDateFormat sdf = new SimpleDateFormat("yy-yy_MM-dd_");// 小写的mm表示的是分钟
-					Date date = null;
-					try {
-						date = sdf.parse(dataOfTime);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					String dateOfTime = token.substring(0, 12);
+//					SimpleDateFormat sdf = new SimpleDateFormat("yy-yy_MM-dd_");// 小写的mm表示的是分钟
+//					Date date = null;
+//					try {
+//						date = sdf.parse(dataOfTime);
+//					} catch (ParseException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 					// 初始化球队
 					String NameOfTeams = token.substring(12, token.length());
 					String[] teams = NameOfTeams.split("-");
@@ -54,7 +54,7 @@ public class MatchReader {
 					data = br.readLine();
 					ArrayList<int[]> pointsList = new ArrayList<int[]>();
 					if (data != null) {
-						str = data.split(";");
+						str = data.split(";");   //代价很高
 						for (int i = 0; i < str.length; i++) {
 							ponitOfGame = str[i].split("-");
 							int[] temp = { Integer.parseInt(ponitOfGame[0]),
@@ -125,6 +125,7 @@ public class MatchReader {
 							else
 								num[i] = Integer.parseInt(str[i]);
 						}
+						dealMistake(str[0], num, ListOfMistake);
 						boolean isStarted = false;
 						if (number <= 5)
 							isStarted = true;
@@ -138,11 +139,11 @@ public class MatchReader {
 						number++;
 						secondRecordList.add(temp);
 					}
-					if (ListOfMistake.size() == 0)
-						ListOfMistake = null;
-					listOfMatches.add(new Match(date, teams, points,
-							pointsList, firstRecordList, secondRecordList,
-							ListOfMistake));
+//					if (ListOfMistake.size() == 0)
+//						ListOfMistake = null;
+//					listOfMatches.add(new Match(dateOfTime, teams, points,
+//							pointsList, firstRecordList, secondRecordList,
+//							ListOfMistake));
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

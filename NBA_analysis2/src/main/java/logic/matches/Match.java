@@ -6,7 +6,7 @@ import java.util.Date;
 import data.matches.MatchMistake;
 
 public class Match {
-	private Date date;
+	private String date;
 	private String[] teams;// 对阵队伍 2容量的teams数组
 	private int[] points;// 比分 2容量
 	private ArrayList<int[]> pointsList;// 每一节的比分，可能会有加时赛
@@ -16,7 +16,7 @@ public class Match {
 
 	private ArrayList<MatchMistake> ListOfMistake; // 记录数据错误；如果没有错误，则为null
 
-	public Match(Date date, String[] teams, int[] points,
+	public Match(String date, String[] teams, int[] points,
 			ArrayList<int[]> pointsList,
 			ArrayList<RecordOfPlayer> firstRecordList,
 			ArrayList<RecordOfPlayer> secondRecordList,
@@ -31,7 +31,7 @@ public class Match {
 		this.ListOfMistake = ListOfMistake;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
