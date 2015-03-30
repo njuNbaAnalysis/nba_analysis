@@ -139,11 +139,11 @@ public class MatchReader {
 						number++;
 						secondRecordList.add(temp);
 					}
-//					if (ListOfMistake.size() == 0)
-//						ListOfMistake = null;
-//					listOfMatches.add(new Match(dateOfTime, teams, points,
-//							pointsList, firstRecordList, secondRecordList,
-//							ListOfMistake));
+					if (ListOfMistake.size() == 0)
+						ListOfMistake = null;
+					listOfMatches.add(new Match(dateOfTime, teams, points,
+							pointsList, firstRecordList, secondRecordList,
+							ListOfMistake));
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
