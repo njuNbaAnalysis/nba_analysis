@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.ArrayList;
+
 import util.Setting;
 
 public class Console {
@@ -8,8 +10,12 @@ public class Console {
             Setting.setPath(args[1]);
         }
         else if(args[0].equals("-player") || args[0].equals("-team")){
-            BLParameter paramter = new BLParameter(args);
-            
+            BLParameter parameter = new BLParameter(args);
+            BLService service = BLController.getInstance();
+            ArrayList<Object> result = service.getResult(parameter);
+            for(Object token:result){
+                out.append(token.toString());
+            }
         }
         else{
             System.out.println("error in Console.execute: can not parsing input parameters!");
