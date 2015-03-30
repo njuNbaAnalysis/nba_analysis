@@ -18,8 +18,6 @@ public class DataController implements DataService{
 
     private DataController(){
         
-        
-        
     }
     
     public static DataController getInstance(){
@@ -64,5 +62,17 @@ public class DataController implements DataService{
 	        return matchReader.getMatchList();
 	    }
 	}
+
+    @Override
+    public boolean isMatchChanged() {
+        if(matchReader == null){
+            matchReader = new MatchReader();
+            matchReader.init();
+            return matchReader.isChanged();
+        }
+        else{
+            return matchReader.isChanged();
+        }
+    }
 
 }

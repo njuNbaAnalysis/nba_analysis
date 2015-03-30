@@ -3,6 +3,7 @@ package logic.teams;
 import java.util.ArrayList;
 
 import logic.BLController;
+import logic.BLParameter;
 import logic.matches.Match;
 import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
@@ -225,7 +226,10 @@ public class TeamController {
             team.setAssistsPercentage(1.0 * team.getAssists() / team.getOffensiveRounds() * 100);
         }
     }
-    
+        
+    public ArrayList<Object> getResult(BLParameter parameter){
+        return null;
+    }
     
     //只计算普通数据，为了数据通常这两个只有一个会被调用
     private void computeNormalInfo(){

@@ -3,6 +3,7 @@ package logic.players;
 import java.util.ArrayList;
 
 import logic.BLController;
+import logic.BLParameter;
 import logic.matches.Match;
 import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
@@ -131,8 +132,9 @@ public class PlayerController {
 		return null;  //没找到
 	}
 
-	
-	
+	public ArrayList<Object> getResult(BLParameter parameter){
+	    return null;
+	}
 	
 	//只计算Hot的三项，为了速度，这三个通常只会有一个被调用
 	private void computeHotInfo(){

@@ -184,4 +184,8 @@ public class MatchReader {
 			}
 		}
 	}
+
+	public boolean isChanged(){
+	    return false;
+	}
 }

@@ -8,6 +8,8 @@ import logic.players.Player;
 import logic.players.PlayerController;
 import logic.teams.Team;
 import logic.teams.TeamController;
+import data.DataController;
+import data.DataService;
 
 public class BLController implements BLService{
     private static BLController blController = null;
@@ -17,6 +19,7 @@ public class BLController implements BLService{
     private MatchController matchController = null;
     private PlayerController playerController = null;
     private TeamController teamController = null;
+    private DataService dataService = null;
     
     private BLController(){
     }
@@ -104,9 +107,30 @@ public class BLController implements BLService{
 
     @Override
     public ArrayList<Object> getResult(BLParameter parameter) {
+        if(parameter.isPlayer()){
+            return PlayerController.getInstance().getResult(parameter);
+        }
+        else{
+            return TeamController.getInstance().getResult(parameter);
+        }
+    }
+
+    
+    @Override
+    public boolean isMatchChanged() {
+        if(dataService == null){
+            dataService = DataController.getInstance();
+            return dataService.isMatchChanged();
+        }
+        else{
+            return dataService.isMatchChanged();
+        }
+    }
+
+    @Override
+    public ArrayList<Player> getMostImprovedPlayer(String field, int num) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    
 }

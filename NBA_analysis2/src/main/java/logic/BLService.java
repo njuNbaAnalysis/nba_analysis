@@ -13,5 +13,7 @@ public interface BLService {
 	public int getProgress();
 	
 	//返回值由testData定义，请进行根据输入参数进行适当转换
-	public ArrayList<Object> getResult(BLParameter parameter);             
+	public ArrayList<Object> getResult(BLParameter parameter);
+	public boolean isMatchChanged();
+	public ArrayList<Player> getMostImprovedPlayer(String field,int num);//把field可能值列在这里
 }
