@@ -6,7 +6,7 @@ import java.util.Date;
 import data.matches.MatchMistake;
 
 public class Match {
-	private String date;
+	private String date;    //例如13-14_01-01 :前面表示13-14赛季，后面表示日期
 	private String[] teams;// 对阵队伍 2容量的teams数组
 	private int[] points;// 比分 2容量
 	private ArrayList<int[]> pointsList;// 每一节的比分，可能会有加时赛
