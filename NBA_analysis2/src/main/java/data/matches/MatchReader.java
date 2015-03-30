@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import util.Setting;
 import data.matches.MatchMistake.Kind;
 import logic.BLController;
 import logic.matches.Match;
@@ -16,18 +17,19 @@ import logic.matches.RecordOfPlayer;
 
 public class MatchReader {
 	private ArrayList<Match> listOfMatches = new ArrayList<Match>();
+	private String path = Setting.getPath() + "/matches/";
 
 	public void init() {
 
 		double current = System.currentTimeMillis();
 
-		File file = new File("Data/matches");
+		File file = new File(path);
 		String[] list = file.list();
 
 		for (String token : list) {
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(new File(
-						"Data/matches/" + token)));
+				        path + token)));
 				String data = br.readLine();
 				if (data == null)
 					break;

@@ -20,9 +20,9 @@ public class BLParameter {
     //独立，可选
     private int number = Integer.MAX_VALUE;//前多少条信息，默认最大
     private boolean isHigh = false;//是否为高阶数据
-    private boolean isAvarage = true;//是否为平均数，默认是
+    private boolean isAverage = true;//是否为平均数，默认是
     
-    class Mode{
+    public class Mode{
         private String mode = "all"; //all or hot or king，默认all
         private String field;   //score or rebound or assist
         private boolean isDaily;  //season or daily
@@ -57,7 +57,7 @@ public class BLParameter {
     }
     
     //只有player适用，可选
-    class Filter{
+    public class Filter{
         private String filterName;//position or league or age
         private String filterValue;
         private int[] range;    //2位整数数组，将会用到Integer.MAX,MIN
@@ -90,7 +90,7 @@ public class BLParameter {
     }
     
     //可选
-    class Sort{
+    public class Sort{
         private String field;
         private boolean isAsc;//是否升序
         public String getField() {
@@ -334,11 +334,11 @@ public class BLParameter {
     }
 
     public boolean isAvarage() {
-        return isAvarage;
+        return isAverage;
     }
 
     public void setAvarage(boolean isAvarage) {
-        this.isAvarage = isAvarage;
+        this.isAverage = isAvarage;
     }
 
     

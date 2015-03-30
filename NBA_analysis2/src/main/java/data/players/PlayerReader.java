@@ -10,12 +10,13 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
+import util.Setting;
 import logic.BLController;
 import logic.players.Player;
 
 public class PlayerReader {
     private ArrayList<Player> playerList = new ArrayList<Player>();
-    private static String dataPath = "Data/players/";
+    private static String dataPath = Setting.getPath() + "/players/";
     
     public void init(){
         playerList = readPlayers();
