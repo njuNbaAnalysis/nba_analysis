@@ -19,11 +19,12 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 
+import util.Setting;
 import util.SvgImage;
 
 public class TeamReader {
     private ArrayList<Team> teamList = new ArrayList<Team>();
-    private static String dataPath = "Data/teams/";
+    private static String dataPath = Setting.getPath() + "/teams/";
     
     public void init(){
         File file = new File(dataPath + "teams");

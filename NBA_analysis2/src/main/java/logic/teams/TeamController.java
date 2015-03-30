@@ -1,12 +1,19 @@
 package logic.teams;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import logic.BLController;
 import logic.BLParameter;
+import logic.BLParameter.Mode;
+import logic.BLParameter.Sort;
 import logic.matches.Match;
 import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
+
+import compare.TeamComparator;
+
 import data.DataController;
 import data.DataService;
 
@@ -85,9 +92,11 @@ public class TeamController {
         String teamName = match.getTeams()[num];
         Team team = getTeam(teamName);
         
+        //得分，比赛场数赋值
         team.setPoints(team.getPoints() + match.getPoints()[num]);
         team.setNumOfMatches(team.getNumOfMatches() + 1);
         
+        //胜利场数赋值
         //getRecordList&if win,plus one
         ArrayList<RecordOfPlayer> recordList = null;
         if(num == 0){
@@ -228,16 +237,74 @@ public class TeamController {
     }
         
     public ArrayList<Object> getResult(BLParameter parameter){
-        return null;
+        
+        ArrayList<Object> result = new ArrayList<Object>();
+        
+        //进行数据加载
+        if(parameter.isHigh()){
+            computeHighInfo();
+        }
+        else{
+            computeNormalInfo();
+        }
+        
+        //进行mode判断,如果是hot直接处理并返回
+        Mode mode = parameter.getMode();
+        if(mode.getMode().equals("hot")){
+            String field = mode.getField();
+            Sort sort = parameter.new Sort(field,false);
+            parameter.addSort(sort);
+            this.sort(teamList, parameter);
+            
+            int num = 0;//已经添加的球队数
+            for(Team team:teamList){
+                if(num == 5) break;
+                
+                result.add(team.getHotInfo(field));
+                num++;
+            }
+            return result;
+        }
+        
+        //排序
+        this.sort(teamList, parameter);
+        
+        //进行Number值判断
+        int num = 0;//已经添加的球队数
+        for(Team team:teamList){
+            if(num == parameter.getNumber()) break;
+            
+            if(parameter.isHigh()){
+                result.add(team.getHighInfo(parameter.isAvarage()));
+            }
+            else{
+                result.add(team.getNormalInfo(parameter.isAvarage()));
+            }
+        }
+        
+        return result;
     }
     
     //只计算普通数据，为了数据通常这两个只有一个会被调用
     private void computeNormalInfo(){
+        ArrayList<Match> matchList = new ArrayList<Match>();
+        MatchController controller = MatchController.getInstance();
+        matchList = controller.getAllMatches();
         
+        for(Match token:matchList){
+            parseRecordList(token,0);
+            parseRecordList(token,1);
+        }
     }
     
     //只计算高阶数据
-    private void computeHignInfo(){
-        
+    private void computeHighInfo(){
+        computeData();  //所有数据必须在normalInfo上进行计算，故直接调用原有接口computeData
     }
+
+    private void sort(ArrayList<Team> teamList,BLParameter parameter){
+        Comparator<Team> comparator = new TeamComparator(parameter);
+        Collections.sort(teamList,comparator);
+    }
+
 }

@@ -3,6 +3,9 @@ package logic.teams;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import test.data.TeamHighInfo;
+import test.data.TeamHotInfo;
+import test.data.TeamNormalInfo;
 import util.SvgImage;
 
 public class Team {
@@ -185,10 +188,18 @@ public class Team {
     public int getOffensiveRebounds() {
         return offensiveRebounds;
     }
+    
+    public double getOffensiveReboundsEfficiency(){
+        return this.getOffensiveRounds() * 1.0/(this.getOffensiveRebounds() + this.getDefenseReboundsRival());
+    }
 
 
     public int getDefensiveRebounds() {
         return defensiveRebounds;
+    }
+    
+    public double getDefensiveReboundsEfficiency(){
+        return this.getDefensiveRebounds() * 1.0 / (this.getDefensiveRebounds() * this.getOffenseReboundsRival());
     }
 
 
@@ -452,6 +463,15 @@ public class Team {
 	    }
 	}
 
+	public double getAverageOffendRounds(){
+	    if(this.getOffensiveRounds() == 0){
+	        return 0;
+	    }
+	    else{
+	        return this.getOffensiveRounds() / this.getNumOfMatches();
+	    }
+	}
+	
 	public double getAverageRebounds() {
 	    if(this.getNumOfMatches() == 0){
 	        return 0;
@@ -526,5 +546,126 @@ public class Team {
 
     public void setConference(char conference) {
         this.conference = conference;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    //逻辑方法
+    
+    public TeamHighInfo getHighInfo(boolean isAverage){
+        TeamHighInfo info = new TeamHighInfo();
+        
+        if(isAverage){
+            info.setOffendRound(this.getAverageOffendRounds());
+        }
+        else{
+            info.setOffendRound(this.getOffensiveRounds());
+        }
+        
+        info.setAssistEfficient(this.getAssistsPercentage());
+        info.setDefendEfficient(this.getDefenseEfficiency());
+        info.setDefendReboundEfficient(this.getDefensiveReboundsEfficiency());;
+        info.setOffendEfficient(this.getOffenseEfficiency());
+        info.setOffendReboundEfficient(this.getOffensiveReboundsEfficiency());;
+        info.setStealEfficient(this.getStealsEfficiency());
+        info.setTeamName(this.getName());
+        info.setWinRate(this.getWinningPercentage());
+        
+        return info;
+    }
+    
+    public TeamHotInfo getHotInfo(String field){
+        //默认average
+        TeamHotInfo info = new TeamHotInfo();
+        
+        info.setField(field);
+        switch(field){
+        case "score":   //热门球队处为score，sort处
+            info.setValue(this.getAveragePoints());
+            break;
+        case "rebound":
+            info.setValue(this.getAverageRebounds());
+            break;
+        case "assist":
+            info.setValue(this.getAverageAssists());
+            break;
+        case "blockShot":
+            info.setValue(this.getAverageBlockShots());
+            break;
+        case "steal":
+            info.setValue(this.getAverageSteals());
+            break;
+        case "foul":
+            info.setValue(this.getAverageFouls());
+            break;
+        case "fault":
+            info.setValue(this.getAverageTurnOver());
+            break;
+        case "shot":
+            info.setValue(this.getFieldGoalsPercentage());
+            break;
+        case "three":
+            info.setValue(this.getThreePointersPercentage());
+            break;
+        case "penalty":
+            info.setValue(this.getFreeThrowsPercentage());
+            break;
+        case "defendRebound":
+            info.setValue(this.getAverageDefenseRebounds());
+            break;
+        case "offendRebound":
+            info.setValue(this.getAverageOffenseRebounds());
+            break;
+        default:
+            System.out.println("error in Team.getHotInfo: " + field);
+        }
+        
+        info.setLeague(this.getDivision());
+        info.setTeamName(this.getName());
+        
+        return info;
+    }
+    
+    public TeamNormalInfo getNormalInfo(boolean isAverage){
+        
+        TeamNormalInfo info = new TeamNormalInfo();
+        
+        if(isAverage){
+            info.setPoint(this.getAveragePoints());;
+            info.setRebound(this.getAverageRebounds());
+            info.setAssist(this.getAverageAssists());
+            info.setBlockShot(this.getAverageBlockShots());
+            info.setSteal(this.getAverageSteals());
+            info.setFoul(this.getAverageFouls());
+            info.setFault(this.getAverageTurnOver());
+            info.setDefendRebound(this.getAverageDefenseRebounds());
+            info.setOffendRebound(this.getAverageOffenseRebounds());
+            
+        }
+        else{
+            info.setPoint(this.getPoints());;
+            info.setRebound(this.getRebounds());
+            info.setAssist(this.getAssists());
+            info.setBlockShot(this.getBlockShots());
+            info.setSteal(this.getSteals());
+            info.setFoul(this.getFouls());
+            info.setFault(this.getTurnOver());
+            info.setDefendRebound(this.getDefensiveRounds());
+            info.setOffendRebound(this.getOffensiveRebounds());
+        }
+        
+        info.setNumOfGame(this.getNumOfMatches());
+        info.setTeamName(this.getName());
+        info.setShot(this.getFieldGoalsPercentage());
+        info.setThree(this.getThreePointersPercentage());
+        info.setPenalty(this.getFreeThrowsPercentage());
+        
+        
+        return info;
     }
 }
