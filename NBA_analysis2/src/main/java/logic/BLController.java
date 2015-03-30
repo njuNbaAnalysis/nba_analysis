@@ -102,17 +102,11 @@ public class BLController implements BLService{
         System.out.println("all:" + (now - current));
     }
 
-    
     @Override
-    public ArrayList<Object> getAllPlayers(String[] parameters) {
+    public ArrayList<Object> getResult(BLParameter parameter) {
         // TODO Auto-generated method stub
         return null;
     }
 
     
-    @Override
-    public ArrayList<Object> getAllTeams(String[] parameters) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }
