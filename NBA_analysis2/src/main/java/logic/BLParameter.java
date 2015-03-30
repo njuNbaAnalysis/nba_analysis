@@ -60,11 +60,13 @@ public class BLParameter {
     class Filter{
         private String filterName;//position or league or age
         private String filterValue;
-        private int[] range;    //2位整数数组，留空表示默认
+        private int[] range;    //2位整数数组，将会用到Integer.MAX,MIN
         
         
         public Filter() {
             super();
+            range = new int[]{Integer.MIN_VALUE,Integer.MAX_VALUE};
+            filterValue = "All";
         }
         public String getFilterName() {
             return filterName;
@@ -117,7 +119,6 @@ public class BLParameter {
     
     public BLParameter(String[] args) {
       //采用从前往后理解的方式进行读取命令
-        BLParameter parameter = new BLParameter();
         ArrayList<String> input = Tools.toArrayList(args);            
         
         while(input.size() != 0){
@@ -126,7 +127,7 @@ public class BLParameter {
                 input.remove(0);
                 break;
             case "-team":
-                parameter.setPlayer(false);
+                this.setPlayer(false);
                 input.remove(0);
                 break;
             
@@ -134,18 +135,18 @@ public class BLParameter {
                 input.remove(0);
                 break;
             case "-total":
-                parameter.setAvarage(false);
+                this.setAvarage(false);
                 input.remove(0);
                 break;
             
             case "-high":
-                parameter.setHigh(true);
+                this.setHigh(true);
                 input.remove(0);
                 break;
             
             case "-n":
                 int number = Integer.parseInt(input.get(1));
-                parameter.setNumber(number);
+                this.setNumber(number);
                 input.remove(1);
                 input.remove(0);
                 break;
@@ -158,6 +159,7 @@ public class BLParameter {
                 BLParameter.Mode mode = new BLParameter.Mode();
                 mode.setMode("hot");
                 mode.setField(field);
+                this.setMode(mode);
                 input.remove(1);
                 input.remove(0);
                 break;
@@ -173,27 +175,75 @@ public class BLParameter {
                 else{
                     modeKing.setDaily(true);
                 }
+                this.setMode(modeKing);
                 input.remove(2);
                 input.remove(1);
                 input.remove(0);
                 break;
                 
             case "-filter":
-                String[] listFilter = input.get(1).split(",");
+                ArrayList<Filter> filterList = new ArrayList<Filter>();
+                StringBuffer filterParameterBuffer = new StringBuffer("");  
+                String[] listFilter = null;  
+                int deleteNumber = 0;   //到下标为这个的数据需要删除
+              //将filter参数压缩成一个stringBuffer
+                for(int i = 1;i < input.size();i ++){
+                    if(input.get(i).contains("-")){
+                        deleteNumber = i - 1;
+                        break;
+                    }
+                    
+                    else{
+                        filterParameterBuffer.append(input.get(i));
+                    }
+                }
+                
+              //将string解压成若干个string
+                String filterParameter = filterParameterBuffer.toString();
+                listFilter = filterParameter.split(",");
+                
                 for(String token:listFilter){
+                    token = token.trim();
                     String[] pair = token.split(".");
                     BLParameter.Filter filter = new BLParameter.Filter();
                     filter.setFilterName(pair[0]);
                     if(filter.getFilterName().equals("age")){
-                        //未完待续
+                        //处理此处为age的情况
+                        int[] range = new int[2];
+                        if(pair[1].equals("All")){
+                            range[0] = Integer.MIN_VALUE;
+                            range[1] = Integer.MAX_VALUE;
+                        }
+                        else if(pair[1].contains("X")){
+                            range[0] = Integer.parseInt(pair[1].split("<")[0]);
+                            range[1] = Integer.parseInt(pair[1].split("<=")[1]);
+                        }
+                        else if(pair[1].contains("<=")){
+                            range[0] = Integer.MIN_VALUE;
+                            range[1] = Integer.parseInt(pair[1].split("<=")[0]);
+                        }
+                        else if(pair[1].contains(">")){
+                            range[0] = Integer.parseInt(pair[1].split(">")[0]);
+                            range[1] = Integer.MAX_VALUE;
+                        }
+                        else{
+                            System.out.println("error in parse -filter: " + pair[0] + " " + pair[1]);
+                        }
+                        
+                        filter.setRange(range);
                     }
                     else{
                         filter.setFilterValue(pair[1]);
                     }
-                    parameter.addFilter(filter);
+                    
+                    filterList.add(filter);
                 }
-                input.remove(1);
-                input.remove(0);
+                this.setFilterList(filterList);
+                
+                //remove
+                for(int i = deleteNumber;i >= 0;i --){
+                    input.remove(i);
+                }
                 break;
                 
                 
@@ -209,7 +259,7 @@ public class BLParameter {
                     else{
                         sort.setAsc(false);
                     }
-                    parameter.addSort(sort);
+                    this.addSort(sort);
                 }
                 input.remove(1);
                 input.remove(0);
