@@ -280,6 +280,7 @@ public class TeamController {
             else{
                 result.add(team.getNormalInfo(parameter.isAvarage()));
             }
+            num++;
         }
         
         return result;
@@ -287,9 +288,9 @@ public class TeamController {
     
     //只计算普通数据，为了数据通常这两个只有一个会被调用
     private void computeNormalInfo(){
-        ArrayList<Match> matchList = new ArrayList<Match>();
+         
         MatchController controller = MatchController.getInstance();
-        matchList = controller.getAllMatches();
+        ArrayList<Match> matchList = controller.getAllMatches();
         
         for(Match token:matchList){
             parseRecordList(token,0);
