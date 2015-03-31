@@ -56,7 +56,7 @@ public class MatchReader {
 					data = br.readLine();
 					ArrayList<int[]> pointsList = new ArrayList<int[]>();
 					if (data != null) {
-						str = data.split(";");   //代价很高
+						str = data.split(";");   //代价
 						for (int i = 0; i < str.length; i++) {
 							ponitOfGame = str[i].split("-");
 							int[] temp = { Integer.parseInt(ponitOfGame[0]),
@@ -141,11 +141,11 @@ public class MatchReader {
 						number++;
 						secondRecordList.add(temp);
 					}
-					if (ListOfMistake.size() == 0)
-						ListOfMistake = null;
-					listOfMatches.add(new Match(dateOfTime, teams, points,
-							pointsList, firstRecordList, secondRecordList,
-							ListOfMistake));
+//					if (ListOfMistake.size() == 0)
+//						ListOfMistake = null;
+//					listOfMatches.add(new Match(dateOfTime, teams, points,
+//							pointsList, firstRecordList, secondRecordList,
+//							ListOfMistake));
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
