@@ -5,6 +5,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Date;
 
+import test.data.PlayerHighInfo;
+import test.data.PlayerHotInfo;
+import test.data.PlayerNormalInfo;
+import test.data.TeamHighInfo;
+import test.data.TeamHotInfo;
+import test.data.TeamNormalInfo;
 import logic.teams.Team;
 import logic.teams.TeamController;
 
@@ -20,63 +26,64 @@ public class Player {
 	private String school;
 	private Image portrait;
 	private Image action;
-	
+
 	// not raw data
-    // 以***结尾的说明此项数据不需要存储
-    private String team; // current team
-    private String location;// 城市
-    private String division;// 分区
-    private char conference;// 分区
+	// 以***结尾的说明此项数据不需要存储
+	private String team; // current team
+	private String location;// 城市
+	private String division;// 分区
+	private char conference;// 分区
 
-    private int gamePlayed;// 出场次数
-    private int gameStarted;// 首发次数
+	private int gamePlayed;// 出场次数
+	private int gameStarted;// 首发次数
 
-    // 可场均
-    private int rebounds;// 总篮板数
-    private int assists;// 总助攻数
-    private int minutes;// 总上场分钟数
-    private int offenseRebounds;// 总进攻篮板
-    private int defenseRebounds;// 总防守篮板
-    private int steals;// 总抢断数
-    private int blockShots;// 总盖帽数
-    private int turnOver;// 总失误数
-    private int fouls;// 总犯规数
-    private int points;// 总得分数
+	// 可场均
+	private int rebounds;// 总篮板数
+	private int assists;// 总助攻数
+	private int minutes;// 总上场分钟数
+	private int offenseRebounds;// 总进攻篮板
+	private int defenseRebounds;// 总防守篮板
+	private int steals;// 总抢断数
+	private int blockShots;// 总盖帽数
+	private int turnOver;// 总失误数
+	private int fouls;// 总犯规数
+	private int points;// 总得分数
 
-    // 百分比率
-    private double fieldGoalsPercentage;// 总投篮命中率
-    private double threePointersPercentage;// 三分命中率
-    private double freeThrowsPercentage;// 罚球命中率
-    private double trueShootingPercentage;// 真实投篮命中率
-    private double reboundsPercentage;// 篮板率
-    private double offenseReboundsPercentage;// 进攻篮板率
-    private double defenseReboundsPercentage;// 防守篮板率
-    private double assistsPercentage;// 助攻率
-    private double stealsPercentage;// 抢断率
-    private double blockShotsPercentage;// 盖帽率
-    private double turnOverPercentage;// 失误率
-    private double usage;// 使用率
+	// 百分比率
+	private double fieldGoalsPercentage;// 总投篮命中率
+	private double threePointersPercentage;// 三分命中率
+	private double freeThrowsPercentage;// 罚球命中率
+	private double trueShootingPercentage;// 真实投篮命中率
+	private double reboundsPercentage;// 篮板率
+	private double offenseReboundsPercentage;// 进攻篮板率
+	private double defenseReboundsPercentage;// 防守篮板率
+	private double assistsPercentage;// 助攻率
+	private double stealsPercentage;// 抢断率
+	private double blockShotsPercentage;// 盖帽率
+	private double turnOverPercentage;// 失误率
+	private double usage;// 使用率
+	private double upgradeRate; //近五场比赛提升率
 
-    // 效率值
-    private double efficiency;// 效率值
-    private double gmsc;// gmsc效率值
-    private double shootingEfficiency;// 投篮效率
+	// 效率值
+	private double efficiency;// 效率值
+	private double gmsc;// gmsc效率值
+	private double shootingEfficiency;// 投篮效率
 
-    // tempData 不用做界面显示，在计算中用到，可能用作以后的界面显示
-    private int fieldGoalHits; // 投篮命中
-    private int fieldGoalAttempts; // 投篮出手
-    private int threePointerHits; // 三分命中
-    private int threePointerAttempts; // 三分出手
-    private int freeThrowHits; // 罚球命中
-    private int freeThrowAttempts; // 罚球出手
+	// tempData 不用做界面显示，在计算中用到，可能用作以后的界面显示
+	private int fieldGoalHits; // 投篮命中
+	private int fieldGoalAttempts; // 投篮出手
+	private int threePointerHits; // 三分命中
+	private int threePointerAttempts; // 三分出手
+	private int freeThrowHits; // 罚球命中
+	private int freeThrowAttempts; // 罚球出手
 
-    private int doubledouble;// 两双
-    private int threedouble;// 三双
-    private int fourdouble;// 四双
-    private int fivedouble;// 五双
+	private int doubledouble;// 两双
+	private int threedouble;// 三双
+	private int fourdouble;// 四双
+	private int fivedouble;// 五双
 
-    private int PRA; // 得分，篮板，助攻一比一比一
-    private double PRAaverage;// 场均
+	private int PRA; // 得分，篮板，助攻一比一比一
+	private double PRAaverage;// 场均
 
 	public void setTeam(String team) {
 		this.team = team;
@@ -222,8 +229,6 @@ public class Player {
 		this.freeThrowAttempts = freeThrowAttempts;
 	}
 
-	
-
 	public int getFourdouble() {
 		return fourdouble;
 	}
@@ -249,46 +254,6 @@ public class Player {
 	}
 
 	public void init() {
-		if (fieldGoalAttempts != 0) {
-			fieldGoalsPercentage = fieldGoalHits * 1.0 / fieldGoalAttempts;
-		} else {
-			fieldGoalsPercentage = 0;
-		}
-		if (threePointerAttempts != 0) {
-			threePointersPercentage = threePointerHits * 1.0
-					/ threePointerAttempts;
-		} else {
-			threePointersPercentage = 0;
-		}
-		if (freeThrowAttempts != 0) {
-			freeThrowsPercentage = freeThrowHits * 1.0 / freeThrowAttempts;
-		} else {
-			freeThrowsPercentage = 0;
-		}
-		if (fieldGoalAttempts != 0 || freeThrowAttempts != 0) {
-			trueShootingPercentage = points * 1.0
-					/ (fieldGoalAttempts + 0.44 * freeThrowAttempts)  / 2 ;// 得分÷(2×(投篮出手数+0.44×罚球出手数))
-		} else {
-			trueShootingPercentage = 0;
-		}
-		if (fieldGoalAttempts != 0) {
-			shootingEfficiency = (fieldGoalHits + 0.5 * threePointerHits)
-					/ (fieldGoalAttempts * 1.0);// (投篮命中数+0.5×三分命中数)÷投篮出手数
-		} else {
-			shootingEfficiency = 0;
-		}
-
-		efficiency = (rebounds + points + blockShots + steals)
-				- (fieldGoalAttempts + threePointerAttempts + freeThrowAttempts
-						- fieldGoalHits - threePointerHits - freeThrowHits)
-				- turnOver; // (得分+篮板+助攻+抢断+盖帽)-（出手次数-命中次数）-（罚球次数-罚球命中次数）-失误次数
-		gmsc = points + 0.4 * fieldGoalHits - 0.7 * fieldGoalAttempts - 0.4
-				* (freeThrowAttempts - freeThrowHits) + 0.7 * offenseRebounds
-				+ 0.3 * defenseRebounds + 0.7 * assistsPercentage + 0.7
-				* assists - 0.4 * fouls - turnOver;
-		// 得分+0.4×投篮命中数-0.7×投篮出手数-0.4×(罚球出手数-罚球命
-		// 中数)+0.7×前场篮板数+0.3×后场篮板数+抢断数+0.7×助攻数+0.7×盖帽数
-		// -0.4×犯规数-失误数
 		TeamController teamcontrol = TeamController.getInstance();
 		PlayerController playercontrol = PlayerController.getInstance();
 		Team teamName = teamcontrol.getTeam(team);
@@ -362,18 +327,17 @@ public class Player {
 			// ： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
 			// 上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
 			// 次数+球队所有球员失误次数)
-
-			PRA = points + rebounds + assists;
-			if (gamePlayed != 0)
-				PRAaverage = PRA / gamePlayed;
 		}
 	}
 
 	public int getPRA() {
+		PRA = points + rebounds + assists;
 		return PRA;
 	}
 
 	public double getPRAaverage() {
+		if (gamePlayed != 0)
+			PRAaverage = PRA / gamePlayed;
 		return PRAaverage;
 	}
 
@@ -502,18 +466,40 @@ public class Player {
 	}
 
 	public double getFieldGoalsPercentage() {
+		if (fieldGoalAttempts != 0) {
+			fieldGoalsPercentage = fieldGoalHits * 1.0 / fieldGoalAttempts;
+		} else {
+			fieldGoalsPercentage = 0;
+		}
 		return fieldGoalsPercentage;
 	}
 
 	public double getThreePointersPercentage() {
+		if (threePointerAttempts != 0) {
+			threePointersPercentage = threePointerHits * 1.0
+					/ threePointerAttempts;
+		} else {
+			threePointersPercentage = 0;
+		}
 		return threePointersPercentage;
 	}
 
 	public double getFreeThrowsPercentage() {
+		if (freeThrowAttempts != 0) {
+			freeThrowsPercentage = freeThrowHits * 1.0 / freeThrowAttempts;
+		} else {
+			freeThrowsPercentage = 0;
+		}
 		return freeThrowsPercentage;
 	}
 
 	public double getTrueShootingPercentage() {
+		if (fieldGoalAttempts != 0 || freeThrowAttempts != 0) {
+			trueShootingPercentage = points * 1.0
+					/ (fieldGoalAttempts + 0.44 * freeThrowAttempts) / 2;// 得分÷(2×(投篮出手数+0.44×罚球出手数))
+		} else {
+			trueShootingPercentage = 0;
+		}
 		return trueShootingPercentage;
 	}
 
@@ -578,14 +564,31 @@ public class Player {
 	}
 
 	public double getEfficiency() {
+		efficiency = (rebounds + points + blockShots + steals)
+				- (fieldGoalAttempts + threePointerAttempts + freeThrowAttempts
+						- fieldGoalHits - threePointerHits - freeThrowHits)
+				- turnOver; // (得分+篮板+助攻+抢断+盖帽)-（出手次数-命中次数）-（罚球次数-罚球命中次数）-失误次数
 		return efficiency;
 	}
 
 	public double getGmsc() {
+		gmsc = points + 0.4 * fieldGoalHits - 0.7 * fieldGoalAttempts - 0.4
+				* (freeThrowAttempts - freeThrowHits) + 0.7 * offenseRebounds
+				+ 0.3 * defenseRebounds + 0.7 * assistsPercentage + 0.7
+				* assists - 0.4 * fouls - turnOver;
+		// 得分+0.4×投篮命中数-0.7×投篮出手数-0.4×(罚球出手数-罚球命
+		// 中数)+0.7×前场篮板数+0.3×后场篮板数+抢断数+0.7×助攻数+0.7×盖帽数
+		// -0.4×犯规数-失误数
 		return gmsc;
 	}
 
 	public double getShootingEfficiency() {
+		if (fieldGoalAttempts != 0) {
+			shootingEfficiency = (fieldGoalHits + 0.5 * threePointerHits)
+					/ (fieldGoalAttempts * 1.0);// (投篮命中数+0.5×三分命中数)÷投篮出手数
+		} else {
+			shootingEfficiency = 0;
+		}
 		return shootingEfficiency;
 	}
 
@@ -684,5 +687,143 @@ public class Player {
 		}
 		return points * 1.0 / gamePlayed;
 	}
+	
+	public double getAverageDoubleTwo() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return doubledouble * 1.0 / gamePlayed;
+	}
+	
+
+	// 逻辑方法
+
+	public PlayerHighInfo getHighInfo() {
+		PlayerHighInfo info = new PlayerHighInfo();
+		info.setAssistEfficient(getAssistsPercentage());
+		info.setBlockShotEfficient(getBlockShotsPercentage());
+		info.setDefendReboundEfficient(getDefenseReboundsPercentage());
+		info.setFaultEfficient(getTurnOverPercentage());
+		info.setFrequency(getUsage());
+		info.setGmSc(getGmsc());
+		info.setLeague(conference + ""); // 暂定
+		info.setName(getName());
+		info.setOffendReboundEfficient(getOffenseReboundsPercentage());
+		info.setPosition(getPosition());
+		info.setRealShot(getTrueShootingPercentage());
+		info.setReboundEfficient(getReboundsPercentage());
+		info.setShotEfficient(getShootingEfficiency());
+		info.setStealEfficient(getStealsPercentage());
+		info.setTeamName(getTeam());
+		return info;
+	}
+
+	public PlayerHotInfo getHotInfo(String field) {
+		// 默认average
+		PlayerHotInfo info = new PlayerHotInfo();
+
+		info.setField(field);
+		switch (field) {
+		case "point": // 热门球队处为score，sort处
+			info.setValue(this.getAveragePoints());
+			break;
+		case "rebound":
+			info.setValue(this.getAverageRebounds());
+			break;
+		case "assist":
+			info.setValue(this.getAverageAssists());
+			break;
+		case "blockShot":
+			info.setValue(this.getAverageBlockShots());
+			break;
+		case "steal":
+			info.setValue(this.getAverageSteals());
+			break;
+		case "foul":
+			info.setValue(this.getAverageFouls());
+			break;
+		case "fault":
+			info.setValue(this.getFreeThrowsPercentage());
+			break;
+		case "minute":
+			info.setValue(this.getAverageMinutes()*60);
+			break;
+		case "efficient":
+			info.setValue(this.getAverageEfficiency());
+			break;
+		case "shot":
+			info.setValue(this.getFieldGoalsPercentage());
+			break;
+		case "three":
+			info.setValue(this.getThreePointersPercentage());
+			break;
+		case "penalty":
+			info.setValue(this.getFieldGoalsPercentage());
+			break;
+		case "doubleTwo":
+			info.setValue(this.getAverageDoubleTwo());
+			break;
+		default:
+			System.out.println("error in Player.getHotInfo: " + field);
+		}
+
+		info.setName(name);
+		info.setTeamName(team);
+		info.setPosition(position);
+		info.setUpgradeRate(upgradeRate);   //待定
+		return info;
+	}
+
+	public double getUpgradeRate() {
+		return upgradeRate;
+	}
+
+	public void setUpgradeRate(double upgradeRate) {
+		this.upgradeRate = upgradeRate;
+	}
+
+	public PlayerNormalInfo getNormalInfo(boolean isAverage) {
+
+		PlayerNormalInfo info = new PlayerNormalInfo();
+
+		if (isAverage) {
+			info.setPoint(this.getAveragePoints());
+			info.setRebound(this.getAverageRebounds());
+			info.setAssist(this.getAverageAssists());
+			info.setBlockShot(this.getAverageBlockShots());
+			info.setSteal(this.getAverageSteals());
+			info.setFoul(this.getAverageFouls());
+			info.setFault(this.getAverageTurnOver());
+			info.setDefend(this.getAverageDefenseRebounds());               //待定
+			info.setEfficiency(this.getAverageEfficiency());
+			info.setMinute(this.getAverageMinutes()*60);
+			info.setOffend(this.getAverageOffenseRebounds());
+			info.setPoint(this.getAveragePoints());
+			
+		} else {
+			info.setPoint(this.getPoints());
+			info.setRebound(this.getRebounds());
+			info.setAssist(this.getAssists());
+			info.setBlockShot(this.getBlockShots());
+			info.setSteal(this.getSteals());
+			info.setFoul(this.getFouls());
+			info.setFault(this.getTurnOver());
+			info.setDefend(this.getDefenseRebounds());
+			info.setEfficiency(this.getEfficiency());
+			info.setMinute(this.getMinutes());
+			info.setOffend(this.getOffenseRebounds());
+			info.setPoint(this.getPoints());
+		}
+		info.setAge(getAge());
+		info.setName(getName());
+		info.setTeamName(getTeam());
+		info.setStart(getGameStarted());
+		info.setNumOfGame(getGamePlayed());
+		info.setShot(this.getFieldGoalsPercentage());
+		info.setThree(this.getThreePointersPercentage());
+		info.setPenalty(this.getFreeThrowsPercentage());
+		return info;
+	}
+	
 
 }

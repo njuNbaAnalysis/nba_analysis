@@ -41,10 +41,10 @@ public class TeamController {
     public void init(){
         teamList = dataService.getAllTeams();
         
-        long current = System.currentTimeMillis();
-        computeData();
-        long now = System.currentTimeMillis();
-        System.out.println("computeData_team:" + (now - current));
+//        long current = System.currentTimeMillis();
+//        computeData();
+//        long now = System.currentTimeMillis();
+//        System.out.println("computeData_team:" + (now - current));
     }
 
     public ArrayList<Team> getAllTeams(){
