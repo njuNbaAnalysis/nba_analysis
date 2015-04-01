@@ -155,7 +155,6 @@ public class PlayerController {
 			if(isSuitable(player,FilterList))
 				PlayerAfterFliter.add(player);
 		}
-		
 		// 进行数据加载
 		if (parameter.isHigh()) {
 			computeHighInfo();
@@ -193,7 +192,6 @@ public class PlayerController {
 		} else {
 			// 排序
 			this.sort(PlayerAfterFliter, parameter);
-
 			// 进行Number值判断
 			int num = 0;// 已经添加的球队数
 			for (Player player : PlayerAfterFliter) {
@@ -228,7 +226,7 @@ public class PlayerController {
 				break;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	private void sort(ArrayList<Player> playerList, BLParameter parameter) {
