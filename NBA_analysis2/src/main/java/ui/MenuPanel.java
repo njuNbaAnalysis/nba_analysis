@@ -271,6 +271,10 @@ public class MenuPanel extends JPanel {
 				teamRankTablePanel.refreshTablePanel(type);
 				
 			}
+			if(type==3){
+				teamRankTablePanel.refreshTablePanel(type);
+			}
+			
 			if(type==5){
 				System.exit(0);
 			}

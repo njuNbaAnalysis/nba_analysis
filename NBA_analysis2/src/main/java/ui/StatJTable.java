@@ -31,10 +31,9 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import compare.PalyerScreening;
-
 import logic.players.Player;
 
-public abstract class StatJTable extends JTable {
+public abstract class StatJTable extends BaseJTable {
 	protected DecimalFormat df = new DecimalFormat("#0.0");
 	protected int showSize = 50;
 	protected ArrayList<Image> imageList;
@@ -57,19 +56,8 @@ public abstract class StatJTable extends JTable {
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
 
-		// 获得表头
-		JTableHeader tableH = null;
-
-		tableH = this.getTableHeader();
-		// 设置表头的背景色
-		tableH.setBackground(new Color(158, 158, 158));
-		// 设置表头的文字颜色
-		tableH.setForeground(new Color(255, 255, 255));
-
-		tableH.setPreferredSize(new Dimension(10000,40));
 		
-		tableH.setReorderingAllowed(false);
-		
+		adjustHeader();
 		
 		
 		this.setTableHeaderColor(new Color(158,158,158));
@@ -77,17 +65,9 @@ public abstract class StatJTable extends JTable {
 
 		
 	}
- 
-
-
-	public void setImageList(ArrayList<Image> portraitsList) {
-		this.imageList = portraitsList;
-	}
-
 	
-
-	// 重写行
-	public void paintRow() {
+	
+	protected void paintRow() {
 		TableColumnModel tcm = this.getColumnModel();
 		for (int i = 0, n = tcm.getColumnCount(); i < n; i++) {
 			TableColumn tc = tcm.getColumn(i);
@@ -95,42 +75,12 @@ public abstract class StatJTable extends JTable {
 		}
 	}
 
-	// 自动调整行高
-	public void updateRowHeights() {
-		try {
-
-			for (int row = 0; row < this.getRowCount(); row++) {
-				int rowHeight = this.getRowHeight();
-
-				for (int column = 0; column < this.getColumnCount(); column++) {
-					Component comp = this.prepareRenderer(
-							this.getCellRenderer(row, column), row, column);
-					rowHeight = Math.max(rowHeight,
-							comp.getPreferredSize().height);
-				}
-
-				this.setRowHeight(row, rowHeight);
-			}
-		} catch (ClassCastException e) {
-		}
-	}
-
-	// 自动调整列宽
-	public void resizeColumnWidth() {
-
-		for (int column = 0; column < this.getColumnCount(); column++) {
-			int width = 100; // Min width
-			for (int row = 0; row < this.getRowCount(); row++) {
-				TableCellRenderer renderer = this.getCellRenderer(row, column);
-				Component comp = this.prepareRenderer(renderer, row, column);
-				width = Math.max(comp.getPreferredSize().width, width);
-			}
-			columnModel.getColumn(column).setPreferredWidth(width);
-		}
+	public void setImageList(ArrayList<Image> portraitsList) {
+		this.imageList = portraitsList;
 	}
 
 	// 重写行方法(paintRow())具体对应的类
-	private class RowRenderer extends DefaultTableCellRenderer {
+	protected class RowRenderer extends DefaultTableCellRenderer {
 
 		public Component getTableCellRendererComponent(JTable t, Object value,
 				boolean isSelected, boolean hasFocus, int row, int column) {
@@ -178,24 +128,7 @@ public abstract class StatJTable extends JTable {
 
 	}
 	
-	
 
-	public boolean isCellEditable(int row, int column) {
-		return false;
-	}
-
-	public void setTableHeaderColor(Color c) {
-
-		TableColumn column;
-		for (int columnIndex = 0; columnIndex < this.getColumnCount(); columnIndex++) {
-			column = this.getTableHeader().getColumnModel()
-					.getColumn(columnIndex);
-			DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
-			cellRenderer.setBackground(c);
-			column.setHeaderRenderer(cellRenderer);
-		}
-
-	}
 	protected void refreshBySelectedColumn(int j, Comparator c) {
 		refresh(selected, c,(j==selectColumn&&clicked)||(j!=selectColumn));
 		if(selectColumn == j){

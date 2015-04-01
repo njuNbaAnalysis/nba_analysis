@@ -3,35 +3,49 @@ package ui;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
-public class PlayerInfoPanel extends JPanel{
-	
-	
-	public PlayerInfoPanel(){
+import logic.BLController;
+import logic.BLService;
+import logic.players.Player;
+
+public class PlayerInfoPanel extends JPanel {
+	private BLService bl;
+	private PlayerBasicInfoLabel playerBasicInfoLabel;
+	private PlayerDetailPanel playerDetailPanel;
+	private PlayerDetailTablePanel playerDetailTablePanel;
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+
+	}
+
+	public PlayerInfoPanel(int width, int height, BLService bl) {
+		this.bl = bl;
+		this.setLayout(null);
+		//for test
+		Player p = bl.getAllPlayers().get(0);
+		
+		playerBasicInfoLabel = new PlayerBasicInfoLabel(p,width,height/4);
+		playerBasicInfoLabel.setBounds(0, 0, width, height/4);
+		this.add(playerBasicInfoLabel);
+		
+		playerDetailPanel = new PlayerDetailPanel(p, width, height/4);
+		playerDetailPanel.setBounds(0, height/4, width, height/4);
+		this.add(playerDetailPanel);
+		
+		playerDetailTablePanel = new PlayerDetailTablePanel(p, width, height/2);
+		playerDetailTablePanel.setBounds(0, height/2, width, height/2);
+		this.add(playerDetailTablePanel);
 		
 	}
 	
-	
-	public class InfoLabel extends JLabel{
-		Image portrait;
-		Image logo;
-		
-		public void paintComponent(Graphics g) {
-			g.drawImage(portrait, 0, 0, this);
-			
-		}
-
-		public InfoLabel(Image portrait, Image logo) {
-			super();
-			this.portrait = portrait;
-			this.logo = logo;
-		}
-		
-		
-		
-		
+	public void startAnimation(){
+		playerDetailPanel.go();
 	}
+
 	
 }
