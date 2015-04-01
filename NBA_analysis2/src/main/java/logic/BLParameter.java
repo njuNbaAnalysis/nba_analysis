@@ -271,6 +271,26 @@ public class BLParameter {
             }
             
         }
+        
+        //如果sort并没有加任何东西，则对sort进行默认初始化
+        if(this.sortList.size() == 0){
+            if(this.isPlayer){
+                if(!this.isHigh){
+                    this.addSort(new Sort("score",false));
+                }
+                else{
+                    this.addSort(new Sort("realShot",false));
+                }
+            }
+            else{
+                if(!this.isHigh){
+                    this.addSort(new Sort("score",false));
+                }
+                else{
+                    this.addSort(new Sort("winRate",false));
+                }
+            }
+        }
     }
     
     public BLParameter() {
