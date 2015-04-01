@@ -166,7 +166,7 @@ public class PlayerController {
 			Sort sort = parameter.new Sort(field, false);
 			parameter.addSort(sort);
 			this.sort(PlayerAfterFliter, parameter);
-
+			System.out.println(PlayerAfterFliter.get(0).getName()+"sadasd");
 			int num = 0;// 已经添加的球队数
 			for (Player player : PlayerAfterFliter) {
 				if (num == 5)

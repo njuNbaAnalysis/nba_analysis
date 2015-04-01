@@ -160,6 +160,7 @@ public class BLParameter {
                 BLParameter.Mode mode = new BLParameter.Mode();
                 mode.setMode("hot");
                 mode.setField(field);
+                this.addSort(new Sort(field, false));
                 this.setMode(mode);
                 input.remove(1);
                 input.remove(0);
@@ -170,6 +171,7 @@ public class BLParameter {
                 BLParameter.Mode modeKing = new BLParameter.Mode();
                 modeKing.setMode("king");
                 modeKing.setField(fieldKing);
+                this.addSort(new Sort(fieldKing, false));
                 if(during.equals("-season")){
                     modeKing.setDaily(false);
                 }
@@ -251,8 +253,10 @@ public class BLParameter {
             case "-sort":
                 String[] listSort = input.get(1).split(",");
                 for(String token:listSort){
-                    String[] pair = token.split(".");
+                	 System.out.println(token);
+                    String[] pair = token.split("\\.");
                     BLParameter.Sort sort = new BLParameter.Sort();
+                  	 System.out.println(pair.length);
                     sort.setField(pair[0]);
                     if(pair[1].equals("asc")){
                         sort.setAsc(true);
@@ -276,7 +280,7 @@ public class BLParameter {
         if(this.sortList.size() == 0){
             if(this.isPlayer){
                 if(!this.isHigh){
-                    this.addSort(new Sort("score",false));
+                    this.addSort(new Sort("point",false));
                 }
                 else{
                     this.addSort(new Sort("realShot",false));
@@ -284,7 +288,7 @@ public class BLParameter {
             }
             else{
                 if(!this.isHigh){
-                    this.addSort(new Sort("score",false));
+                    this.addSort(new Sort("point",false));
                 }
                 else{
                     this.addSort(new Sort("winRate",false));

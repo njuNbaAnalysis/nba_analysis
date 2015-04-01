@@ -9,7 +9,6 @@ import util.Setting;
 
 public class Console {
     public void execute(java.io.PrintStream out,String[] args){
-        
         if(args[0].equals("--datasource")){
             Setting.setPath(args[1]);
         }
