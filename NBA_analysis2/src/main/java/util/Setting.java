@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class Setting {
     
-    private static String path;
+    private static String path = "Data";
     
     //静态初始化，防止路径信息的重复读取
     static{

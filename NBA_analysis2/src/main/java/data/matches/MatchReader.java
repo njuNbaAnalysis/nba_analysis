@@ -56,7 +56,7 @@ public class MatchReader {
 					data = br.readLine();
 					ArrayList<int[]> pointsList = new ArrayList<int[]>();
 					if (data != null) {
-						str = data.split(";");   //代价
+						str = data.split(";");   
 						for (int i = 0; i < str.length; i++) {
 							ponitOfGame = str[i].split("-");
 							int[] temp = { Integer.parseInt(ponitOfGame[0]),
@@ -70,8 +70,11 @@ public class MatchReader {
 					data = br.readLine();// 可以在这里校验球队数据是否出错
 					int number = 1;
 					while ((data = br.readLine()) != null) {
-						str = data.split(";");
-						if (str.length == 1)
+//						str = data.split(";");
+						str = fastSplit(data, ';');
+//						if (str.length == 1)
+//							break;
+						if (str[2] == null)
 							break;
 						int[] num = new int[str.length];
 						if ((str[2].equals("")) || (str[2].equals("null"))
@@ -108,8 +111,11 @@ public class MatchReader {
 					number = 1;
 					ArrayList<RecordOfPlayer> secondRecordList = new ArrayList<RecordOfPlayer>();
 					while ((data = br.readLine()) != null) {
-						str = data.split(";");
-						if (str.length != 18)
+//						str = data.split(";");
+						str = fastSplit(data, ';');
+//						if (str.length != 18)
+//							break;
+						if (str[2] == null)
 							break;
 						int[] num = new int[str.length];
 						if ((str[2].equals("")) || (str[2].equals("null"))
@@ -186,6 +192,29 @@ public class MatchReader {
 			}
 		}
 	}
+	
+	private String[] fastSplit(final String text, char separator) {
+		String[] result = new String[18];
+		
+		int num = 0;
+		if (text != null && text.length() > 0) {
+			int index1 = 0;
+			int index2 = text.indexOf(separator);
+			while (index2 >= 0) {
+				result[num] =  text.substring(index1, index2);
+				index1 = index2 + 1;
+				index2 = text.indexOf(separator, index1);
+				num++;
+			}
+
+			if (index1 < text.length() - 1) {
+				result[num] = text.substring(index1);
+			}
+		}// else: input unavailable
+
+		return result;
+	}
+	
 
 	public boolean isChanged(){
 	    return false;
