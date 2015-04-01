@@ -137,6 +137,7 @@ public class PlayerStatTablePanel extends JPanel {
 			System.out.println("新建球队表");
 			if(selectPanel!=null){
 				selectPanel.setVisible(false);
+				selectPanel.setOpaque(false);
 				selectPanel=null;
 			}
 			
