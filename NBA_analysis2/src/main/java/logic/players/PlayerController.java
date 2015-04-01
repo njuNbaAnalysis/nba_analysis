@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import test.data.PlayerKingInfo;
 import compare.PlayerComparator;
 import compare.TeamComparator;
 import logic.BLController;
 import logic.BLParameter;
+import logic.BLParameter.Filter;
 import logic.BLParameter.Mode;
 import logic.BLParameter.Sort;
 import logic.matches.Match;
@@ -80,9 +82,8 @@ public class PlayerController {
 	}
 
 	private void UpdataPlayer(RecordOfPlayer record, String team) {
-		for (int i = 0; i < playerList.size(); i++) {
-			if (playerList.get(i).getName().equals(record.getPlayerName())) {
-				Player temp = playerList.get(i);
+		for (Player temp:playerList) {
+			if (temp.getName().equals(record.getPlayerName())) {
 				temp.setAssists(temp.getAssists() + record.getAssists());
 				temp.setBlockShots(temp.getBlockShots() + record.getBlocks());
 				temp.setDefenseRebounds(temp.getDefenseRebounds()
@@ -111,6 +112,7 @@ public class PlayerController {
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
+				temp.AddRecord(temp.getPoints(), temp.getRebounds(), temp.getAssists());
 				int flag = 0;// 用于计算两双或三双
 				if (record.getAssists() >= 10)
 					flag++;
@@ -146,6 +148,14 @@ public class PlayerController {
 	public ArrayList<Object> getResult(BLParameter parameter) {
 		ArrayList<Object> result = new ArrayList<Object>();
 
+		//进行筛选：
+		ArrayList<Filter> FilterList = parameter.getFilterList();
+		ArrayList<Player> PlayerAfterFliter = new ArrayList<Player>();
+		for(Player player : playerList){
+			if(isSuitable(player,FilterList))
+				PlayerAfterFliter.add(player);
+		}
+		
 		// 进行数据加载
 		if (parameter.isHigh()) {
 			computeHighInfo();
@@ -156,10 +166,10 @@ public class PlayerController {
 			String field = mode.getField();
 			Sort sort = parameter.new Sort(field, false);
 			parameter.addSort(sort);
-			this.sort(playerList, parameter);
+			this.sort(PlayerAfterFliter, parameter);
 
 			int num = 0;// 已经添加的球队数
-			for (Player player : playerList) {
+			for (Player player : PlayerAfterFliter) {
 				if (num == 5)
 					break;
 				result.add(player.getHotInfo(field));
@@ -168,19 +178,26 @@ public class PlayerController {
 			return result;
 		}
 
-		if (mode.getMode().equals("king") && (mode.isDaily())) {
-			
+		if (mode.getMode().equals("king")) {
+			if (mode.isDaily()) {
+				
+			} else {
+				String field = mode.getField();
+				Sort sort = parameter.new Sort(field, false);
+				parameter.addSort(sort);
+				this.sort(PlayerAfterFliter, parameter);
+				Player player = PlayerAfterFliter.get(0);
+				result.add(player.getKingInfo(field));
+			}
 			return result;
 		} else {
 			// 排序
-			this.sort(playerList, parameter);
+			this.sort(PlayerAfterFliter, parameter);
 
 			// 进行Number值判断
 			int num = 0;// 已经添加的球队数
-			for (Player player : playerList) {
+			for (Player player : PlayerAfterFliter) {
 				if (num == parameter.getNumber())
-					break;
-				if (mode.getMode().equals("king") && num == 1)
 					break;
 				if (parameter.isHigh()) {
 					result.add(player.getHighInfo());
@@ -191,6 +208,27 @@ public class PlayerController {
 			}
 			return result;
 		}
+	}
+
+	private boolean isSuitable(Player player, ArrayList<Filter> filterList) {
+		// TODO Auto-generated method stub
+		for(Filter filter:filterList){
+			switch (filter.getFilterName()){
+			case "position":
+				if((!filter.getFilterValue().equals("All"))&&(!player.getPosition().contains(filter.getFilterValue())))
+					return false;
+				break;
+			case "league":
+				if((!filter.getFilterValue().equals("All"))&&(!(player.getConference()==filter.getFilterValue().charAt(0))))
+					return false;
+				break;
+			case "age":
+				if(!(player.getAge()>filter.getRange()[0]&&player.getAge()<=filter.getRange()[0]))
+					return false;
+				break;
+			}
+		}
+		return false;
 	}
 
 	private void sort(ArrayList<Player> playerList, BLParameter parameter) {
