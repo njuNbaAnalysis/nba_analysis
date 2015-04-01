@@ -725,7 +725,8 @@ public class Player {
 
 		info.setField(field);
 		switch (field) {
-		case "point": // 热门球队处为score，sort处
+		case "point":
+		case "score": // 热门球队处为score，sort处
 			info.setValue(this.getAveragePoints());
 			info.setUpgradeRate(this.getUpgradeRate()[0]);
 			break;
@@ -753,7 +754,8 @@ public class Player {
 
 		info.setField(field);
 		switch (field) {
-		case "point": // 热门球队处为score，sort处
+		case "point":
+		case "score": // 热门球队处为score，sort处
 			info.setValue(this.getAveragePoints());
 			break;
 		case "rebound":
@@ -777,14 +779,20 @@ public class Player {
 			double FivePoints = 0;
 			double FiveRebounds = 0;
 			double FiveAssists = 0;
-			for(int i=0;i<ListOfRecord.size();i++){
+			for (int i = 0; i < ListOfRecord.size(); i++) {
 				FivePoints += ListOfRecord.get(i).getPoints();
 				FiveRebounds += ListOfRecord.get(i).getRebounds();
 				FiveAssists += ListOfRecord.get(i).getAssists();
 			}
-			upgradeRate[0] = (FivePoints/5 - (getPoints()-FivePoints)/(gamePlayed-5)) / (getAveragePoints());
-			upgradeRate[1] = (FiveRebounds/5 - (getRebounds()-FiveRebounds)/(gamePlayed-5)) / (getAverageRebounds());
-			upgradeRate[2] = (FiveAssists/5 - (getAssists()-FiveAssists)/(gamePlayed-5)) / (getAverageAssists());
+			upgradeRate[0] = (FivePoints / 5 - (getPoints() - FivePoints)
+					/ (gamePlayed - 5))
+					/ (getAveragePoints());
+			upgradeRate[1] = (FiveRebounds / 5 - (getRebounds() - FiveRebounds)
+					/ (gamePlayed - 5))
+					/ (getAverageRebounds());
+			upgradeRate[2] = (FiveAssists / 5 - (getAssists() - FiveAssists)
+					/ (gamePlayed - 5))
+					/ (getAverageAssists());
 		}
 		return upgradeRate;
 	}
@@ -794,7 +802,7 @@ public class Player {
 	}
 
 	public void AddRecord(double points, double rebounds, double assists) {
-		if(ListOfRecord.size()>=5)
+		if (ListOfRecord.size() >= 5)
 			ListOfRecord.remove(0);
 		ListOfRecord.add(new playerData(points, rebounds, assists));
 	}
