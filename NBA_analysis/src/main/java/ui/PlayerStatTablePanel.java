@@ -121,9 +121,6 @@ public class PlayerStatTablePanel extends JPanel {
 
 	public void refreshTablePanel(int t) {
 
-		//if ((t == 1 && type != t && statTable != null) || statTable == null) {
-		System.out.println("t:"+t);
-		System.out.println("type"+type);
 		if(t == 1){
 			System.out.println("新建球员表");
 			selectPanel = new SelectPanel(width, 66 * height / (1080), this);
