@@ -25,7 +25,7 @@ public class TeamComparator implements Comparator<Team>{
             //默认升序排列，如果降序则取负
             
             switch(token.getField()){
-            case "point":
+            case "point":case "score":
                 if(isAvarage){
                     if(o1.getAveragePoints() < o2.getAveragePoints()){
                         result = -1;
