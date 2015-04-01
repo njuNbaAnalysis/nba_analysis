@@ -7,6 +7,7 @@ import java.util.Date;
 
 import test.data.PlayerHighInfo;
 import test.data.PlayerHotInfo;
+import test.data.PlayerKingInfo;
 import test.data.PlayerNormalInfo;
 import test.data.TeamHighInfo;
 import test.data.TeamHotInfo;
@@ -62,7 +63,8 @@ public class Player {
 	private double blockShotsPercentage;// 盖帽率
 	private double turnOverPercentage;// 失误率
 	private double usage;// 使用率
-	private double upgradeRate; //近五场比赛提升率
+	private ArrayList<playerData> ListOfRecord = new ArrayList<playerData>(); // 近五场比赛记录
+	private double[] upgradeRate = new double[3]; // 近五场比赛提升率,按次序依次为得分，篮板，助攻
 
 	// 效率值
 	private double efficiency;// 效率值
@@ -687,14 +689,13 @@ public class Player {
 		}
 		return points * 1.0 / gamePlayed;
 	}
-	
+
 	public double getAverageDoubleTwo() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
 		return doubledouble * 1.0 / gamePlayed;
 	}
-	
 
 	// 逻辑方法
 
@@ -726,42 +727,15 @@ public class Player {
 		switch (field) {
 		case "point": // 热门球队处为score，sort处
 			info.setValue(this.getAveragePoints());
+			info.setUpgradeRate(this.getUpgradeRate()[0]);
 			break;
 		case "rebound":
 			info.setValue(this.getAverageRebounds());
+			info.setUpgradeRate(this.getUpgradeRate()[1]);
 			break;
 		case "assist":
 			info.setValue(this.getAverageAssists());
-			break;
-		case "blockShot":
-			info.setValue(this.getAverageBlockShots());
-			break;
-		case "steal":
-			info.setValue(this.getAverageSteals());
-			break;
-		case "foul":
-			info.setValue(this.getAverageFouls());
-			break;
-		case "fault":
-			info.setValue(this.getFreeThrowsPercentage());
-			break;
-		case "minute":
-			info.setValue(this.getAverageMinutes()*60);
-			break;
-		case "efficient":
-			info.setValue(this.getAverageEfficiency());
-			break;
-		case "shot":
-			info.setValue(this.getFieldGoalsPercentage());
-			break;
-		case "three":
-			info.setValue(this.getThreePointersPercentage());
-			break;
-		case "penalty":
-			info.setValue(this.getFieldGoalsPercentage());
-			break;
-		case "doubleTwo":
-			info.setValue(this.getAverageDoubleTwo());
+			info.setUpgradeRate(this.getUpgradeRate()[2]);
 			break;
 		default:
 			System.out.println("error in Player.getHotInfo: " + field);
@@ -770,16 +744,59 @@ public class Player {
 		info.setName(name);
 		info.setTeamName(team);
 		info.setPosition(position);
-		info.setUpgradeRate(upgradeRate);   //待定
 		return info;
 	}
 
-	public double getUpgradeRate() {
+	public PlayerKingInfo getKingInfo(String field) {
+		// 默认average
+		PlayerKingInfo info = new PlayerKingInfo();
+
+		info.setField(field);
+		switch (field) {
+		case "point": // 热门球队处为score，sort处
+			info.setValue(this.getAveragePoints());
+			break;
+		case "rebound":
+			info.setValue(this.getAverageRebounds());
+			break;
+		case "assist":
+			info.setValue(this.getAverageAssists());
+			break;
+		default:
+			System.out.println("error in Player.getHotInfo: " + field);
+		}
+
+		info.setName(name);
+		info.setTeamName(team);
+		info.setPosition(position);
+		return info;
+	}
+
+	public double[] getUpgradeRate() {
+		if (gamePlayed > 5) {
+			double FivePoints = 0;
+			double FiveRebounds = 0;
+			double FiveAssists = 0;
+			for(int i=0;i<ListOfRecord.size();i++){
+				FivePoints += ListOfRecord.get(i).getPoints();
+				FiveRebounds += ListOfRecord.get(i).getRebounds();
+				FiveAssists += ListOfRecord.get(i).getAssists();
+			}
+			upgradeRate[0] = (FivePoints/5 - (getPoints()-FivePoints)/(gamePlayed-5)) / (getAveragePoints());
+			upgradeRate[1] = (FiveRebounds/5 - (getRebounds()-FiveRebounds)/(gamePlayed-5)) / (getAverageRebounds());
+			upgradeRate[2] = (FiveAssists/5 - (getAssists()-FiveAssists)/(gamePlayed-5)) / (getAverageAssists());
+		}
 		return upgradeRate;
 	}
 
-	public void setUpgradeRate(double upgradeRate) {
+	public void setUpgradeRate(double[] upgradeRate) {
 		this.upgradeRate = upgradeRate;
+	}
+
+	public void AddRecord(double points, double rebounds, double assists) {
+		if(ListOfRecord.size()>=5)
+			ListOfRecord.remove(0);
+		ListOfRecord.add(new playerData(points, rebounds, assists));
 	}
 
 	public PlayerNormalInfo getNormalInfo(boolean isAverage) {
@@ -794,12 +811,12 @@ public class Player {
 			info.setSteal(this.getAverageSteals());
 			info.setFoul(this.getAverageFouls());
 			info.setFault(this.getAverageTurnOver());
-			info.setDefend(this.getAverageDefenseRebounds());               //待定
+			info.setDefend(this.getAverageDefenseRebounds()); // 待定
 			info.setEfficiency(this.getAverageEfficiency());
-			info.setMinute(this.getAverageMinutes()*60);
+			info.setMinute(this.getAverageMinutes() * 60);
 			info.setOffend(this.getAverageOffenseRebounds());
 			info.setPoint(this.getAveragePoints());
-			
+
 		} else {
 			info.setPoint(this.getPoints());
 			info.setRebound(this.getRebounds());
@@ -824,6 +841,4 @@ public class Player {
 		info.setPenalty(this.getFreeThrowsPercentage());
 		return info;
 	}
-	
-
 }
