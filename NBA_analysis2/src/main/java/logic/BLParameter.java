@@ -124,6 +124,7 @@ public class BLParameter {
         while(input.size() != 0){
             switch(input.get(0)){
             case "-player":
+            	this.setPlayer(true);
                 input.remove(0);
                 break;
             case "-team":
