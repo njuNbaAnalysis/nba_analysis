@@ -1,12 +1,15 @@
 package logic.players;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 import test.data.PlayerKingInfo;
 import compare.PlayerComparator;
 import compare.TeamComparator;
+import compare.todayPlayerComp;
 import logic.BLController;
 import logic.BLParameter;
 import logic.BLParameter.Filter;
@@ -82,7 +85,7 @@ public class PlayerController {
 	}
 
 	private void UpdataPlayer(RecordOfPlayer record, String team) {
-		for (Player temp:playerList) {
+		for (Player temp : playerList) {
 			if (temp.getName().equals(record.getPlayerName())) {
 				temp.setAssists(temp.getAssists() + record.getAssists());
 				temp.setBlockShots(temp.getBlockShots() + record.getBlocks());
@@ -112,7 +115,8 @@ public class PlayerController {
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
-				temp.AddRecord(temp.getPoints(), temp.getRebounds(), temp.getAssists());
+				temp.AddRecord(temp.getPoints(), temp.getRebounds(),
+						temp.getAssists());
 				int flag = 0;// 用于计算两双或三双
 				if (record.getAssists() >= 10)
 					flag++;
@@ -148,11 +152,11 @@ public class PlayerController {
 	public ArrayList<Object> getResult(BLParameter parameter) {
 		ArrayList<Object> result = new ArrayList<Object>();
 
-		//进行筛选：
+		// 进行筛选：
 		ArrayList<Filter> FilterList = parameter.getFilterList();
 		ArrayList<Player> PlayerAfterFliter = new ArrayList<Player>();
-		for(Player player : playerList){
-			if(isSuitable(player,FilterList))
+		for (Player player : playerList) {
+			if (isSuitable(player, FilterList))
 				PlayerAfterFliter.add(player);
 		}
 		// 进行数据加载
@@ -166,7 +170,6 @@ public class PlayerController {
 			Sort sort = parameter.new Sort(field, false);
 			parameter.addSort(sort);
 			this.sort(PlayerAfterFliter, parameter);
-			System.out.println(PlayerAfterFliter.get(0).getName()+"sadasd");
 			int num = 0;// 已经添加的球队数
 			for (Player player : PlayerAfterFliter) {
 				if (num == 5)
@@ -178,10 +181,11 @@ public class PlayerController {
 		}
 
 		if (mode.getMode().equals("king")) {
+			String field = mode.getField();
 			if (mode.isDaily()) {
-				
+				todayPlayer todayPlayer = this.getTotalPlayer(field);
+				result.add(todayPlayer.getKingInfo(field));
 			} else {
-				String field = mode.getField();
 				Sort sort = parameter.new Sort(field, false);
 				parameter.addSort(sort);
 				this.sort(PlayerAfterFliter, parameter);
@@ -210,18 +214,23 @@ public class PlayerController {
 
 	private boolean isSuitable(Player player, ArrayList<Filter> filterList) {
 		// TODO Auto-generated method stub
-		for(Filter filter:filterList){
-			switch (filter.getFilterName()){
+		for (Filter filter : filterList) {
+			switch (filter.getFilterName()) {
 			case "position":
-				if((!filter.getFilterValue().equals("All"))&&(!player.getPosition().contains(filter.getFilterValue())))
+				if ((!filter.getFilterValue().equals("All"))
+						&& (!player.getPosition().contains(
+								filter.getFilterValue())))
 					return false;
 				break;
 			case "league":
-				if((!filter.getFilterValue().equals("All"))&&(!(player.getConference()==filter.getFilterValue().charAt(0))))
+				if ((!filter.getFilterValue().equals("All"))
+						&& (!(player.getConference() == filter.getFilterValue()
+								.charAt(0))))
 					return false;
 				break;
 			case "age":
-				if(!(player.getAge()>filter.getRange()[0]&&player.getAge()<=filter.getRange()[0]))
+				if (!(player.getAge() > filter.getRange()[0] && player.getAge() <= filter
+						.getRange()[0]))
 					return false;
 				break;
 			}
@@ -234,4 +243,40 @@ public class PlayerController {
 		Collections.sort(playerList, comparator);
 	}
 
+	public todayPlayer getTotalPlayer(String field) { // 得到当日最热球员
+		Date now = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String strDate = df.format(now);
+		BLController bl = BLController.getInstance();
+		ArrayList<Match> list = bl.getAllMatches();
+		for (int i = 0; i < list.size(); i++) {
+			if (!(list.get(i).getDate().substring(6, 16).equals(strDate)))
+				list.remove(i);
+		}
+		ArrayList<todayPlayer> listTodayHotPlayer = new ArrayList<todayPlayer>();
+		for (Match m : list) {
+			ArrayList<RecordOfPlayer> firstlist = m.getFirstRecordList();
+			ArrayList<RecordOfPlayer> secondlist = m.getSecondRecordList();
+			for (int i = 0; i < firstlist.size(); i++) {
+				listTodayHotPlayer.add(new todayPlayer(firstlist.get(i)
+						.getPlayerName(), m.getTeams()[0], firstlist.get(i)
+						.getPosition(), firstlist.get(i).getPoints(), firstlist
+						.get(i).getRebounds(), firstlist.get(i).getAssists()));
+			}
+			for (int i = 0; i < secondlist.size(); i++) {
+				listTodayHotPlayer.add(new todayPlayer(secondlist.get(i)
+						.getPlayerName(), m.getTeams()[1], secondlist.get(i)
+						.getPosition(), secondlist.get(i).getPoints(),
+						secondlist.get(i).getRebounds(), secondlist.get(i)
+								.getAssists()));
+			}
+
+		}
+		Comparator<todayPlayer> comparator = new todayPlayerComp(field);
+		Collections.sort(listTodayHotPlayer, comparator);
+		if (listTodayHotPlayer.size() >= 0) {
+			return listTodayHotPlayer.get(0);
+		} else
+			return null;
+	}
 }

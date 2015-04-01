@@ -1,8 +1,13 @@
 package logic.matches;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+import compare.MatchComp;
+import compare.PlayerComparator;
 import logic.BLController;
+import logic.players.Player;
 import data.DataController;
 import data.DataService;
 import data.matches.MatchMistake;
@@ -29,6 +34,8 @@ public class MatchController {
 
 	public void init() {
 		matchList = dataService.getAllMatches();
+		Comparator<Match> comparator = new MatchComp();
+		Collections.sort(matchList, comparator);
 		computeData();
 		BLController.progress ++;
 	}

@@ -36,6 +36,12 @@ public class MatchReader {
 				else {
 					// 初始化时间
 					String dateOfTime = token.substring(0, 12);
+					String strtemp = dateOfTime.substring(6, 8);
+					if(Integer.parseInt(strtemp)>=10)
+						dateOfTime = dateOfTime.substring(0, 6)+"20"+dateOfTime.substring(0, 2)+"-"+dateOfTime.substring(6,11);
+					else
+						dateOfTime = dateOfTime.substring(0, 6)+"20"+dateOfTime.substring(3, 5)+"-"+dateOfTime.substring(6,11);
+					System.out.println(dateOfTime);
 //					SimpleDateFormat sdf = new SimpleDateFormat("yy-yy_MM-dd_");// 小写的mm表示的是分钟
 //					Date date = null;
 //					try {
@@ -159,7 +165,7 @@ public class MatchReader {
 			}
 		}
 		double now = System.currentTimeMillis();
-		System.out.println("matchReader:" + (now - current));
+		System.out.println("matchsort:" + (now - current));
 
 		BLController.progress++;
 	}
