@@ -1,12 +1,19 @@
 package logic.players;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+import compare.PlayerComparator;
+import compare.TeamComparator;
 import logic.BLController;
 import logic.BLParameter;
+import logic.BLParameter.Mode;
+import logic.BLParameter.Sort;
 import logic.matches.Match;
 import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
+import logic.teams.Team;
 import data.DataController;
 import data.DataService;
 
@@ -17,7 +24,7 @@ public class PlayerController {
 
 	private PlayerController() {
 		dataService = DataController.getInstance();
-		init();//此时做init为了使构造和init不能分开调用，防止BLController中的机制出错
+		init();// 此时做init为了使构造和init不能分开调用，防止BLController中的机制出错
 	}
 
 	public static PlayerController getInstance() {
@@ -35,18 +42,14 @@ public class PlayerController {
 	}
 
 	public void init() {
-	    playerList = dataService.getAllPlayers();
-		computeData();
+		playerList = dataService.getAllPlayers();
+		computeNormalInfo();
 	}
 
-	
-	
-	
-	
 	// 对Player数据进一步计算
-	private void computeData() {
-	    
-	    double current = System.currentTimeMillis();
+	private void computeNormalInfo() {
+
+		double current = System.currentTimeMillis();
 
 		MatchController matchController = MatchController.getInstance();
 		ArrayList<Match> ListOfMatches = matchController.getAllMatches();
@@ -65,11 +68,15 @@ public class PlayerController {
 						.getTeams()[1]);
 			}
 		}
-		initPlayers();
 		BLController.progress++;
-		
 		double now = System.currentTimeMillis();
-        System.out.println("computeData_player:" + (now - current));
+		System.out.println("computeData_player:" + (now - current));
+	}
+
+	private void computeHighInfo() {
+		for (int i = 0; i < playerList.size(); i++) {
+			playerList.get(i).init();
+		}
 	}
 
 	private void UpdataPlayer(RecordOfPlayer record, String team) {
@@ -104,52 +111,91 @@ public class PlayerController {
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
-				int flag = 0;//用于计算两双或三双
-				if(record.getAssists()>=10) flag++;
-				if(record.getBlocks()>=10) flag++;
-				if(record.getPoints()>=10) flag++;
-				if(record.getSteals()>=10) flag++;
-				if(record.getRebounds()>=10) flag++;
-				if(flag==2) temp.setThreedouble(temp.getDoubledouble() + 1);
-				if(flag==3) temp.setDoubledouble(temp.getThreedouble() + 1);
-				if(flag==4) temp.setFourdouble(temp.getFourdouble() + 1);
-				if(flag==5) temp.setFivedouble(temp.getFivedouble() + 1);
+				int flag = 0;// 用于计算两双或三双
+				if (record.getAssists() >= 10)
+					flag++;
+				if (record.getBlocks() >= 10)
+					flag++;
+				if (record.getPoints() >= 10)
+					flag++;
+				if (record.getSteals() >= 10)
+					flag++;
+				if (record.getRebounds() >= 10)
+					flag++;
+				if (flag == 2)
+					temp.setThreedouble(temp.getDoubledouble() + 1);
+				if (flag == 3)
+					temp.setDoubledouble(temp.getThreedouble() + 1);
+				if (flag == 4)
+					temp.setFourdouble(temp.getFourdouble() + 1);
+				if (flag == 5)
+					temp.setFivedouble(temp.getFivedouble() + 1);
 				break;
 			}
 		}
 	}
-	private void initPlayers(){
-		for(int i=0;i<playerList.size();i++){
-			playerList.get(i).init();
-		}
-	}
-	
-	public Player getPlayer(String name){
-		for(int i=0;i<playerList.size();i++){
-			if(playerList.get(i).getName().equals(name))
+
+	public Player getPlayer(String name) {
+		for (int i = 0; i < playerList.size(); i++) {
+			if (playerList.get(i).getName().equals(name))
 				return playerList.get(i);
 		}
-		return null;  //没找到
+		return null; // 没找到
 	}
 
-	public ArrayList<Object> getResult(BLParameter parameter){
-	    return null;
+	public ArrayList<Object> getResult(BLParameter parameter) {
+		ArrayList<Object> result = new ArrayList<Object>();
+
+		// 进行数据加载
+		if (parameter.isHigh()) {
+			computeHighInfo();
+		}
+		// 进行mode判断,如果是hot直接处理并返回
+		Mode mode = parameter.getMode();
+		if (mode.getMode().equals("hot")) {
+			String field = mode.getField();
+			Sort sort = parameter.new Sort(field, false);
+			parameter.addSort(sort);
+			this.sort(playerList, parameter);
+
+			int num = 0;// 已经添加的球队数
+			for (Player player : playerList) {
+				if (num == 5)
+					break;
+				result.add(player.getHotInfo(field));
+				num++;
+			}
+			return result;
+		}
+
+		if (mode.getMode().equals("king") && (mode.isDaily())) {
+			
+			return result;
+		} else {
+			// 排序
+			this.sort(playerList, parameter);
+
+			// 进行Number值判断
+			int num = 0;// 已经添加的球队数
+			for (Player player : playerList) {
+				if (num == parameter.getNumber())
+					break;
+				if (mode.getMode().equals("king") && num == 1)
+					break;
+				if (parameter.isHigh()) {
+					result.add(player.getHighInfo());
+				} else {
+					result.add(player.getNormalInfo(parameter.isAvarage()));
+				}
+				num++;
+			}
+			return result;
+		}
 	}
-	
-	//只计算Hot的三项，为了速度，这三个通常只会有一个被调用
-	private void computeHotInfo(){
-	    
+
+	private void sort(ArrayList<Player> playerList, BLParameter parameter) {
+		Comparator<Player> comparator = new PlayerComparator(parameter);
+		Collections.sort(playerList, comparator);
 	}
-	
-	//只计算普通数据
-	private void computeNormalInfo(){
-	    
-	}
-	
-	//只计算高阶数据
-	private void computeHighInfo(){
-	    
-	}
-	
-	
+
 }
