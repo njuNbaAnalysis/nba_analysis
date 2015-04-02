@@ -130,7 +130,7 @@ public class MatchReader {
 						else {
 							String[] temp = str[2].split(":");
 							num[2] = Integer.parseInt(temp[0])
-									* Integer.parseInt(temp[1]);
+									*60 + Integer.parseInt(temp[1]);
 						}
 						for (int i = 3; i < str.length; i++) {
 							if ((str[i].equals("")) || (str[i].equals("null"))
