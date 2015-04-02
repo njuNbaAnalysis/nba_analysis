@@ -566,9 +566,9 @@ public class Player {
 	}
 
 	public double getEfficiency() {
-		efficiency = (rebounds + points + blockShots + steals)
-				- (fieldGoalAttempts + threePointerAttempts + freeThrowAttempts
-						- fieldGoalHits - threePointerHits - freeThrowHits)
+		efficiency = (rebounds + points + blockShots + steals + assists)
+				- (fieldGoalAttempts - fieldGoalHits) -
+						(freeThrowAttempts  - freeThrowHits)
 				- turnOver; // (得分+篮板+助攻+抢断+盖帽)-（出手次数-命中次数）-（罚球次数-罚球命中次数）-失误次数
 		return efficiency;
 	}
