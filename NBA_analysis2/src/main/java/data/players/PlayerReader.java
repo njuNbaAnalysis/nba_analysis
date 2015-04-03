@@ -23,7 +23,7 @@ public class PlayerReader {
     
     public void init(){
         playerList = readPlayers();
-        BLController.progress ++;
+        
         
 /*        Thread thread1 = new Thread(){
             public void run(){
@@ -138,6 +138,7 @@ public class PlayerReader {
                 e.printStackTrace();
             }
         }
+        BLController.progress ++;
     }
     
     public void readAction(){
@@ -151,6 +152,7 @@ public class PlayerReader {
             } catch (IOException e) {
             }
         }
+        BLController.progress ++;
     }
     
     public void readPortrait(){
@@ -164,9 +166,10 @@ public class PlayerReader {
             } catch (IOException e) {
             }
         }
+        BLController.progress ++;
     }
     
-    private void readImage(){
+    public void readImage(){
         for(Player token:playerList){
             String name = token.getName();
             
@@ -182,6 +185,8 @@ public class PlayerReader {
             } catch (IOException e) {
             }
         }
+        BLController.progress ++;
+        BLController.progress ++;
     }
  
     

@@ -115,7 +115,6 @@ public class BLController implements BLService{
         }
     }
 
-    
     @Override
     public boolean isMatchChanged() {
         if(dataService == null){
@@ -131,6 +130,54 @@ public class BLController implements BLService{
     public ArrayList<Player> getMostImprovedPlayer(String field, int num) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    
+    //界面层用来初始化的
+    //所有的getAll
+    //所有的图片
+    @Override
+    public void init() {
+        if(matchController == null){ 
+            matchController = MatchController.getInstance();
+        }
+        if(teamController == null){
+            teamController = TeamController.getInstance();
+        }
+        if(playerController == null){
+            playerController = PlayerController.getInstance();
+        }
+        if(dataService == null){
+            dataService = DataController.getInstance();
+            dataService.readAllImages();
+        }
+    }
+
+    
+    @Override
+    //界面层调用
+    public Team[] getTeamsByMatch(Match match) {
+        if(teamController == null){
+            teamController = TeamController.getInstance();
+        }
+        Team[] teams = new Team[2];
+        String teamNames[] = match.getTeams();
+        int num = 0;
+        for(Team team: teamController.getAllTeams()){
+            if(team.getName().equals(teamNames[0])){
+                teams[0] = team;
+                num ++;
+            }
+            if(team.getName().equals(teamNames[1])){
+                teams[1] = team;
+                num ++;
+            }
+            if(num == 2){
+                break;
+            }
+        }
+        
+        return teams;
     }
 
 }

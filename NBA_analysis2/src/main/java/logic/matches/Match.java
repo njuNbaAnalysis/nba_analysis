@@ -1,8 +1,8 @@
 package logic.matches;
 
 import java.util.ArrayList;
-import java.util.Date;
 
+import logic.teams.Team;
 import data.matches.MatchMistake;
 
 public class Match {
@@ -58,4 +58,5 @@ public class Match {
 	public ArrayList<MatchMistake> getMatchMistakeList(){
 		return ListOfMistake;
 	}
+
 }

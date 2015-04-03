@@ -49,6 +49,7 @@ public class PlayerController {
 	public void init() {
 		playerList = dataService.getAllPlayers();
 		computeNormalInfo();
+		BLController.progress ++;
 	}
 
 	// 对Player数据进一步计算
@@ -73,7 +74,6 @@ public class PlayerController {
 						.getTeams()[1]);
 			}
 		}
-		BLController.progress++;
 		double now = System.currentTimeMillis();
 		System.out.println("computeData_player:" + (now - current));
 	}
@@ -278,5 +278,10 @@ public class PlayerController {
 			return listTodayHotPlayer.get(0);
 		} else
 			return null;
+	}
+
+	//提供给MatchController的方法
+	public void addMatch(Match match){
+	    
 	}
 }
