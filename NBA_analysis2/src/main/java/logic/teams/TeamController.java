@@ -290,7 +290,7 @@ public class TeamController {
         return result;
     }
     
-    //只计算普通数据，为了数据通常这两个只有一个会被调用
+    //只计算普通数据，为了数据通常这两个只有一个会被调用，根据matchList即时计算
     private void computeNormalInfo(){
          
         MatchController controller = MatchController.getInstance();
@@ -302,7 +302,7 @@ public class TeamController {
         }
     }
     
-    //只计算高阶数据
+    //只计算高阶数据，根据matchList即时计算 
     private void computeHighInfo(){
         computeData();  //所有数据必须在normalInfo上进行计算，故直接调用原有接口computeData
     }
@@ -314,6 +314,11 @@ public class TeamController {
 
     //提供给MatchController的接口
     public void addMatch(Match match){
+        parseRecordList(match,0);
+        parseRecordList(match,1);
         
+        computeRounds(match);
+        computeRival(match);
+        computeEfficiency(this.teamList);
     }
 }
