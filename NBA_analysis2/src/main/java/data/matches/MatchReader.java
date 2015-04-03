@@ -41,7 +41,6 @@ public class MatchReader {
 						dateOfTime = dateOfTime.substring(0, 6)+"20"+dateOfTime.substring(0, 2)+"-"+dateOfTime.substring(6,11);
 					else
 						dateOfTime = dateOfTime.substring(0, 6)+"20"+dateOfTime.substring(3, 5)+"-"+dateOfTime.substring(6,11);
-					System.out.println(dateOfTime);
 //					SimpleDateFormat sdf = new SimpleDateFormat("yy-yy_MM-dd_");// 小写的mm表示的是分钟
 //					Date date = null;
 //					try {
