@@ -14,11 +14,11 @@ import java.io.IOException;
  */
 public class Setting {
     
-    private static String path = "Data";
+    private static String path = "Data/";
     
     //静态初始化，防止路径信息的重复读取
     static{
-        File file = new File("dataPath");
+        File file = new File("./dataPath");
         if(file.exists()){
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -40,7 +40,7 @@ public class Setting {
     
     public static void setPath(String path){
         Setting.path = path;
-        File file = new File("dataPath");
+        File file = new File("./dataPath");
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(path);

@@ -1,0 +1,16 @@
+##########################################################
+System Argument Not Invalid.
+Exception Occur :Option "--id" was given 0 times, but must be given exactly 1 times
+de.tototec.cmdoption.CmdlineParserException: Option "--id" was given 0 times, but must be given exactly 1 times
+	at de.tototec.cmdoption.CmdlineParser.parse(CmdlineParser.java:403)
+	at de.tototec.cmdoption.CmdlineParser.parse(CmdlineParser.java:199)
+	at de.tototec.cmdoption.CmdlineParser.parse(CmdlineParser.java:176)
+	at com.nba.autoinvoker.Auto.main(Auto.java:39)
+##########################################################
+System Argument Not Invalid.
+Exception Occur :Unsupported option or parameter found: PC\Desktop\NBA_analysis\NBA_analysis2\tests
+de.tototec.cmdoption.CmdlineParserException: Unsupported option or parameter found: PC\Desktop\NBA_analysis\NBA_analysis2\tests
+	at de.tototec.cmdoption.CmdlineParser.parse(CmdlineParser.java:365)
+	at de.tototec.cmdoption.CmdlineParser.parse(CmdlineParser.java:199)
+	at de.tototec.cmdoption.CmdlineParser.parse(CmdlineParser.java:176)
+	at com.nba.autoinvoker.Auto.main(Auto.java:39)

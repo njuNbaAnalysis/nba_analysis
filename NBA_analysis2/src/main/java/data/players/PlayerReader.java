@@ -3,16 +3,19 @@ package data.players;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
 
-import util.Setting;
 import logic.BLController;
 import logic.players.Player;
+import util.Setting;
+import util.Tools;
 
 public class PlayerReader {
     private ArrayList<Player> playerList = new ArrayList<Player>();
@@ -48,6 +51,8 @@ public class PlayerReader {
         
         File infoFile = new File(dataPath + "info");
         String[] infoList = infoFile.list();
+        File[] list = infoFile.listFiles();
+        list[0].isDirectory();
 
         readText(infoList); 
         //readImage();
@@ -63,7 +68,8 @@ public class PlayerReader {
     private void readText(String[] infoList){
         for(String token:infoList){
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(new File(dataPath + "info/" + token)));
+                //BufferedReader reader = new BufferedReader(new FileReader(new File(dataPath + "info/" + token)));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(dataPath + "info/" + token),"UTF-8"));
                 {
                     String name = null;
                     int number = 0;
@@ -194,6 +200,7 @@ public class PlayerReader {
 
         String[] temp = null;
         temp = line.split("│");
+        
         //System.out.println(temp[0] + "  " + temp[1]);
         temp = temp[1].split("║");
         return temp[0].trim();

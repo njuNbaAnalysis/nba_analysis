@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -60,7 +60,8 @@ public class TeamReader {
         double current = System.currentTimeMillis();
         
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(dataPath + "teams")));
+            //BufferedReader reader = new BufferedReader(new FileReader(new File(dataPath + "teams")),"UTF-8");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
             String line = null;
             while((line = reader.readLine()) != null){
                 if(line.contains("═"))  continue;   //过滤第一行和最后一行
