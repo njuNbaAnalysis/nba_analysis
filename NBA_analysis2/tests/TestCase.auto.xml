@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autotest>
+    <config>
+        <output>
+            <extension>.out</extension>
+        </output>
+    </config>
+    <tests>
+        <test-case name="All_Team" weight="3">
+            <command>-team -all -total</command>
+            <description>get all team data order by score desc</description>
+            <time-limit>1000</time-limit>
+        </test-case>
+
+        <test-case name="All_Player">
+            <command>-player -all -n 50 -total</command>
+            <description>get all player data</description>
+            <time-limit>1000</time-limit>
+        </test-case>
+
+        <test-case name="All_Player">
+            <command>-player -all -n 50 -total</command>
+            <description>get all player data</description>
+            <time-limit>1000</time-limit>
+        </test-case>
+    </tests>
+</autotest>
