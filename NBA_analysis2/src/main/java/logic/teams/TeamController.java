@@ -40,11 +40,15 @@ public class TeamController {
     
     public void init(){
         teamList = dataService.getAllTeams();
+        computeData();
+        
         
 //        long current = System.currentTimeMillis();
 //        computeData();
 //        long now = System.currentTimeMillis();
 //        System.out.println("computeData_team:" + (now - current));
+        
+        BLController.progress ++;
     }
 
     public ArrayList<Team> getAllTeams(){
@@ -235,7 +239,7 @@ public class TeamController {
             team.setAssistsPercentage(1.0 * team.getAssists() / team.getOffensiveRounds() * 100);
         }
     }
-        
+    
     public ArrayList<Object> getResult(BLParameter parameter){
         
         ArrayList<Object> result = new ArrayList<Object>();
@@ -308,4 +312,8 @@ public class TeamController {
         Collections.sort(teamList,comparator);
     }
 
+    //提供给MatchController的接口
+    public void addMatch(Match match){
+        
+    }
 }

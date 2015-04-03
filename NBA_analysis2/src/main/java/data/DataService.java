@@ -13,4 +13,5 @@ public interface DataService {
 	public ArrayList<Match> getAllMatches();
 	
 	public boolean isMatchChanged();
+	public void readAllImages();
 }

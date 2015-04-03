@@ -29,7 +29,7 @@ public class TeamReader {
     public void init(){
         File file = new File(dataPath + "teams");
         readText(file);
-        BLController.progress ++;
+        
         
         /*Thread thread1 = new Thread(){
             public void run(){
@@ -93,6 +93,7 @@ public class TeamReader {
         
         double now = System.currentTimeMillis();
         System.out.println("teamReader:" + (now - current));
+        BLController.progress ++;
         
         return ;
     }
@@ -117,6 +118,7 @@ public class TeamReader {
             }
         }
         
+        BLController.progress ++;
     }
     
     public void convert2PNG(String path){ 
