@@ -255,7 +255,7 @@ public class Player {
 		return threedouble;
 	}
 
-	public void init() {
+	public void init() {                          //每次得到这些高阶数据时，都需要init()
 		TeamController teamcontrol = TeamController.getInstance();
 		PlayerController playercontrol = PlayerController.getInstance();
 		Team teamName = teamcontrol.getTeam(team);
