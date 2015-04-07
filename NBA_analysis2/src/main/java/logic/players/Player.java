@@ -610,91 +610,91 @@ public class Player {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return rebounds * 1.0 / gamePlayed;
+		return getRebounds() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageOffenseRebounds() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return offenseRebounds * 1.0 / gamePlayed;
+		return getOffenseRebounds() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageDefenseRebounds() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return defenseRebounds * 1.0 / gamePlayed;
+		return getDefenseRebounds() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageAssists() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return assists * 1.0 / gamePlayed;
+		return getAssists() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageBlockShots() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return blockShots * 1.0 / gamePlayed;
+		return getBlockShots() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageSteals() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return steals * 1.0 / gamePlayed;
+		return getSteals() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageTurnOver() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return turnOver * 1.0 / gamePlayed;
+		return getTurnOver() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageMinutes() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return minutes * 1.0 / gamePlayed / 60;
+		return getMinutes() * 1.0 / gamePlayed / 60;
 	}
 
 	public double getAverageEfficiency() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return efficiency * 1.0 / gamePlayed;
+		return getEfficiency() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageGmSc() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return gmsc * 1.0 / gamePlayed;
+		return getGmsc() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageFouls() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return fouls * 1.0 / gamePlayed;
+		return getFouls() * 1.0 / gamePlayed;
 	}
 
 	public double getAveragePoints() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return points * 1.0 / gamePlayed;
+		return getPoints() * 1.0 / gamePlayed;
 	}
 
 	public double getAverageDoubleTwo() {
 		if (gamePlayed == 0) {
 			return 0;
 		}
-		return doubledouble * 1.0 / gamePlayed;
+		return getDoubledouble() * 1.0 / gamePlayed;
 	}
 
 	// 逻辑方法
