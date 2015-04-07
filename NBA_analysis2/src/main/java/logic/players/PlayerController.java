@@ -49,39 +49,38 @@ public class PlayerController {
 	public void init() {
 		playerList = dataService.getAllPlayers();
 		computeNormalInfo();
-		BLController.progress ++;
+		BLController.progress++;
 	}
 
 	// 对Player数据进一步计算
 	private void computeNormalInfo() {
-
 		double current = System.currentTimeMillis();
-
 		MatchController matchController = MatchController.getInstance();
 		ArrayList<Match> ListOfMatches = matchController.getAllMatches();
 		for (int i = 0; i < ListOfMatches.size(); i++) {
-			Match temp = ListOfMatches.get(i);
-			ArrayList<RecordOfPlayer> ListOfPlayers1 = temp
-					.getFirstRecordList();
-			ArrayList<RecordOfPlayer> ListOfPlayers2 = temp
-					.getSecondRecordList();
-			for (int j = 0; j < ListOfPlayers1.size(); j++) {
-				UpdataPlayer(ListOfPlayers1.get(j), ListOfMatches.get(i)
-						.getTeams()[0]);
-			}
-			for (int j = 0; j < ListOfPlayers2.size(); j++) {
-				UpdataPlayer(ListOfPlayers2.get(j), ListOfMatches.get(i)
-						.getTeams()[1]);
-			}
+			addMatch(ListOfMatches.get(i));
 		}
 		double now = System.currentTimeMillis();
 		System.out.println("computeData_player:" + (now - current));
 	}
 
-	private void computeHighInfo() {
+	public void computeHighInfo() {
 		for (int i = 0; i < playerList.size(); i++) {
 			playerList.get(i).init();
 		}
+	}
+
+	// 提供给MatchController的方法
+	public void addMatch(Match temp) {
+		ArrayList<RecordOfPlayer> ListOfPlayers1 = temp.getFirstRecordList();
+		ArrayList<RecordOfPlayer> ListOfPlayers2 = temp.getSecondRecordList();
+		for (int j = 0; j < ListOfPlayers1.size(); j++) {
+			UpdataPlayer(ListOfPlayers1.get(j), temp.getTeams()[0]);
+		}
+		for (int j = 0; j < ListOfPlayers2.size(); j++) {
+			UpdataPlayer(ListOfPlayers2.get(j), temp.getTeams()[1]);
+		}
+
 	}
 
 	private void UpdataPlayer(RecordOfPlayer record, String team) {
@@ -278,10 +277,5 @@ public class PlayerController {
 			return listTodayHotPlayer.get(0);
 		} else
 			return null;
-	}
-
-	//提供给MatchController的方法
-	public void addMatch(Match match){
-	    
 	}
 }

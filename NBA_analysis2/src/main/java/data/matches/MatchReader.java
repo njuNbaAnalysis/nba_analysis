@@ -16,6 +16,8 @@ import logic.matches.Match;
 import logic.matches.RecordOfPlayer;
 
 public class MatchReader {
+	public static int numberOFbefore;
+	public static int numberOFcurrent;
 	private ArrayList<Match> listOfMatches = new ArrayList<Match>();
 	private String path = Setting.getPath() + "/matches/";
 
@@ -25,11 +27,18 @@ public class MatchReader {
 
 		File file = new File(path);
 		String[] list = file.list();
+		numberOFbefore = list.length;
+		readText(list);
+		double now = System.currentTimeMillis();
+		System.out.println("matchsort:" + (now - current));
+		BLController.progress++;
+	}
 
+	public void readText(String[] list) {
 		for (String token : list) {
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(new File(
-				        path + token)));
+						path + token)));
 				String data = br.readLine();
 				if (data == null)
 					break;
@@ -37,18 +46,23 @@ public class MatchReader {
 					// 初始化时间
 					String dateOfTime = token.substring(0, 12);
 					String strtemp = dateOfTime.substring(6, 8);
-					if(Integer.parseInt(strtemp)>=10)
-						dateOfTime = dateOfTime.substring(0, 6)+"20"+dateOfTime.substring(0, 2)+"-"+dateOfTime.substring(6,11);
+					if (Integer.parseInt(strtemp) >= 10)
+						dateOfTime = dateOfTime.substring(0, 6) + "20"
+								+ dateOfTime.substring(0, 2) + "-"
+								+ dateOfTime.substring(6, 11);
 					else
-						dateOfTime = dateOfTime.substring(0, 6)+"20"+dateOfTime.substring(3, 5)+"-"+dateOfTime.substring(6,11);
-//					SimpleDateFormat sdf = new SimpleDateFormat("yy-yy_MM-dd_");// 小写的mm表示的是分钟
-//					Date date = null;
-//					try {
-//						date = sdf.parse(dataOfTime);
-//					} catch (ParseException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+						dateOfTime = dateOfTime.substring(0, 6) + "20"
+								+ dateOfTime.substring(3, 5) + "-"
+								+ dateOfTime.substring(6, 11);
+					// SimpleDateFormat sdf = new
+					// SimpleDateFormat("yy-yy_MM-dd_");// 小写的mm表示的是分钟
+					// Date date = null;
+					// try {
+					// date = sdf.parse(dataOfTime);
+					// } catch (ParseException e) {
+					// // TODO Auto-generated catch block
+					// e.printStackTrace();
+					// }
 					// 初始化球队
 					String NameOfTeams = token.substring(12, token.length());
 					String[] teams = NameOfTeams.split("-");
@@ -61,7 +75,7 @@ public class MatchReader {
 					data = br.readLine();
 					ArrayList<int[]> pointsList = new ArrayList<int[]>();
 					if (data != null) {
-						str = data.split(";");   
+						str = data.split(";");
 						for (int i = 0; i < str.length; i++) {
 							ponitOfGame = str[i].split("-");
 							int[] temp = { Integer.parseInt(ponitOfGame[0]),
@@ -75,10 +89,10 @@ public class MatchReader {
 					data = br.readLine();// 可以在这里校验球队数据是否出错
 					int number = 1;
 					while ((data = br.readLine()) != null) {
-//						str = data.split(";");
+						// str = data.split(";");
 						str = fastSplit(data, ';');
-//						if (str.length == 1)
-//							break;
+						// if (str.length == 1)
+						// break;
 						if (str[2] == null)
 							break;
 						int[] num = new int[str.length];
@@ -116,10 +130,10 @@ public class MatchReader {
 					number = 1;
 					ArrayList<RecordOfPlayer> secondRecordList = new ArrayList<RecordOfPlayer>();
 					while ((data = br.readLine()) != null) {
-//						str = data.split(";");
+						// str = data.split(";");
 						str = fastSplit(data, ';');
-//						if (str.length != 18)
-//							break;
+						// if (str.length != 18)
+						// break;
 						if (str[2] == null)
 							break;
 						int[] num = new int[str.length];
@@ -128,8 +142,8 @@ public class MatchReader {
 							num[2] = -1;
 						else {
 							String[] temp = str[2].split(":");
-							num[2] = Integer.parseInt(temp[0])
-									*60 + Integer.parseInt(temp[1]);
+							num[2] = Integer.parseInt(temp[0]) * 60
+									+ Integer.parseInt(temp[1]);
 						}
 						for (int i = 3; i < str.length; i++) {
 							if ((str[i].equals("")) || (str[i].equals("null"))
@@ -163,10 +177,6 @@ public class MatchReader {
 				e.printStackTrace();
 			}
 		}
-		double now = System.currentTimeMillis();
-		System.out.println("matchsort:" + (now - current));
-
-		BLController.progress++;
 	}
 
 	public ArrayList<Match> getMatchList() { // 若数据为-1，则表示缺省。迭代一中仅可能有上场时间缺省（未解决）和个人得分缺省（已解决）
@@ -197,16 +207,16 @@ public class MatchReader {
 			}
 		}
 	}
-	
+
 	private String[] fastSplit(final String text, char separator) {
 		String[] result = new String[18];
-		
+
 		int num = 0;
 		if (text != null && text.length() > 0) {
 			int index1 = 0;
 			int index2 = text.indexOf(separator);
 			while (index2 >= 0) {
-				result[num] =  text.substring(index1, index2);
+				result[num] = text.substring(index1, index2);
 				index1 = index2 + 1;
 				index2 = text.indexOf(separator, index1);
 				num++;
@@ -219,9 +229,25 @@ public class MatchReader {
 
 		return result;
 	}
-	
 
-	public boolean isChanged(){
-	    return false;
+	public boolean isChanged() {
+		File file = new File(path);
+		String[] list = file.list();
+		numberOFcurrent = list.length;
+		if (numberOFcurrent < numberOFbefore) {
+			System.out
+					.println("Error in DataReader:the number of Data is declined!!!");
+		} else if (numberOFcurrent == numberOFbefore) {
+			return false;
+		} else {
+			String[] str = new String[numberOFcurrent - numberOFbefore];
+			for(int i=numberOFbefore;i<numberOFcurrent;i++){
+				str[i-numberOFbefore] = list[i];
+			}
+			readText(str);
+			return true;
+		}
+
+		return false;
 	}
 }
