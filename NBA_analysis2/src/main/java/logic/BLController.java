@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import logic.matches.Match;
 import logic.matches.MatchController;
@@ -165,5 +166,13 @@ public class BLController implements BLService {
 
 		return teams;
 	}
+
+    @Override
+    public ArrayList<Match> getTodayMatches(String date) {
+        if(matchController == null){
+            matchController = MatchController.getInstance();
+        }
+        return matchController.getTodayMatches(date);
+    }
 
 }
