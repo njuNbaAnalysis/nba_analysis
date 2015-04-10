@@ -11,7 +11,7 @@ public class Start {
 		long past = System.currentTimeMillis();
 		
 		final BLController bl = BLController.getInstance();
-
+		
 		final AnimationFrame animation = new AnimationFrame(bl);
 
 		Thread thread = new Thread(new Runnable() {
@@ -34,9 +34,7 @@ public class Start {
 			}
 		});
 		thread.start();
-		
 		bl.init();
-		
 		try {
             thread.join();
         } catch (InterruptedException e) {
