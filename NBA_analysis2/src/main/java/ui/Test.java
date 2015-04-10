@@ -1,11 +1,18 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+
+import logic.BLController;
+import logic.matches.Match;
 
 public class Test extends JFrame {
 
@@ -31,14 +38,22 @@ public class Test extends JFrame {
 	 * Create the frame.
 	 */
 	public Test() {
+		final BLController bl = BLController.getInstance();
+		bl.init();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
-		setBounds(100, 100, 1800, 300);
+		setBounds(1920, 0, 1920, 1080);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		contentPane.add(new PlayerBasicInfoLabel(null, 0,0));
+		//contentPane.add(new PlayerBasicInfoLabel(bl.getAllPlayers().get(0), 1800,200));
+		MatchPanel matchPanel = new MatchPanel(0,0,bl);
+		JScrollPane scrollPane = new JScrollPane(matchPanel);
+		scrollPane.setBounds(0, 0, 1920, 1080);
+		contentPane.add(scrollPane);
+		
+		//contentPane.add(matchPanel);
 	}
 
 }
