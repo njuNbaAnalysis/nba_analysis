@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import compare.MatchComp;
-import compare.PlayerComparator;
 import logic.BLController;
-import logic.players.Player;
 import logic.players.PlayerController;
-import logic.teams.Team;
 import logic.teams.TeamController;
+
+import compare.MatchComp;
+
 import data.DataController;
 import data.DataService;
 import data.matches.MatchMistake;
@@ -121,5 +120,15 @@ public class MatchController {
 			playcontrol.addMatch(newMatchList.get(i));
 			teamcontrol.addMatch(newMatchList.get(i));
 		}
+	}
+
+	public ArrayList<Match> getTodayMatches(String date){
+	    ArrayList<Match> result = new ArrayList<Match>();
+	    for(Match match:matchList){
+	        if(match.getDate().equals(date)){
+	            result.add(match);
+	        }
+	    }
+	    return result;
 	}
 }
