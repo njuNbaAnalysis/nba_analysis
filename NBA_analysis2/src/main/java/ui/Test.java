@@ -40,6 +40,9 @@ public class Test extends JFrame {
 	public Test() {
 		final BLController bl = BLController.getInstance();
 		bl.init();
+		while(bl.getProgress()!=10){
+			System.out.println(bl.getProgress());
+		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		setBounds(1920, 0, 1920, 1080);

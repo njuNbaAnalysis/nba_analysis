@@ -39,7 +39,7 @@ public class MatchPanel extends JPanel {
 		 * this.width=width1; this.height = height1;
 		 */
 		this.bl = bl;
-		this.matchList = new ArrayList<Match>(bl.getAllMatches().subList(0, 5));
+		this.matchList = new ArrayList<Match>(bl.getTodayMatches("13-14_2014-01-01"));
 		this.width = 1920;
 		this.height = 1080;
 
@@ -169,39 +169,40 @@ public class MatchPanel extends JPanel {
 			g.fillRect(0, height / 10 + 1, width * 2 / 5, height * 8 / 10 - 1);
 			g.setFont(new Font("default", Font.BOLD, 20));
 			g.drawString("结束", 45, 22);
-			g.drawImage(logo, 50, 60, this);
-			g.drawImage(logo, 50, 170, this);
-			
+			g.drawImage(teams[0].getLogo(96, 60), 50, 60, this);
+			g.drawImage(teams[1].getLogo(96, 60), 50, 170, this);
 			g.setColor(Color.black);
 			g.setFont(new Font("default", Font.PLAIN, 30));
 			g.drawString(match.getTeams()[0], 150, 90);
 			g.drawString(match.getTeams()[1], 150, 200);
 			g.setFont(new Font("default", Font.PLAIN, 15));
-			g.drawString("29-45", 160, 110);
-			g.drawString("52-22", 160, 220);
+	
+			g.drawString(teams[0].getNumOfVictory()+"-"+(teams[0].getNumOfMatches()-teams[0].getNumOfVictory()), 160, 110);
+			g.drawString(teams[1].getNumOfVictory()+"-"+(teams[1].getNumOfMatches()-teams[1].getNumOfVictory()), 160, 220);
 			g.drawString("1", 270, 60);
 			g.drawString("2", 350, 60);
 			g.drawString("3", 430, 60);
 			g.drawString("4", 510, 60);
 			g.setFont(new Font("default", Font.PLAIN, 30));
-			g.drawString("25", 255, 110);
-			g.drawString("20", 335, 110);
-			g.drawString("17", 415, 110);
-			g.drawString("16", 495, 110);
-			g.drawString("17", 415, 210);
+			g.drawString(match.getPointsList().get(0)[0]+"", 255, 110);
+			g.drawString(match.getPointsList().get(1)[0]+"", 335, 110);
+			g.drawString(match.getPointsList().get(2)[0]+"", 415, 110);
+			g.drawString(match.getPointsList().get(3)[0]+"", 495, 110);
+			
 			g.setColor(new Color(169, 11, 51));
-			g.drawString("33", 255, 210);
-			g.drawString("23", 335, 210);
-			g.drawString("29", 495, 210);
+			g.drawString(match.getPointsList().get(0)[1]+"", 415, 210);
+			g.drawString(match.getPointsList().get(1)[1]+"", 255, 210);
+			g.drawString(match.getPointsList().get(2)[1]+"", 335, 210);
+			g.drawString(match.getPointsList().get(3)[1]+"", 495, 210);
 			g.setFont(new Font("default", Font.PLAIN, 40));
 			g.setColor(new Color(169, 11, 51));
-			g.drawString("102", 580, 215);
+			g.drawString(match.getPoints()[1]+"", 580, 215);
 			g.setColor(Color.black);
-			g.drawString("78", 580, 115);
+			g.drawString(match.getPoints()[0]+"", 580, 115);
 
 			g.setFont(new Font("default", Font.BOLD, 20));
-			g.drawString("黄蜂", 980, 70);
-			g.drawString("马刺", 1380, 70);
+			g.drawString(match.getTeams()[0], 980, 70);
+			g.drawString(match.getTeams()[1], 1380, 70);
 			g.drawString("得分", 800, 110);
 			g.drawString("篮板", 800, 170);
 			g.drawString("助攻", 800, 230);
