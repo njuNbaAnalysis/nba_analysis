@@ -151,11 +151,11 @@ public class BLController implements BLService {
 		String teamNames[] = match.getTeams();
 		int num = 0;
 		for (Team team : teamController.getAllTeams()) {
-			if (team.getName().equals(teamNames[0])) {
+			if (team.getAbbreviation().equals(teamNames[0])) {
 				teams[0] = team;
 				num++;
 			}
-			if (team.getName().equals(teamNames[1])) {
+			if (team.getAbbreviation().equals(teamNames[1])) {
 				teams[1] = team;
 				num++;
 			}
