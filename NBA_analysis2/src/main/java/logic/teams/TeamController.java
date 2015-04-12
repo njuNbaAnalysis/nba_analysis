@@ -77,7 +77,7 @@ public class TeamController {
         
         computeEfficiency(teamList);
         
-        BLController.progress ++;
+        //BLController.progress ++;
     }
     
     //根据名字缩写查找，如果没有找到则返回null
