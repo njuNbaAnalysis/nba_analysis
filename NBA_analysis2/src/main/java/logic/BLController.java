@@ -182,13 +182,19 @@ public class BLController implements BLService {
 	}
 
 	@Override
-	public ArrayList<Player> getSeasonKingPlayer(String date, String field,int num) {
+	public Team getTeamByPlayer(Player player) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Team getTeamByPlayer(Player player) {
+	public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Team> getSeasonKingTeam(String field, int num) {
 		// TODO Auto-generated method stub
 		return null;
 	}
