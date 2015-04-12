@@ -16,6 +16,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import logic.BLController;
+import logic.BLService;
 
 public class MenuPanel extends JPanel {
 	private int width;
@@ -23,7 +27,7 @@ public class MenuPanel extends JPanel {
 	private int heightOfHead ;
 	private static Image logo;
 	int selectedNumber = -1;
-
+	BLController bl;
 	ImageIcon playerIcon;
 	ImageIcon playerIconD;
 	ImageIcon teamIcon;
@@ -51,7 +55,7 @@ public class MenuPanel extends JPanel {
 	JButton teamStat;
 	JButton match;
 	JButton exit;
-	PlayerStatTablePanel teamRankTablePanel;
+	JPanel content;
 	
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(31, 31, 31));
@@ -59,12 +63,13 @@ public class MenuPanel extends JPanel {
 		g.drawImage(logo, 0, 0, this);
 	}
 
-	public MenuPanel(int width, int height, PlayerStatTablePanel teamRankTablePanel) {
+	public MenuPanel(int width, int height, JPanel content,BLController bl) {
 		setLayout(null);
 		this.width = width / 10;
 		this.height = height;
 		this.heightOfHead = 116*height/(1080);
-		this.teamRankTablePanel = teamRankTablePanel;
+		this.content = content;
+		this.bl=bl;
 		loadImage();
 		initButton();
 	}
@@ -293,19 +298,34 @@ public class MenuPanel extends JPanel {
 			}
 			
 			if(type==1){
-				teamRankTablePanel.refreshTablePanel(type);
+				
+				
+				//teamRankTablePanel.refreshTablePanel(type);
+				PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(width*10,height,bl);
+				teamRankTablePanel.setBounds(0, 0, width*9, height);
+				content.removeAll();
+				content.add(teamRankTablePanel);
+				content.updateUI();
+			
 			}
+			
 			if(type==2){
-				teamRankTablePanel.refreshTablePanel(type);
+				//teamRankTablePanel.refreshTablePanel(type);
 			}
 			if(type==3){
-				teamRankTablePanel.refreshTablePanel(type);
+				//teamRankTablePanel.refreshTablePanel(type);
 			}
 			if(type==5){
 				System.exit(0);
 			}
 			if(type==6){
-				teamRankTablePanel.refreshTablePanel(type);
+				//teamRankTablePanel.refreshTablePanel(type);
+				MatchPanel matchPanel = new MatchPanel(0,0,bl);
+				JScrollPane scrollPane = new JScrollPane(matchPanel);
+				scrollPane.setBounds(0, 0, 192*9, 1080);
+				content.removeAll();
+				content.add(scrollPane);
+				content.updateUI();
 			}
 		}
 
