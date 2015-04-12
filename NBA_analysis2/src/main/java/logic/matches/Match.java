@@ -2,7 +2,6 @@ package logic.matches;
 
 import java.util.ArrayList;
 
-import logic.teams.Team;
 import data.matches.MatchMistake;
 
 public class Match {
@@ -57,6 +56,33 @@ public class Match {
 	
 	public ArrayList<MatchMistake> getMatchMistakeList(){
 		return ListOfMistake;
+	}
+	
+	
+	
+	//即时生成，得分相同比篮板 
+	public KingOfMatch[] getKingsOfMatch(){
+	    KingOfMatch[] kings = new KingOfMatch[2];
+	    kings[0] = getKing(this.firstRecordList);
+	    kings[1] = getKing(this.secondRecordList);
+	    
+	    return kings;
+	}
+	
+	private KingOfMatch getKing(ArrayList<RecordOfPlayer> list){
+	    RecordOfPlayer record = list.get(0);
+	    for(RecordOfPlayer token:list){
+	        if(token.getPoints() > record.getPoints()){
+	            record = token;
+	        }
+	        else if(token.getPoints() == record.getPoints()
+	                && token.getRebounds() > record.getRebounds()){
+	            record = token;
+	        }
+	    }
+	    
+	    KingOfMatch king = new KingOfMatch(record.getPlayerName(),record.getPoints(),record.getRebounds(),record.getAssists());
+	    return king;
 	}
 
 }
