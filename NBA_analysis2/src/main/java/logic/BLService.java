@@ -20,4 +20,6 @@ public interface BLService {
 	public void init();    //界面层专用的初始化，干所有事情之前调用，progress从0~9
 	public Team[] getTeamsByMatch(Match match);
 	public ArrayList<Match> getTodayMatches(String date); //13-14_2014-01-01
+	public ArrayList<Player> getTodayKingPlayer(String date,String field,int num);//得到今天的联盟数据王,date日期格式:13-14_2014-01-01.field排序字段，num人数
+	public ArrayList<Player> getSeasonKingPlayer(String date,String field,int num);//得到赛季的联盟数据王
 }

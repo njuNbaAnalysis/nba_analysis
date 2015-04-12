@@ -175,4 +175,16 @@ public class BLController implements BLService {
         return matchController.getTodayMatches(date);
     }
 
+	@Override
+	public ArrayList<Player> getTodayKingPlayer(String date, String field,int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Player> getSeasonKingPlayer(String date, String field,int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
