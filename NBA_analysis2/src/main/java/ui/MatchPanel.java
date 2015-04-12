@@ -4,11 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import logic.BLController;
+import logic.matches.KingsOfMatch;
 import logic.matches.Match;
 import logic.teams.Team;
 
@@ -29,9 +33,11 @@ public class MatchPanel extends JPanel {
 	private int width;
 	private int height;
 	BLController bl;
-	Date date = new Date();
+	Date date ;
 	ArrayList<Match> matchList;
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	
+	
 
 	public MatchPanel(int width1, int height1, BLController bl) {
 		super();
@@ -39,14 +45,26 @@ public class MatchPanel extends JPanel {
 		 * this.width=width1; this.height = height1;
 		 */
 		this.bl = bl;
-		this.matchList = new ArrayList<Match>(bl.getTodayMatches("13-14_2014-01-01"));
 		this.width = 1920;
 		this.height = 1080;
-
-		int size = matchList.size();
-		setBackground(Color.white);
 		this.setBounds(0, 0, width, height);
 		this.setLayout(null);
+		setBackground(Color.white);
+		try {
+		    date = df.parse("2014-01-01");
+		   } catch (ParseException e) {
+		    e.printStackTrace();
+	     }
+	
+		this.matchList = new ArrayList<Match>(bl.getTodayMatches("13-14_2014-01-01"));
+		addChildren();
+
+		
+	}
+    
+	public void addChildren(){
+		int size = matchList.size();
+		
 		head = new HeadLabel(width, height / 10);
 		this.add(head);
 
@@ -64,8 +82,11 @@ public class MatchPanel extends JPanel {
 			 */
 		}
 		this.setPreferredSize(new Dimension(1920, 200 + size * 320));
+		
+		
 	}
-
+	
+	
 	class HeadLabel extends JLabel {
 
 		int width;
@@ -152,12 +173,16 @@ public class MatchPanel extends JPanel {
 
 		int width;
 		int height;
+		JButton stat;
 		String date;
 		Match match;
-		Image logo;
 		Team[] teams;
-
-		public void paintComponent(Graphics g) {
+		KingsOfMatch[] kings;
+		
+		public void paintComponent(Graphics g2) {
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(new Color(246, 246, 246));
 			g.fillRect(0, 0, width, height);
 			g.setColor(new Color(169, 11, 51));
@@ -169,14 +194,14 @@ public class MatchPanel extends JPanel {
 			g.fillRect(0, height / 10 + 1, width * 2 / 5, height * 8 / 10 - 1);
 			g.setFont(new Font("default", Font.BOLD, 20));
 			g.drawString("结束", 45, 22);
-			g.drawImage(teams[0].getLogo(96, 60), 50, 60, this);
-			g.drawImage(teams[1].getLogo(96, 60), 50, 170, this);
+			g.drawImage(teams[0].getLogo(96, 80), 50, 60, this);
+			g.drawImage(teams[1].getLogo(96, 80), 50, 170, this);
 			g.setColor(Color.black);
 			g.setFont(new Font("default", Font.PLAIN, 30));
 			g.drawString(match.getTeams()[0], 150, 90);
 			g.drawString(match.getTeams()[1], 150, 200);
 			g.setFont(new Font("default", Font.PLAIN, 15));
-	
+			
 			g.drawString(teams[0].getNumOfVictory()+"-"+(teams[0].getNumOfMatches()-teams[0].getNumOfVictory()), 160, 110);
 			g.drawString(teams[1].getNumOfVictory()+"-"+(teams[1].getNumOfMatches()-teams[1].getNumOfVictory()), 160, 220);
 			g.drawString("1", 270, 60);
@@ -207,14 +232,14 @@ public class MatchPanel extends JPanel {
 			g.drawString("篮板", 800, 170);
 			g.drawString("助攻", 800, 230);
 			g.setColor(Color.blue);
-			g.setFont(new Font("default", Font.PLAIN, 17));
-			g.drawString("张冠炜           42", 980, 110);
-			g.drawString("张冠炜           45", 980, 170);
-			g.drawString("张冠炜           18", 980, 230);
+			g.setFont(new Font("default", Font.BOLD, 17));
+			g.drawString(kings[0].getNameOfPointsKing()+"  "+kings[0].getPoints(), 980, 110);
+			g.drawString(kings[0].getNameOfReboundsKing()+"  "+kings[0].getRebounds(), 980, 170);
+			g.drawString(kings[0].getNameOfAssistsKing()+"  "+kings[0].getAssists(), 980, 230);
 
-			g.drawString("张冠炜           42", 1380, 110);
-			g.drawString("张冠炜           45", 1380, 170);
-			g.drawString("张冠炜           18", 1380, 230);
+			g.drawString(kings[1].getNameOfPointsKing()+"  "+kings[1].getPoints(), 1380, 110);
+			g.drawString(kings[1].getNameOfReboundsKing()+"  "+kings[1].getRebounds(), 1380, 170);
+			g.drawString(kings[1].getNameOfAssistsKing()+"  "+kings[1].getAssists(), 1380, 230);
 
 		}
 
@@ -223,20 +248,25 @@ public class MatchPanel extends JPanel {
 			this.height = height;
 			this.match = match;
 			teams = bl.getTeamsByMatch(match);
+			kings = match.getKingsOfMatch();
 			//System.out.println(teams[0]==null);
 			this.setBounds(x, y, width, height);
-
-			// stub logo
-			try {
-				logo = ImageIO.read(new File("image" + File.separator
-						+ "logo1_s.png"));
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
+			initButton();
+			
 
 		}
-
+		public void initButton(){
+			stat = new JButton("技术统计");
+			stat.setSize(100, 30);
+			stat.setLocation(0, height * 9 / 10);
+			stat.setContentAreaFilled(false);
+			stat.setBorderPainted(false);
+			stat.setIcon(null);
+			MouseHandle statListener = new MouseHandle(null, null, null,
+					3);
+			stat.addMouseListener(statListener);
+			this.add(stat);
+		}
 	}
 
 	class MouseHandle extends MouseAdapter {
@@ -260,11 +290,20 @@ public class MatchPanel extends JPanel {
 
 			if (type == 1) {
 				date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
+				
 				head.currentLabel.setText(df.format(date));
+				MatchPanel.this.matchList = new ArrayList<Match>(bl.getTodayMatches("13-14_"+df.format(date)));
+				MatchPanel.this.removeAll();
+				MatchPanel.this.addChildren();
+				MatchPanel.this.updateUI();
 			}
 			if (type == 2) {
 				date = new Date(date.getTime() + 24 * 60 * 60 * 1000);
 				head.currentLabel.setText(df.format(date));
+				MatchPanel.this.matchList = new ArrayList<Match>(bl.getTodayMatches("13-14_"+df.format(date)));
+				MatchPanel.this.removeAll();
+				MatchPanel.this.addChildren();
+				MatchPanel.this.updateUI();
 			}
 			if (type == 3) {
 			}

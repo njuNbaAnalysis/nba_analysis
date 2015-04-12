@@ -40,7 +40,7 @@ public class Test extends JFrame {
 	public Test() {
 		final BLController bl = BLController.getInstance();
 		bl.init();
-		while(bl.getProgress()!=10){
+		while(bl.getProgress()!=9){
 			System.out.println(bl.getProgress());
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
