@@ -1,8 +1,8 @@
 package ui;
 
 import logic.BLController;
+import logic.matches.KingOfMatch;
 import logic.matches.Match;
-import logic.teams.Team;
 
 public class Start {
 
@@ -42,6 +42,10 @@ public class Start {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+		
+		Match match = bl.getTodayMatches("13-14_2014-01-01").get(0);
+		KingOfMatch[] kings = match.getKingsOfMatch();
+		System.out.println(kings[0]);
 		
 		long now = System.currentTimeMillis();
 		System.out.print("初始化：" + (now - past) / 1000.0 + "s");
