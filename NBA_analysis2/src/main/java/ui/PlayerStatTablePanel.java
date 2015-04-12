@@ -55,9 +55,7 @@ public class PlayerStatTablePanel extends JPanel {
 		g.fillRect(0, 50 * height / (1080), 2000, 66 * height / (1080));
 		g.drawImage(headBar, 0, 0, this);
 		g.drawImage(filter, 0, 50 * height / (1080), this);
-
 		g.setFont(new Font("STHUPO", Font.PLAIN, 40 * 2 / 3));
-
 	}
 
 	public void setLookAndFeel() {
@@ -93,10 +91,8 @@ public class PlayerStatTablePanel extends JPanel {
 		try {
 			bufferHeadBar = ImageIO.read(new File("image" + File.separator
 					+ "headBar.png"));
-
 			bufferHeadBar = MenuPanel.resize(bufferHeadBar,
 					width * 800 / (1920), height * 50 / (1080));
-
 			bufferedFilter = ImageIO.read(new File("image" + File.separator
 					+ "filter.png"));
 			bufferedFilter = MenuPanel.resize(bufferedFilter,
@@ -111,13 +107,8 @@ public class PlayerStatTablePanel extends JPanel {
 		headPanel = new HeadPanel(width, 50 * height / (1080), this);
 		headPanel.setBounds(0, 0, width, 50 * height / (1080));
 		this.add(headPanel);
-
 		
-
 		refreshTablePanel(type);
-
-		
-
 	}
 
 	public void refreshTablePanel(int t) {
