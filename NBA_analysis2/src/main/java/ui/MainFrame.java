@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 * @param bl 
 	 */
-	public MainFrame(BLService bl) {
+	public MainFrame(BLController  bl) {
 		this.bl=bl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		setUndecorated(true);
