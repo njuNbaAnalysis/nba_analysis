@@ -187,4 +187,10 @@ public class BLController implements BLService {
 		return null;
 	}
 
+	@Override
+	public Team getTeamByPlayer(Player player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
