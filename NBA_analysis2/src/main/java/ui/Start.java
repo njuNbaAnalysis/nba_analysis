@@ -43,10 +43,6 @@ public class Start {
             e.printStackTrace();
         }
 		
-		Match match = bl.getTodayMatches("13-14_2014-01-01").get(0);
-		KingsOfMatch[] kings = match.getKingsOfMatch();
-		System.out.println(kings[0]);
-		
 		long now = System.currentTimeMillis();
 		System.out.print("初始化：" + (now - past) / 1000.0 + "s");
 		
