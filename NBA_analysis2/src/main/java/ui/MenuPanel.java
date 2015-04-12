@@ -41,11 +41,15 @@ public class MenuPanel extends JPanel {
 	ImageIcon statisticsIconB;
 	ImageIcon exitIcon;
 	ImageIcon exitIconR;
+	ImageIcon matchIcon;
+	ImageIcon matchIconD;
+	ImageIcon matchIconB;
 	JButton statistics;
 	JButton player;
 	JButton team;
 	JButton playerStat;
 	JButton teamStat;
+	JButton match;
 	JButton exit;
 	PlayerStatTablePanel teamRankTablePanel;
 	
@@ -84,6 +88,9 @@ public class MenuPanel extends JPanel {
 		BufferedImage bufferStatB = null;
 		BufferedImage bufferExit = null;
 		BufferedImage bufferExitR = null;
+		BufferedImage bufferMatchB = null;
+		BufferedImage bufferMatch = null;
+		BufferedImage bufferMatchD = null;
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
@@ -141,7 +148,15 @@ public class MenuPanel extends JPanel {
 			bufferExitR = ImageIO.read(new File("image" + File.separator
 					+ "exit_r.png"));
 			bufferExitR = this.resize_B(bufferExitR);
-
+			bufferMatchB = ImageIO.read(new File("image" + File.separator
+					+ "match_b.png"));
+			bufferMatchB = this.resize_B(bufferMatchB);
+			bufferMatch = ImageIO.read(new File("image" + File.separator
+					+ "match_l.png"));
+			bufferMatch = this.resize_B(bufferMatch);
+			bufferMatchD = ImageIO.read(new File("image" + File.separator
+					+ "match_d.png"));
+			bufferMatchD = this.resize_B(bufferMatchD);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -159,7 +174,9 @@ public class MenuPanel extends JPanel {
 		statisticsIconD = new ImageIcon(bufferStatD);
 		exitIcon = new ImageIcon(bufferExit);
 		exitIconR = new ImageIcon(bufferExitR);
-		
+		matchIcon = new ImageIcon(bufferMatch);
+		matchIconD = new ImageIcon(bufferMatchD);
+		matchIconB = new ImageIcon(bufferMatchB);
 		playerIconB = new ImageIcon(bufferPlayerB);
 		teamIconB = new ImageIcon(bufferTeamB);
 		playerStatisticsIconB = new ImageIcon(bufferplayerStatB);
@@ -224,6 +241,17 @@ public class MenuPanel extends JPanel {
 				teamIconB, 4);
 		team.addMouseListener(teamListener);
 		this.add(team);
+	
+		match = new JButton();
+		match.setSize( width*25/24, (width*25*3)/(24*20));
+		match.setLocation(0, heightOfHead + 240*height/1080);
+		match.setContentAreaFilled(false);
+		match.setBorderPainted(false);
+		match.setIcon(matchIcon);
+		MouseHandle matchListener = new MouseHandle(matchIconD, matchIcon,
+				matchIconB, 6);
+		match.addMouseListener(matchListener);
+		this.add(match);
 
 		exit = new JButton();
 		exit.setSize( width*25/24, (width*25*3)/(24*20));
@@ -278,6 +306,11 @@ public class MenuPanel extends JPanel {
 			if(type==5){
 				System.exit(0);
 			}
+			
+			if(type==6){
+				
+				
+			}
 		}
 
 		public void mouseEntered(MouseEvent e) {
@@ -315,6 +348,9 @@ public class MenuPanel extends JPanel {
 			break;
 		case 4:
 			team.setIcon(teamIcon);
+			break;
+		case 6:
+			match.setIcon(matchIcon);
 			break;
 		}
 
