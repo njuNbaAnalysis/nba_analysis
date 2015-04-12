@@ -1,7 +1,7 @@
 package ui;
 
 import logic.BLController;
-import logic.matches.KingOfMatch;
+import logic.matches.KingsOfMatch;
 import logic.matches.Match;
 
 public class Start {
@@ -44,7 +44,7 @@ public class Start {
         }
 		
 		Match match = bl.getTodayMatches("13-14_2014-01-01").get(0);
-		KingOfMatch[] kings = match.getKingsOfMatch();
+		KingsOfMatch[] kings = match.getKingsOfMatch();
 		System.out.println(kings[0]);
 		
 		long now = System.currentTimeMillis();

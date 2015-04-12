@@ -61,15 +61,17 @@ public class Match {
 	
 	
 	//即时生成，得分相同比篮板 
-	public KingOfMatch[] getKingsOfMatch(){
-	    KingOfMatch[] kings = new KingOfMatch[2];
-	    kings[0] = getKing(this.firstRecordList);
-	    kings[1] = getKing(this.secondRecordList);
+	public KingsOfMatch[] getKingsOfMatch(){
+	    KingsOfMatch[] kings = new KingsOfMatch[2];
+	    kings[0] = getKings(this.firstRecordList);
+	    kings[1] = getKings(this.secondRecordList);
 	    
 	    return kings;
 	}
 	
-	private KingOfMatch getKing(ArrayList<RecordOfPlayer> list){
+	private KingsOfMatch getKings(ArrayList<RecordOfPlayer> list){
+	    KingsOfMatch king = new KingsOfMatch();
+	    
 	    RecordOfPlayer record = list.get(0);
 	    for(RecordOfPlayer token:list){
 	        if(token.getPoints() > record.getPoints()){
@@ -81,7 +83,27 @@ public class Match {
 	        }
 	    }
 	    
-	    KingOfMatch king = new KingOfMatch(record.getPlayerName(),record.getPoints(),record.getRebounds(),record.getAssists());
+	    king.setNameOfPointsKing(record.getPlayerName());
+	    king.setPoints(record.getPoints());
+	    
+	    record = list.get(0);
+        for(RecordOfPlayer token:list){
+            if(token.getRebounds() > record.getRebounds()){
+                record = token;
+            }
+        }
+        king.setNameOfReboundsKing(record.getPlayerName());
+        king.setRebounds(record.getRebounds());
+        
+        record = list.get(0);
+        for(RecordOfPlayer token:list){
+            if(token.getAssists() > record.getAssists()){
+                record = token;
+            }
+        }
+        king.setNameOfAssistsKing(record.getPlayerName());
+        king.setAssists(record.getAssists());
+        
 	    return king;
 	}
 
