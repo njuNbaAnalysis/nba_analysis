@@ -50,11 +50,12 @@ public class Test extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		//contentPane.add(new PlayerBasicInfoLabel(bl.getAllPlayers().get(0), 1800,200));
-		MatchPanel matchPanel = new MatchPanel(0,0,bl);
+		contentPane.add(new TeamBasicInfoLabel(bl.getAllTeams().get(0), 192*9, 200));
+		
+		/*MatchPanel matchPanel = new MatchPanel(0,0,bl);
 		JScrollPane scrollPane = new JScrollPane(matchPanel);
 		scrollPane.setBounds(0, 0, 1920, 1080);
-		contentPane.add(scrollPane);
+		contentPane.add(scrollPane);*/
 		
 		//contentPane.add(matchPanel);
 	}
