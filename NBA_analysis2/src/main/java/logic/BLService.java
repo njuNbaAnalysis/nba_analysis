@@ -21,6 +21,7 @@ public interface BLService {
 	public Team[] getTeamsByMatch(Match match);
 	public ArrayList<Match> getTodayMatches(String date); //13-14_2014-01-01
 	public ArrayList<Player> getTodayKingPlayer(String date,String field,int num);//得到今天的联盟数据王,date日期格式:13-14_2014-01-01.field排序字段，num人数
-	public ArrayList<Player> getSeasonKingPlayer(String date,String field,int num);//得到赛季的联盟数据王，格式同上
+	public ArrayList<Player> getSeasonKingPlayer(String field,int num);//得到赛季的联盟数据王，格式同上
+	public ArrayList<Team> getSeasonKingTeam(String field,int num);//得到赛季的热门球队，格式同上
 	public Team getTeamByPlayer(Player player);
 }
