@@ -117,7 +117,7 @@ public class Team {
 
 
     public Image getLogo(int width,int height) {
-    	System.out.println(logo==null);
+    	//System.out.println(logo==null);
         return logo.getImage(width, height);
     }
     
