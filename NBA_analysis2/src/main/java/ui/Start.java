@@ -43,8 +43,6 @@ public class Start {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		Team team = bl.getAllTeams().get(0);
-		System.out.println(team.getNumOfMatches());
 		
 		long now = System.currentTimeMillis();
 		System.out.print("初始化：" + (now - past) / 1000.0 + "s");
