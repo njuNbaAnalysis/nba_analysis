@@ -150,7 +150,7 @@ public class BLController implements BLService {
 	public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
 		// TODO Auto-generated method stub
 		if (playerController == null) {
-			playerController = playerController.getInstance();
+			playerController = PlayerController.getInstance();
 		}
 		ArrayList<Player> playlist = playerController.getSeasonKingPlayer(
 				field, num);
@@ -166,7 +166,7 @@ public class BLController implements BLService {
 	public ArrayList<Player> getMostImprovedPlayer(String field, int num) {
 		// TODO Auto-generated method stub
 		if (playerController == null) {
-			playerController = playerController.getInstance();
+			playerController = PlayerController.getInstance();
 		}
 		ArrayList<Player> list = playerController.getMostImprovedPlayer(field);
 		ArrayList<Player> listResult = new ArrayList<Player>();
@@ -182,7 +182,7 @@ public class BLController implements BLService {
 			int num) {
 		// TODO Auto-generated method stub
 		if (playerController == null) {
-			playerController = playerController.getInstance();
+			playerController = PlayerController.getInstance();
 		}
 		ArrayList<todayPlayer> list = playerController.getTotalPlayer(date,
 				field);
