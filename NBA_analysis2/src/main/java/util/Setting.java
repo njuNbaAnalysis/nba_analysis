@@ -14,10 +14,10 @@ import java.io.IOException;
  */
 public class Setting {
     
-    private static String path = "Data/";
+    private static String path = "./Data/";
     
     //静态初始化，防止路径信息的重复读取
-    static{
+/*    static{
         File file = new File("./dataPath");
         if(file.exists()){
             try {
@@ -32,7 +32,7 @@ public class Setting {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
     
     public static String getPath(){
         return path;
