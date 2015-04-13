@@ -7,6 +7,7 @@ import logic.matches.Match;
 import logic.matches.MatchController;
 import logic.players.Player;
 import logic.players.PlayerController;
+import logic.players.todayPlayer;
 import logic.teams.Team;
 import logic.teams.TeamController;
 import data.DataController;
@@ -177,18 +178,6 @@ public class BLController implements BLService {
     }
 
 	@Override
-	public ArrayList<Player> getTodayKingPlayer(String date, String field,int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Team getTeamByPlayer(Player player) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
 		// TODO Auto-generated method stub
 		return null;
@@ -208,6 +197,19 @@ public class BLController implements BLService {
 
 	@Override
 	public double[] getAllianceAverageData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Team getTeamByName(String teamName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<todayPlayer> getTodayKingPlayer(String date, String field,
+			int num) {
 		// TODO Auto-generated method stub
 		return null;
 	}
