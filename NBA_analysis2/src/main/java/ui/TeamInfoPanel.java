@@ -210,7 +210,7 @@ public class TeamInfoPanel extends JPanel {
 			private String field;
 
 			private TableButton(String field,String type) {
-				super();
+				super(field);
 				this.field = field;
 				this.type = type;
 				this.setHorizontalAlignment(SwingConstants.CENTER);
