@@ -13,6 +13,7 @@ import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
 
 import compare.TeamComparator;
+import compare.TeamWinPercentageComp;
 
 import data.DataController;
 import data.DataService;
@@ -56,6 +57,7 @@ public class TeamController {
     }
     
     //对team数据进一步计算
+    //包括对team被赛季的联盟排名进行赋值
     private void computeData(){
         
         ArrayList<Match> matchList = new ArrayList<Match>();
@@ -77,7 +79,7 @@ public class TeamController {
         
         computeEfficiency(teamList);
         
-        //BLController.progress ++;
+        computeRankingInLeague();   //计算在联盟中的排名
     }
     
     //根据名字缩写查找，如果没有找到则返回null
@@ -312,6 +314,35 @@ public class TeamController {
         Collections.sort(teamList,comparator);
     }
 
+    //对球队本赛季在联盟中的排名进行赋值，按照胜率排名
+    private void computeRankingInLeague(){
+        ArrayList<Team> eastList = new ArrayList<Team>();
+        ArrayList<Team> westList = new ArrayList<Team>();
+        
+        for(Team team:teamList){
+            if(team.getConference() == 'E'){
+                eastList.add(team);
+            }
+            else if(team.getConference() == 'W'){
+                westList.add(team);
+            }
+            else{
+                System.out.println("error in TeamController.computeRankingInLeague: " + team.getConference());
+            }
+        }
+        
+        eastList.sort(new TeamWinPercentageComp());
+        westList.sort(new TeamWinPercentageComp());
+        
+        //写入ranking
+        for(Team team:eastList){
+            team.setRankingInLeague(eastList.indexOf(team) + 1);
+        }
+        for(Team team:westList){
+            team.setRankingInLeague(westList.indexOf(team) + 1);
+        }
+    }
+    
     //提供给MatchController的接口
     public void addMatch(Match match){
         parseRecordList(match,0);

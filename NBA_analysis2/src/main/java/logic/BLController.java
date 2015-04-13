@@ -130,6 +130,7 @@ public class BLController implements BLService {
 		}
 		if (teamController == null) {
 			teamController = TeamController.getInstance();
+			teamController.init();
 		}
 		if (playerController == null) {
 			playerController = PlayerController.getInstance();
