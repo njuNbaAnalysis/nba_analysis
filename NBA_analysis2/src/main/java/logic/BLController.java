@@ -115,7 +115,6 @@ public class BLController implements BLService {
 		return ischanged;
 	}
 
-
 	// 界面层用来初始化的
 	// 所有的getAll
 	// 所有的图片
@@ -140,100 +139,111 @@ public class BLController implements BLService {
 
 	@Override
 	public double[] getAllianceAverageData() {
-		if(teamController == null){
-		    teamController = TeamController.getInstance();
+		if (teamController == null) {
+			teamController = TeamController.getInstance();
 		}
 		return teamController.getAllianceAverageData();
 	}
 
+	// player
+	@Override
+	public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
+		// TODO Auto-generated method stub
+		if (playerController == null) {
+			playerController = playerController.getInstance();
+		}
+		ArrayList<Player> playlist = playerController.getSeasonKingPlayer(
+				field, num);
+		ArrayList<Player> list = new ArrayList<Player>();
+		if (playlist.size() >= num)
+			for (int i = 0; i < num; i++) {
+				list.add(playlist.get(i));
+			}
+		return list;
+	}
 
-	//player
-    @Override
-    public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
-        // TODO Auto-generated method stub
-        if(playerController == null){
-            playerController = playerController.getInstance();
-        }
-        ArrayList<Player> playlist = playerController.getSeasonKingPlayer( field,  num);
-        ArrayList<Player> list = new ArrayList<Player>();
-        if(playlist.size()>=num)
-            for(int i=0;i<num;i++){
-                list.add(playlist.get(i));
-            }
-        return list;
-    }
-	
-    @Override
-    public ArrayList<Player> getMostImprovedPlayer(String field, int num) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    @Override
-    public ArrayList<todayPlayer> getTodayKingPlayer(String date, String field,
-            int num) {
-        // TODO Auto-generated method stub
-        if(playerController == null){
-            playerController = playerController.getInstance();
-        }
-        ArrayList<todayPlayer> list = playerController.getTotalPlayer(date, field);
-        ArrayList<todayPlayer> listResult = new ArrayList<todayPlayer>();
-        if(list.size()>=num)
-            for(int i=0;i<num;i++){
-                listResult.add(list.get(i));
-            }
-        return listResult;
-    }
-	//match
-    @Override
-    public ArrayList<Match> getTodayMatches(String date) {
-        if(matchController == null){
-            matchController = MatchController.getInstance();
-        }
-        return matchController.getTodayMatches(date);
-    }
-    
-	//team
-    @Override
-    public Team getTeamByName(String teamName) {
-        if(teamController == null){
-            teamController = TeamController.getInstance();
-        }
-        return teamController.getTeam(teamName);
-    }
+	@Override
+	public ArrayList<Player> getMostImprovedPlayer(String field, int num) {
+		// TODO Auto-generated method stub
+		if (playerController == null) {
+			playerController = playerController.getInstance();
+		}
+		ArrayList<Player> list = playerController.getMostImprovedPlayer(field);
+		ArrayList<Player> listResult = new ArrayList<Player>();
+		if (list.size() >= num)
+			for (int i = 0; i < num; i++) {
+				listResult.add(list.get(i));
+			}
+		return listResult;
+	}
 
-    @Override
-    public ArrayList<Team> getSeasonKingTeam(String field, int num) {
-        if(teamController == null){
-            teamController = TeamController.getInstance();
-        }
-        
-        return teamController.getSeasonKingTeam(field,num);
-    }
-    
-    @Override
-    // 界面层调用
-    public Team[] getTeamsByMatch(Match match) {
-        if (teamController == null) {
-            teamController = TeamController.getInstance();
-        }
-        Team[] teams = new Team[2];
-        String teamNames[] = match.getTeams();
-        int num = 0;
-        for (Team team : teamController.getAllTeams()) {
-            if (team.getAbbreviation().equals(teamNames[0])) {
-                teams[0] = team;
-                num++;
-            }
-            if (team.getAbbreviation().equals(teamNames[1])) {
-                teams[1] = team;
-                num++;
-            }
-            if (num == 2) {
-                break;
-            }
-        }
+	@Override
+	public ArrayList<todayPlayer> getTodayKingPlayer(String date, String field,
+			int num) {
+		// TODO Auto-generated method stub
+		if (playerController == null) {
+			playerController = playerController.getInstance();
+		}
+		ArrayList<todayPlayer> list = playerController.getTotalPlayer(date,
+				field);
+		ArrayList<todayPlayer> listResult = new ArrayList<todayPlayer>();
+		if (list.size() >= num)
+			for (int i = 0; i < num; i++) {
+				listResult.add(list.get(i));
+			}
+		return listResult;
+	}
 
-        return teams;
-    }
+	// match
+	@Override
+	public ArrayList<Match> getTodayMatches(String date) {
+		if (matchController == null) {
+			matchController = MatchController.getInstance();
+		}
+		return matchController.getTodayMatches(date);
+	}
+
+	// team
+	@Override
+	public Team getTeamByName(String teamName) {
+		if (teamController == null) {
+			teamController = TeamController.getInstance();
+		}
+		return teamController.getTeam(teamName);
+	}
+
+	@Override
+	public ArrayList<Team> getSeasonKingTeam(String field, int num) {
+		if (teamController == null) {
+			teamController = TeamController.getInstance();
+		}
+
+		return teamController.getSeasonKingTeam(field, num);
+	}
+
+	@Override
+	// 界面层调用
+	public Team[] getTeamsByMatch(Match match) {
+		if (teamController == null) {
+			teamController = TeamController.getInstance();
+		}
+		Team[] teams = new Team[2];
+		String teamNames[] = match.getTeams();
+		int num = 0;
+		for (Team team : teamController.getAllTeams()) {
+			if (team.getAbbreviation().equals(teamNames[0])) {
+				teams[0] = team;
+				num++;
+			}
+			if (team.getAbbreviation().equals(teamNames[1])) {
+				teams[1] = team;
+				num++;
+			}
+			if (num == 2) {
+				break;
+			}
+		}
+
+		return teams;
+	}
 }

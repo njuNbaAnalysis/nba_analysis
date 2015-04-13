@@ -8,6 +8,7 @@ import java.util.Date;
 
 import test.data.PlayerKingInfo;
 import compare.PlayerComparator;
+import compare.PlayerUpgradeRateComp;
 import compare.TeamComparator;
 import compare.todayPlayerComp;
 import logic.BLController;
@@ -286,6 +287,25 @@ public class PlayerController {
 		parameter.addSort(sort);
 		parameter.setAvarage(true);
 		this.sort(playerList, parameter);
+		return playerList;
+	}
+	public ArrayList<Player> getMostImprovedPlayer(String field){
+		int num = 0;
+		switch (field) {
+		case "points":
+			num = 0;
+			break;
+		case "rebound":
+			num = 1;
+			break;
+		case "assist":
+			num = 2;
+			break;
+		default:
+			break;
+		}
+		Comparator<Player> comparator = new PlayerUpgradeRateComp(num);
+		Collections.sort(playerList, comparator);
 		return playerList;
 	}
 }
