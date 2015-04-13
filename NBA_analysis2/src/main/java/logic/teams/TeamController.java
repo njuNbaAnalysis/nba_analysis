@@ -22,6 +22,9 @@ public class TeamController {
     private static TeamController teamController = null;
     private DataService dataService;
     
+    /**
+     * 构造中初始化
+     */
     private TeamController(){
         dataService = DataController.getInstance();
         init();//此时做init为了使构造和init不能分开调用，防止BLController中的机制出错
