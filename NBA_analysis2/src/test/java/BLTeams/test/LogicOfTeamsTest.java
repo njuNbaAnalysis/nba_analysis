@@ -57,7 +57,6 @@ public class LogicOfTeamsTest {
 	@Test
 	public void testgetTeam() {
 		TeamController teamcontrol = TeamController.getInstance();
-		teamcontrol.init();
 		boolean result = (teamcontrol. getTeam("")== null);
 		assertTrue(result);
 	}
@@ -65,7 +64,6 @@ public class LogicOfTeamsTest {
 	@Test
 	public void testGetAllTeams(){
 	    TeamController teamcontroller = TeamController.getInstance();
-        teamcontroller.init();
         ArrayList<Team> result = teamcontroller.getAllTeams();
         assertNotNull(result);
 	}
@@ -73,7 +71,6 @@ public class LogicOfTeamsTest {
 	@Test
     public void testGetResult(){
 	    TeamController teamcontroller = TeamController.getInstance();
-        teamcontroller.init();
         BLParameter parameter = new BLParameter();
         parameter.setPlayer(false);
         ArrayList<Object> result = teamcontroller.getResult(parameter);
