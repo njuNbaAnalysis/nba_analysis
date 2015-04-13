@@ -304,24 +304,34 @@ public class MatchPanel extends JPanel {
 			g.setColor(Color.blue);
 			g.setFont(new Font("default", Font.BOLD, 17));
 			g.drawString(
-					kings[0].getNameOfPointsKing() + "  "
-							+ kings[0].getPoints(), 980, 110);
+					kings[0].getNameOfPointsKing() + "", 980, 110);
 			g.drawString(
-					kings[0].getNameOfReboundsKing() + "  "
-							+ kings[0].getRebounds(), 980, 170);
+					kings[0].getNameOfReboundsKing() + "", 980, 170);
 			g.drawString(
-					kings[0].getNameOfAssistsKing() + "  "
-							+ kings[0].getAssists(), 980, 230);
+					kings[0].getNameOfAssistsKing() + "", 980, 230);
 
 			g.drawString(
-					kings[1].getNameOfPointsKing() + "  "
-							+ kings[1].getPoints(), 1380, 110);
+					kings[1].getNameOfPointsKing() + "", 1380, 110);
 			g.drawString(
-					kings[1].getNameOfReboundsKing() + "  "
-							+ kings[1].getRebounds(), 1380, 170);
+					kings[1].getNameOfReboundsKing() + "", 1380, 170);
 			g.drawString(
-					kings[1].getNameOfAssistsKing() + "  "
-							+ kings[1].getAssists(), 1380, 230);
+					kings[1].getNameOfAssistsKing() + "", 1380, 230);
+			
+			g.setColor(Color.black);
+			g.setFont(new Font("default", Font.PLAIN, 17));
+			g.drawString(
+					 kings[0].getPoints()+"", 1200, 110);
+			g.drawString(
+					kings[0].getRebounds()+"", 1200, 170);
+			g.drawString(
+					kings[0].getAssists()+"", 1200, 230);
+
+			g.drawString(
+					 kings[1].getPoints()+"", 1600, 110);
+			g.drawString(
+					 kings[1].getRebounds()+"", 1600, 170);
+			g.drawString(
+					kings[1].getAssists()+"", 1600, 230);
 
 		}
 

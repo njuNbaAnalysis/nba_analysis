@@ -369,6 +369,7 @@ public class MenuPanel extends JPanel {
 				MatchPanel matchPanel = new MatchPanel(width*9,height,bl);
 				JScrollPane scrollPane = new JScrollPane(matchPanel);
 				scrollPane.setBounds(0, 0, width*9, height);
+				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 				content.removeAll();
 				content.add(scrollPane);
 				content.updateUI();
