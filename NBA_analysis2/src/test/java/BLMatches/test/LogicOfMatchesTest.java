@@ -59,4 +59,18 @@ public class LogicOfMatchesTest {
 	    assertNotNull(list);
 	}
 	
+	@Test
+	public void testGetKingsOfMatch(){
+	    MatchController matchcontroller = MatchController.getInstance();
+	    Match match = matchcontroller.getAllMatches().get(0);
+	    assertNotNull(match.getKingsOfMatch());
+	}
+	
+	@Test
+	public void testAddMatches(){
+	    MatchController matchcontroller = MatchController.getInstance();
+	    matchcontroller.addMatches();
+	    assert(true);
+	}
+	
 }

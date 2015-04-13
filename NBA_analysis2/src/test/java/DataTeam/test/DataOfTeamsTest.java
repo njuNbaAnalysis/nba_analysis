@@ -50,6 +50,7 @@ public class DataOfTeamsTest {
 		} catch (Exception e) {
 			result = false;
 		}
+		
 
 		assertTrue(result);
 	}

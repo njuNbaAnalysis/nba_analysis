@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 
 import logic.BLParameter;
+import logic.BLParameter.Sort;
 import logic.teams.Team;
 import logic.teams.TeamController;
 
@@ -73,14 +74,25 @@ public class LogicOfTeamsTest {
 	    TeamController teamcontroller = TeamController.getInstance();
         BLParameter parameter = new BLParameter();
         parameter.setPlayer(false);
+        
+        BLParameter.Sort sort = parameter.new Sort();
+        sort.setAsc(true);
+        sort.setField("rebound");
+        parameter.addSort(sort);
+        
+        BLParameter.Filter filter = parameter.new Filter();
+        filter.setFilterName("league");
+        filter.setFilterValue("E");
+        parameter.addFilter(filter);
+        
         ArrayList<Object> result = teamcontroller.getResult(parameter);
         assertNotNull(result);
+        
     }
 	
 	@Test
     public void testGetSeasonKingTeam(){
 	    TeamController teamcontroller = TeamController.getInstance();
-        teamcontroller.init();
         ArrayList<Team> result = teamcontroller.getSeasonKingTeam("rebound", 5);
         assertNotNull(result);
     }
@@ -88,8 +100,35 @@ public class LogicOfTeamsTest {
 	@Test
     public void testGetAllianceAverageData(){
 	    TeamController teamcontroller = TeamController.getInstance();
-        teamcontroller.init();
         double[] result = teamcontroller.getAllianceAverageData();
         assertNotNull(result);
+    }
+	
+	@Test
+	public void testComputeHighInfo1(){
+	    TeamController teamcontroller = TeamController.getInstance();
+	    Team team = teamcontroller.getAllTeams().get(0);
+	    assertNotNull(team.getHighInfo(true));
+	}
+	
+	@Test
+    public void testComputeHighInfo2(){
+        TeamController teamcontroller = TeamController.getInstance();
+        Team team = teamcontroller.getAllTeams().get(0);
+        assertNotNull(team.getHighInfo(false));
+    }
+	
+	@Test
+    public void testComputeNormalInfo1(){
+        TeamController teamcontroller = TeamController.getInstance();
+        Team team = teamcontroller.getAllTeams().get(0);
+        assertNotNull(team.getNormalInfo(true));
+    }
+	
+	@Test
+    public void testComputeNormalInfo2(){
+        TeamController teamcontroller = TeamController.getInstance();
+        Team team = teamcontroller.getAllTeams().get(0);
+        assertNotNull(team.getNormalInfo(false));
     }
 }
