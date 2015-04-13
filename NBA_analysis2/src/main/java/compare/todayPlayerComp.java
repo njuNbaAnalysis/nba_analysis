@@ -27,11 +27,13 @@ public class todayPlayerComp implements Comparator<todayPlayer>{
 				return 1;
 			else if(t1.getAverageAssists()<t2.getAverageAssists())
 				return -1;
+			break;
 		case "rebound":
 			if(t1.getAverageRebounds()>t2.getAverageRebounds())
 				return 1;
 			else if(t1.getAverageRebounds()<t2.getAverageRebounds())
 				return -1;
+			break;
 		default:
 			System.out.println("error in TodayPlayer.compare: " + field);
 		}
