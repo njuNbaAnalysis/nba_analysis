@@ -280,6 +280,11 @@ public class PlayerController {
 		return listTodayHotPlayer;
 	}
 	public ArrayList<Player> getSeasonKingPlayer(String field, int num){
-		return null;
+		BLParameter parameter = new BLParameter();
+		Sort sort = parameter.new Sort(field, false);
+		parameter.addSort(sort);
+		parameter.setAvarage(true);
+		this.sort(playerList, parameter);
+		return playerList;
 	}
 }
