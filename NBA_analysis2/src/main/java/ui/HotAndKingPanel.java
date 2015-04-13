@@ -75,7 +75,7 @@ public class HotAndKingPanel extends JPanel {
 
 		this.add(hotPlayerPanel);
 
-		System.out.println("here");
+		//System.out.println("here");
 	}
 
 	private class KingPanel extends JPanel {
@@ -295,18 +295,28 @@ public class HotAndKingPanel extends JPanel {
 	}
 
 	private class TableHeadLabel extends JLabel {
+		private String text;
 		public TableHeadLabel() {
 			this.setForeground(Color.WHITE);
 			this.setOpaque(true);
-			this.setFont(new Font(FONT_OF_HOT, Font.CENTER_BASELINE,
-					30 * height / 1280));
+
 			this.setBackground(new Color(30, 81, 140));
 			this.setUI(new LabelUI());
 		}
 
 		public TableHeadLabel(String text) {
 			this();
-			this.setText(text);
+			this.text = text;
+			//this.setText(text);
+		}
+		
+		public void paintComponent(Graphics g2) {
+			super.paintComponent(g2);
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setColor(Color.white);
+			g.setFont(new Font(FONT_OF_HOT, Font.CENTER_BASELINE,
+					30 * height / 1280));
+			g.drawString(text,width/20,30 * height / 1280);
 		}
 
 		private class LabelUI extends BasicLabelUI {
@@ -314,7 +324,8 @@ public class HotAndKingPanel extends JPanel {
 			@Override
 			public void paint(Graphics g, JComponent c) {
 				// TODO Auto-generated method stub
-
+                
+				
 				int y = (int) c.getSize().getHeight();
 				int x = (int) c.getSize().getWidth();
 
@@ -593,32 +604,4 @@ public class HotAndKingPanel extends JPanel {
 		}
 	}
 
-	public static void main(String[] args) {
-		BLService bl = BLController.getInstance();
-		bl.init();
-		while(bl.getProgress()<9){
-			System.out.println(bl.getProgress());
-		}
-
-		JFrame f = new JFrame();
-		f.setBounds(0, 0, 1920, 1280);
-	//	f.setUndecorated(true);
-		f.setLayout(null);
-		// f.getContentPane().setLayout(null);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		HotAndKingPanel p = new HotAndKingPanel(2000, 1500, bl);
-		//p.setBounds(0, 0, 1920, 1580);
-		
-		p.setPreferredSize(new Dimension(2000,1500));
-		
-		JScrollPane js = new JScrollPane();
-		js.setBounds(0, 0, 1920, 1080);
-		js.getVerticalScrollBar().setUnitIncrement(20);
-		js.setViewportView(p);
-		//js.add(p);
-		//js.setWheelScrollingEnabled(true);
-
-		f.add(js);
-		f.setVisible(true);
-	}
 }
