@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
 	public MainFrame(BLController  bl) {
 		this.bl=bl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setUndecorated(true);
+		setUndecorated(true);
 	    screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //		System.out.println((int)screenSize.getWidth()+" "+(int)screenSize.getHeight());
 //		setBounds((int)screenSize.getWidth(), 0, (int)screenSize.getWidth(), (int)screenSize.getHeight());
