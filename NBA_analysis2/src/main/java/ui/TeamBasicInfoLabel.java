@@ -29,7 +29,7 @@ public class TeamBasicInfoLabel extends JLabel {
 		
 		for (int i = 0; i < 20; i++) {
 			double x = Math.random();
-			g.setColor(new Color(180+(int)(20*x),190+(int)(20*x),197+(int)(20*x)));
+			g.setColor(new Color(180+(int)(20*x),190+(int)(20*x),197+(int)(20*x),120));
 			g.fillRect(0, 10*i, (int)(x*100+100) , 10);
 		}
 		g.setColor(new Color(190, 157, 83));
@@ -43,12 +43,14 @@ public class TeamBasicInfoLabel extends JLabel {
 		g.drawLine(550, 20, 550, 80);
 		g.setColor(new Color(68, 68, 68));
 		g.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
-		g.drawString(team.getNumOfVictory() + "胜-" + team.getNumOfMatches()
+		g.drawString(team.getNumOfVictory() + "胜-" + (team.getNumOfMatches()-team.getNumOfVictory())
 				+ "负", 555, 40);
 		g.setFont(new Font("default", Font.PLAIN, 20));
 
 		g.setColor(new Color(30, 81, 140));
 		g.drawString("主场:" + team.getHomeCourt(), 555, 70);
+		
+		g.drawString("在"+(team.getConference()=='E'?"东部":"西部")+"排名#"+team.getRankingInLeague(),555,95);
 		g.setColor(new Color(68, 68, 68));
 		g.setFont(new Font("default", Font.PLAIN, 15));
 		g.drawString("场均得分", 950, 125);
