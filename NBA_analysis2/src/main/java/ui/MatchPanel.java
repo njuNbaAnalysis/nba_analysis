@@ -45,8 +45,8 @@ public class MatchPanel extends JPanel {
 		 * this.width=width1; this.height = height1;
 		 */
 		this.bl = bl;
-		this.width = 1920;
-		this.height = 1080;
+		this.width = width1;
+		this.height = height1;
 		this.setBounds(0, 0, width, height);
 		this.setLayout(null);
 		setBackground(Color.white);
@@ -81,7 +81,7 @@ public class MatchPanel extends JPanel {
 			 * 300, matchList.get(0)); this.add(info3);
 			 */
 		}
-		this.setPreferredSize(new Dimension(1920, 200 + size * 320));
+		this.setPreferredSize(new Dimension(width, 200 + size * 320));
 		
 		
 	}
