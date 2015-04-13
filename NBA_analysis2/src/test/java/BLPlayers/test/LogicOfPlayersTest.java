@@ -91,4 +91,19 @@ public class LogicOfPlayersTest {
         ArrayList<Player> result = playerController.getMostImprovedPlayer("rebound");
         assertNotNull(result);
 	}
+	
+	@Test
+	public void testComputeHighInfo(){
+	    PlayerController playerController = PlayerController.getInstance();
+	    playerController.computeHighInfo();
+	    Player player = playerController.getAllPlayers().get(0);
+	    assertNotNull(player.getHighInfo());
+	}
+	
+	@Test
+    public void testComputeHotInfo(){
+        PlayerController playerController = PlayerController.getInstance();
+        Player player = playerController.getAllPlayers().get(0);
+        assertNotNull(player.getHotInfo("rebound"));
+    }
 }
