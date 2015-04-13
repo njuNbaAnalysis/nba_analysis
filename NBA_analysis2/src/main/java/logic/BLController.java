@@ -185,12 +185,6 @@ public class BLController implements BLService {
 	}
 
 	@Override
-	public ArrayList<Match> getLatestMatchByPlayer(Player player) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public double[] getAllianceAverageData() {
 		// TODO Auto-generated method stub
 		return null;
