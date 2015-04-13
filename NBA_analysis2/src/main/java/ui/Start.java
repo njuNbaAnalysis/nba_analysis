@@ -43,10 +43,6 @@ public class Start {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		ArrayList<Team> list = bl.getAllTeams();
-		for(Team team:list){
-		    System.out.println(team.getConference() + ": " + team.getWinningPercentage() + "   " + team.getRankingInLeague());
-		}
 		
 		long now = System.currentTimeMillis();
 		System.out.print("初始化：" + (now - past) / 1000.0 + "s");
