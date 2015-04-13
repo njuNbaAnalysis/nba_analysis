@@ -346,7 +346,7 @@ public class HotAndKingPanel extends JPanel {
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 头像
 			BufferedImage action = UIUtils.resize(players[0].getAction(),
-					contentWidth / 12, contentHeight);
+					contentWidth / 10, contentHeight);
 			g.drawImage(action, 0, 0, this);
 			// 排名
 			g.setColor(new Color(190, 157, 83));
@@ -512,7 +512,7 @@ public class HotAndKingPanel extends JPanel {
 					contentHeight);
 			// 头像
 			BufferedImage portrait = UIUtils.resize(players[0].getPortrait(),
-					contentWidth / 8, contentHeight * 3 / 10);
+					contentWidth / 10, contentHeight * 3 / 10);
 			g.drawImage(portrait, 0,0, this);
 			// 排名
 			g.setColor(new Color(190, 157, 83));
@@ -614,14 +614,6 @@ public class HotAndKingPanel extends JPanel {
 		JScrollPane js = new JScrollPane();
 		js.setBounds(0, 0, 1920, 1080);
 		js.getVerticalScrollBar().setUnitIncrement(20);
-		js.setHorizontalScrollBarPolicy(
-				   JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		js.setVerticalScrollBarPolicy(
-				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
-		
-	//	js.setLayout(null);
-		//js.getViewport().add(p);
-		//this.getContentPane().add(scrollPane);
 		js.setViewportView(p);
 		//js.add(p);
 		//js.setWheelScrollingEnabled(true);
