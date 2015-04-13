@@ -149,4 +149,38 @@ public class RecordOfPlayer{
     public void setFreeThrowAttemps(int freeThrowAttemps) {
         this.freeThrowAttemps = freeThrowAttemps;
     }
+
+	public int getEfficiency() {
+		int efficiency = (rebounds + points + blocks + steals + assists)
+				- (fieldGoalAttempts - fieldGoalHits) -
+						(freeThrowAttemps  - freeThrowHits)
+				- turnOver; // (得分+篮板+助攻+抢断+盖帽)-（出手次数-命中次数）-（罚球次数-罚球命中次数）-失误次数
+		return efficiency;
+	}
+
+	public double getThreePointPercentage() {
+		
+		double threePointersPercentage = 0;
+		if (threePointAttemps != 0) {
+			threePointersPercentage = threePointHits * 1.0
+					/ threePointAttemps;
+		}
+		return threePointersPercentage;
+	}
+
+	public double getFreeThrowPercentage() {
+		double freeThrowsPercentage = 0;
+		if (freeThrowAttemps != 0) {
+			freeThrowsPercentage = freeThrowHits * 1.0 / freeThrowAttemps;
+		}
+		return freeThrowsPercentage;
+	}
+
+	public double getFieldGoalPercentage() {
+		double fieldGoalsPercentage = 0;
+		if (fieldGoalAttempts != 0) {
+			fieldGoalsPercentage = fieldGoalHits * 1.0 / fieldGoalAttempts;
+		}
+		return fieldGoalsPercentage;
+	}
 }
