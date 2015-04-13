@@ -18,7 +18,7 @@ public class DisplayJPanel extends JPanel implements Runnable {
 		    
     		g.drawImage(image, 0, 0, this);  
     		g.setColor(new Color(1f,1f,1f,0.5f));
-			g.fillRect(0, 628, progress, 20);
+			g.fillRect(0, 638, progress, 10);
    	}
     	
 	public DisplayJPanel(Image image, BLController bl){
