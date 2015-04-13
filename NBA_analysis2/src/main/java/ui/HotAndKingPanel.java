@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -313,10 +314,14 @@ public class HotAndKingPanel extends JPanel {
 		public void paintComponent(Graphics g2) {
 			super.paintComponent(g2);
 			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(Color.white);
 			g.setFont(new Font(FONT_OF_HOT, Font.CENTER_BASELINE,
 					30 * height / 1280));
-			g.drawString(text,width/20,height/20);
+			g.drawString(text,width/20,height/40);
 		}
 
 		private class LabelUI extends BasicLabelUI {
@@ -353,6 +358,8 @@ public class HotAndKingPanel extends JPanel {
 		public void paintComponent(Graphics g2) {
 			// 背景
 			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(Color.white);
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 头像
@@ -442,6 +449,8 @@ public class HotAndKingPanel extends JPanel {
 		public void paintComponent(Graphics g2) {
 			// 背景
 			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(Color.white);
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 队标
@@ -518,6 +527,8 @@ public class HotAndKingPanel extends JPanel {
 		public void paintComponent(Graphics g2) {
 			// 背景
 			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(Color.white);
 			g.fillRect(0, 0, contentWidth,
 					contentHeight);
