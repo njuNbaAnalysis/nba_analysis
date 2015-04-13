@@ -30,11 +30,11 @@ public class PlayerInfoPanel extends JPanel {
 		Player p = bl.getAllPlayers().get(0);
 		
 		playerBasicInfoLabel = new PlayerBasicInfoLabel(p,width,height/4);
-		playerBasicInfoLabel.setBounds(0, 0, width, height/4);
+		playerBasicInfoLabel.setBounds(0, 0, width, height/6);
 		this.add(playerBasicInfoLabel);
 		
 		playerDetailPanel = new PlayerDetailPanel(p, width, height/4);
-		playerDetailPanel.setBounds(0, height/4, width, height/4);
+		playerDetailPanel.setBounds(0, height/6, width, height/3);
 		this.add(playerDetailPanel);
 		
 		playerDetailTablePanel = new PlayerDetailTablePanel(p, width, height/2);
