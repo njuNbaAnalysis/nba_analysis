@@ -13,9 +13,9 @@ public class BLParameter {
     
     private boolean isPlayer;//player or team
     
-    private Mode mode = new Mode("all",null,false);
-    private ArrayList<Filter> filterList = new ArrayList<Filter>();
-    private ArrayList<Sort> sortList = new ArrayList<Sort>();//如果没有则为空
+    private Mode mode = new Mode("all",null,false);//可以不初始化
+    private ArrayList<Filter> filterList = new ArrayList<Filter>(); //可以不初始化
+    private ArrayList<Sort> sortList = new ArrayList<Sort>();//如果没有则为空，可以不初始化
     
     //独立，可选
     private int number = Integer.MAX_VALUE;//前多少条信息，默认最大
