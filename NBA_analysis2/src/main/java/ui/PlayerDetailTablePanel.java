@@ -264,7 +264,7 @@ public class PlayerDetailTablePanel extends JPanel {
 					row[0] = "总计";
 
 				} else {
-					row = getSeasonData();
+					row = data;
 
 				}
 				model.addRow(row);
