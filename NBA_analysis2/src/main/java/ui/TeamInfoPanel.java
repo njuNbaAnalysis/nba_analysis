@@ -17,8 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicLabelUI;
-
-import ui.HotAndKingPanel.KingPanel;
 import util.UIUtils;
 import logic.BLService;
 import logic.players.Player;
