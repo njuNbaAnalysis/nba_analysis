@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -47,13 +48,17 @@ public class MenuPanel extends JPanel {
 	ImageIcon exitIconR;
 	ImageIcon matchIcon;
 	ImageIcon matchIconD;
-	ImageIcon matchIconB;
+	ImageIcon matchIconB;	
+	ImageIcon hotPlayerIcon;
+	ImageIcon hotPlayerIconD;
+	ImageIcon hotPlayerIconB;
 	JButton statistics;
 	JButton player;
 	JButton team;
 	JButton playerStat;
 	JButton teamStat;
 	JButton match;
+	JButton hotPlayer;
 	JButton exit;
 	JPanel content;
 	
@@ -96,6 +101,9 @@ public class MenuPanel extends JPanel {
 		BufferedImage bufferMatchB = null;
 		BufferedImage bufferMatch = null;
 		BufferedImage bufferMatchD = null;
+		BufferedImage bufferHotPlayerB = null;
+		BufferedImage bufferHotPlayer = null;
+		BufferedImage bufferHotPlayerD = null;
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
@@ -153,6 +161,7 @@ public class MenuPanel extends JPanel {
 			bufferExitR = ImageIO.read(new File("image" + File.separator
 					+ "exit_r.png"));
 			bufferExitR = this.resize_B(bufferExitR);
+			
 			bufferMatchB = ImageIO.read(new File("image" + File.separator
 					+ "match_b.png"));
 			bufferMatchB = this.resize_B(bufferMatchB);
@@ -162,6 +171,16 @@ public class MenuPanel extends JPanel {
 			bufferMatchD = ImageIO.read(new File("image" + File.separator
 					+ "match_d.png"));
 			bufferMatchD = this.resize_B(bufferMatchD);
+			
+			bufferHotPlayerB = ImageIO.read(new File("image" + File.separator
+					+ "hotplayer_b.png"));
+			bufferHotPlayerB = this.resize_B(bufferHotPlayerB);
+			bufferHotPlayer = ImageIO.read(new File("image" + File.separator
+					+ "hotplayer_l.png"));
+			bufferHotPlayer = this.resize_B(bufferHotPlayer);
+			bufferHotPlayerD = ImageIO.read(new File("image" + File.separator
+					+ "hotplayer_d.png"));
+			bufferHotPlayerD = this.resize_B(bufferHotPlayerD);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -187,6 +206,9 @@ public class MenuPanel extends JPanel {
 		playerStatisticsIconB = new ImageIcon(bufferplayerStatB);
 		teamStatisticsIconB = new ImageIcon(bufferTeamStatB);
 		statisticsIconB = new ImageIcon(bufferStatB);
+		hotPlayerIcon = new ImageIcon(bufferHotPlayer);
+		hotPlayerIconD = new ImageIcon(bufferHotPlayerD);
+		hotPlayerIconB = new ImageIcon(bufferHotPlayerB);
 
 	}
 
@@ -257,6 +279,17 @@ public class MenuPanel extends JPanel {
 				matchIconB, 6);
 		match.addMouseListener(matchListener);
 		this.add(match);
+		
+		hotPlayer = new JButton();
+		hotPlayer.setSize( width*25/24, (width*25*3)/(24*20));
+		hotPlayer.setLocation(0, heightOfHead + 280*height/1080);
+		hotPlayer.setContentAreaFilled(false);
+		hotPlayer.setBorderPainted(false);
+		hotPlayer.setIcon(hotPlayerIcon);
+		MouseHandle hotPlayerListener = new MouseHandle(hotPlayerIconD, hotPlayerIcon,
+				hotPlayerIconB, 7);
+		hotPlayer.addMouseListener(hotPlayerListener);
+		this.add(hotPlayer);
 
 		exit = new JButton();
 		exit.setSize( width*25/24, (width*25*3)/(24*20));
@@ -268,6 +301,8 @@ public class MenuPanel extends JPanel {
 				exitIcon, exitIconR, 5);
 		exit.addMouseListener(exitStatListener);
 		this.add(exit);
+		
+		
 		
 	}
 
@@ -317,11 +352,7 @@ public class MenuPanel extends JPanel {
 				
 			}
 			if(type==3){
-				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*10,height,bl);
-				hotAndKingPanel.setBounds(0, 0, width*9, height);
-				content.removeAll();
-				content.add(hotAndKingPanel);
-				content.updateUI();
+				
 				//teamRankTablePanel.refreshTablePanel(type);
 				
 			}
@@ -333,6 +364,18 @@ public class MenuPanel extends JPanel {
 				MatchPanel matchPanel = new MatchPanel(0,0,bl);
 				JScrollPane scrollPane = new JScrollPane(matchPanel);
 				scrollPane.setBounds(0, 0, 192*9, 1080);
+				content.removeAll();
+				content.add(scrollPane);
+				content.updateUI();
+			}
+			if(type==7){
+				
+				
+				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*10,height*6/5,bl);
+				hotAndKingPanel.setPreferredSize(new Dimension(width*10,height*6/5));
+				JScrollPane scrollPane = new JScrollPane(hotAndKingPanel);
+				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+				scrollPane.setBounds(0, 0, width*9, height);
 				content.removeAll();
 				content.add(scrollPane);
 				content.updateUI();
@@ -377,6 +420,9 @@ public class MenuPanel extends JPanel {
 			break;
 		case 6:
 			match.setIcon(matchIcon);
+			break;
+		case 7:
+			hotPlayer.setIcon(hotPlayerIcon);
 			break;
 		}
 
