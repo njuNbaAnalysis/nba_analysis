@@ -353,7 +353,12 @@ public class MenuPanel extends JPanel {
 			}
 			if(type==3){
 				
-				//teamRankTablePanel.refreshTablePanel(type);
+				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(width*10,height,bl);
+				teamRankTablePanel.setBounds(0, 0, width*9, height);
+				teamRankTablePanel.startAnimation();
+				content.removeAll();
+				content.add(teamRankTablePanel);
+				content.updateUI();
 				
 			}
 			if(type==5){
