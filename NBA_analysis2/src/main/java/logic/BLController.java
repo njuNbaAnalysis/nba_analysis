@@ -177,11 +177,6 @@ public class BLController implements BLService {
         return matchController.getTodayMatches(date);
     }
 
-	@Override
-	public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ArrayList<Team> getSeasonKingTeam(String field, int num) {
@@ -211,6 +206,25 @@ public class BLController implements BLService {
 	public ArrayList<todayPlayer> getTodayKingPlayer(String date, String field,
 			int num) {
 		// TODO Auto-generated method stub
+		if(playerController == null){
+			playerController = playerController.getInstance();
+        }
+		ArrayList<todayPlayer> list = playerController.getTotalPlayer(date, field);
+		ArrayList<todayPlayer> listResult = new ArrayList<todayPlayer>();
+		if(list.size()>=num)
+			for(int i=0;i<num;i++){
+				listResult.add(list.get(i));
+			}
+		return listResult;
+	}
+
+	@Override
+	public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
+		// TODO Auto-generated method stub
+		if(playerController == null){
+			playerController = playerController.getInstance();
+        }
+		ArrayList<Player> list = playerController.getSeasonKingPlayer( field,  num);
 		return null;
 	}
 

@@ -181,9 +181,15 @@ public class PlayerController {
 
 		if (mode.getMode().equals("king")) {
 			String field = mode.getField();
-			if (mode.isDaily()) {
-				todayPlayer todayPlayer = this.getTotalPlayer(field);
-				result.add(todayPlayer.getKingInfo(field));
+			if (mode.isDaily()) {           						 //暂时这样
+				Date now = new Date();
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				String strDate = df.format(now);
+				
+				ArrayList<todayPlayer> todayPlayer = this.getTotalPlayer(strDate,field);
+				if(todayPlayer.size()>0)
+					result.add(todayPlayer.get(0).getKingInfo(field));
+				
 			} else {
 				Sort sort = parameter.new Sort(field, false);
 				parameter.addSort(sort);
@@ -242,15 +248,13 @@ public class PlayerController {
 		Collections.sort(playerList, comparator);
 	}
 
-	public todayPlayer getTotalPlayer(String field) { // 得到当日最热球员
-		Date now = new Date();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String strDate = df.format(now);
+	public ArrayList<todayPlayer> getTotalPlayer(String strDate,String field) { // 得到当日最热球员
 		BLController bl = BLController.getInstance();
-		ArrayList<Match> list = bl.getAllMatches();
-		for (int i = 0; i < list.size(); i++) {
-			if (!(list.get(i).getDate().substring(6, 16).equals(strDate)))
-				list.remove(i);
+		ArrayList<Match> Matchlist = bl.getAllMatches();
+		ArrayList<Match> list = new ArrayList<Match>();
+		for (int i = 0; i < Matchlist.size(); i++) {
+			if (!(Matchlist.get(i).getDate().equals(strDate)))
+				list.add(Matchlist.get(0));
 		}
 		ArrayList<todayPlayer> listTodayHotPlayer = new ArrayList<todayPlayer>();
 		for (Match m : list) {
@@ -273,9 +277,9 @@ public class PlayerController {
 		}
 		Comparator<todayPlayer> comparator = new todayPlayerComp(field);
 		Collections.sort(listTodayHotPlayer, comparator);
-		if (listTodayHotPlayer.size() >= 0) {
-			return listTodayHotPlayer.get(0);
-		} else
-			return null;
+		return listTodayHotPlayer;
+	}
+	public ArrayList<Player> getSeasonKingPlayer(String field, int num){
+		return null;
 	}
 }
