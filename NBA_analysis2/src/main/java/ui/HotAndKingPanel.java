@@ -72,14 +72,11 @@ public class HotAndKingPanel extends JPanel {
 		hotPlayerPanel = new HotPlayerPanel("热门球员",typeArray[2],
 				hotColumnName, p,width, height / 2);
 		hotPlayerPanel.setBounds(0, height / 2, width*9/10, height / 2);
-
-
 		this.add(hotPlayerPanel);
 
-		//System.out.println("here");
 	}
 
-	private class KingPanel extends JPanel {
+	public class KingPanel extends JPanel {
 		private String type;// 有球员和球队数据王两种，分别用"P"和"T"表示
 		private String headName;
 		private String[] columnName;
