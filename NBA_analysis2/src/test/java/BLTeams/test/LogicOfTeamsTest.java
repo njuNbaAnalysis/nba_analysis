@@ -1,7 +1,12 @@
 package BLTeams.test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import logic.players.PlayerController;
+
+import java.util.ArrayList;
+
+import logic.BLParameter;
+import logic.teams.Team;
 import logic.teams.TeamController;
 
 import org.junit.After;
@@ -52,7 +57,42 @@ public class LogicOfTeamsTest {
 	@Test
 	public void testgetTeam() {
 		TeamController teamcontrol = TeamController.getInstance();
+		teamcontrol.init();
 		boolean result = (teamcontrol. getTeam("")== null);
 		assertTrue(result);
 	}
+	
+	@Test
+	public void testGetAllTeams(){
+	    TeamController teamcontroller = TeamController.getInstance();
+        teamcontroller.init();
+        ArrayList<Team> result = teamcontroller.getAllTeams();
+        assertNotNull(result);
+	}
+	
+	@Test
+    public void testGetResult(){
+	    TeamController teamcontroller = TeamController.getInstance();
+        teamcontroller.init();
+        BLParameter parameter = new BLParameter();
+        parameter.setPlayer(false);
+        ArrayList<Object> result = teamcontroller.getResult(parameter);
+        assertNotNull(result);
+    }
+	
+	@Test
+    public void testGetSeasonKingTeam(){
+	    TeamController teamcontroller = TeamController.getInstance();
+        teamcontroller.init();
+        ArrayList<Team> result = teamcontroller.getSeasonKingTeam("rebound", 5);
+        assertNotNull(result);
+    }
+	
+	@Test
+    public void testGetAllianceAverageData(){
+	    TeamController teamcontroller = TeamController.getInstance();
+        teamcontroller.init();
+        double[] result = teamcontroller.getAllianceAverageData();
+        assertNotNull(result);
+    }
 }
