@@ -245,4 +245,12 @@ public class BLController implements BLService {
 
 		return teams;
 	}
+
+    @Override
+    public Player getPlayerByName(String name) {
+        if(playerController == null){
+            playerController = PlayerController.getInstance();
+        }
+        return playerController.getPlayer(name);
+    }
 }

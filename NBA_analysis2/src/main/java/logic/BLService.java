@@ -25,6 +25,7 @@ public interface BLService {
 	public ArrayList<Player> getMostImprovedPlayer(String field,int num);//把field可能值列在这里,可能值:"场均得分"、"场均篮板"、"场均助攻"
 	public ArrayList<todayPlayer> getTodayKingPlayer(String date,String field,int num);//得到今天的联盟数据王,date日期格式:13-14_2014-01-01.field排序字段，num人数,field可能值：得分、篮板、助攻、抢断、盖帽
     public ArrayList<Player> getSeasonKingPlayer(String field,int num);//得到赛季的联盟数据王，格式同上,field可能值： "得分", "篮板", "助攻", "抢断", "盖帽" 
+    public Player getPlayerByName(String name);//根据球员名字得到球员
     
 	//match
     public ArrayList<Match> getTodayMatches(String date); //13-14_2014-01-01
