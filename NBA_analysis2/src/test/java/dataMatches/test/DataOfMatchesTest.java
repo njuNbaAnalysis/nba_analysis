@@ -32,7 +32,7 @@ public class DataOfMatchesTest {
     public void testReader() {
        MatchReader matchRead = new MatchReader();
        matchRead.init();
-       boolean result = (matchRead.getMatchList()==null);
+       boolean result = (matchRead.getMatchList()!=null);
        assertTrue(result);
     }
     
