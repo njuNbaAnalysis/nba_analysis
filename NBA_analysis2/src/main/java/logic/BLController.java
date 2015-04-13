@@ -121,14 +121,13 @@ public class BLController implements BLService {
 	@Override
 	public void init() {
 		if (matchController == null) {
-			matchController = MatchController.getInstance();
+			matchController = MatchController.getInstance(); 
 		}
 		if (teamController == null) {
-			teamController = TeamController.getInstance();
-			teamController.init();
+			teamController = TeamController.getInstance();//构造中初始化
 		}
 		if (playerController == null) {
-			playerController = PlayerController.getInstance();
+			playerController = PlayerController.getInstance();//构造中初始化
 			playerController.computeHighInfo();
 		}
 		if (dataService == null) {
