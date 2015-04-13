@@ -377,4 +377,9 @@ public class TeamController {
         }
         return result;
     }
+
+    public double[] getAllianceAverageData() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

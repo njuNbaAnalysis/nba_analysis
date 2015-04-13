@@ -19,7 +19,7 @@ public interface BLService {
 	//返回值由testData定义，请进行根据输入参数进行适当转换
 	public ArrayList<Object> getResult(BLParameter parameter); //
 	
-	public double[] getAllianceAverageData();//得到联盟的平均数据（场均得分，场均篮板，场均助攻，罚球%，三分%）
+	public double[] getAllianceAverageData();//得到联盟(30个球队加起来)的平均数据（场均得分，场均篮板，场均助攻，罚球%，三分%）
 	
 	//player
 	public ArrayList<Player> getMostImprovedPlayer(String field,int num);//把field可能值列在这里,可能值:"场均得分"、"场均篮板"、"场均助攻"
