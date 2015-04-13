@@ -1,8 +1,11 @@
 package BLMatches.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import logic.matches.Match;
 import logic.matches.MatchController;
-import logic.teams.TeamController;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -49,7 +52,11 @@ public class LogicOfMatchesTest {
 		assertTrue(result);
 	}
 	
-	//@Test
-	//public void testToday
+	@Test
+	public void testGetTodayMatches(){
+	    MatchController matchcontroller = MatchController.getInstance();
+	    ArrayList<Match> list = matchcontroller.getTodayMatches("13-14_2014-01-01");
+	    assertNotNull(list);
+	}
 	
 }
