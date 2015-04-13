@@ -602,7 +602,6 @@ public class HotAndKingPanel extends JPanel {
 				g.drawString(str, contentWidth * 9 / 40, posh+contentHeight*7/80);
 				
 				//最近五场/提升率
-				
 				g.setColor(Color.black);
 				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 30));
 				g.drawString("20.0",contentWidth *7/ 12,contentHeight/2+contentHeight*(i-2)/ 8+contentHeight/40);
