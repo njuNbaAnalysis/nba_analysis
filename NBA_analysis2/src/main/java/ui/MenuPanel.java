@@ -299,8 +299,6 @@ public class MenuPanel extends JPanel {
 			
 			if(type==1){
 				
-				
-				//teamRankTablePanel.refreshTablePanel(type);
 				PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(width*10,height,bl);
 				teamRankTablePanel.setBounds(0, 0, width*9, height);
 				content.removeAll();
@@ -310,10 +308,22 @@ public class MenuPanel extends JPanel {
 			}
 			
 			if(type==2){
+				TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(width*10,height,bl);
+				teamRankTablePanel.setBounds(0, 0, width*9, height);
+				content.removeAll();
+				content.add(teamRankTablePanel);
+				content.updateUI();
 				//teamRankTablePanel.refreshTablePanel(type);
+				
 			}
 			if(type==3){
+				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*10,height,bl);
+				hotAndKingPanel.setBounds(0, 0, width*9, height);
+				content.removeAll();
+				content.add(hotAndKingPanel);
+				content.updateUI();
 				//teamRankTablePanel.refreshTablePanel(type);
+				
 			}
 			if(type==5){
 				System.exit(0);

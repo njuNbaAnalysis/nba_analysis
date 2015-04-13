@@ -8,17 +8,17 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class HeadPanel extends JPanel {
-	PlayerStatTablePanel playerStatTablePanel;
+	StatTablePanel statTablePanel;
 	JButton average;
 	JButton total;
 	boolean selected = true;
 	int width;
 	int height;
 	
-	public HeadPanel(int width, int height, PlayerStatTablePanel playerStatTablePanel) {
+	public HeadPanel(int width, int height, StatTablePanel statTablePanel) {
 		this.setOpaque(false);
 		this.setLayout(null);
-		this.playerStatTablePanel = playerStatTablePanel;
+		this.statTablePanel = statTablePanel;
 		this.width = width;
 		this.height = height;
 		setLabel();
@@ -82,12 +82,12 @@ public class HeadPanel extends JPanel {
 		if ((JButton) e.getSource() == (average)) {
 			average.setBackground(new Color(42, 108, 182));
 			total.setBackground(new Color(26, 71, 123));
-			playerStatTablePanel.refresh();
+			statTablePanel.refresh();
 
 		} else if ((JButton) e.getSource() == (total)) {
 			total.setBackground(new Color(42, 108, 182));
 			average.setBackground(new Color(26, 71, 123));
-			playerStatTablePanel.refresh();
+			statTablePanel.refresh();
 		}
 		this.validate();
 		this.repaint();
