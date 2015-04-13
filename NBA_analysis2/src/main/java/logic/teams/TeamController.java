@@ -378,8 +378,35 @@ public class TeamController {
         return result;
     }
 
+    /**
+     * 得到联盟(30个球队加起来)的平均数据（场均得分，场均篮板，场均助攻，罚球%，三分%）
+     * @return
+     */
     public double[] getAllianceAverageData() {
-        // TODO Auto-generated method stub
-        return null;
+        double[] result = new double[5];
+        
+        double totalPoints = 0; //30支球队平均得分相加
+        double totalRebounds = 0;   //30支球队平均篮板相加
+        double totalAssists = 0;    //30支球队平均助攻相加
+        int totalFreeThrowAttempts = 0;
+        int totalFreeThrowHits = 0;
+        int totalThreePointerAttempts = 0;
+        int totalThreePointerHits = 0;
+        for(Team team:teamList){
+            totalPoints += team.getAveragePoints();
+            totalRebounds += team.getAverageRebounds();
+            totalAssists += team.getAverageAssists();
+            totalFreeThrowAttempts += team.getFreeThrows();
+            totalFreeThrowHits += team.getFreeThrowHits();
+            totalThreePointerAttempts += team.getThreePointerAttempts();
+            totalThreePointerHits += team.getThreePointerHits();
+        }
+        result[0] = totalPoints/30.0;
+        result[1] = totalRebounds/30.0;
+        result[2] = totalAssists/30/0;
+        result[3] = 1.0 * totalFreeThrowHits / totalFreeThrowAttempts;
+        result[4] = 1.0 * totalThreePointerHits / totalThreePointerAttempts;
+
+        return result;
     }
 }
