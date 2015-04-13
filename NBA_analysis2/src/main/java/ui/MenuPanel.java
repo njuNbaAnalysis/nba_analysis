@@ -361,6 +361,14 @@ public class MenuPanel extends JPanel {
 				content.updateUI();
 				
 			}
+			if(type==4){
+				TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*10,height,bl.getAllTeams().get(0),bl);
+				teamRankTablePanel.setBounds(0, 0, width*9, height);
+				//teamRankTablePanel.startAnimation();
+				content.removeAll();
+				content.add(teamRankTablePanel);
+				content.updateUI();
+			}
 			if(type==5){
 				System.exit(0);
 			}
