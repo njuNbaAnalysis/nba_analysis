@@ -357,7 +357,24 @@ public class TeamController {
      * @return
      */
     public ArrayList<Team> getSeasonKingTeam(String field, int num) {
-        // TODO Auto-generated method stub
-        return null;
+        //parameter
+        BLParameter parameter = new BLParameter();
+        parameter.setAvarage(true);
+        
+        BLParameter.Sort sort = parameter.new Sort();
+        sort.setField(field);
+        sort.setAsc(false);
+        parameter.addSort(sort);
+        
+        this.teamList.sort(new TeamComparator(parameter));
+        
+        ArrayList<Team> result = new ArrayList<Team>();
+        int flag = 0;   //已经加入的team数量
+        for(Team team:teamList){
+            if(flag >= num) break;
+            result.add(team);
+            flag++;
+        }
+        return result;
     }
 }
