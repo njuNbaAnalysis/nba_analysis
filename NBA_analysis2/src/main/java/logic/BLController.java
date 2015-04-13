@@ -221,8 +221,13 @@ public class BLController implements BLService {
 		if(playerController == null){
 			playerController = playerController.getInstance();
         }
-		ArrayList<Player> list = playerController.getSeasonKingPlayer( field,  num);
-		return null;
+		ArrayList<Player> playlist = playerController.getSeasonKingPlayer( field,  num);
+		ArrayList<Player> list = new ArrayList<Player>();
+		if(playlist.size()>=num)
+			for(int i=0;i<num;i++){
+				list.add(playlist.get(i));
+			}
+		return list;
 	}
 
 }

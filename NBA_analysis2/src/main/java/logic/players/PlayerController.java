@@ -282,6 +282,7 @@ public class PlayerController {
 	public ArrayList<Player> getSeasonKingPlayer(String field, int num){
 		BLParameter parameter = new BLParameter();
 		Sort sort = parameter.new Sort(field, false);
+		sort.setAsc(false);
 		parameter.addSort(sort);
 		parameter.setAvarage(true);
 		this.sort(playerList, parameter);
