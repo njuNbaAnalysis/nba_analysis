@@ -28,7 +28,6 @@ public interface BLService {
     
 	//match
     public ArrayList<Match> getTodayMatches(String date); //13-14_2014-01-01
-    public ArrayList<Match> getLatestMatchByPlayer(Player player);
     
     //team
     public ArrayList<Team> getSeasonKingTeam(String field,int num);//得到赛季的热门球队，格式同上，field可能值："得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%","罚球%" 
