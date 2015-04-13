@@ -56,7 +56,7 @@ public class MatchTablePanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(238,238,238));
-		g.fillRect(width/20, 0, width, height / 20);
+		g.fillRect(width/20, 0, width*9/10, height / 20);
 		// 第一个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
@@ -67,7 +67,7 @@ public class MatchTablePanel extends JPanel {
 		
 		
 		g.setColor(new Color(238,238,238));
-		g.fillRect(width/20, height*9 / 20, width, height*2 / 20);
+		g.fillRect(width/20, height*9 / 20, width*9/10, height*2 / 20);
 		// 第二个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
