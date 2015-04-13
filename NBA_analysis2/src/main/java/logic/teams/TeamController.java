@@ -11,10 +11,8 @@ import logic.BLParameter.Sort;
 import logic.matches.Match;
 import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
-
 import compare.TeamComparator;
 import compare.TeamWinPercentageComp;
-
 import data.DataController;
 import data.DataService;
 
@@ -351,5 +349,15 @@ public class TeamController {
         computeRounds(match);
         computeRival(match);
         computeEfficiency(this.teamList);
+    }
+
+    /**
+     * @param field
+     * @param num返回前几
+     * @return
+     */
+    public ArrayList<Team> getSeasonKingTeam(String field, int num) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

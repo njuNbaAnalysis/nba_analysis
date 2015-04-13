@@ -180,8 +180,11 @@ public class BLController implements BLService {
 
 	@Override
 	public ArrayList<Team> getSeasonKingTeam(String field, int num) {
-		// TODO Auto-generated method stub
-		return null;
+	    if(teamController == null){
+	        teamController = TeamController.getInstance();
+	    }
+	    
+	    return teamController.getSeasonKingTeam(field,num);
 	}
 
 	@Override
