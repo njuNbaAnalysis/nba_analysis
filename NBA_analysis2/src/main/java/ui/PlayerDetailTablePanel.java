@@ -46,7 +46,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		seasonTable.refreshElement();
 
 		latestJspane = new JScrollPane();
-		latestJspane.setBounds(0, height * 1 / 2, width, height *35/ 80);
+		latestJspane.setBounds(0, height * 1 / 2, width, height * 35 / 80);
 		latestTable = new LatestJTable();
 		latestJspane.setViewportView(latestTable);
 
@@ -205,6 +205,7 @@ public class PlayerDetailTablePanel extends JPanel {
 				tc.setCellRenderer(new RowRenderer());
 			}
 		}
+
 		protected void updateRowHeights() {
 			try {
 
@@ -265,7 +266,6 @@ public class PlayerDetailTablePanel extends JPanel {
 
 				} else {
 					row = data;
-
 				}
 				model.addRow(row);
 			}
