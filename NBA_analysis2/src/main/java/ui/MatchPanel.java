@@ -34,7 +34,9 @@ public class MatchPanel extends JPanel {
 	private int height;
 	private boolean isFolded = false;
 	int currentIndex = 0;
+	MatchTablePanel table;
 	BLController bl;
+	Thread thread;
 	Date date;
 	ArrayList<Match> matchList;
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -93,28 +95,37 @@ public class MatchPanel extends JPanel {
 		final int size = matchList.size();
 
 		head = new HeadLabel(width, height / 10);
-
-		Thread thread = new Thread(new Runnable() {
+	
+		this.setPreferredSize(new Dimension(width, 1000 + size * 320));
+		//thread.interrupt();
+		
+		//notifyAll();
+		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				for (int j = 0; j <= 30; j++) {
 					MatchPanel.this.removeAll();
 					MatchPanel.this.add(head);
-
+					
+					
 					for (int i = 0; i < size; i++) {
 						if (i <= index) {
 							InfoLabel info = new InfoLabel(0, 150 + 320 * i,
 									width, 300, matchList.get(i));
 							MatchPanel.this.add(info);
 						} else {
-							InfoLabel info = new InfoLabel(0, 150 + 10*j+ 5 * j * j
-									/ 9 + 320 * i, width, 300,
+							InfoLabel info = new InfoLabel(0, 150 + 10 * j + 5
+									* j * j / 9 + 320 * i, width, 300,
 									matchList.get(i));
 							MatchPanel.this.add(info);
 						}
 					}
+					table.setBounds(0, 470+320*index, width, 10 * j + 5
+							* j * j / 9);
+					MatchPanel.this.add(table);
+					
 					MatchPanel.this.repaint();
-					// MatchPanel.this.updateUI();
+					 MatchPanel.this.updateUI();
 
 					try {
 						Thread.sleep(10);
@@ -127,8 +138,8 @@ public class MatchPanel extends JPanel {
 			}
 		});
 		thread.start();
-
-		this.setPreferredSize(new Dimension(width, 1000 + size * 320));
+		
+		
 
 	}
 
@@ -334,7 +345,8 @@ public class MatchPanel extends JPanel {
 			stat.setBorderPainted(false);
 			stat.setIcon(null);
 			MouseHandle statListener = new MouseHandle(null, null, null, 3,
-					currentIndex++);
+					currentIndex);
+			currentIndex = (currentIndex+1)%matchList.size();
 			stat.addMouseListener(statListener);
 			this.add(stat);
 		}
@@ -390,8 +402,10 @@ public class MatchPanel extends JPanel {
 			if (type == 3) {
 				isFolded = !isFolded;
 				if (!isFolded) {
+					
 					fold(index);
 				} else {
+					table = new MatchTablePanel(width, 800, matchList.get(index), bl);
 					unfold(index);
 
 				}
