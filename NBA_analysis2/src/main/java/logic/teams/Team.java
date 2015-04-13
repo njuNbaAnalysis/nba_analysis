@@ -57,6 +57,9 @@ public class Team {
 	private int offenseReboundsRival;          //对手总进攻篮板
 	private int defenseReboundsRival;          //对手总防守篮板 
 	
+	//仅界面需要
+	private int rankingInLeague;               //本赛季在联盟中的排名，东西部分别计算
+	
     //后期
     //private int rebounds;                       //篮板数
     //private double threePointersPercentage;     //三分命中率
@@ -668,4 +671,13 @@ public class Team {
         
         return info;
     }
+
+    public int getRankingInLeague() {
+        return rankingInLeague;
+    }
+
+    public void setRankingInLeague(int rankingInLeague) {
+        this.rankingInLeague = rankingInLeague;
+    }
+
 }
