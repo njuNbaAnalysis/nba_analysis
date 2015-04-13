@@ -71,7 +71,7 @@ public class MatchTablePanel extends JPanel {
 		// 第二个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
-		g.drawString(match.getTeams()[1], width/20, height*10 / 20);
+		g.drawString(match.getTeams()[1], width/20, height*11 / 20);
 		
 		Image teamImage2 =  bl.getTeamByName(match.getTeams()[1]).getLogo(width/20, height/ 20);
 		g.drawImage(teamImage2, 0, height*10 / 20, this);
