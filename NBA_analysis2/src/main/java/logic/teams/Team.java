@@ -10,6 +10,8 @@ import test.data.TeamHotInfo;
 import test.data.TeamNormalInfo;
 import util.SvgImage;
 
+import compare.MatchSimpleInfoComparator;
+
 public class Team {
     //raw data
 	private String name;                   //球队名
@@ -732,7 +734,7 @@ public class Team {
         }
         
         //根据日期对结果排序
-        //以按照读取顺序自动排序
+        result.sort(new MatchSimpleInfoComparator());
         
         return result;
     }
