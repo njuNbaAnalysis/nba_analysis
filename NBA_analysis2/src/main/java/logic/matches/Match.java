@@ -1,11 +1,12 @@
 package logic.matches;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import data.matches.MatchMistake;
 
 public class Match {
-	private String date;    //例如13-14_2014_01-01 :前面表示13-14赛季，后面表示日期
+	private String date;    //例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期
 	private String[] teams;// 对阵队伍 2容量的teams数组,这里面存的是缩写！！！
 	private int[] points;// 比分 2容量
 	private ArrayList<int[]> pointsList;// 每一节的比分，可能会有加时赛
@@ -107,4 +108,13 @@ public class Match {
 	    return king;
 	}
 
+	//得到月份，以Date的形式，month是0~11
+	public Date getDateInDate(){
+	    Date date = new Date();
+	    String[] dateString = this.date.split("_")[1].split("-");
+	    date.setYear(Integer.parseInt(dateString[0]));
+	    date.setMonth(Integer.parseInt(dateString[1]) - 1);
+	    date.setDate(Integer.parseInt(dateString[2]));
+	    return date;
+	}
 }

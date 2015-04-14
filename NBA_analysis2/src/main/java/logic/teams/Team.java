@@ -3,6 +3,8 @@ package logic.teams;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import logic.matches.Match;
+import logic.matches.MatchController;
 import test.data.TeamHighInfo;
 import test.data.TeamHotInfo;
 import test.data.TeamNormalInfo;
@@ -680,4 +682,58 @@ public class Team {
         this.rankingInLeague = rankingInLeague;
     }
 
+    //返回当前球队所涉及的所有比赛,根据日期进行升序排序并返回
+    public ArrayList<MatchSimpleInfo> getMatchSimpleInfo(){
+        MatchController matchController = MatchController.getInstance();
+        ArrayList<MatchSimpleInfo> result = new ArrayList<MatchSimpleInfo>();
+        ArrayList<Match> matchList = matchController.getAllMatches();
+        
+        for(Match match:matchList){
+            //主场
+            if(match.getTeams()[0].equals(this.getAbbreviation())){
+                MatchSimpleInfo info = new MatchSimpleInfo();
+                info.setDate(match.getDateInDate());
+                
+                if(match.getPoints()[0] > match.getPoints()[1]){
+                    info.setWin(true);
+                }
+                else{
+                    info.setWin(false);
+                }
+                
+                info.setPoints(match.getPoints());
+                info.setNameOfRival(match.getTeams()[1]);
+                info.setAtHome(true);
+                result.add(info);
+            }
+            //客场
+            else if(match.getTeams()[1].equals(this.getAbbreviation())){
+                MatchSimpleInfo info = new MatchSimpleInfo();
+                info.setDate(match.getDateInDate());
+                
+                if(match.getPoints()[1] > match.getPoints()[0]){
+                    info.setWin(true);
+                }
+                else{
+                    info.setWin(false);
+                }
+                
+                int[] points = new int[2];
+                points[0] = match.getPoints()[1];
+                points[1] = match.getPoints()[0];
+                info.setPoints(points);
+                info.setNameOfRival(match.getTeams()[0]);
+                info.setAtHome(false);
+                result.add(info);
+            }
+            else{
+                System.out.println("error in logic.teams.Team.getMatchSimpleInfo");
+            }
+        }
+        
+        //根据日期对结果排序
+        //以按照读取顺序自动排序
+        
+        return result;
+    }
 }
