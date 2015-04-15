@@ -56,12 +56,12 @@ public class TeamInfoPanel extends JPanel {
 			playerList.add(bl.getPlayerByName(nameList.get(i)));
 		}
 
-		teamBasicInfoPanel = new TeamBasicInfoLabel(team, width, height / 4);
-		teamBasicInfoPanel.setBounds(0, 0, width, height / 4);
+		teamBasicInfoPanel = new TeamBasicInfoLabel(team, width, height / 3);
+		teamBasicInfoPanel.setBounds(0, 0, width, height / 3);
 		this.add(teamBasicInfoPanel);
 
 		contentPanel = new JScrollPane();
-		contentPanel.setBounds(0, height / 3, width, height * 2 / 3);
+		contentPanel.setBounds(0, height / 2, width, height * 2 / 3);
 		contentPanel.setLayout(null);
 		this.add(contentPanel);
 		// 默认加数据王
@@ -84,7 +84,7 @@ public class TeamInfoPanel extends JPanel {
 		for (int i = 0; i < size; i++) {
 			btArray[i] = new TeamButton(tabName[i], i);
 			btArray[i].setBounds(width * i / size, height / 4, width / size,
-					height / 15);
+					height / 20);
 			this.add(btArray[i]);
 		}
 	}
