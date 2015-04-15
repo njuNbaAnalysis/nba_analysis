@@ -15,7 +15,7 @@ public class ContentPanel extends JPanel {
 		content = new JPanel();
 		content.setBounds(width/10, 0, width-width/10, height);
 		content.setLayout(null);
-		teamRankTablePanel = new PlayerStatTablePanel(width,height,bl);
+		teamRankTablePanel = new PlayerStatTablePanel(width,height,bl,content);
 		teamRankTablePanel.setBounds(0, 0, width-width/10, height);
 		content.add(teamRankTablePanel);
 		

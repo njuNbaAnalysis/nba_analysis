@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import compare.PalyerScreening;
@@ -74,6 +75,7 @@ import compare.TeamThreePointersPercentageComp;
 import compare.TeamTurnOversComp;
 import compare.TeamWinPercentageComp;
 import logic.BLService;
+import logic.players.Player;
 import logic.teams.Team;
 
 public class TeamJTable extends StatJTable {
@@ -84,13 +86,43 @@ public class TeamJTable extends StatJTable {
 			"3分命中", "3分出手", "罚球命中", "罚球出手", "进攻篮板", "防守篮板", "篮板", "助攻", "抢断",
 			"盖帽", "失误", "犯规", "得分" };
 	private ArrayList<Team> list;
+	private JPanel content;
+	private int width;
+	private int height;
+	private BLService bl;
 
-	public TeamJTable(BLService bl, int i, int j) {
+	public TeamJTable(BLService bl, int i, int j,JPanel content) {
 		super();
 		list = bl.getAllTeams();
 		this.getTableHeader().addMouseListener(new MouseHandle());
-		this.portraitWidth = i * 80 / 800;
-		this.portraitHeight = j * 80 / 800;
+		this.portraitWidth = 80;
+		this.portraitHeight = 80;
+		this.width = i;
+		this.height = j;
+		this.content = content;
+		this.bl = bl;
+		this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column;
+                if (TeamJTable.this.getSelectedRow() == -1) {
+                    return;
+                }
+               
+                if((column=TeamJTable.this.getSelectedColumn()) == 1){
+                	int row = TeamJTable.this.getSelectedRow();
+                	String teamName = (String)TeamJTable.this.getValueAt(row, column);
+
+                	Team t = TeamJTable.this.bl.getTeamByName(teamName);
+            		
+            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,TeamJTable.this.bl);
+            		m.setBounds(0, 0, width, height*10/9);
+            		TeamJTable.this.content.removeAll();
+            		TeamJTable.this.content.add(m);
+            		TeamJTable.this.content.updateUI();
+                }
+            }
+        });
 	}
 
 	private String[] getAverageDataRow(Team t, int i) {

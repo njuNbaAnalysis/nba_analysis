@@ -34,7 +34,7 @@ public class PlayerStatTablePanel extends StatTablePanel {
 
 	private SelectPanel selectPanel;
 
-	public PlayerStatTablePanel(int width, int height, BLService bl) {
+	public PlayerStatTablePanel(int width, int height, BLService bl,JPanel content) {
 		super(width, height, bl);
 
 		
@@ -48,7 +48,8 @@ public class PlayerStatTablePanel extends StatTablePanel {
 		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
 				* height / (1080));
 
-		statTable = new PlayerJTable(bl, 800, 600);
+		statTable = new PlayerJTable(bl, width * 9 / 10, height - 116
+				* height / (1080),content);
 		statTable.setBounds(200, 200, 800, 600);
 		jspane.setViewportView(statTable);
 		refresh();

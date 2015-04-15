@@ -334,7 +334,7 @@ public class MenuPanel extends JPanel {
 			
 			if(type==1){
 				
-				PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(width*10,height,bl);
+				PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(width*10,height,bl,content);
 				teamRankTablePanel.setBounds(0, 0, width*9, height);
 				content.removeAll();
 				content.add(teamRankTablePanel);
@@ -343,7 +343,7 @@ public class MenuPanel extends JPanel {
 			}
 			
 			if(type==2){
-				TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(width*10,height,bl);
+				TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(width*10,height,bl,content);
 				teamRankTablePanel.setBounds(0, 0, width*9, height);
 				content.removeAll();
 				content.add(teamRankTablePanel);
