@@ -134,7 +134,7 @@ public class TeamInfoPanel extends JPanel {
 								"P", "常规赛数据王", columnName, width, height / 3,
 								bl);
 						playerKingPanel.setPlayers(players);
-						playerKingPanel.setBounds(0, height / 3, width, height * 1 / 3);
+						playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 
 						contentPanel.removeAll();
 						contentPanel.add(playerKingPanel);

@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ public class PlayerDetailTablePanel extends JPanel {
 	private LatestJTable latestTable;
 	private JScrollPane seasonJspane;
 	private JScrollPane latestJspane;
+	private DecimalFormat df = new DecimalFormat("#0.0");
 
 	public PlayerDetailTablePanel(Player player, int width, int height) {
 		this.player = player;
@@ -40,10 +42,10 @@ public class PlayerDetailTablePanel extends JPanel {
 	private void setTable() {
 		seasonJspane = new JScrollPane();
 		seasonJspane.setBounds(0, height / 10, width, height / 4);
-		seasonTable = new SeasonJTable();
+		seasonTable = new SeasonJTable(player);
 		seasonJspane.setViewportView(seasonTable);
 		this.add(seasonJspane);
-		seasonTable.refreshElement();
+		//seasonTable.refreshElement();
 
 		latestJspane = new JScrollPane();
 		latestJspane.setBounds(0, height * 1 / 2, width, height * 35 / 80);
@@ -51,7 +53,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		latestJspane.setViewportView(latestTable);
 
 		this.add(latestJspane);
-		latestTable.refreshElement();
+		//latestTable.refreshElement();
 
 	}
 
@@ -75,13 +77,13 @@ public class PlayerDetailTablePanel extends JPanel {
 	}
 
 	private abstract class DetailJTable extends BaseJTable {
+
 		public DetailJTable() {
 			super();
 			this.setShowGrid(false);
 			// this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			this.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 15));
 			adjustHeader();
-			refreshElement();
 
 		}
 
@@ -110,12 +112,15 @@ public class PlayerDetailTablePanel extends JPanel {
 	}
 
 	private class SeasonJTable extends DetailJTable {
+		Player player;
 		private String[] columnName = { "年度", "球队", "场数", "先发", "分钟", "%",
 				"三分%", "进攻", "防守", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "得分" };
 
-		public SeasonJTable() {
+		public SeasonJTable(Player player) {
 			super();
+			this.player = player;
 			this.setModel(new DefaultTableModel(null, columnName));
+			refreshElement();
 		}
 
 		protected void paintRow() {
@@ -154,7 +159,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		@Override
 		public void refreshElement() {
 			DefaultTableModel model = (DefaultTableModel) this.getModel();
-			String[] data = getSeasonData();
+			//String[] data = getSeasonData(player);
 			String[] row = null;
 			for (int i = 0; i < 4; i++) {
 				row = new String[16];
@@ -164,9 +169,11 @@ public class PlayerDetailTablePanel extends JPanel {
 				} else if (i == 2) {
 					row[0] = "赛季总计";
 
-				} else {
-					row = getSeasonData();
+				} else if (i == 1) {
+					row = getSeasonAverageData(player);
 
+				} else {
+					row = getSeasonTotalData(player);
 				}
 				model.addRow(row);
 			}
@@ -179,14 +186,55 @@ public class PlayerDetailTablePanel extends JPanel {
 		}
 
 		// 这个方法没有实现
-		private String[] getSeasonData() {
+		private String[] getSeasonAverageData(Player player) {
 			String[] result = new String[16];
-			for (int i = 0; i < 16; i++) {
-				result[i] = Integer.toString(i);
-			}
+			result[0] = "12-13";
+			result[1] = player.getTeam();
+			result[2] = player.getGamePlayed()+"";
+			
+			result[3] = player.getGameStarted()+"";
+			result[4] = Integer.toString(player.getMinutes());
+			result[5] = df.format(player.getFieldGoalsPercentage()*100);		
+			result[6] = df.format(player.getThreePointersPercentage()*100);
+
+			result[7] = df.format(player.getAverageOffenseRebounds());
+			result[8] = df.format(player.getAverageDefenseRebounds());
+			result[9] = df.format(player.getAverageRebounds());
+			result[10] = df.format(player.getAverageAssists());
+			
+			result[11] = df.format(player.getAverageSteals());
+			result[12] = df.format(player.getAverageBlockShots());
+			result[13] = df.format(player.getAverageFouls());
+			result[14] = df.format(player.getAverageTurnOver());
+			
+			result[15] = df.format(player.getAveragePoints());
 			return result;
 		}
+		
+		private String[] getSeasonTotalData(Player player) {
+			String[] result = new String[16];
+			result[0] = "12-13";
+			result[1] = player.getTeam();
+			result[2] = player.getGamePlayed()+"";
+			
+			result[3] = player.getGameStarted()+"";
+			result[4] = player.getMinutes()+"";
+			result[5] = df.format(player.getFieldGoalsPercentage()*100);		
+			result[6] = df.format(player.getThreePointersPercentage()*100);
 
+			result[7] = player.getOffenseRebounds()+"";
+			result[8] = player.getDefenseRebounds()+"";
+			result[9] = player.getRebounds()+"";
+			result[10] = player.getAssists()+"";
+			
+			result[11] = player.getSteals()+"";
+			result[12] = player.getBlockShots()+"";
+			result[13] = player.getFouls()+"";
+			result[14] = player.getTurnOver()+"";
+			
+			result[15] = player.getPoints()+"";
+			return result;
+		}
 	}
 
 	private class LatestJTable extends DetailJTable {

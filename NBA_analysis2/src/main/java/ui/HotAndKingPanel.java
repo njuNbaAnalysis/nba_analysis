@@ -57,8 +57,8 @@ public class HotAndKingPanel extends JPanel {
 		
 		// 设置player
 		
-		ArrayList<todayPlayer> playerList = bl.getTodayKingPlayer("13-14_2014-01-01", "场均得分", 5);
-		todayPlayer [] players = new todayPlayer[5];
+		ArrayList<Player> playerList = bl.getMostImprovedPlayer("point", 5);
+		Player [] players = new Player[5];
 		for(int i=0;i<5;i++){
 			players[i] = playerList.get(i);
 		}

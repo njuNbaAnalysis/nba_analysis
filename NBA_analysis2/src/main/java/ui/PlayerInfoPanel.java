@@ -23,21 +23,21 @@ public class PlayerInfoPanel extends JPanel {
 
 	}
 
-	public PlayerInfoPanel(int width, int height, BLService bl) {
+	public PlayerInfoPanel(int width, int height, Player player,BLService bl) {
 		this.bl = bl;
 		this.setLayout(null);
 		//for test
-		Player p = bl.getAllPlayers().get(0);
+		//Player p = bl.getAllPlayers().get(0);
 		
-		playerBasicInfoLabel = new PlayerBasicInfoLabel(p,width,height/4);
+		playerBasicInfoLabel = new PlayerBasicInfoLabel(player,width,height/4);
 		playerBasicInfoLabel.setBounds(0, 0, width, height/6);
 		this.add(playerBasicInfoLabel);
 		
-		playerDetailPanel = new PlayerDetailPanel(p, bl.getAllianceAverageData(),width, height/4);
+		playerDetailPanel = new PlayerDetailPanel(player, bl.getAllianceAverageData(),width, height/4);
 		playerDetailPanel.setBounds(0, height/4, width, height/4);
 		this.add(playerDetailPanel);
 		
-		playerDetailTablePanel = new PlayerDetailTablePanel(p, width, height/2);
+		playerDetailTablePanel = new PlayerDetailTablePanel(player, width, height/2);
 		playerDetailTablePanel.setBounds(0, height/2, width, height/2);
 		this.add(playerDetailTablePanel);
 		

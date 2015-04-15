@@ -68,15 +68,15 @@ public class PlayerDetailPanel extends JPanel {
 				.getAverageRebounds()));
 		playerData[2] = Double
 				.parseDouble(df.format(player.getAverageAssists()));
-		playerData[3] = Double.parseDouble(df.format(0.837 * 100));
-		playerData[4] = Double.parseDouble(df.format(0.297 * 100));
+		playerData[3] = Double.parseDouble(df.format(player.getFreeThrowsPercentage() * 100));
+		playerData[4] = Double.parseDouble(df.format(player.getThreePointersPercentage()* 100));
 
 		this.allianceAverage = allianceAverage;
-		allianceAverage[0] = Double.parseDouble(df.format(9.5));
-		allianceAverage[1] = Double.parseDouble(df.format(4.1));
-		allianceAverage[2] = Double.parseDouble(df.format(2.1));
-		allianceAverage[3] = Double.parseDouble(df.format(0.751 * 100));
-		allianceAverage[4] = Double.parseDouble(df.format(0.350 * 100));
+		allianceAverage[0] = Double.parseDouble(df.format(allianceAverage[0]));
+		allianceAverage[1] = Double.parseDouble(df.format(allianceAverage[1]));
+		allianceAverage[2] = Double.parseDouble(df.format(allianceAverage[2]));
+		allianceAverage[3] = Double.parseDouble(df.format(allianceAverage[3] * 100));
+		allianceAverage[4] = Double.parseDouble(df.format(allianceAverage[4] * 100));
 
 		setLabel();
 		setBarCharts();
@@ -87,36 +87,36 @@ public class PlayerDetailPanel extends JPanel {
 
 		head = new BarChartLabel();
 		head.setText("球员/均值");
-		head.setBounds(0, height * 67 / 96, width * 1 / 5, height * 1 / 6);
+		head.setBounds(0, height * 80 / 96, width * 1 / 5, height * 1 / 6);
 		this.add(head);
 
 		points = new BarChartLabel();
 		points.setText("平均得分");
-		points.setBounds(width * 1 / 5, height * 67 / 96, width * 3 / 20,
+		points.setBounds(width * 1 / 5, height * 80 / 96, width * 3 / 20,
 				height * 1 / 6);
 		this.add(points);
 
 		rebounds = new BarChartLabel();
 		rebounds.setText("平均篮板");
-		rebounds.setBounds(width * 7 / 20, height * 67 / 96, width * 3 / 20,
+		rebounds.setBounds(width * 7 / 20, height * 80 / 96, width * 3 / 20,
 				height * 1 / 6);
 		this.add(rebounds);
 
 		assist = new BarChartLabel();
 		assist.setText("平均助攻");
-		assist.setBounds(width * 10 / 20, height * 67 / 96, width * 3 / 20,
+		assist.setBounds(width * 10 / 20, height * 80 / 96, width * 3 / 20,
 				height * 1 / 6);
 		this.add(assist);
 
 		freeThrow = new BarChartLabel();
 		freeThrow.setText("罚球 %");
-		freeThrow.setBounds(width * 13 / 20, height * 67 / 96, width * 3 / 20,
+		freeThrow.setBounds(width * 13 / 20, height * 80 / 96, width * 3 / 20,
 				height * 1 / 6);
 		this.add(freeThrow);
 
 		threePointers = new BarChartLabel("special");
 		threePointers.setText("三分 %");
-		threePointers.setBounds(width * 16 / 20, height * 67 / 96,
+		threePointers.setBounds(width * 16 / 20, height * 80 / 96,
 				width * 4 / 20, height * 1 / 6);
 		this.add(threePointers);
 
@@ -143,7 +143,7 @@ public class PlayerDetailPanel extends JPanel {
 				numLimits[i] = allianceAverage[i / 2];
 			}
 
-			barPositony[i] = height * 67 / 96;
+			barPositony[i] = height * 80 / 96;
 			barHeight[i] = 0;
 			barWidth[i] = width / 64;
 			barNum[i] = 0;

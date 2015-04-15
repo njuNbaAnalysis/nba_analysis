@@ -10,6 +10,7 @@ import java.util.Comparator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
@@ -55,8 +56,10 @@ import compare.PlayerTrueShootingPercentageComp;
 import compare.PlayerTurnOverComp;
 import compare.PlayerTurnOverPercentageComp;
 import compare.PlayerUsageComp;
+import logic.BLController;
 import logic.BLService;
 import logic.players.Player;
+import logic.teams.Team;
 
 public class PlayerJTable extends StatJTable {
 	private static String[] averageColumn = { "排名", "球员", "球队", "场数", "先发",
@@ -67,13 +70,56 @@ public class PlayerJTable extends StatJTable {
 			"助攻", "在场时间", "投篮命中率%", "三分命中率%", "罚球命中率%", "进攻数", "防守数", "抢断数",
 			"盖帽数", "失误数", "犯规数", " 得分" };
 	private ArrayList<Player> list;
+	private BLService bl;
 
 	public PlayerJTable(BLService bl, int i, int j) {
 		super();
 		list = bl.getAllPlayers();
+		this.bl = bl;
 		this.portraitWidth = i * 70 / 800;
 		this.portraitHeight = j * 80 / 800;
 		this.getTableHeader().addMouseListener(new MouseHandle());
+		this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column;
+                if (PlayerJTable.this.getSelectedRow() == -1) {
+                    return;
+                }
+                if ((column=PlayerJTable.this.getSelectedColumn()) == 1) {
+                	int row = PlayerJTable.this.getSelectedRow();
+                	String playerName = (String)PlayerJTable.this.getValueAt(row, column);
+
+                	Player p = PlayerJTable.this.bl.getPlayerByName(playerName);
+            		
+            		PlayerInfoPanel m = new PlayerInfoPanel(1920,1280,p,PlayerJTable.this.bl);
+            		m.setBounds(0, 0, 1920, 1280);
+            		JFrame f = new JFrame();
+            		f.setLayout(null);
+            		f.add(m);
+            		f.setSize(1920,1280);
+            		f.setVisible(true);   
+            		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            		m.startAnimation();
+                }
+                if((column=PlayerJTable.this.getSelectedColumn()) == 2){
+                	int row = PlayerJTable.this.getSelectedRow();
+                	String teamName = (String)PlayerJTable.this.getValueAt(row, column);
+
+                	Team t = PlayerJTable.this.bl.getTeamByName(teamName);
+            		
+            		TeamInfoPanel m = new TeamInfoPanel(1920,1280,t,PlayerJTable.this.bl);
+            		m.setBounds(0, 0, 1920, 1280);
+            		JFrame f = new JFrame();
+            		f.setLayout(null);
+            		f.add(m);
+            		f.setSize(1920,1280);
+            		f.setVisible(true);   
+            		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            		//m.startAnimation();
+                }
+            }
+        });
 
 	}
 

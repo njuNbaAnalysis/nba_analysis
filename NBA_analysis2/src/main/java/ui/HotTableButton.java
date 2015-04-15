@@ -74,12 +74,12 @@ public class HotTableButton extends JButton{
 					HotTableButton.this.hotPanel.repaint();
 					break;
 				case "HP":	
-					ArrayList<todayPlayer> playerList2 = HotTableButton.this.bl.getTodayKingPlayer("13-14_2014-01-01", transferField(field), 5);
-					todayPlayer [] players2 = new todayPlayer[5];
+					ArrayList<Player> playerList2 = HotTableButton.this.bl.getMostImprovedPlayer(transferField(field), 5);
+					Player [] players2 = new Player[5];
 					for(int i=0;i<5;i++){
 						players2[i] = playerList2.get(i);
 					}
-					((ImprovedLabelPanel)HotTableButton.this.hotPanel).setPlayers(players2);
+					((ImprovedLabelPanel)HotTableButton.this.hotPanel).setPlayers(players2,transferField(field));
 					HotTableButton.this.hotPanel.repaint();
 					break;
 				}
