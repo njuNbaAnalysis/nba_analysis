@@ -18,10 +18,10 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	private String type;
 	private int num = 5;
 
-	private todayPlayer[] players;
+	private Player[] players;
 
 	public ImprovedLabelPanel(String headName, String type,
-			String[] columnName, todayPlayer[] players, int hotWidth, int hotHeight,
+			String[] columnName,Player[] players, int hotWidth, int hotHeight,
 			BLService bl) {
 		super(headName, columnName, hotWidth, hotHeight, bl);
 		this.type = type;
@@ -29,7 +29,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 		setTableHeadLabel();
 		setButton(type);
 		setHotTableContentLabel();
-		setPlayers(players);
+		setPlayers(players,type);
 
 	}
 	
@@ -51,20 +51,6 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 		}
 	}
 
-	/*public void setTableContent(String type) {
-		if (type.equals("HP")) {
-			Object[] o = bl.getAllPlayers().subList(0, num).toArray();
-			Player[] p = new Player[num];
-			for (int i = 0; i < num; i++) {
-				p[i] = (Player) o[i];
-			}
-			
-			setHotTableContentLabel();
-			setPlayers(p);
-		}
-
-	}*/
-
 	private void setHotTableContentLabel() {
 		tableContentLabel = new HotTableContentLabel(players, hotWidth,
 				hotHeight * 5 / 6);
@@ -75,24 +61,32 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	}
 
 
-	public void setPlayers(todayPlayer[] players) {
+	public void setPlayers(Player[] players,String type) {
 		((HotTableContentLabel) tableContentLabel).setPlayers(players);
+		((HotTableContentLabel) tableContentLabel).setType(type);
+		this.type = type;
 
 	}
 
 	private class HotTableContentLabel extends JLabel {
-		private todayPlayer[] players;
+		private Player[] players;
 		private int contentWidth;
 		private int contentHeight;
+		private String type;
 
-		public HotTableContentLabel(todayPlayer[] players, int contentWidth,
+		public HotTableContentLabel(Player[] players, int contentWidth,
 				int contentHeight) {
 			this.players = players;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
 		}
 
-		public void setPlayers(todayPlayer[] players) {
+		public void setType(String type2) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void setPlayers(Player[] players) {
 			this.players = players;
 			this.repaint();
 		}
@@ -105,6 +99,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 			g.setColor(Color.white);
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 头像
+			
 			BufferedImage portrait = UIUtils.resize(players[0].getPortrait(),
 					contentWidth / 10, contentHeight * 3 / 10);
 			g.drawImage(portrait, 0, 0, this);
@@ -158,8 +153,9 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 				g.drawString(i + "", contentWidth / 12, posh + contentHeight
 						/ 16);
 				// 头像
+				Player player = bl.getPlayerByName(players[i-1].getName());
 				BufferedImage image = UIUtils.resize(
-						players[i - 1].getPortrait(), contentWidth / 25,
+						player.getPortrait(), contentWidth / 25,
 						contentHeight / 10);
 
 				g.drawImage(image, contentWidth / 6, posh, this);
@@ -170,7 +166,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 						posh + contentHeight / 30);
 
 				// 球队
-				String str = Integer.toString(players[i - 1].getNumber()) + " "
+				String str = Integer.toString(player.getNumber()) + " "
 						+ players[i - 1].getPosition() + "/"
 						+ players[i - 1].getTeam();
 				g.drawString(str, contentWidth * 9 / 40, posh + contentHeight
@@ -190,6 +186,17 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 			}
 
 		}
+		
+		/*private String getData(todayPlayer p){
+			switch(type){
+				case "point":
+					return p.get
+				case "rebound":
+					
+				case "assist":
+					
+			}
+		}*/
 	}
 
 }
