@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
 
@@ -74,6 +75,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 		private int contentWidth;
 		private int contentHeight;
 		private String field;
+		protected DecimalFormat df = new DecimalFormat("#0.00");
 
 		public HotTableContentLabel(Player[] players, int contentWidth,
 				int contentHeight,String field) {
@@ -126,6 +128,32 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 			g.drawString("最近五场" + "/" + "提升率", contentWidth / 2,
 					contentHeight * 3 / 10);
+			double result1 = 0;
+			double result2 = 0;
+			switch(field){
+			case "point":
+			case "场均得分":
+				result1 = players[0].FivePoints();
+				result2 = players[0].getUpgradeRate()[0];
+				break;
+			case "rebound":
+			case "场均篮板":
+				result1 = players[0].FiveRebounds();
+				result2 = players[0].getUpgradeRate()[1];
+				break;
+			case "assist":
+			case "场均助攻":
+				result1 = players[0].FiveAssists();
+				result2 = players[0].getUpgradeRate()[2];
+				break;
+			default:
+				System.out.println("Error in ImprovefLabelPanel.paintComponent()!!!"+field);	
+			}
+			// 最近五场/提升率
+						g.setColor(new Color(68, 68, 68));
+						g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+						g.drawString(Double.toString(result1) + "/" + (df.format(result2)), contentWidth / 2,
+								contentHeight * 4 / 10);
 			// 数据、球队图标暂无
 
 			g.setColor(new Color(158, 158, 158));
@@ -177,17 +205,20 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 				// 最近五场/提升率
 				g.setColor(Color.black);
 				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 30));
-				double result1 = 0;
-				double result2 = 0;
+				result1 = 0;
+				result2 = 0;
 				switch(field){
+				case "point":
 				case "场均得分":
 					result1 = players[i-1].FivePoints();
 					result2 = players[i-1].getUpgradeRate()[0];
 					break;
+				case "rebound":
 				case "场均篮板":
 					result1 = players[i-1].FiveRebounds();
 					result2 = players[i-1].getUpgradeRate()[1];
 					break;
+				case "assist":
 				case "场均助攻":
 					result1 = players[i-1].FiveAssists();
 					result2 = players[i-1].getUpgradeRate()[2];
@@ -200,7 +231,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 
 				g.setColor(new Color(57, 167, 229));
 				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 15));
-				g.drawString(Double.toString(result2), contentWidth * 7 / 11,
+				g.drawString((df.format(result2)), contentWidth * 7 / 11,
 						contentHeight / 2 + contentHeight * (i - 2) / 8
 								+ contentHeight / 40);
 			}
