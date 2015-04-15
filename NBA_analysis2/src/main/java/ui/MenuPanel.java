@@ -353,7 +353,7 @@ public class MenuPanel extends JPanel {
 			}
 			if(type==3){
 				
-				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(width*10,height,bl);
+				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(width*9,height,bl);
 				teamRankTablePanel.setBounds(0, 0, width*9, height);
 				teamRankTablePanel.startAnimation();
 				content.removeAll();
@@ -362,7 +362,7 @@ public class MenuPanel extends JPanel {
 				
 			}
 			if(type==4){
-				TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*10,height,bl.getAllTeams().get(0),bl);
+				TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl);
 				teamRankTablePanel.setBounds(0, 0, width*9, height);
 				//teamRankTablePanel.startAnimation();
 				content.removeAll();
@@ -385,7 +385,7 @@ public class MenuPanel extends JPanel {
 			if(type==7){
 				
 				
-				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*10,height*6/5,bl);
+				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*9,height*6/5,bl);
 				hotAndKingPanel.setPreferredSize(new Dimension(width*10,height*6/5));
 				JScrollPane scrollPane = new JScrollPane(hotAndKingPanel);
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);

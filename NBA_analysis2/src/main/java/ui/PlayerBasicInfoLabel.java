@@ -56,10 +56,6 @@ public class PlayerBasicInfoLabel extends JLabel {
 
 	public PlayerBasicInfoLabel(Player player, int width, int height) {
 		super();
-		/*
-		 * this.player = player; this.width = width; this.height = height;
-		 * this.setSize(width, height);
-		 */
 
 		this.player = player;
 		this.height = height;

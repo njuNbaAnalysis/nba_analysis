@@ -1,74 +1,89 @@
 package ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicLabelUI;
 
-
-
-import util.UIUtils;
 import logic.BLService;
 import logic.players.Player;
-import logic.players.todayPlayer;
 import logic.teams.Team;
+import util.UIUtils;
 
-public class HotAndKingPanel extends JPanel {
-	private int num = 5;
-	private int width;
-	private int height;
-	private BLService bl;
-	private static String FONT_OF_HOT = "微软雅黑";
-	private static String [] typeArray = {"T","P","HP"};
-	private KingLabelPanel teamKingPanel;
-	private KingLabelPanel playerKingPanel;
-	private ImprovedLabelPanel hotPlayerPanel;
+public class KingLabelPanel extends HotLabelPanel {
+	private String type;// 有球员和球队数据王两种，分别用"P"和"T"表示
+	private int num =5;
 
-	public HotAndKingPanel(int width, int height, BLService bl) {
-		this.width = width;
-		this.height = height;
-		this.bl = bl;
-		this.setLayout(null);
-		
-		//创建字体
-		UIUtils.createFont("font"+File.separator+"Oswald-Bold.otf");
-		
-		String[] playerColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽" };
-		playerKingPanel = new KingLabelPanel("P", "每日 联盟数据王",
-				playerColumnName, width*9/10, height / 4,bl);
-		playerKingPanel.setBounds(0, 0, width*9/10, height / 4);
-		this.add(playerKingPanel);
+	KingLabelPanel(String type, String headName, String[] columnName,
+			int kingWidth, int kingHeight,BLService bl) {
+		super(headName,columnName,kingWidth,kingHeight,bl);
+		this.type = type;
+		setTableHeadLabel();
+		setButton(type);
+		setTableContent(type);
+	}
 
-		String[] teamColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%",
-				"罚球%" };
-		teamKingPanel = new KingLabelPanel("T", "常规赛 联盟球队数据",
-				teamColumnName, width*9/10, height / 4,bl);
-		teamKingPanel.setBounds(0, height / 4, width*9/10, height / 4);
-		this.add(teamKingPanel);
-
-		
-		// 设置player
-		
-		ArrayList<todayPlayer> playerList = bl.getTodayKingPlayer("13-14_2014-01-01", "场均得分", 5);
-		todayPlayer [] players = new todayPlayer[5];
-		for(int i=0;i<5;i++){
-			players[i] = playerList.get(i);
+	public void setTableContent(String type) {
+		if (type.equals("P")) {
+			Object[] o = bl.getAllPlayers().subList(0, num).toArray();
+			Player[] p = new Player[num];
+			for (int i = 0; i < num; i++) {
+				p[i] = (Player) o[i];
+			}
+			setPlayerTableContent(p);
+		} else if (type.equals("T")) {
+			Object[] o = bl.getAllTeams().subList(0, num).toArray();
+			Team[] t = new Team[num];
+			for (int i = 0; i < num; i++) {
+				t[i] = (Team) o[i];
+			}
+			setTeamTableContent(t);
 		}
-		String[] hotColumnName = { "场均得分", "场均篮板", "场均助攻" };
-		hotPlayerPanel = new ImprovedLabelPanel("热门球员",typeArray[2],
-				hotColumnName, players,width, height / 2,bl);
-		hotPlayerPanel.setBounds(0, height / 2, width*9/10, height / 2);
-		this.add(hotPlayerPanel);
 
 	}
+
+	
+
+	private void setPlayerTableContent(Player[] players) {
+
+		tableContentLabel = new PlayerTableContentLabel(players, hotWidth,
+				hotHeight * 2 / 3);
+		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
+				hotHeight * 2 / 3);
+		this.add(tableContentLabel);
+	}
+
+	private void setTeamTableContent(Team[] teams) {
+		tableContentLabel = new TeamTableContentLabel(teams, hotWidth,
+				hotHeight * 2 / 3);
+		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
+				hotHeight * 2 / 3);
+		this.add(tableContentLabel);
+
+	}
+
+	public void setTeams(Team [] teams) {
+		((TeamTableContentLabel) tableContentLabel).setTeams(teams);			
+	}
+	
+	public void setPlayers(Player [] players) {
+		((PlayerTableContentLabel) tableContentLabel).setPlayers(players);			
+	}
+	
+
 	
 
 	private class PlayerTableContentLabel extends JLabel {
@@ -236,5 +251,4 @@ public class HotAndKingPanel extends JPanel {
 	}
 
 	
-
 }
