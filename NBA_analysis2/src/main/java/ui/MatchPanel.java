@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import logic.BLController;
 import logic.matches.KingsOfMatch;
 import logic.matches.Match;
+import logic.players.Player;
 import logic.teams.Team;
 
 public class MatchPanel extends JPanel {
@@ -34,6 +35,7 @@ public class MatchPanel extends JPanel {
 	private int height;
 	private boolean isFolded = false;
 	int currentIndex = 0;
+	JPanel content;
 	MatchTablePanel table;
 	BLController bl;
 	Thread thread;
@@ -41,11 +43,12 @@ public class MatchPanel extends JPanel {
 	ArrayList<Match> matchList;
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-	public MatchPanel(int width1, int height1, BLController bl) {
+	public MatchPanel(int width1, int height1, BLController bl,JPanel content) {
 		super();
 		/*
 		 * this.width=width1; this.height = height1;
 		 */
+		this.content = content;
 		this.bl = bl;
 		this.width = width1;
 		this.height = height1;
@@ -240,6 +243,12 @@ public class MatchPanel extends JPanel {
 		Match match;
 		Team[] teams;
 		KingsOfMatch[] kings;
+		JButton b1;
+		JButton b2;
+		JButton b3;
+		JButton b4;
+		JButton b5;
+		JButton b6;
 
 		public void paintComponent(Graphics g2) {
 			Graphics2D g = (Graphics2D) g2.create();
@@ -303,19 +312,19 @@ public class MatchPanel extends JPanel {
 			g.drawString("助攻", 800, 230);
 			g.setColor(Color.blue);
 			g.setFont(new Font("default", Font.BOLD, 17));
-			g.drawString(
-					kings[0].getNameOfPointsKing() + "", 980, 110);
-			g.drawString(
-					kings[0].getNameOfReboundsKing() + "", 980, 170);
-			g.drawString(
-					kings[0].getNameOfAssistsKing() + "", 980, 230);
+			/*g.drawString(
+					kings[0].getNameOfPointsKing() + "", 980, 110);*/
+			/*g.drawString(
+					kings[0].getNameOfReboundsKing() + "", 980, 170);*/
+			/*g.drawString(
+					kings[0].getNameOfAssistsKing() + "", 980, 230);*/
 
-			g.drawString(
+			/*g.drawString(
 					kings[1].getNameOfPointsKing() + "", 1380, 110);
 			g.drawString(
 					kings[1].getNameOfReboundsKing() + "", 1380, 170);
 			g.drawString(
-					kings[1].getNameOfAssistsKing() + "", 1380, 230);
+					kings[1].getNameOfAssistsKing() + "", 1380, 230);*/
 			
 			g.setColor(Color.black);
 			g.setFont(new Font("default", Font.PLAIN, 17));
@@ -359,6 +368,149 @@ public class MatchPanel extends JPanel {
 			currentIndex = (currentIndex+1)%matchList.size();
 			stat.addMouseListener(statListener);
 			this.add(stat);
+			
+			b1 = new JButton(kings[0].getNameOfReboundsKing());
+			b1.setForeground(Color.blue);
+			b1.setFont(new Font("default", Font.BOLD, 17));
+			b1.setContentAreaFilled(false);
+			b1.setBorderPainted(false);
+			b1.setBounds(930, 150,200,30);
+			b1.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                
+	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfReboundsKing());
+	            		
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
+	            		playerInfoPanel.startAnimation();
+	            		MatchPanel.this.content.removeAll();
+	            		MatchPanel.this.content.add(playerInfoPanel);
+	            		MatchPanel.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+	            }
+	        });
+			this.add(b1);
+			
+			b2 = new JButton(kings[0].getNameOfPointsKing());
+			b2.setForeground(Color.blue);
+			b2.setFont(new Font("default", Font.BOLD, 17));
+			b2.setContentAreaFilled(false);
+			b2.setBorderPainted(false);
+			b2.setBounds(930, 90,200,30);
+			b2.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                
+	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfPointsKing());
+	            		
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
+	            		playerInfoPanel.startAnimation();
+	            		MatchPanel.this.content.removeAll();
+	            		MatchPanel.this.content.add(playerInfoPanel);
+	            		MatchPanel.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+	            }
+	        });
+			this.add(b2);
+			
+			b3 = new JButton(kings[0].getNameOfAssistsKing());
+			b3.setForeground(Color.blue);
+			b3.setFont(new Font("default", Font.BOLD, 17));
+			b3.setContentAreaFilled(false);
+			b3.setBorderPainted(false);
+			b3.setBounds(930, 210,200,30);
+			b3.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                
+	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfAssistsKing());
+	            		
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
+	            		playerInfoPanel.startAnimation();
+	            		MatchPanel.this.content.removeAll();
+	            		MatchPanel.this.content.add(playerInfoPanel);
+	            		MatchPanel.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+	            }
+	        });
+			this.add(b3);
+			
+			
+			b4 = new JButton(kings[1].getNameOfPointsKing());
+			b4.setForeground(Color.blue);
+			b4.setFont(new Font("default", Font.BOLD, 17));
+			b4.setContentAreaFilled(false);
+			b4.setBorderPainted(false);
+			b4.setBounds(1330, 90,200,30);
+			b4.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                
+	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfPointsKing());
+	            		
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
+	            		playerInfoPanel.startAnimation();
+	            		MatchPanel.this.content.removeAll();
+	            		MatchPanel.this.content.add(playerInfoPanel);
+	            		MatchPanel.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+	            }
+	        });
+			this.add(b4);
+			
+			
+			b5 = new JButton(kings[1].getNameOfReboundsKing());
+			b5.setForeground(Color.blue);
+			b5.setFont(new Font("default", Font.BOLD, 17));
+			b5.setContentAreaFilled(false);
+			b5.setBorderPainted(false);
+			b5.setBounds(1330, 150,200,30);
+			b5.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                
+	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfReboundsKing());
+	            		
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
+	            		playerInfoPanel.startAnimation();
+	            		MatchPanel.this.content.removeAll();
+	            		MatchPanel.this.content.add(playerInfoPanel);
+	            		MatchPanel.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+	            }
+	        });
+			this.add(b5);
+			
+			
+			b6 = new JButton(kings[1].getNameOfAssistsKing());
+			b6.setForeground(Color.blue);
+			b6.setFont(new Font("default", Font.BOLD, 17));
+			b6.setContentAreaFilled(false);
+			b6.setBorderPainted(false);
+			b6.setBounds(1330, 210,200,30);
+			b6.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                
+	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfAssistsKing());
+	            		
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
+	            		playerInfoPanel.startAnimation();
+	            		MatchPanel.this.content.removeAll();
+	            		MatchPanel.this.content.add(playerInfoPanel);
+	            		MatchPanel.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+	            }
+	        });
+			this.add(b6);
+			
+			
 		}
 	}
 
