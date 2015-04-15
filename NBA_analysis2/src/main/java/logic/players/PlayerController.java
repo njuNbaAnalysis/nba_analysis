@@ -308,4 +308,28 @@ public class PlayerController {
 		Collections.sort(playerList, comparator);
 		return playerList;
 	}
+	
+	 public double[] getAllianceAverageDataOFPlayer() {
+	        double[] result = new double[5];
+	        
+	        double totalPoints = 0; //30支球队平均得分相加
+	        double totalRebounds = 0;   //30支球队平均篮板相加
+	        double totalAssists = 0;    //30支球队平均助攻相加
+	        double totalFreeThrowPercent = 0;
+	        double totalThreeThrowPercent = 0;
+	        for(Player play:playerList){
+	            totalPoints += play.getAveragePoints();
+	            totalRebounds += play.getAverageRebounds();
+	            totalAssists += play.getAverageAssists();
+	            totalFreeThrowPercent += play.getFreeThrowsPercentage();
+	            totalThreeThrowPercent += play.getThreePointersPercentage();
+	        }
+	        result[0] = totalPoints/playerList.size();
+	        result[1] = totalRebounds/playerList.size();
+	        result[2] = totalAssists/playerList.size();
+	        result[3] = 1.0 * totalFreeThrowPercent / playerList.size();
+	        result[4] = 1.0 * totalThreeThrowPercent / playerList.size();
+
+	        return result;
+	    }
 }
