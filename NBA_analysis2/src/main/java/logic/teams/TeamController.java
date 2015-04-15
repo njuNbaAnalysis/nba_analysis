@@ -66,8 +66,10 @@ public class TeamController {
         matchList = controller.getAllMatches();
         
         for(Match token:matchList){
+            System.out.println("token == null?" + token == null);
             parseRecordList(token,0);
             parseRecordList(token,1);
+            
         }
         
         for(Match token:matchList){
@@ -89,6 +91,12 @@ public class TeamController {
             if(token.getAbbreviation().equals(name)||token.getName().equals(name)){
                 return token;
             }
+            if(token.getAbbreviation().equals("NOH") && name.equals("NOP")){
+                return token;
+            }
+            if(token.getAbbreviation().equals("NOP") && name.equals("NOH")){
+                return token;
+            }
         }
         return null;
     }
@@ -100,6 +108,8 @@ public class TeamController {
         Team team = getTeam(teamName);
         
         //得分，比赛场数赋值
+        System.out.println("team == null?" + (team == null));
+        System.out.println("teamName:" + teamName);
         team.setPoints(team.getPoints() + match.getPoints()[num]);
         team.setNumOfMatches(team.getNumOfMatches() + 1);
         
