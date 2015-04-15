@@ -30,7 +30,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 		setTableHeadLabel();
 		setButton(type);
 		setHotTableContentLabel();
-		setPlayers(players,type);
+		setPlayers(players,"point");
 
 	}
 	
