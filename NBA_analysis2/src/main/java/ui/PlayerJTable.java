@@ -106,7 +106,7 @@ public class PlayerJTable extends StatJTable {
 
 		}
 
-		//System.out.println(c.getClass());
+		// System.out.println(c.getClass());
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 		Collections.sort(list, c);
 		imageList = new ArrayList<Image>();
@@ -176,7 +176,6 @@ public class PlayerJTable extends StatJTable {
 		s[17] = df.format(p.getAverageTurnOver()) + "";
 		s[18] = df.format(p.getAverageFouls()) + "";
 		s[19] = df.format(p.getAveragePoints()) + "";
-		// System.out.println("得分："+p.getAveragePoints());
 
 		s[20] = df.format(p.getTrueShootingPercentage() * 100) + "";
 		s[21] = df.format(p.getShootingEfficiency() * 100) + "";
@@ -223,7 +222,7 @@ public class PlayerJTable extends StatJTable {
 			Comparator c = null;
 			int i = columnAtPoint(e.getPoint());
 			int j = convertColumnIndexToModel(i);
-			//System.out.println(j);
+			// System.out.println(j);
 			if (selected) {
 				switch (j) {
 				case 1:
@@ -375,7 +374,6 @@ public class PlayerJTable extends StatJTable {
 				}
 			}
 
-			
 			refreshBySelectedColumn(j, c);
 
 		}

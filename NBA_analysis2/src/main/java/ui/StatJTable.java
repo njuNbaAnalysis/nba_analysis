@@ -30,6 +30,7 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import util.UIUtils;
 import compare.PalyerScreening;
 import logic.players.Player;
 
@@ -53,17 +54,10 @@ public abstract class StatJTable extends BaseJTable {
 		this.setShowGrid(false);
 		this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		this.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		
-
-		
-		adjustHeader();
-		
-		
+		this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);		
+		adjustHeader();	
 		this.setTableHeaderColor(new Color(158,158,158));
 
-
-		
 	}
 	
 	
@@ -102,7 +96,7 @@ public abstract class StatJTable extends BaseJTable {
 			// 设置图片
 			if (column == 1) {
 
-				ImageIcon icon = new ImageIcon(resize(imageList.get(row),
+				ImageIcon icon = new ImageIcon(UIUtils.resize(imageList.get(row),
 						portraitWidth, portraitHeight));
 				setIcon(icon);
 
@@ -113,18 +107,7 @@ public abstract class StatJTable extends BaseJTable {
 
 		}
 
-		public BufferedImage resize(Image image, int width, int height) {
-
-			BufferedImage bi = new BufferedImage(width, height,
-					BufferedImage.TRANSLUCENT);
-			Graphics2D g2d = (Graphics2D) bi.createGraphics();
-			g2d.addRenderingHints(new RenderingHints(
-					RenderingHints.KEY_RENDERING,
-					RenderingHints.VALUE_RENDER_QUALITY));
-			g2d.drawImage(image, 0, 0, width, height, null);
-			g2d.dispose();
-			return bi;
-		}
+		
 
 	}
 	

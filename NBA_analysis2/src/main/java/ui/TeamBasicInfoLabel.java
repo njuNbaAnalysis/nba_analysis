@@ -68,10 +68,6 @@ public class TeamBasicInfoLabel extends JLabel {
 
 	public TeamBasicInfoLabel(Team team, int width, int height) {
 		super();
-		/*
-		 * this.player = player; this.width = width; this.height = height;
-		 * this.setSize(width, height);
-		 */
 
 		this.team = team;
 		this.height = height;

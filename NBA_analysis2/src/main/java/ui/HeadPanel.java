@@ -22,13 +22,7 @@ public class HeadPanel extends JPanel {
 		this.statTablePanel = statTablePanel;
 		this.width = width;
 		this.height = height;
-		setLabel();
 		setButton();
-		setComboBox();
-	}
-
-	private void setLabel() {
-
 	}
 
 	private void setButton() {
@@ -74,9 +68,6 @@ public class HeadPanel extends JPanel {
 
 	}
 
-	private void setComboBox() {
-
-	}
 
 	private void ChangeActionPerformed(ActionEvent e) {
 
