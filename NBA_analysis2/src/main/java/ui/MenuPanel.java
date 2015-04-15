@@ -353,7 +353,7 @@ public class MenuPanel extends JPanel {
 			}
 			if(type==3){
 				
-				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(width*9,height,bl.getAllPlayers().get(0),bl);
+				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(width*9,height,bl.getAllPlayers().get(0),bl,content);
 				teamRankTablePanel.setBounds(0, 0, width*9, height);
 				teamRankTablePanel.startAnimation();
 				content.removeAll();
@@ -362,7 +362,7 @@ public class MenuPanel extends JPanel {
 				
 			}
 			if(type==4){
-				TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl);
+				TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl,content);
 				teamRankTablePanel.setBounds(0, 0, width*9, height);
 				//teamRankTablePanel.startAnimation();
 				content.removeAll();

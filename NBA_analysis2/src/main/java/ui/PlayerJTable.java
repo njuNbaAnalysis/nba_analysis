@@ -99,7 +99,7 @@ public class PlayerJTable extends StatJTable {
 
                 	Player p = PlayerJTable.this.bl.getPlayerByName(playerName);
             		
-            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*10/9,p,PlayerJTable.this.bl);
+            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*10/9,p,PlayerJTable.this.bl,PlayerJTable.this.content);
             		
             		playerInfoPanel.setBounds(0, 0, width, height*10/9);
             		playerInfoPanel.startAnimation();
@@ -114,7 +114,7 @@ public class PlayerJTable extends StatJTable {
 
                 	Team t = PlayerJTable.this.bl.getTeamByName(teamName);
             		
-            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,PlayerJTable.this.bl);
+            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,PlayerJTable.this.bl,PlayerJTable.this.content);
             		m.setBounds(0, 0, width, height*10/9);
             		PlayerJTable.this.content.removeAll();
             		PlayerJTable.this.content.add(m);

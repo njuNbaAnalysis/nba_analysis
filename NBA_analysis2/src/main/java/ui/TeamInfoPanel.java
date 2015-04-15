@@ -32,18 +32,20 @@ public class TeamInfoPanel extends JPanel {
 	private static String[] tabName = { "赛程", "数据王", "阵容" };
 	private Team team;
 	private BLService bl;
-	private JScrollPane contentPanel;
+	private JPanel content;
+	private JScrollPane js;
 	private Player[] players;
 	private ArrayList<Player> playerList;
 	private int num = 5;
 
-	public TeamInfoPanel(int width, int height, Team team, BLService bl) {
+	public TeamInfoPanel(int width, int height, Team team, BLService bl,JPanel content) {
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
 		this.team = team;
 		this.setLayout(null);
 		this.bl = bl;
+		this.content = content;
 
 		ArrayList<String> nameList = team.getPlayerList();
 		players = new Player[num];
@@ -56,22 +58,22 @@ public class TeamInfoPanel extends JPanel {
 			playerList.add(bl.getPlayerByName(nameList.get(i)));
 		}
 
-		teamBasicInfoPanel = new TeamBasicInfoLabel(team, width, height / 3);
-		teamBasicInfoPanel.setBounds(0, 0, width, height / 3);
+		teamBasicInfoPanel = new TeamBasicInfoLabel(team, width, height / 4);
+		teamBasicInfoPanel.setBounds(0, 0, width, height / 4);
 		this.add(teamBasicInfoPanel);
 
-		contentPanel = new JScrollPane();
-		contentPanel.setBounds(0, height / 2, width, height * 2 / 3);
-		contentPanel.setLayout(null);
-		this.add(contentPanel);
+		js = new JScrollPane();
+		js.setBounds(0, height / 3, width, height * 2 / 3);
+		js.setLayout(null);
+		this.add(js);
 		// 默认加数据王
 		String[] columnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%", "罚球%" };
 
 		KingLabelPanel playerKingPanel = new KingLabelPanel("P", "常规赛 数据王",
-				columnName, width, height / 3, bl);
+				columnName, width, height*1 / 3, bl);
 		playerKingPanel.setPlayers(players);
-		playerKingPanel.setBounds(0, 0, width, height / 3);
-		contentPanel.add(playerKingPanel);
+		playerKingPanel.setBounds(0, 0, width, height*1 / 3);
+		js.add(playerKingPanel);
 
 		setButton();
 
@@ -119,11 +121,11 @@ public class TeamInfoPanel extends JPanel {
 					switch (TeamButton.this.type) {
 					case 0:
 						AgendaPanel agenda = new AgendaPanel(width,
-								height * 2 / 3, team.getMatchSimpleInfo());
+								height * 2 / 3, team.getMatchSimpleInfo(),bl,content);
 						agenda.setBounds(0, 0, width, height * 2 / 3);
-						contentPanel.removeAll();
-						contentPanel.add(agenda);
-						contentPanel.updateUI();
+						js.removeAll();
+						js.add(agenda);
+						js.updateUI();
 						break;
 					case 1:
 
@@ -136,17 +138,17 @@ public class TeamInfoPanel extends JPanel {
 						playerKingPanel.setPlayers(players);
 						playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 
-						contentPanel.removeAll();
-						contentPanel.add(playerKingPanel);
-						contentPanel.updateUI();
+						js.removeAll();
+						js.add(playerKingPanel);
+						js.updateUI();
 						break;
 					case 2:
 						LineUpPanel lineUp = new LineUpPanel(width,
-								height * 2 / 3, playerList);
+								height * 2 / 3, team.getPlayerList(),bl,content);
 						lineUp.setBounds(0, 0, width, height * 2 / 3);
-						contentPanel.removeAll();
-						contentPanel.add(lineUp);
-						contentPanel.updateUI();
+						js.removeAll();
+						js.add(lineUp);
+						js.updateUI();
 						break;
 					}
 				}

@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -36,18 +39,22 @@ public class AgendaPanel extends JPanel{
 	private int height;
 	private ArrayList<MatchSimpleInfo> matches;
 	private JScrollPane js;
+	private BLService bl;
+	private JPanel content;
 
-	AgendaPanel(int width, int height, ArrayList<MatchSimpleInfo> matches) {
+	AgendaPanel(int width, int height, ArrayList<MatchSimpleInfo> matches,BLService bl,JPanel content) {
 		this.width = width;
 		this.height = height;
 		this.matches = matches;
+		this.bl = bl;
+		this.content = content;
 		this.setLayout(null);
 		setTabelPanel();
 
 	}
 
 	private void setTabelPanel() {
-		AgendaTable table = new AgendaTable(matches);
+		AgendaTable table = new AgendaTable(matches,bl,content);
 		js = new JScrollPane(table);
 		js.setBounds(0, height * 1 / 20, width, height * 19 / 20);
 		this.add(js);
@@ -74,17 +81,43 @@ public class AgendaPanel extends JPanel{
 		
 		private ArrayList<Image> imageList;
 		private String[] agendaColumnName = { "日期", "对手", "结果", "比分", "比赛链接"};
+		private BLService bl;
+		private JPanel content;
 
 		// type :0表示信息，1表示数据
-		public AgendaTable(ArrayList<MatchSimpleInfo> matchList) {
-			
+		public AgendaTable(ArrayList<MatchSimpleInfo> matchList,BLService bl,JPanel content) {
+			this.bl = bl;
+			this.content = content;
 			this.setShowGrid(false);
 			this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			this.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 			this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			adjustHeader();
 			this.setTableHeaderColor(new Color(158,158,158));
-
+			
+			
+			this.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                int column;
+	                if (AgendaTable.this.getSelectedRow() == -1) {
+	                    return;
+	                }
+	                if ((column=AgendaTable.this.getSelectedColumn()) == 1) {
+	                	int row = AgendaTable.this.getSelectedRow();
+	                	String teamName = (String)AgendaTable.this.getValueAt(row, column);
+	                	teamName = teamName.substring(2);//空格在1位
+	                	Team t = AgendaTable.this.bl.getTeamByName(teamName);
+	            		
+	            		TeamInfoPanel m = new TeamInfoPanel(width,height*3/2,t,AgendaTable.this.bl,AgendaTable.this.content);
+	            		m.setBounds(0, 0, width, height*10/9);
+	            		AgendaTable.this.content.removeAll();
+	            		AgendaTable.this.content.add(m);
+	            		AgendaTable.this.content.updateUI();
+	                }
+	               
+	            }
+	        });
 			
 			
 			DefaultTableModel model = new DefaultTableModel(null, agendaColumnName);
@@ -154,7 +187,18 @@ public class AgendaPanel extends JPanel{
 				tc.setCellRenderer(new RowRenderer());
 			}
 		}
+		protected void resizeColumnWidth() {
 
+			for (int column = 0; column < this.getColumnCount(); column++) {
+				int width = 320; // Min width
+				for (int row = 0; row < this.getRowCount(); row++) {
+					TableCellRenderer renderer = this.getCellRenderer(row, column);
+					Component comp = this.prepareRenderer(renderer, row, column);
+					width = Math.max(comp.getPreferredSize().width, width);
+				}
+				columnModel.getColumn(column).setPreferredWidth(width);
+			}
+		}
 		// 重写行方法(paintRow())具体对应的类
 		protected class RowRenderer extends DefaultTableCellRenderer {
 			public Component getTableCellRendererComponent(JTable t,
@@ -163,7 +207,8 @@ public class AgendaPanel extends JPanel{
 
 				// 设置内容居中
 				
-				setHorizontalAlignment(SwingConstants.CENTER);
+					setHorizontalAlignment(SwingConstants.CENTER);
+				
 				
 
 				// 设置奇偶行的背景色，可在此根据需要进行修改
@@ -181,7 +226,7 @@ public class AgendaPanel extends JPanel{
 
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		BLService bl = BLController.getInstance();
 		bl.init();
 		while(bl.getProgress()<9){
@@ -195,5 +240,5 @@ public class AgendaPanel extends JPanel{
 		f.add(m);
 		f.setSize(1920,1280);
 		f.setVisible(true);
-	}
+	}*/
 }

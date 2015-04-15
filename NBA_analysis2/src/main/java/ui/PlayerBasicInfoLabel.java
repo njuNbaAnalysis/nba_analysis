@@ -5,17 +5,24 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import logic.BLController;
 import logic.BLService;
 import logic.players.Player;
+import logic.teams.Team;
 
 public class PlayerBasicInfoLabel extends JLabel {
 	private Player player;
 	private int width;
 	private int height;
+	private JPanel content;
+	private BLService bl;
 
 	public void paintComponent(Graphics g2) {
 		Graphics2D g = (Graphics2D) g2.create();
@@ -33,13 +40,19 @@ public class PlayerBasicInfoLabel extends JLabel {
 		g.drawLine(550, 20, 550, 80);
 		g.setColor(new Color(68, 68, 68));
 		g.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
+		
+		
 		g.drawString(player.getName(), 555, 45);
-		g.setColor(new Color(174, 0, 1));
+		
+		
 		g.setFont(new Font("default", Font.PLAIN, 20));
 		g.drawString(player.getPosition()+"-", 555, 80);
-		g.setColor(new Color(30, 81, 140));
-		g.drawString("-"+player.getTeam(), 573, 80);
+		
+		
+		
 		g.setColor(new Color(68, 68, 68));
+		
+		
 		g.setFont(new Font("default", Font.PLAIN, 15));
 		g.drawString("场均得分", 450, 118);
 		g.drawString("场均篮板", 550, 118);
@@ -53,14 +66,49 @@ public class PlayerBasicInfoLabel extends JLabel {
 				148);
 
 	}
+	
+	private void setLabel(){
+		JLabel teamName = new JLabel(player.getTeam());
+		teamName.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				
+			}
 
-	public PlayerBasicInfoLabel(Player player, int width, int height) {
+			public void mouseExited(MouseEvent e) {
+				
+			}
+
+			
+			public void mousePressed(MouseEvent e) {
+				
+
+            	Team t = PlayerBasicInfoLabel.this.bl.getTeamByName(player.getTeam());
+        		
+        		TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content);
+        		m.setBounds(0, 0, width, height*4);
+        		PlayerBasicInfoLabel.this.content.removeAll();
+        		PlayerBasicInfoLabel.this.content.add(m);
+        		PlayerBasicInfoLabel.this.content.updateUI();
+				
+			}
+		});
+		teamName.setForeground(new Color(30, 81, 140));
+		teamName.setFont(new Font("default", Font.PLAIN, 20));
+		teamName.setBounds(578, 48, 100, 50);
+		teamName.setOpaque(false);
+		System.out.println("-"+player.getTeam());
+		this.add(teamName);
+	}
+
+	public PlayerBasicInfoLabel(Player player, int width, int height,JPanel content,BLService bl) {
 		super();
-
+		this.bl = bl;
 		this.player = player;
 		this.height = height;
 		this.width = width;
+		this.content = content;
 		this.setSize(width, height);
+		setLabel();
 
 	}
 
