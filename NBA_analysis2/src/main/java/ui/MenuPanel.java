@@ -1,5 +1,6 @@
 package ui;
 
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -28,6 +29,8 @@ public class MenuPanel extends JPanel {
 	private int heightOfHead ;
 	private static Image logo;
 	int selectedNumber = -1;
+	boolean canFresh;
+	boolean hasFreshed;
 	BLController bl;
 	ImageIcon playerIcon;
 	ImageIcon playerIconD;
@@ -52,6 +55,9 @@ public class MenuPanel extends JPanel {
 	ImageIcon hotPlayerIcon;
 	ImageIcon hotPlayerIconD;
 	ImageIcon hotPlayerIconB;
+	ImageIcon freshIcon;
+	ImageIcon freshIconD;
+	ImageIcon freshIconR;
 	JButton statistics;
 	JButton player;
 	JButton team;
@@ -59,7 +65,7 @@ public class MenuPanel extends JPanel {
 	JButton teamStat;
 	JButton match;
 	JButton hotPlayer;
-	
+	JButton fresh;
 	JButton exit;
 	JPanel content;
 	
@@ -78,6 +84,8 @@ public class MenuPanel extends JPanel {
 		this.bl=bl;
 		loadImage();
 		initButton();
+		Thread fresh = new Thread(new Refresh());
+		fresh.start();
 	}
 
 	public void loadImage() {
@@ -105,6 +113,9 @@ public class MenuPanel extends JPanel {
 		BufferedImage bufferHotPlayerB = null;
 		BufferedImage bufferHotPlayer = null;
 		BufferedImage bufferHotPlayerD = null;
+		BufferedImage bufferFresh = null;
+		BufferedImage bufferFreshD = null;
+		BufferedImage bufferFreshR = null;
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
@@ -182,6 +193,16 @@ public class MenuPanel extends JPanel {
 			bufferHotPlayerD = ImageIO.read(new File("image" + File.separator
 					+ "hotplayer_d.png"));
 			bufferHotPlayerD = this.resize_B(bufferHotPlayerD);
+			bufferFresh = ImageIO.read(new File("image" + File.separator
+					+ "fresh_l.png"));
+			bufferFresh = this.resize_B(bufferFresh);
+			bufferFreshD = ImageIO.read(new File("image" + File.separator
+					+ "fresh_d.png"));
+			bufferFreshD = this.resize_B(bufferFreshD);
+			bufferFreshR = ImageIO.read(new File("image" + File.separator
+					+ "fresh_r.png"));
+			bufferFreshR = this.resize_B(bufferFreshR);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -210,7 +231,9 @@ public class MenuPanel extends JPanel {
 		hotPlayerIcon = new ImageIcon(bufferHotPlayer);
 		hotPlayerIconD = new ImageIcon(bufferHotPlayerD);
 		hotPlayerIconB = new ImageIcon(bufferHotPlayerB);
-
+		freshIcon = new ImageIcon(bufferFresh);
+		freshIconD = new ImageIcon(bufferFreshD);
+		freshIconR = new ImageIcon(bufferFreshR);
 	}
 
 	public void initButton() {
@@ -292,6 +315,17 @@ public class MenuPanel extends JPanel {
 		hotPlayer.addMouseListener(hotPlayerListener);
 		this.add(hotPlayer);
 
+		fresh = new JButton();
+		fresh.setSize( width*25/24, (width*25*3)/(24*20));
+		fresh.setLocation(0,  height-120*height/1080);
+		fresh.setContentAreaFilled(false);
+		fresh.setBorderPainted(false);
+		fresh.setIcon(freshIcon);
+		MouseHandle freshListener = new MouseHandle(freshIcon,
+				freshIcon, freshIcon, 8);
+		fresh.addMouseListener(freshListener);
+		this.add(fresh);
+		
 		exit = new JButton();
 		exit.setSize( width*25/24, (width*25*3)/(24*20));
 		exit.setLocation(0,  height-80*height/1080);
@@ -299,7 +333,7 @@ public class MenuPanel extends JPanel {
 		exit.setBorderPainted(false);
 		exit.setIcon(exitIcon);
 		MouseHandle exitStatListener = new MouseHandle(exitIconR,
-				exitIcon, exitIconR, 5);
+				exitIcon, exitIcon, 5);
 		exit.addMouseListener(exitStatListener);
 		this.add(exit);
 		
@@ -327,7 +361,7 @@ public class MenuPanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (selectedNumber != type) {
+			if ((selectedNumber != type)&&type!=8) {
 				((JButton) e.getSource()).setIcon(selIcon);
 				clearImage(selectedNumber);
 				selectedNumber = type;
@@ -399,6 +433,10 @@ public class MenuPanel extends JPanel {
 				content.add(scrollPane);
 				content.updateUI();
 			}
+			
+			if(type==8){
+				((JButton) e.getSource()).setIcon(selIcon);
+			}
 		}
 
 		public void mouseEntered(MouseEvent e) {
@@ -443,6 +481,8 @@ public class MenuPanel extends JPanel {
 		case 7:
 			hotPlayer.setIcon(hotPlayerIcon);
 			break;
+		case 8:
+			fresh.setIcon(freshIcon);
 		}
 
 	}
@@ -471,5 +511,27 @@ public class MenuPanel extends JPanel {
 		g2d.dispose();
 		return bi;
 	}
+	
+	class Refresh implements Runnable {
+
+		public void run() {
+			while (true) {
+				canFresh = bl.isMatchChanged();
+				
+				if (canFresh) {
+					fresh.setIcon(freshIconR);;
+				} 
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+	
 
 }
