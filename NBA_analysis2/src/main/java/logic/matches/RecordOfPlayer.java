@@ -22,6 +22,12 @@ public class RecordOfPlayer{
     private int points;//个人得分
     private boolean isStarted;  //是否是首发出场
     
+    //used in TotalRecordOfPlayer
+    //private double threePointersPercentage;     //三分命中率
+    //private double freeThrowsPercentage;        //罚球命中率
+    //private double fieldGoalsPercentage;           //投篮命中率
+    
+    
     public RecordOfPlayer(String playerName, String position, int minutes, int fieldGoals, int fieldAttempts,
             int threePoints, int threePointAttemps, int freeThrows, int freeThrowAttemps, int offensiveRebounds,
             int defensiveRebounds, int rebounds, int assists, int steals, int blocks, int turnOver, int fauls,
@@ -46,6 +52,10 @@ public class RecordOfPlayer{
         this.fauls = fauls;
         this.points = points;
         this.isStarted = isStarted;
+    }
+
+    public RecordOfPlayer() {
+        // TODO Auto-generated constructor stub
     }
 
     public String getPlayerName() {
@@ -183,5 +193,65 @@ public class RecordOfPlayer{
 		}
 		return fieldGoalsPercentage;
 	}
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public void setOffensiveRebounds(int offensiveRebounds) {
+        this.offensiveRebounds = offensiveRebounds;
+    }
+
+    public void setDefensiveRebounds(int defensiveRebounds) {
+        this.defensiveRebounds = defensiveRebounds;
+    }
+
+    public void setRebounds(int rebounds) {
+        this.rebounds = rebounds;
+    }
+
+    public void setAssists(int assists) {
+        this.assists = assists;
+    }
+
+    public void setSteals(int steals) {
+        this.steals = steals;
+    }
+
+    public void setBlocks(int blocks) {
+        this.blocks = blocks;
+    }
+
+    public void setTurnOver(int turnOver) {
+        this.turnOver = turnOver;
+    }
+
+    public void setFauls(int fauls) {
+        this.fauls = fauls;
+    }
+
+    public void setStarted(boolean isStarted) {
+        this.isStarted = isStarted;
+    }
+
+    public double getThreePointersPercentage() {
+        return this.getThreePointHits() * 1.0 / this.getThreePointAttemps();
+    }
+
+    public double getFreeThrowsPercentage() {
+        return this.getFreeThrowHits() * 1.0 / this.getFreeThrowAttemps();
+    }
+
+    public double getFieldGoalsPercentage() {
+        return this.getFieldGoalHits() * 1.0 / this.getFieldGoalAttempts();
+    }
 
 }

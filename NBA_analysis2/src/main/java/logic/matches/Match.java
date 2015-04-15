@@ -119,5 +119,68 @@ public class Match {
 	}
 	
 	//得到RecordOfPlayer的总计数据
+	public RecordOfPlayer[] getTotalRecordOfPlayer(){
+	    RecordOfPlayer[] result = new RecordOfPlayer[2];
+	    result[0] = getTotalRecordOfPlayer(this.firstRecordList);
+	    result[0] = getTotalRecordOfPlayer(this.secondRecordList);
+	    return result;
+	}
 	
+	private RecordOfPlayer getTotalRecordOfPlayer(ArrayList<RecordOfPlayer> recordList){
+	    RecordOfPlayer resultRecord = new RecordOfPlayer();
+	    int minutes = 0;    //在场时间，以秒为单位
+        int fieldGoalHits = 0; //投篮命中数
+        int fieldGoalAttempts = 0;//投篮出手数
+        int threePointHits = 0;//三分球命中数
+        int threePointAttemps = 0;//三分球出手数
+        int freeThrowHits = 0;//罚球命中数
+        int freeThrowAttemps = 0;//罚球出手数
+        int offensiveRebounds = 0;//进攻篮板数
+        int defensiveRebounds = 0;//防守篮板数
+        int rebounds = 0;//总篮板数
+        int assists = 0;//助攻数
+        int steals = 0;//抢断数
+        int blocks = 0;//盖帽数
+        int turnOver = 0;//失误数
+        int fauls = 0;//犯规数
+        int points = 0;//个人得分
+        
+        for(RecordOfPlayer record: firstRecordList){
+            minutes += record.getMinutes();
+            fieldGoalHits += record.getFieldGoalHits();
+            fieldGoalAttempts += record.getFieldGoalAttempts();
+            threePointHits += record.getThreePointHits();
+            threePointAttemps += record.getThreePointAttemps();
+            freeThrowHits += record.getFreeThrowHits();
+            freeThrowAttemps += record.getFreeThrowAttemps();
+            offensiveRebounds += record.getOffensiveRebounds();
+            defensiveRebounds += record.getDefensiveRebounds();
+            rebounds += record.getRebounds();
+            assists += record.getAssists();
+            steals += record.getSteals();
+            blocks += record.getBlocks();
+            turnOver += record.getTurnOver();
+            fauls += record.getFauls();
+            points += record.getPoints();
+        }
+        
+        resultRecord.setMinutes(minutes);
+        resultRecord.setFieldGoalAttempts(fieldGoalAttempts);
+        resultRecord.setFieldGoalHits(fieldGoalHits);
+        resultRecord.setThreePointHits(threePointHits);
+        resultRecord.setThreePointAttemps(threePointAttemps);
+        resultRecord.setFreeThrowHits(freeThrowHits);
+        resultRecord.setFreeThrowAttemps(freeThrowAttemps);
+        resultRecord.setOffensiveRebounds(offensiveRebounds);
+        resultRecord.setDefensiveRebounds(defensiveRebounds);
+        resultRecord.setRebounds(rebounds);
+        resultRecord.setAssists(assists);
+        resultRecord.setSteals(steals);
+        resultRecord.setBlocks(blocks);
+        resultRecord.setTurnOver(turnOver);
+        resultRecord.setFauls(fauls);
+        resultRecord.setPoints(points);
+        
+        return resultRecord;
+	}
 }
