@@ -106,11 +106,12 @@ public class AgendaPanel extends JPanel{
 	                if ((column=AgendaTable.this.getSelectedColumn()) == 1) {
 	                	int row = AgendaTable.this.getSelectedRow();
 	                	String teamName = (String)AgendaTable.this.getValueAt(row, column);
-	                	teamName = teamName.substring(2);//空格在1位
+	                	teamName = teamName.split(" ")[1];//空格在1位
+	                	System.out.println("球队名字"+teamName);
 	                	Team t = AgendaTable.this.bl.getTeamByName(teamName);
 	            		
 	            		TeamInfoPanel m = new TeamInfoPanel(width,height*3/2,t,AgendaTable.this.bl,AgendaTable.this.content);
-	            		m.setBounds(0, 0, width, height*10/9);
+	            		m.setBounds(0, 0, width, height*3/2);
 	            		AgendaTable.this.content.removeAll();
 	            		AgendaTable.this.content.add(m);
 	            		AgendaTable.this.content.updateUI();
@@ -226,19 +227,5 @@ public class AgendaPanel extends JPanel{
 
 	}
 
-	/*public static void main(String[] args) {
-		BLService bl = BLController.getInstance();
-		bl.init();
-		while(bl.getProgress()<9){
-			System.out.println(bl.getProgress());
-		}
-		Team t = bl.getAllTeams().get(0);
-		ArrayList<MatchSimpleInfo> matchList = t.getMatchSimpleInfo();
-		AgendaPanel m = new AgendaPanel(1920,1280,matchList);
-		m.setBounds(0, 0, 1920,1280);
-		JFrame f = new JFrame();
-		f.add(m);
-		f.setSize(1920,1280);
-		f.setVisible(true);
-	}*/
+
 }

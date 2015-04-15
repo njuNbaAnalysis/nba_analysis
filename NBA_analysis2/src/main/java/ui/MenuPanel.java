@@ -424,7 +424,7 @@ public class MenuPanel extends JPanel {
 			if(type==7){
 				
 				
-				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*10,height*6/5,bl);
+				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*10,height*6/5,bl,content);
 				hotAndKingPanel.setPreferredSize(new Dimension(width*10,height*6/5));
 				JScrollPane scrollPane = new JScrollPane(hotAndKingPanel);
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);

@@ -163,11 +163,11 @@ public class PlayerDetailPanel extends JPanel {
 		heightLimits[0] = playerData[0] / 40.0 * height / 3;
 		heightLimits[1] = allianceAverage[0] / 40.0 * height / 3;
 
-		heightLimits[2] = playerData[1] / 20.0 * height / 3;
-		heightLimits[3] = allianceAverage[1] / 20.0 * height / 3;
+		heightLimits[2] = playerData[1] / 25.0 * height / 3;
+		heightLimits[3] = allianceAverage[1] / 25.0 * height / 3;
 
-		heightLimits[4] = playerData[2] / 15.0 * height / 3;
-		heightLimits[5] = allianceAverage[2] / 15.0 * height / 3;
+		heightLimits[4] = playerData[2] / 20.0 * height / 3;
+		heightLimits[5] = allianceAverage[2] / 20.0 * height / 3;
 
 		heightLimits[6] = playerData[3] / 40.0 * height / 5;
 		heightLimits[7] = allianceAverage[3] / 40.0 * height / 5;
