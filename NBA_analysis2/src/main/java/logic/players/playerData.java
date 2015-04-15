@@ -19,6 +19,38 @@ public class playerData { // 比赛关键数据记录
 		this.enemy = enemy;
 	}
 
+	public String getDate() {
+		return Date;
+	}
+
+	public void setDate(String date) {
+		Date = date;
+	}
+
+	public String getEnemy() {
+		return enemy;
+	}
+
+	public void setEnemy(String enemy) {
+		this.enemy = enemy;
+	}
+
+	public double getBlock() {
+		return block;
+	}
+
+	public void setBlock(double block) {
+		this.block = block;
+	}
+
+	public double getSteal() {
+		return steal;
+	}
+
+	public void setSteal(double steal) {
+		this.steal = steal;
+	}
+
 	public double getPoints() {
 		return points;
 	}

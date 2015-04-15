@@ -111,8 +111,8 @@ public class PlayerController {
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
-				temp.AddRecord(temp.getPoints(), temp.getRebounds(),
-						temp.getAssists(),temp.getSteals(),temp.getBlockShots(),Date,enemy);
+				temp.AddRecord(record.getPoints(), record.getRebounds(),
+						record.getAssists(),record.getSteals(),record.getBlocks(),Date,enemy);
 				int flag = 0;// 用于计算两双或三双
 				if (record.getAssists() >= 10)
 					flag++;
