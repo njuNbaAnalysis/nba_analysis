@@ -91,6 +91,7 @@ public class TeamController {
             if(token.getAbbreviation().equals(name)||token.getName().equals(name)){
                 return token;
             }
+            if(name == null) return null;
             if(token.getAbbreviation().equals("NOH") && name.equals("NOP")){
                 return token;
             }
