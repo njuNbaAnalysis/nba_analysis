@@ -117,4 +117,7 @@ public class Match {
 	    date.setDate(Integer.parseInt(dateString[2]));
 	    return date;
 	}
+	
+	//得到RecordOfPlayer的总计数据
+	
 }
