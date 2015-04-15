@@ -195,7 +195,7 @@ public class PlayerDetailTablePanel extends JPanel {
 			result[2] = player.getGamePlayed()+"";
 			
 			result[3] = player.getGameStarted()+"";
-			result[4] = Integer.toString(player.getMinutes());
+			result[4] = df.format(player.getAverageMinutes());
 			result[5] = df.format(player.getFieldGoalsPercentage()*100);		
 			result[6] = df.format(player.getThreePointersPercentage()*100);
 
@@ -220,7 +220,7 @@ public class PlayerDetailTablePanel extends JPanel {
 			result[2] = player.getGamePlayed()+"";
 			
 			result[3] = player.getGameStarted()+"";
-			result[4] = player.getMinutes()+"";
+			result[4] = df.format(player.getMinutes()/60);
 			result[5] = df.format(player.getFieldGoalsPercentage()*100);		
 			result[6] = df.format(player.getThreePointersPercentage()*100);
 

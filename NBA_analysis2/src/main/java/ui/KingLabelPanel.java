@@ -97,6 +97,7 @@ public class KingLabelPanel extends HotLabelPanel {
 		private Player[] players;
 		private int contentWidth;
 		private int contentHeight;
+		private JLabel teamName;
 
 		public PlayerTableContentLabel(Player[] players, int contentWidth,
 				int contentHeight) {
@@ -180,15 +181,21 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		private void setPlayerNameLabel() {
 
-			JLabel teamName = new JLabel(players[0].getName());
+			//JLabel teamName = new JLabel(players[0].getName());
+			if(teamName==null){
+				teamName = new JLabel(players[0].getName());
+			}else{
+				teamName.setText(players[0].getName());
+			}
 
 			teamName.setForeground(new Color(68, 68, 68));
 			teamName.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
-			teamName.setBounds(contentWidth / 4, contentHeight * 3 / 20,
-					contentWidth / 8, contentHeight / 10);
+			teamName.setBounds(contentWidth / 4, contentHeight * 3 / 10,
+					contentWidth / 8, contentHeight*3 / 20);
 			teamName.addMouseListener(new PlayerMouseAdapter());
 			teamName.setOpaque(false);
 			this.add(teamName);
+		
 
 		}
 	}
@@ -206,6 +213,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			KingLabelPanel.this.content.removeAll();
 			KingLabelPanel.this.content.add(playInfoPanel);
 			KingLabelPanel.this.content.updateUI();
+			playInfoPanel.startAnimation();
 
 		}
 
@@ -215,6 +223,7 @@ public class KingLabelPanel extends HotLabelPanel {
 		private Team[] teams;
 		private int contentWidth;
 		private int contentHeight;
+		JLabel teamName;
 
 		public TeamTableContentLabel(Team[] teams, int contentWidth,
 				int contentHeight) {
@@ -275,6 +284,8 @@ public class KingLabelPanel extends HotLabelPanel {
 
 				g.setColor(Color.black);
 				g.setFont(new Font("default", Font.BOLD, 15));
+				
+				
 				g.drawString(teams[i - 1].getName(), contentWidth * 13 / 20,
 						contentHeight * (4 * i - 5) / 20);
 				String str = teams[i - 1].getConference()
@@ -287,12 +298,17 @@ public class KingLabelPanel extends HotLabelPanel {
 		}
 
 		private void setTeamNameLabel() {
-			JLabel teamName = new JLabel(teams[0].getName());
+			if(teamName==null){
+				teamName = new JLabel(teams[0].getName());
+			}else{
+				teamName.setText(teams[0].getName());
+			}
+			
 
 			teamName.setForeground(new Color(68, 68, 68));
 			teamName.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
 			teamName.setBounds(contentWidth / 4, contentHeight * 3 / 20,
-					contentWidth / 8, contentHeight / 10);
+					contentWidth / 8, contentHeight / 5);
 			teamName.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e) {
 
