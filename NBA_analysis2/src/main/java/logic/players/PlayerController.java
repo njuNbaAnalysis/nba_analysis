@@ -72,15 +72,15 @@ public class PlayerController {
 		ArrayList<RecordOfPlayer> ListOfPlayers1 = temp.getFirstRecordList();
 		ArrayList<RecordOfPlayer> ListOfPlayers2 = temp.getSecondRecordList();
 		for (int j = 0; j < ListOfPlayers1.size(); j++) {
-			UpdataPlayer(ListOfPlayers1.get(j), temp.getTeams()[0]);
+			UpdataPlayer(ListOfPlayers1.get(j), temp.getTeams()[0],temp.getDate(),temp.getTeams()[1]);
 		}
 		for (int j = 0; j < ListOfPlayers2.size(); j++) {
-			UpdataPlayer(ListOfPlayers2.get(j), temp.getTeams()[1]);
+			UpdataPlayer(ListOfPlayers2.get(j), temp.getTeams()[1],temp.getDate(),temp.getTeams()[0]);
 		}
 
 	}
 
-	private void UpdataPlayer(RecordOfPlayer record, String team) {
+	private void UpdataPlayer(RecordOfPlayer record, String team,String Date,String enemy) {
 		for (Player temp : playerList) {
 			if (temp.getName().equals(record.getPlayerName())) {
 				temp.setAssists(temp.getAssists() + record.getAssists());
@@ -112,7 +112,7 @@ public class PlayerController {
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
 				temp.AddRecord(temp.getPoints(), temp.getRebounds(),
-						temp.getAssists());
+						temp.getAssists(),temp.getSteals(),temp.getBlockShots(),Date,enemy);
 				int flag = 0;// 用于计算两双或三双
 				if (record.getAssists() >= 10)
 					flag++;

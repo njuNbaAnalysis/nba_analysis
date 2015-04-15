@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import logic.matches.RecordOfPlayer;
 import logic.players.Player;
+import logic.players.playerData;
 
 public class PlayerDetailTablePanel extends JPanel {
 	private Player player;
@@ -49,7 +51,7 @@ public class PlayerDetailTablePanel extends JPanel {
 
 		latestJspane = new JScrollPane();
 		latestJspane.setBounds(0, height * 1 / 2, width, height * 35 / 80);
-		latestTable = new LatestJTable();
+		latestTable = new LatestJTable(player.getListOfRecord());
 		latestJspane.setViewportView(latestTable);
 
 		this.add(latestJspane);
@@ -242,8 +244,9 @@ public class PlayerDetailTablePanel extends JPanel {
 				"三分%", "三分命中", "三分出手", "罚球%", "罚球命中", "罚球出手", "进攻", "防守", "篮板",
 				"助攻", "犯规", "抢断", "盖帽", "失误", "盖帽", "得分" };
 
-		public LatestJTable() {
+		public LatestJTable(ArrayList<playerData> arrayList) {
 			this.setModel(new DefaultTableModel(null, columnName));
+			refreshElement();
 		}
 
 		protected void paintRow() {

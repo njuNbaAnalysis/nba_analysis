@@ -64,6 +64,14 @@ public class Player {
 	private double turnOverPercentage;// 失误率
 	private double usage;// 使用率
 	private ArrayList<playerData> ListOfRecord = new ArrayList<playerData>(); // 近五场比赛记录
+	public ArrayList<playerData> getListOfRecord() {
+		return ListOfRecord;
+	}
+
+	public void setListOfRecord(ArrayList<playerData> listOfRecord) {
+		ListOfRecord = listOfRecord;
+	}
+
 	private double[] upgradeRate = new double[3]; // 近五场比赛提升率,按次序依次为得分，篮板，助攻
 
 	// 效率值
@@ -800,10 +808,10 @@ public class Player {
 		this.upgradeRate = upgradeRate;
 	}
 
-	public void AddRecord(double points, double rebounds, double assists) {
+	public void AddRecord(double points, double rebounds, double assists,double steal,double block,String date,String enemy) {
 		if (ListOfRecord.size() >= 5)
 			ListOfRecord.remove(0);
-		ListOfRecord.add(new playerData(points, rebounds, assists));
+		ListOfRecord.add(new playerData(points, rebounds, assists,steal,block,date,enemy));
 	}
 
 	public PlayerNormalInfo getNormalInfo(boolean isAverage) {
