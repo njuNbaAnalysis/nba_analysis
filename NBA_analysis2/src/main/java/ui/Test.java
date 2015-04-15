@@ -40,7 +40,7 @@ public class Test extends JFrame {
 	public Test() {
 		final BLController bl = BLController.getInstance();
 		bl.init();
-		while(bl.getProgress()!=10){
+		while(bl.getProgress()!=9){
 			System.out.println(bl.getProgress());
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +50,9 @@ public class Test extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		contentPane.add(new TeamBasicInfoLabel(bl.getAllTeams().get(0), 192*9, 200));
+		
+		//contentPane.add(new TeamBasicInfoLabel(bl.getAllTeams().get(0), 192*9, 200));
+		contentPane.add(new AllTeamPanel(192*9, 1080, bl));
 		
 		/*MatchPanel matchPanel = new MatchPanel(0,0,bl);
 		JScrollPane scrollPane = new JScrollPane(matchPanel);
