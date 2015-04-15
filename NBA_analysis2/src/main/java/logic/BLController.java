@@ -261,5 +261,14 @@ public class BLController implements BLService {
         return playerController.getPlayer(name);
     }
 
+	@Override
+	public String getTime() {
+		// TODO Auto-generated method stub
+		if(matchController == null){
+			matchController = MatchController.getInstance();
+        }
+		return matchController.getTime();
+	}
+
 	
 }

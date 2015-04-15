@@ -29,6 +29,7 @@ public interface BLService {
     public double[] getAlliancePlayerAverageData();//得到所有球员的平均场均数据（场均得分，场均篮板，场均助攻，罚球%，三分%）
 	//match
     public ArrayList<Match> getTodayMatches(String date); //13-14_2014-01-01
+    public String getTime();//得到当前日期：默认为最近一场比赛日期
     
     //team
     public ArrayList<Team> getSeasonKingTeam(String field,int num);//得到赛季的热门球队，格式同上，field可能值："得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%","罚球%" 
