@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicLabelUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -31,20 +34,25 @@ import logic.BLController;
 import logic.BLService;
 import logic.matches.RecordOfPlayer;
 import logic.players.Player;
+import logic.teams.Team;
 
 public class LineUpPanel extends JPanel {
 	private int width;
 	private int height;
-	private ArrayList<Player> players;
+	private ArrayList<String> playersName;
 	private JButton info;
 	private JButton data;
 	private int state = 0;
 	private JScrollPane js;
+	private BLService bl;
+	private JPanel content;
 
-	LineUpPanel(int width, int height, ArrayList<Player> players) {
+	LineUpPanel(int width, int height, ArrayList<String> playersName,BLService bl,JPanel content) {
 		this.width = width;
 		this.height = height;
-		this.players = players;
+		this.playersName = playersName;
+		this.bl = bl;
+		this.content= content;
 		this.setLayout(null);
 		setButton();
 		setTabelPanel();
@@ -52,7 +60,7 @@ public class LineUpPanel extends JPanel {
 	}
 
 	private void setTabelPanel() {
-		LineUpTable table = new LineUpTable(players, 0);
+		LineUpTable table = new LineUpTable(playersName, 0,bl,content);
 		js = new JScrollPane(table);
 		js.setBounds(0, height * 1 / 20, width, height * 19 / 20);
 		this.add(js);
@@ -124,7 +132,7 @@ public class LineUpPanel extends JPanel {
 			data.setBackground(new Color(26, 71, 123));
 			if (state != 0) {
 				//js.removeAll();
-				LineUpTable table = new LineUpTable(players, 0);
+				LineUpTable table = new LineUpTable(playersName, 0,bl,content);
 				table.setBounds(0, 0, width, height*9/10);
 				js.setViewportView(table);
 				js.updateUI();
@@ -137,7 +145,7 @@ public class LineUpPanel extends JPanel {
 
 			if (state != 1) {
 				//js.removeAll();
-				LineUpTable table = new LineUpTable(players, 1);
+				LineUpTable table = new LineUpTable(playersName, 1,bl,content);
 				table.setBounds(0, 0, width, height*9/10);
 				js.setViewportView(table);
 				js.updateUI();
@@ -160,17 +168,48 @@ public class LineUpPanel extends JPanel {
 		protected DecimalFormat df = new DecimalFormat("#0.0");
 		private int portraitWidth = 70;
 		private int portraitHeight = 60;
+		private BLService bl;
+		private JPanel content;
 
 		// type :0表示信息，1表示数据
-		public LineUpTable(ArrayList<Player> playerList, int type) {
-			
+		public LineUpTable(ArrayList<String> playersName, int type,BLService bl,JPanel content) {
+			this.bl = bl;
+			this.content = content;
 			this.setShowGrid(false);
 			this.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			this.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 			this.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			adjustHeader();
 			this.setTableHeaderColor(new Color(158,158,158));
+			
+			this.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                int column;
+	                if (LineUpTable.this.getSelectedRow() == -1) {
+	                    return;
+	                }
+	                if ((column=LineUpTable.this.getSelectedColumn()) == 0) {
+	                	int row = LineUpTable.this.getSelectedRow();
+	                	String playerName = (String)LineUpTable.this.getValueAt(row, column);
 
+	                	Player p = LineUpTable.this.bl.getPlayerByName(playerName);
+	            		
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*3/2,p,LineUpTable.this.bl,LineUpTable.this.content);
+	            		
+	            		playerInfoPanel.setBounds(0, 0, width, height*3/2);
+	            		playerInfoPanel.startAnimation();
+	            		LineUpTable.this.content.removeAll();
+	            		LineUpTable.this.content.add(playerInfoPanel);
+	            		LineUpTable.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+	                }
+	               
+	            }
+	        });
+			
+			
+			
 			String[] columnName = null;
 			if (type == 0) {
 				columnName = infoColumnName;
@@ -178,19 +217,26 @@ public class LineUpPanel extends JPanel {
 				columnName = dataColumnName;
 			}
 			DefaultTableModel model = new DefaultTableModel(null, columnName);
-			int size = playerList.size();
+			int size = playersName.size();
 			System.out.println("球员列表"+size);
 			imageList = new ArrayList<Image>();
 			//存疑
-			for (int i = 0; i < size-5; i++) {
+			for (int i = 0; i < size; i++) {
 				String[] s = null;
+				Player player = bl.getPlayerByName(playersName.get(i));
+				if(player==null){
+					s = new String[1];
+					s[0] = playersName.get(i);
+					continue;
+				}
+				
 				if (type == 0) {
-					s = getInfoRow(playerList.get(i));
+					s = getInfoRow(player);
 				} else {
-					s = getDataRow(playerList.get(i));
+					s = getDataRow(player);
 				}
 
-				imageList.add(playerList.get(i).getPortrait());
+				imageList.add(player.getPortrait());
 				model.addRow(s);
 
 			}
@@ -257,8 +303,12 @@ public class LineUpPanel extends JPanel {
 					int row, int column) {
 
 				// 设置内容居中
+				if(column==0){
+					setHorizontalAlignment(SwingConstants.LEFT);
+				}else{
+					setHorizontalAlignment(SwingConstants.CENTER);
+				}
 				
-				setHorizontalAlignment(SwingConstants.CENTER);
 				
 
 				// 设置奇偶行的背景色，可在此根据需要进行修改
@@ -281,26 +331,19 @@ public class LineUpPanel extends JPanel {
 
 			}
 		}
+		
+		
+		protected void resizeColumnWidth() {
 
-	}
-
-	public static void main(String[] args) {
-		BLService bl = BLController.getInstance();
-		bl.init();
-		while(bl.getProgress()<9){
-			System.out.println(bl.getProgress());
+			for (int column = 0; column < this.getColumnCount(); column++) {
+				int width = 200; // Min width
+				for (int row = 0; row < this.getRowCount(); row++) {
+					TableCellRenderer renderer = this.getCellRenderer(row, column);
+					Component comp = this.prepareRenderer(renderer, row, column);
+					width = Math.max(comp.getPreferredSize().width, width);
+				}
+				columnModel.getColumn(column).setPreferredWidth(width);
+			}
 		}
-		ArrayList<String> nameList = bl.getAllTeams().get(0).getPlayerList();
-		ArrayList<Player> playerList1 = new ArrayList<Player>();
-		for (int i = 0; i < nameList.size(); i++) {
-			playerList1.add((bl.getPlayerByName(nameList
-					.get(i))));
-		}
-		LineUpPanel m = new LineUpPanel(1920,1280,playerList1);
-		m.setBounds(0, 0, 1920,1280);
-		JFrame f = new JFrame();
-		f.add(m);
-		f.setSize(1920,1280);
-		f.setVisible(true);
 	}
 }

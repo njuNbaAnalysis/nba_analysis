@@ -16,6 +16,7 @@ public class PlayerInfoPanel extends JPanel {
 	private PlayerBasicInfoLabel playerBasicInfoLabel;
 	private PlayerDetailPanel playerDetailPanel;
 	private PlayerDetailTablePanel playerDetailTablePanel;
+	private JPanel content;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -23,13 +24,14 @@ public class PlayerInfoPanel extends JPanel {
 
 	}
 
-	public PlayerInfoPanel(int width, int height, Player player,BLService bl) {
+	public PlayerInfoPanel(int width, int height, Player player,BLService bl,JPanel content) {
 		this.bl = bl;
 		this.setLayout(null);
+		this.content = content;
 		//for test
 		//Player p = bl.getAllPlayers().get(0);
 		
-		playerBasicInfoLabel = new PlayerBasicInfoLabel(player,width,height/4);
+		playerBasicInfoLabel = new PlayerBasicInfoLabel(player,width,height/4,content,bl);
 		playerBasicInfoLabel.setBounds(0, 0, width, height/6);
 		this.add(playerBasicInfoLabel);
 		

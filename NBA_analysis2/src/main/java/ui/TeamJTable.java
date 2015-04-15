@@ -115,7 +115,7 @@ public class TeamJTable extends StatJTable {
 
                 	Team t = TeamJTable.this.bl.getTeamByName(teamName);
             		
-            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,TeamJTable.this.bl);
+            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,TeamJTable.this.bl,TeamJTable.this.content);
             		m.setBounds(0, 0, width, height*10/9);
             		TeamJTable.this.content.removeAll();
             		TeamJTable.this.content.add(m);
