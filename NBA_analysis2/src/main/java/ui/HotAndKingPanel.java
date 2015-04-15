@@ -31,11 +31,13 @@ public class HotAndKingPanel extends JPanel {
 	private KingLabelPanel teamKingPanel;
 	private KingLabelPanel playerKingPanel;
 	private ImprovedLabelPanel hotPlayerPanel;
+	private JPanel content;
 
-	public HotAndKingPanel(int width, int height, BLService bl) {
+	public HotAndKingPanel(int width, int height, BLService bl,JPanel content) {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
+		this.content = content;
 		this.setLayout(null);
 		
 		//创建字体
@@ -43,14 +45,14 @@ public class HotAndKingPanel extends JPanel {
 		
 		String[] playerColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽" };
 		playerKingPanel = new KingLabelPanel("P", "每日 联盟数据王",
-				playerColumnName, width*9/10, height / 4,bl);
+				playerColumnName, width*9/10, height / 4,bl,content);
 		playerKingPanel.setBounds(0, 0, width*9/10, height / 4);
 		this.add(playerKingPanel);
 
 		String[] teamColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%",
 				"罚球%" };
 		teamKingPanel = new KingLabelPanel("T", "常规赛 联盟球队数据",
-				teamColumnName, width*9/10, height / 4,bl);
+				teamColumnName, width*9/10, height / 4,bl,content);
 		teamKingPanel.setBounds(0, height / 4, width*9/10, height / 4);
 		this.add(teamKingPanel);
 

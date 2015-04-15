@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -25,12 +26,15 @@ import util.UIUtils;
 
 public class KingLabelPanel extends HotLabelPanel {
 	private String type;// 有球员和球队数据王两种，分别用"P"和"T"表示
-	private int num =5;
+	private int num = 5;
+	private Player[] players;
+	private JPanel content;
 
 	KingLabelPanel(String type, String headName, String[] columnName,
-			int kingWidth, int kingHeight,BLService bl) {
-		super(headName,columnName,kingWidth,kingHeight,bl);
+			int kingWidth, int kingHeight, BLService bl, JPanel content) {
+		super(headName, columnName, kingWidth, kingHeight, bl);
 		this.type = type;
+		this.content = content;
 		setTableHeadLabel();
 		setButton(type);
 		setTableContent(type);
@@ -51,11 +55,11 @@ public class KingLabelPanel extends HotLabelPanel {
 				t[i] = (Team) o[i];
 			}
 			setTeamTableContent(t);
+		} else {
+			setPlayerTableContent(null);
 		}
 
 	}
-
-	
 
 	private void setPlayerTableContent(Player[] players) {
 
@@ -63,6 +67,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				hotHeight * 2 / 3);
 		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
 				hotHeight * 2 / 3);
+		this.players = players;
 		this.add(tableContentLabel);
 	}
 
@@ -75,16 +80,18 @@ public class KingLabelPanel extends HotLabelPanel {
 
 	}
 
-	public void setTeams(Team [] teams) {
-		((TeamTableContentLabel) tableContentLabel).setTeams(teams);			
+	public void setTeams(Team[] teams) {
+		((TeamTableContentLabel) tableContentLabel).setTeams(teams);
 	}
-	
-	public void setPlayers(Player [] players) {
-		((PlayerTableContentLabel) tableContentLabel).setPlayers(players);			
-	}
-	
 
-	
+	public void setPlayers(Player[] players) {
+		((PlayerTableContentLabel) tableContentLabel).setPlayers(players);
+		this.players = players;
+	}
+
+	public Player[] getPlayers() {
+		return players;
+	}
 
 	private class PlayerTableContentLabel extends JLabel {
 		private Player[] players;
@@ -114,10 +121,9 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.setFont(new Font("微软雅黑", Font.BOLD, 50));
 			g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
 			// 姓名
-			g.setColor(new Color(68, 68, 68));
-			g.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
-			g.drawString(players[0].getName(), contentWidth / 4,
-					contentHeight * 2 / 5);
+
+			setPlayerNameLabel();
+
 			// 号码
 			g.setColor(new Color(68, 68, 68));
 			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
@@ -166,10 +172,43 @@ public class KingLabelPanel extends HotLabelPanel {
 			}
 
 		}
-	    public void setPlayers(Player[] players){
-	    	this.players = players;
-	    	this.repaint();
-	    }
+
+		public void setPlayers(Player[] players) {
+			this.players = players;
+			this.repaint();
+		}
+
+		private void setPlayerNameLabel() {
+
+			JLabel teamName = new JLabel(players[0].getName());
+
+			teamName.setForeground(new Color(68, 68, 68));
+			teamName.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
+			teamName.setBounds(contentWidth / 4, contentHeight * 3 / 20,
+					contentWidth / 8, contentHeight / 10);
+			teamName.addMouseListener(new PlayerMouseAdapter());
+			teamName.setOpaque(false);
+			this.add(teamName);
+
+		}
+	}
+
+	private class PlayerMouseAdapter extends MouseAdapter {
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			Player p = KingLabelPanel.this.bl
+					.getPlayerByName(players[0].getName());
+			PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(
+					hotWidth, hotHeight * 3, p, KingLabelPanel.this.bl,
+					KingLabelPanel.this.content);
+			playInfoPanel.setBounds(0, 0, hotWidth, hotHeight * 3);
+			KingLabelPanel.this.content.removeAll();
+			KingLabelPanel.this.content.add(playInfoPanel);
+			KingLabelPanel.this.content.updateUI();
+
+		}
+
 	}
 
 	private class TeamTableContentLabel extends JLabel {
@@ -183,8 +222,8 @@ public class KingLabelPanel extends HotLabelPanel {
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
 		}
-		
-		public void setTeams(Team[] teams){
+
+		public void setTeams(Team[] teams) {
 			this.teams = teams;
 			this.repaint();
 		}
@@ -206,10 +245,8 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.setFont(new Font("default", Font.BOLD, 50));
 			g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
 			// 队名
-			g.setColor(new Color(68, 68, 68));
-			g.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
-			g.drawString(teams[0].getName(), contentWidth / 4,
-					contentHeight * 2 / 5);
+			setTeamNameLabel();
+
 			// 联盟
 			g.setColor(new Color(68, 68, 68));
 			g.setFont(new Font("default", Font.PLAIN, 20));
@@ -248,7 +285,41 @@ public class KingLabelPanel extends HotLabelPanel {
 				// 没有球队得分
 			}
 		}
+
+		private void setTeamNameLabel() {
+			JLabel teamName = new JLabel(teams[0].getName());
+
+			teamName.setForeground(new Color(68, 68, 68));
+			teamName.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
+			teamName.setBounds(contentWidth / 4, contentHeight * 3 / 20,
+					contentWidth / 8, contentHeight / 10);
+			teamName.addMouseListener(new MouseAdapter() {
+				public void mouseEntered(MouseEvent e) {
+
+				}
+
+				public void mouseExited(MouseEvent e) {
+
+				}
+
+				public void mousePressed(MouseEvent e) {
+
+					Team t = KingLabelPanel.this.bl.getTeamByName(teams[0]
+							.getName());
+					TeamInfoPanel m = new TeamInfoPanel(hotWidth,
+							hotHeight * 3, t, KingLabelPanel.this.bl,
+							KingLabelPanel.this.content);
+					m.setBounds(0, 0, hotWidth, hotHeight * 3);
+					KingLabelPanel.this.content.removeAll();
+					KingLabelPanel.this.content.add(m);
+					KingLabelPanel.this.content.updateUI();
+
+				}
+			});
+			teamName.setOpaque(false);
+			this.add(teamName);
+
+		}
 	}
 
-	
 }

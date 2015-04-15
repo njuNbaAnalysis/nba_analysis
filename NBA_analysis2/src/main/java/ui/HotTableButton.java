@@ -5,11 +5,22 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import compare.PlayerAverageAssistsComp;
+import compare.PlayerAverageBlockShotsComp;
+import compare.PlayerAveragePointsComp;
+import compare.PlayerAverageReboundsComp;
+import compare.PlayerAverageStealsComp;
+import compare.PlayerFieldGoalsPercentageComp;
+import compare.PlayerFreeThrowsPercentageComp;
+import compare.PlayerThreePointersPercentageComp;
+import compare.PlayerUpgradeRateComp;
 import logic.BLService;
 import logic.players.Player;
 import logic.players.todayPlayer;
@@ -42,6 +53,12 @@ public class HotTableButton extends JButton{
 		this.setFont(new Font("微软雅黑", Font.CENTER_BASELINE,
 			 20 ));
 		
+		addListener();
+		
+	}
+	
+	protected void addListener() {
+
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				HotTableButton.this.setBackground(new Color(69, 69, 69));
@@ -82,9 +99,58 @@ public class HotTableButton extends JButton{
 					((ImprovedLabelPanel)HotTableButton.this.hotPanel).setPlayers(players2,transferField(field));
 					HotTableButton.this.hotPanel.repaint();
 					break;
+				case "TP":
+					Player [] players = ((KingLabelPanel)HotTableButton.this.hotPanel).getPlayers();
+					
+					ArrayList<Player> playerList = new ArrayList<Player>();
+					for(int i=0;i<players.length;i++){
+						playerList.add(players[i]);
+					}
+					playerList = getTeamSortedPlayer(playerList,transferField(field));
+					for(int i=0;i<players.length;i++){
+						players[i] = playerList.get(i);
+					}
+					
+					((KingLabelPanel)HotTableButton.this.hotPanel).setPlayers(players);
+					HotTableButton.this.hotPanel.repaint();
 				}
 			}
 		});
+		
+	}
+	public ArrayList<Player> getTeamSortedPlayer(ArrayList<Player> list,String field) {
+		Comparator<Player> comparator  = new PlayerAveragePointsComp();
+		switch (field) {
+		case "points":
+			comparator = new PlayerAveragePointsComp();
+			break;
+		case "rebound":
+			comparator = new PlayerAverageReboundsComp();
+			break;
+		case "assist":
+			comparator = new PlayerAverageAssistsComp();
+			break;
+		case "steal":
+			comparator = new PlayerAverageStealsComp();
+			break;
+		case "blockShot":
+			comparator = new PlayerAverageBlockShotsComp();
+			break;
+		case "three":
+			comparator = new PlayerThreePointersPercentageComp();
+			break;
+		case "shot":
+			comparator = new PlayerFieldGoalsPercentageComp();
+			break;
+		case "penalty":
+			comparator = new PlayerFreeThrowsPercentageComp();
+			break;
+		default:
+			break;
+		}
+		
+		Collections.sort(list, comparator);
+		return list;
 	}
 	
 	private String transferField(String field){

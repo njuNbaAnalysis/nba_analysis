@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -59,10 +60,11 @@ public class PlayerBasicInfoLabel extends JLabel {
 		g.drawString("场均助攻", 650, 118);
 		g.setColor(new Color(68, 68, 68));
 		g.setFont(new Font("default", Font.BOLD, 25));
-		g.drawString((player.getAveragePoints() + "").substring(0, 4), 455, 148);
-		g.drawString((player.getAverageRebounds() + "").substring(0, 3), 555,
+		DecimalFormat df = new DecimalFormat("#0.00");
+		g.drawString(df.format(player.getAveragePoints()), 455, 148);
+		g.drawString(df.format(player.getAverageRebounds()), 555,
 				148);
-		g.drawString((player.getAverageAssists() + "").substring(0, 3), 655,
+		g.drawString(df.format(player.getAverageAssists()), 655,
 				148);
 
 	}
@@ -94,9 +96,8 @@ public class PlayerBasicInfoLabel extends JLabel {
 		});
 		teamName.setForeground(new Color(30, 81, 140));
 		teamName.setFont(new Font("default", Font.PLAIN, 20));
-		teamName.setBounds(578, 48, 100, 50);
+		teamName.setBounds(598, 48, 100, 50);
 		teamName.setOpaque(false);
-		System.out.println("-"+player.getTeam());
 		this.add(teamName);
 	}
 

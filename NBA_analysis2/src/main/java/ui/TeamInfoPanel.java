@@ -57,7 +57,8 @@ public class TeamInfoPanel extends JPanel {
 
 			playerList.add(bl.getPlayerByName(nameList.get(i)));
 		}
-
+		
+		//最上面球队基本信息
 		teamBasicInfoPanel = new TeamBasicInfoLabel(team, width, height / 4);
 		teamBasicInfoPanel.setBounds(0, 0, width, height / 4);
 		this.add(teamBasicInfoPanel);
@@ -69,8 +70,8 @@ public class TeamInfoPanel extends JPanel {
 		// 默认加数据王
 		String[] columnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%", "罚球%" };
 
-		KingLabelPanel playerKingPanel = new KingLabelPanel("P", "常规赛 数据王",
-				columnName, width, height*1 / 3, bl);
+		KingLabelPanel playerKingPanel = new KingLabelPanel("TP", "常规赛 数据王",
+				columnName, width, height*1 / 3, bl,content);
 		playerKingPanel.setPlayers(players);
 		playerKingPanel.setBounds(0, 0, width, height*1 / 3);
 		js.add(playerKingPanel);
@@ -133,8 +134,8 @@ public class TeamInfoPanel extends JPanel {
 								"三分%", "%", "罚球%" };
 
 						KingLabelPanel playerKingPanel = new KingLabelPanel(
-								"P", "常规赛数据王", columnName, width, height / 3,
-								bl);
+								"TP", "常规赛 数据王", columnName, width, height / 3,
+								bl,content);
 						playerKingPanel.setPlayers(players);
 						playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 
