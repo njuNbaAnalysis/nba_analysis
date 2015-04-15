@@ -1,5 +1,7 @@
 package logic.players;
 
+import java.awt.Image;
+
 import test.data.PlayerKingInfo;
 
 public class todayPlayer {
@@ -92,5 +94,15 @@ public class todayPlayer {
 		info.setTeamName(team);
 		info.setPosition(position);
 		return info;
+	}
+
+	public int getNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Image getPortrait() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
