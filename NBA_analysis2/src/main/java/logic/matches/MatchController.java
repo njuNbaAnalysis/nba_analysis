@@ -7,9 +7,7 @@ import java.util.Comparator;
 import logic.BLController;
 import logic.players.PlayerController;
 import logic.teams.TeamController;
-
 import compare.MatchComp;
-
 import data.DataController;
 import data.DataService;
 import data.matches.MatchMistake;
@@ -130,5 +128,12 @@ public class MatchController {
 	        }
 	    }
 	    return result;
+	}
+
+	public String getTime() {
+		// TODO Auto-generated method stub
+		matchList = getAllMatches();
+		Match match = matchList.get(matchList.size());
+		return match.getDate();
 	}
 }
