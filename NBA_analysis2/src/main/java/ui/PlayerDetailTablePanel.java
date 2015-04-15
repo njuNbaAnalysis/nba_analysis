@@ -240,12 +240,12 @@ public class PlayerDetailTablePanel extends JPanel {
 	}
 
 	private class LatestJTable extends DetailJTable {
-		private String[] columnName = { "日期", "对手", "分钟", "%", "命中", "出手",
-				"三分%", "三分命中", "三分出手", "罚球%", "罚球命中", "罚球出手", "进攻", "防守", "篮板",
-				"助攻", "犯规", "抢断", "盖帽", "失误", "盖帽", "得分" };
-
+		private String[] columnName = { "日期", "对手", "得分", "篮板",
+				"助攻",  "抢断", "盖帽" };
+		private ArrayList<playerData> arrayListOfPlayerData;
 		public LatestJTable(ArrayList<playerData> arrayList) {
 			this.setModel(new DefaultTableModel(null, columnName));
+			arrayListOfPlayerData = arrayList;
 			refreshElement();
 		}
 
@@ -305,7 +305,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		@Override
 		protected void refreshElement() {
 			DefaultTableModel model = (DefaultTableModel) this.getModel();
-			String[] data = getSeasonData();
+			
 			String[] row = null;
 			for (int i = 0; i < 8; i++) {
 				row = new String[22];
@@ -315,8 +315,10 @@ public class PlayerDetailTablePanel extends JPanel {
 				} else if (i == 7) {
 					row[0] = "总计";
 
-				} else {
-					row = data;
+				} else if(i<=4){
+					row = getSeasonData(i);
+				}else{
+					row = getAverageData();
 				}
 				model.addRow(row);
 			}
@@ -328,12 +330,38 @@ public class PlayerDetailTablePanel extends JPanel {
 
 		}
 
-		// 这个方法没有实现
-		private String[] getSeasonData() {
-			String[] result = new String[22];
-			for (int i = 0; i < 22; i++) {
-				result[i] = Integer.toString(i);
+		private String[] getSeasonData(int numberOfMatches) {
+			String[] result = new String[7];
+			result[0] = arrayListOfPlayerData.get(numberOfMatches).getDate();
+			result[1] = arrayListOfPlayerData.get(numberOfMatches).getEnemy();
+			result[2] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getPoints());
+			result[3] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getRebounds());
+			result[4] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getAssists());
+			result[5] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getSteal());
+			result[6] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getBlock());
+			return result;
+		}
+		private String[] getAverageData() {
+			String[] result = new String[7];
+			result[0] = "";
+			result[1] = "";
+			double points = 0;
+			double rebounds = 0;
+			double assists = 0;
+			double steal = 0;
+			double block = 0;
+			for(int i=0;i<arrayListOfPlayerData.size();i++){
+				points+=arrayListOfPlayerData.get(i).getPoints();
+				rebounds+=arrayListOfPlayerData.get(i).getRebounds();
+				assists+=arrayListOfPlayerData.get(i).getAssists();
+				steal+=arrayListOfPlayerData.get(i).getSteal();
+				block+=arrayListOfPlayerData.get(i).getBlock();
 			}
+			result[2] = Double.toString(points/5.0);
+			result[3] = Double.toString(rebounds/5.0);
+			result[4] = Double.toString(assists/5.0);
+			result[5] = Double.toString(steal/5.0);
+			result[6] = Double.toString(block/5.0);
 			return result;
 		}
 	}
