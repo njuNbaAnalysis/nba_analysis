@@ -17,21 +17,33 @@ public class todayPlayerComp implements Comparator<todayPlayer>{
 		switch (field) {
 		case "point":
 		case "score":
-			if(t1.getAveragePoints()>t2.getAveragePoints())
+			if(t1.getPoints()>t2.getPoints())
 				return 1;
-			else if(t1.getAveragePoints()<t2.getAveragePoints())
+			else if(t1.getPoints()<t2.getPoints())
 				return -1;
 			break;
 		case "assist":
-			if(t1.getAverageAssists()>t2.getAverageAssists())
+			if(t1.getAssists()>t2.getAssists())
 				return 1;
-			else if(t1.getAverageAssists()<t2.getAverageAssists())
+			else if(t1.getAssists()<t2.getAssists())
 				return -1;
 			break;
 		case "rebound":
-			if(t1.getAverageRebounds()>t2.getAverageRebounds())
+			if(t1.getRebounds()>t2.getRebounds())
 				return 1;
-			else if(t1.getAverageRebounds()<t2.getAverageRebounds())
+			else if(t1.getRebounds()<t2.getRebounds())
+				return -1;
+			break;
+		case "blockShot":
+			if(t1.getBlockShots()>t2.getBlockShots())
+				return 1;
+			else if(t1.getBlockShots()<t2.getBlockShots())
+				return -1;
+			break;
+		case "steal":
+			if(t1.getSteals()>t2.getSteals())
+				return 1;
+			else if(t1.getSteals()<t2.getSteals())
 				return -1;
 			break;
 		default:

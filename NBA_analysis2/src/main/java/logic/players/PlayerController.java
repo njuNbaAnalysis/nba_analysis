@@ -182,15 +182,16 @@ public class PlayerController {
 
 		if (mode.getMode().equals("king")) {
 			String field = mode.getField();
-			if (mode.isDaily()) {           						 //暂时这样
+			if (mode.isDaily()) { // 暂时这样
 				Date now = new Date();
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String strDate = df.format(now);
-				
-				ArrayList<todayPlayer> todayPlayer = this.getTotalPlayer(strDate,field);
-				if(todayPlayer.size()>0)
+
+				ArrayList<todayPlayer> todayPlayer = this.getTotalPlayer(
+						strDate, field);
+				if (todayPlayer.size() > 0)
 					result.add(todayPlayer.get(0).getKingInfo(field));
-				
+
 			} else {
 				Sort sort = parameter.new Sort(field, false);
 				parameter.addSort(sort);
@@ -249,7 +250,7 @@ public class PlayerController {
 		Collections.sort(playerList, comparator);
 	}
 
-	public ArrayList<todayPlayer> getTotalPlayer(String strDate,String field) { // 得到当日最热球员
+	public ArrayList<todayPlayer> getTotalPlayer(String strDate, String field) { // 得到当日最热球员
 		BLController bl = BLController.getInstance();
 		ArrayList<Match> Matchlist = bl.getAllMatches();
 		ArrayList<Match> list = new ArrayList<Match>();
@@ -265,14 +266,17 @@ public class PlayerController {
 				listTodayHotPlayer.add(new todayPlayer(firstlist.get(i)
 						.getPlayerName(), m.getTeams()[0], firstlist.get(i)
 						.getPosition(), firstlist.get(i).getPoints(), firstlist
-						.get(i).getRebounds(), firstlist.get(i).getAssists()));
+						.get(i).getRebounds(), firstlist.get(i).getAssists(),
+						firstlist.get(i).getSteals(), firstlist.get(i)
+								.getBlocks()));
 			}
 			for (int i = 0; i < secondlist.size(); i++) {
 				listTodayHotPlayer.add(new todayPlayer(secondlist.get(i)
 						.getPlayerName(), m.getTeams()[1], secondlist.get(i)
 						.getPosition(), secondlist.get(i).getPoints(),
 						secondlist.get(i).getRebounds(), secondlist.get(i)
-								.getAssists()));
+								.getAssists(), secondlist.get(i).getSteals(),
+						secondlist.get(i).getBlocks()));
 			}
 
 		}
@@ -280,7 +284,8 @@ public class PlayerController {
 		Collections.sort(listTodayHotPlayer, comparator);
 		return listTodayHotPlayer;
 	}
-	public ArrayList<Player> getSeasonKingPlayer(String field, int num){
+
+	public ArrayList<Player> getSeasonKingPlayer(String field, int num) {
 		BLParameter parameter = new BLParameter();
 		Sort sort = parameter.new Sort(field, false);
 		sort.setAsc(false);
@@ -289,7 +294,8 @@ public class PlayerController {
 		this.sort(playerList, parameter);
 		return playerList;
 	}
-	public ArrayList<Player> getMostImprovedPlayer(String field){
+
+	public ArrayList<Player> getMostImprovedPlayer(String field) {
 		int num = 0;
 		switch (field) {
 		case "points":
@@ -308,28 +314,28 @@ public class PlayerController {
 		Collections.sort(playerList, comparator);
 		return playerList;
 	}
-	
-	 public double[] getAllianceAverageDataOFPlayer() {
-	        double[] result = new double[5];
-	        
-	        double totalPoints = 0; //30支球队平均得分相加
-	        double totalRebounds = 0;   //30支球队平均篮板相加
-	        double totalAssists = 0;    //30支球队平均助攻相加
-	        double totalFreeThrowPercent = 0;
-	        double totalThreeThrowPercent = 0;
-	        for(Player play:playerList){
-	            totalPoints += play.getAveragePoints();
-	            totalRebounds += play.getAverageRebounds();
-	            totalAssists += play.getAverageAssists();
-	            totalFreeThrowPercent += play.getFreeThrowsPercentage();
-	            totalThreeThrowPercent += play.getThreePointersPercentage();
-	        }
-	        result[0] = totalPoints/playerList.size();
-	        result[1] = totalRebounds/playerList.size();
-	        result[2] = totalAssists/playerList.size();
-	        result[3] = 1.0 * totalFreeThrowPercent / playerList.size();
-	        result[4] = 1.0 * totalThreeThrowPercent / playerList.size();
 
-	        return result;
-	    }
+	public double[] getAllianceAverageDataOFPlayer() {
+		double[] result = new double[5];
+
+		double totalPoints = 0; // 30支球队平均得分相加
+		double totalRebounds = 0; // 30支球队平均篮板相加
+		double totalAssists = 0; // 30支球队平均助攻相加
+		double totalFreeThrowPercent = 0;
+		double totalThreeThrowPercent = 0;
+		for (Player play : playerList) {
+			totalPoints += play.getAveragePoints();
+			totalRebounds += play.getAverageRebounds();
+			totalAssists += play.getAverageAssists();
+			totalFreeThrowPercent += play.getFreeThrowsPercentage();
+			totalThreeThrowPercent += play.getThreePointersPercentage();
+		}
+		result[0] = totalPoints / playerList.size();
+		result[1] = totalRebounds / playerList.size();
+		result[2] = totalAssists / playerList.size();
+		result[3] = 1.0 * totalFreeThrowPercent / playerList.size();
+		result[4] = 1.0 * totalThreeThrowPercent / playerList.size();
+
+		return result;
+	}
 }
