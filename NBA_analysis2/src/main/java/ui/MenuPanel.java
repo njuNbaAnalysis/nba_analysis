@@ -59,6 +59,7 @@ public class MenuPanel extends JPanel {
 	JButton teamStat;
 	JButton match;
 	JButton hotPlayer;
+	
 	JButton exit;
 	JPanel content;
 	
@@ -362,12 +363,16 @@ public class MenuPanel extends JPanel {
 				
 			}
 			if(type==4){
-				TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl,content);
-				teamRankTablePanel.setBounds(0, 0, width*9, height);
+				AllTeamPanel team = new AllTeamPanel(width*9, height, bl,content);
+				//TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl,content);
+				//team.setBounds(0, 0, width*9, height);
 				//teamRankTablePanel.startAnimation();
 				content.removeAll();
-				content.add(teamRankTablePanel);
+				content.setVisible(false);
+				content.add(team);
 				content.updateUI();
+				content.setVisible(true);
+				
 			}
 			if(type==5){
 				System.exit(0);
