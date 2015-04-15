@@ -255,7 +255,7 @@ public class Player {
 		return threedouble;
 	}
 
-	public void init() {                          //每次得到这些高阶数据时，都需要init()
+	public void init() { // 每次得到这些高阶数据时，都需要init()
 		TeamController teamcontrol = TeamController.getInstance();
 		PlayerController playercontrol = PlayerController.getInstance();
 		Team teamName = teamcontrol.getTeam(team);
@@ -567,9 +567,8 @@ public class Player {
 
 	public double getEfficiency() {
 		efficiency = (rebounds + points + blockShots + steals + assists)
-				- (fieldGoalAttempts - fieldGoalHits) -
-						(freeThrowAttempts  - freeThrowHits)
-				- turnOver; // (得分+篮板+助攻+抢断+盖帽)-（出手次数-命中次数）-（罚球次数-罚球命中次数）-失误次数
+				- (fieldGoalAttempts - fieldGoalHits)
+				- (freeThrowAttempts - freeThrowHits) - turnOver; // (得分+篮板+助攻+抢断+盖帽)-（出手次数-命中次数）-（罚球次数-罚球命中次数）-失误次数
 		return efficiency;
 	}
 
@@ -848,5 +847,41 @@ public class Player {
 		info.setThree(this.getThreePointersPercentage());
 		info.setPenalty(this.getFreeThrowsPercentage());
 		return info;
+	}
+
+	public double FivePoints() {
+		if (ListOfRecord.size() != 5)
+			return 0;
+		else {
+			double total = 0;
+			for(int i=0;i<ListOfRecord.size();i++){
+				total += ListOfRecord.get(i).getPoints();
+			}
+			return total/5.0;
+		}
+	}
+
+	public double FiveRebounds() {
+		if (ListOfRecord.size() != 5)
+			return 0;
+		else {
+			double total = 0;
+			for(int i=0;i<ListOfRecord.size();i++){
+				total += ListOfRecord.get(i).getRebounds();
+			}
+			return total/5.0;
+		}
+	}
+
+	public double FiveAssists() {
+		if (ListOfRecord.size() != 5)
+			return 0;
+		else {
+			double total = 0;
+			for(int i=0;i<ListOfRecord.size();i++){
+				total += ListOfRecord.get(i).getAssists();
+			}
+			return total/5.0;
+		}
 	}
 }
