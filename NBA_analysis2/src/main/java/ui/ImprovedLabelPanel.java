@@ -177,12 +177,30 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 				// 最近五场/提升率
 				g.setColor(Color.black);
 				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 30));
-				g.drawString("20.0", contentWidth * 7 / 12, contentHeight / 2
+				double result1 = 0;
+				double result2 = 0;
+				switch(field){
+				case "场均得分":
+					result1 = players[i-1].FivePoints();
+					result2 = players[i-1].getUpgradeRate()[0];
+					break;
+				case "场均篮板":
+					result1 = players[i-1].FiveRebounds();
+					result2 = players[i-1].getUpgradeRate()[1];
+					break;
+				case "场均助攻":
+					result1 = players[i-1].FiveAssists();
+					result2 = players[i-1].getUpgradeRate()[2];
+					break;
+				default:
+					System.out.println("Error in ImprovefLabelPanel.paintComponent()!!!"+field);	
+				}
+				g.drawString(Double.toString(result1), contentWidth * 7 / 12, contentHeight / 2
 						+ contentHeight * (i - 2) / 8 + contentHeight / 40);
 
 				g.setColor(new Color(57, 167, 229));
 				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 15));
-				g.drawString("/     97.5%", contentWidth * 7 / 11,
+				g.drawString(Double.toString(result2), contentWidth * 7 / 11,
 						contentHeight / 2 + contentHeight * (i - 2) / 8
 								+ contentHeight / 40);
 			}
