@@ -413,7 +413,7 @@ public class MenuPanel extends JPanel {
 			}
 			if(type==6){
 				//teamRankTablePanel.refreshTablePanel(type);
-				MatchPanel matchPanel = new MatchPanel(width*9,height,bl);
+				MatchPanel matchPanel = new MatchPanel(width*9,height,bl,content);
 				JScrollPane scrollPane = new JScrollPane(matchPanel);
 				scrollPane.setBounds(0, 0, width*9, height);
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
