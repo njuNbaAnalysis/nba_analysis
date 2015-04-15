@@ -307,6 +307,7 @@ public class PlayerController {
 			break;
 		}
 		Comparator<Player> comparator = new PlayerUpgradeRateComp(num);
+		playerList = getAllPlayers();
 		Collections.sort(playerList, comparator);
 		return playerList;
 	}

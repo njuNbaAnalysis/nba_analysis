@@ -64,6 +64,7 @@ public class Player {
 	private double turnOverPercentage;// 失误率
 	private double usage;// 使用率
 	private ArrayList<playerData> ListOfRecord = new ArrayList<playerData>(); // 近五场比赛记录
+
 	public ArrayList<playerData> getListOfRecord() {
 		return ListOfRecord;
 	}
@@ -791,15 +792,28 @@ public class Player {
 				FiveRebounds += ListOfRecord.get(i).getRebounds();
 				FiveAssists += ListOfRecord.get(i).getAssists();
 			}
-			upgradeRate[0] = (FivePoints / 5 - (getPoints() - FivePoints)
-					/ (gamePlayed - 5))
-					/ (getAveragePoints());
-			upgradeRate[1] = (FiveRebounds / 5 - (getRebounds() - FiveRebounds)
-					/ (gamePlayed - 5))
-					/ (getAverageRebounds());
-			upgradeRate[2] = (FiveAssists / 5 - (getAssists() - FiveAssists)
-					/ (gamePlayed - 5))
-					/ (getAverageAssists());
+			if (getAveragePoints() != 0)
+				upgradeRate[0] = (FivePoints / 5 - (getPoints() - FivePoints)
+						/ (gamePlayed - 5))
+						/ (getAveragePoints());
+			else
+				upgradeRate[0] = 0;
+			if (getAverageRebounds() != 0)
+				upgradeRate[1] = (FiveRebounds / 5 - (getRebounds() - FiveRebounds)
+						/ (gamePlayed - 5))
+						/ (getAverageRebounds());
+			else
+				upgradeRate[1] = 0;
+			if (getAssists() != 0)
+				upgradeRate[2] = (FiveAssists / 5 - (getAssists() - FiveAssists)
+						/ (gamePlayed - 5))
+						/ (getAverageAssists());
+			else
+				upgradeRate[2] = 0;
+		} else {
+			upgradeRate[0] = 0;
+			upgradeRate[1] = 0;
+			upgradeRate[2] = 0;
 		}
 		return upgradeRate;
 	}
@@ -808,10 +822,12 @@ public class Player {
 		this.upgradeRate = upgradeRate;
 	}
 
-	public void AddRecord(double points, double rebounds, double assists,double steal,double block,String date,String enemy) {
+	public void AddRecord(double points, double rebounds, double assists,
+			double steal, double block, String date, String enemy) {
 		if (ListOfRecord.size() >= 5)
 			ListOfRecord.remove(0);
-		ListOfRecord.add(new playerData(points, rebounds, assists,steal,block,date,enemy));
+		ListOfRecord.add(new playerData(points, rebounds, assists, steal,
+				block, date, enemy));
 	}
 
 	public PlayerNormalInfo getNormalInfo(boolean isAverage) {
@@ -862,10 +878,10 @@ public class Player {
 			return 0;
 		else {
 			double total = 0;
-			for(int i=0;i<ListOfRecord.size();i++){
+			for (int i = 0; i < ListOfRecord.size(); i++) {
 				total += ListOfRecord.get(i).getPoints();
 			}
-			return total/5.0;
+			return total / 5.0;
 		}
 	}
 
@@ -874,10 +890,10 @@ public class Player {
 			return 0;
 		else {
 			double total = 0;
-			for(int i=0;i<ListOfRecord.size();i++){
+			for (int i = 0; i < ListOfRecord.size(); i++) {
 				total += ListOfRecord.get(i).getRebounds();
 			}
-			return total/5.0;
+			return total / 5.0;
 		}
 	}
 
@@ -886,10 +902,10 @@ public class Player {
 			return 0;
 		else {
 			double total = 0;
-			for(int i=0;i<ListOfRecord.size();i++){
+			for (int i = 0; i < ListOfRecord.size(); i++) {
 				total += ListOfRecord.get(i).getAssists();
 			}
-			return total/5.0;
+			return total / 5.0;
 		}
 	}
 }

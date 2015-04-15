@@ -242,6 +242,7 @@ public class PlayerDetailTablePanel extends JPanel {
 	private class LatestJTable extends DetailJTable {
 		private String[] columnName = { "日期", "对手", "得分", "篮板",
 				"助攻",  "抢断", "盖帽" };
+		
 		private ArrayList<playerData> arrayListOfPlayerData;
 		public LatestJTable(ArrayList<playerData> arrayList) {
 			this.setModel(new DefaultTableModel(null, columnName));
