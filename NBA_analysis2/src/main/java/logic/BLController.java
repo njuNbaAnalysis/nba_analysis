@@ -192,6 +192,13 @@ public class BLController implements BLService {
 			}
 		return listResult;
 	}
+	@Override
+	public double[] getAlliancePlayerAverageData() {
+		if (playerController == null) {
+			playerController = PlayerController.getInstance();
+		}
+		return playerController.getAllianceAverageDataOFPlayer();
+	}
 
 	// match
 	@Override
@@ -253,4 +260,6 @@ public class BLController implements BLService {
         }
         return playerController.getPlayer(name);
     }
+
+	
 }
