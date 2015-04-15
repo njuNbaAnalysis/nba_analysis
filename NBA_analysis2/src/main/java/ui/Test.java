@@ -52,7 +52,7 @@ public class Test extends JFrame {
 		setContentPane(contentPane);
 		
 		//contentPane.add(new TeamBasicInfoLabel(bl.getAllTeams().get(0), 192*9, 200));
-		contentPane.add(new AllTeamPanel(192*9, 1080, bl));
+		contentPane.add(new AllTeamPanel(192*9, 1080, bl,contentPane));
 		
 		/*MatchPanel matchPanel = new MatchPanel(0,0,bl);
 		JScrollPane scrollPane = new JScrollPane(matchPanel);
