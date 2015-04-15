@@ -8,18 +8,22 @@ public class todayPlayer {
 	String name;
 	String team;
 	String position;
-	double averagePoints;
-	double averageRebounds;
-	double averageAssists;
+	private int Points;
+	private int Rebounds;
+	private int Assists;
+	private int steals;// 总抢断数
+	private int blockShots;// 总盖帽数
 
 	public todayPlayer(String name, String team, String position,
-			int Points, int Rebounds, int Assists) {
+			int Points, int Rebounds, int Assists,int steals,int blockShots) {
 		this.name = name;
 		this.team = team;
 		this.position = position;
-		this.averageAssists = Assists;
-		this.averagePoints = Points;
-		this.averageRebounds = Rebounds;
+		this.Assists = Assists;
+		this.Points = Points;
+		this.Rebounds = Rebounds;
+		this.steals = steals;
+		this.blockShots = blockShots;
 	}
 
 	public String getName() {
@@ -46,28 +50,26 @@ public class todayPlayer {
 		this.position = position;
 	}
 
-	public double getAveragePoints() {
-		return averagePoints;
+	
+
+	public int getPoints() {
+		return Points;
 	}
 
-	public void setAveragePoints(double averagePoints) {
-		this.averagePoints = averagePoints;
+	public int getRebounds() {
+		return Rebounds;
 	}
 
-	public double getAverageRebounds() {
-		return averageRebounds;
+	public int getAssists() {
+		return Assists;
 	}
 
-	public void setAverageRebounds(double averageRebounds) {
-		this.averageRebounds = averageRebounds;
+	public int getSteals() {
+		return steals;
 	}
 
-	public double getAverageAssists() {
-		return averageAssists;
-	}
-
-	public void setAverageAssists(double averageAssists) {
-		this.averageAssists = averageAssists;
+	public int getBlockShots() {
+		return blockShots;
 	}
 
 	public PlayerKingInfo getKingInfo(String field) {
@@ -78,13 +80,19 @@ public class todayPlayer {
 		switch (field) {
 		case "point":
 		case "score": // 热门球队处为score，sort处
-			info.setValue(this.getAveragePoints());
+			info.setValue(this.getPoints());
 			break;
 		case "rebound":
-			info.setValue(this.getAverageRebounds());
+			info.setValue(this.getRebounds());
 			break;
 		case "assist":
-			info.setValue(this.getAverageAssists());
+			info.setValue(this.getAssists());
+			break;
+		case "blockShot":
+			info.setValue(this.getBlockShots());
+			break;
+		case "steal":
+			info.setValue(this.getSteals());
 			break;
 		default:
 			System.out.println("error in TodayPlayer.getHotInfo: " + field);
@@ -96,13 +104,4 @@ public class todayPlayer {
 		return info;
 	}
 
-	public int getNumber() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public Image getPortrait() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
