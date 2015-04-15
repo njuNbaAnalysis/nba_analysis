@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import compare.PalyerScreening;
@@ -71,13 +72,19 @@ public class PlayerJTable extends StatJTable {
 			"盖帽数", "失误数", "犯规数", " 得分" };
 	private ArrayList<Player> list;
 	private BLService bl;
+	private JPanel content;
+	private int width;
+	private int height;
 
-	public PlayerJTable(BLService bl, int i, int j) {
+	public PlayerJTable(BLService bl, int i, int j,JPanel content) {
 		super();
 		list = bl.getAllPlayers();
 		this.bl = bl;
-		this.portraitWidth = i * 70 / 800;
-		this.portraitHeight = j * 80 / 800;
+		this.portraitWidth =  80 ;
+		this.portraitHeight =  70 ;
+		this.content = content;
+		this.width = i;
+		this.height = j;
 		this.getTableHeader().addMouseListener(new MouseHandle());
 		this.addMouseListener(new MouseAdapter() {
             @Override
@@ -92,15 +99,14 @@ public class PlayerJTable extends StatJTable {
 
                 	Player p = PlayerJTable.this.bl.getPlayerByName(playerName);
             		
-            		PlayerInfoPanel m = new PlayerInfoPanel(1920,1280,p,PlayerJTable.this.bl);
-            		m.setBounds(0, 0, 1920, 1280);
-            		JFrame f = new JFrame();
-            		f.setLayout(null);
-            		f.add(m);
-            		f.setSize(1920,1280);
-            		f.setVisible(true);   
-            		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            		m.startAnimation();
+            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*10/9,p,PlayerJTable.this.bl);
+            		
+            		playerInfoPanel.setBounds(0, 0, width, height*10/9);
+            		playerInfoPanel.startAnimation();
+            		PlayerJTable.this.content.removeAll();
+            		PlayerJTable.this.content.add(playerInfoPanel);
+            		PlayerJTable.this.content.updateUI();
+            		playerInfoPanel.startAnimation();
                 }
                 if((column=PlayerJTable.this.getSelectedColumn()) == 2){
                 	int row = PlayerJTable.this.getSelectedRow();
@@ -108,14 +114,11 @@ public class PlayerJTable extends StatJTable {
 
                 	Team t = PlayerJTable.this.bl.getTeamByName(teamName);
             		
-            		TeamInfoPanel m = new TeamInfoPanel(1920,1280,t,PlayerJTable.this.bl);
-            		m.setBounds(0, 0, 1920, 1280);
-            		JFrame f = new JFrame();
-            		f.setLayout(null);
-            		f.add(m);
-            		f.setSize(1920,1280);
-            		f.setVisible(true);   
-            		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,PlayerJTable.this.bl);
+            		m.setBounds(0, 0, width, height*10/9);
+            		PlayerJTable.this.content.removeAll();
+            		PlayerJTable.this.content.add(m);
+            		PlayerJTable.this.content.updateUI();
             		//m.startAnimation();
                 }
             }

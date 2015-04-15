@@ -33,7 +33,7 @@ public class PlayerInfoPanel extends JPanel {
 		playerBasicInfoLabel.setBounds(0, 0, width, height/6);
 		this.add(playerBasicInfoLabel);
 		
-		playerDetailPanel = new PlayerDetailPanel(player, bl.getAllianceAverageData(),width, height/4);
+		playerDetailPanel = new PlayerDetailPanel(player, bl.getAlliancePlayerAverageData(),width, height/4);
 		playerDetailPanel.setBounds(0, height/4, width, height/4);
 		this.add(playerDetailPanel);
 		
