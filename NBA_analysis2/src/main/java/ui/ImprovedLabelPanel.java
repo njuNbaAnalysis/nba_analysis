@@ -16,6 +16,7 @@ import logic.players.todayPlayer;
 
 public class ImprovedLabelPanel extends HotLabelPanel {
 	private String type;
+	private String field;
 	private int num = 5;
 
 	private Player[] players;
@@ -53,7 +54,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 
 	private void setHotTableContentLabel() {
 		tableContentLabel = new HotTableContentLabel(players, hotWidth,
-				hotHeight * 5 / 6);
+				hotHeight * 5 / 6,"point");
 		tableContentLabel.setBounds(0, hotHeight / 6, hotWidth,
 				hotHeight * 5 / 6);
 		this.add(tableContentLabel);
@@ -61,10 +62,10 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	}
 
 
-	public void setPlayers(Player[] players,String type) {
+	public void setPlayers(Player[] players,String field) {
 		((HotTableContentLabel) tableContentLabel).setPlayers(players);
-		((HotTableContentLabel) tableContentLabel).setType(type);
-		this.type = type;
+		((HotTableContentLabel) tableContentLabel).setType(field);
+		this.field = field;
 
 	}
 
@@ -72,17 +73,18 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 		private Player[] players;
 		private int contentWidth;
 		private int contentHeight;
-		private String type;
+		private String field;
 
 		public HotTableContentLabel(Player[] players, int contentWidth,
-				int contentHeight) {
+				int contentHeight,String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
+			this.field = field;
 		}
 
-		public void setType(String type2) {
-			// TODO Auto-generated method stub
+		public void setType(String field) {
+			this.field = field;
 			
 		}
 
