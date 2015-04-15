@@ -183,4 +183,5 @@ public class RecordOfPlayer{
 		}
 		return fieldGoalsPercentage;
 	}
+
 }
