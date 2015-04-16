@@ -136,4 +136,9 @@ public class MatchController {
 		Match match = matchList.get(matchList.size());
 		return match.getDate();
 	}
+
+	public Match getMatch(String date,String[] teamNameAbb){
+	    
+	    return null;
+	}
 }
