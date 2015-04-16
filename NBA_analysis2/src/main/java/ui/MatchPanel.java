@@ -234,7 +234,7 @@ public class MatchPanel extends JPanel {
 
 	}
 
-	class InfoLabel extends JLabel {
+	public class InfoLabel extends JLabel {
 
 		int width;
 		int height;
