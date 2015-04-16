@@ -240,6 +240,7 @@ public class PlayerDetailTablePanel extends JPanel {
 	}
 
 	private class LatestJTable extends DetailJTable {
+		protected DecimalFormat df = new DecimalFormat("#0");
 		private String[] columnName = { "日期", "对手", "得分", "篮板",
 				"助攻",  "抢断", "盖帽" };
 		
@@ -279,6 +280,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		}
 
 		protected class RowRenderer extends DefaultTableCellRenderer {
+			
 
 			public Component getTableCellRendererComponent(JTable t,
 					Object value, boolean isSelected, boolean hasFocus,
@@ -335,11 +337,11 @@ public class PlayerDetailTablePanel extends JPanel {
 			String[] result = new String[7];
 			result[0] = arrayListOfPlayerData.get(numberOfMatches).getDate();
 			result[1] = arrayListOfPlayerData.get(numberOfMatches).getEnemy();
-			result[2] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getPoints());
-			result[3] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getRebounds());
-			result[4] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getAssists());
-			result[5] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getSteal());
-			result[6] = Double.toString(arrayListOfPlayerData.get(numberOfMatches).getBlock());
+			result[2] = df.format(arrayListOfPlayerData.get(numberOfMatches).getPoints());
+			result[3] = df.format(arrayListOfPlayerData.get(numberOfMatches).getRebounds());
+			result[4] = df.format(arrayListOfPlayerData.get(numberOfMatches).getAssists());
+			result[5] = df.format(arrayListOfPlayerData.get(numberOfMatches).getSteal());
+			result[6] = df.format(arrayListOfPlayerData.get(numberOfMatches).getBlock());
 			return result;
 		}
 		private String[] getAverageData() {

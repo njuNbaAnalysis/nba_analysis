@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -205,6 +206,19 @@ public class LineUpPanel extends JPanel {
 	            		playerInfoPanel.startAnimation();
 	                }
 	               
+	            }
+	            
+	            public void mouseEntered(MouseEvent e){
+	            	 if ((LineUpTable.this.getSelectedColumn()) == 0) {
+	            		 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+	            	 }
+	            }
+	            public void mouseExited(MouseEvent e){
+	            	 if ((LineUpTable.this.getSelectedColumn()) == 0) {
+	            		 setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
+	            	 }
 	            }
 	        });
 			
