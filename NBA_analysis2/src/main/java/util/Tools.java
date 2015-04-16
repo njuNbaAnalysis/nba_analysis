@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Tools {
     public static ArrayList<String> toArrayList(String[] args){
@@ -31,5 +32,15 @@ public class Tools {
         }// else: input unavailable
 
         return result;
+    }
+
+    //输入：“2014-01-01”
+    public static Date getDateByChinese(String input){
+        Date date = new Date();
+        String temp[] = input.split("-");
+        date.setYear(Integer.parseInt(temp[0]));
+        date.setMonth(Integer.parseInt(temp[1]) - 1);
+        date.setDate(Integer.parseInt(temp[2]));
+        return date;
     }
 }

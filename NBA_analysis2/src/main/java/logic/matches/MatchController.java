@@ -3,11 +3,14 @@ package logic.matches;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 import logic.BLController;
 import logic.players.PlayerController;
 import logic.teams.TeamController;
+
 import compare.MatchComp;
+
 import data.DataController;
 import data.DataService;
 import data.matches.MatchMistake;
@@ -137,8 +140,18 @@ public class MatchController {
 		return match.getDate();
 	}
 
-	public Match getMatch(String date,String[] teamNameAbb){
+	public Match getMatch(Date date,String[] teamNameAbb){
+	    Match result = null;
 	    
-	    return null;
+	    for(Match match:this.matchList){
+	        Date temp = match.getDateInDate();
+	        if(temp.getYear() == date.getYear()
+	                && temp.getMonth() == date.getMonth()
+	                && temp.getDate() == date.getDate()){
+	            result = match;
+	            break;
+	        }
+	    }
+	    return result;
 	}
 }

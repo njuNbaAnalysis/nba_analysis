@@ -210,7 +210,7 @@ public class BLController implements BLService {
 	}
 	
     @Override
-    public Match getMatch(String date, String[] teamNameAbb) {
+    public Match getMatch(Date date, String[] teamNameAbb) {
         if(matchController == null){
             matchController = MatchController.getInstance();
         }
