@@ -12,7 +12,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -80,9 +83,10 @@ public class AgendaPanel extends JPanel{
 	private class AgendaTable extends BaseJTable {
 		
 		private ArrayList<Image> imageList;
-		private String[] agendaColumnName = { "日期", "对手", "结果", "比分", "比赛链接"};
+		private String[] agendaColumnName = { "日期", "对手", "结果", "比分"};
 		private BLService bl;
 		private JPanel content;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM月dd日");
 
 		// type :0表示信息，1表示数据
 		public AgendaTable(ArrayList<MatchSimpleInfo> matchList,BLService bl,JPanel content) {
@@ -115,11 +119,28 @@ public class AgendaPanel extends JPanel{
 	            		AgendaTable.this.content.add(m);
 	            		AgendaTable.this.content.updateUI();
 	                }
-	               /* //暂时这样
-	                if ((column=AgendaTable.this.getSelectedColumn()) == 4) {
+	                //暂时这样
+	               /* if ((column=AgendaTable.this.getSelectedColumn()) == 4) {
 	                	int row = AgendaTable.this.getSelectedRow();
-	                	String teamName = (String)AgendaTable.this.getValueAt(row, column);
-	                	teamName = teamName.split(" ")[1];//空格在1位
+	                	String day = (String)AgendaTable.this.getValueAt(row, 0);
+	                	day = day.trim();
+	                	day = "2014-"+day;
+	                	Date date = null;
+	                	try {
+							date = df.parse(day);
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+	                	
+	                	String name = (String)AgendaTable.this.getValueAt(row, 1);
+	                	String atHome = name.split(" ")[0];
+	                	String teamName = name.split(" ")[1];//空格在1位
+	                	String [] result = new String [2];
+	                	if(atHome.equals("vs")){
+	                		result[0] = matchList.get(0).get
+	                	}
+	                	
 	                	System.out.println("球队名字"+teamName);
 	                	Team t = AgendaTable.this.bl.getTeamByName(teamName);
 	            		
@@ -204,7 +225,7 @@ public class AgendaPanel extends JPanel{
 		protected void resizeColumnWidth() {
 
 			for (int column = 0; column < this.getColumnCount(); column++) {
-				int width = 320; // Min width
+				int width = 340; // Min width
 				for (int row = 0; row < this.getRowCount(); row++) {
 					TableCellRenderer renderer = this.getCellRenderer(row, column);
 					Component comp = this.prepareRenderer(renderer, row, column);

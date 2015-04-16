@@ -266,15 +266,19 @@ public class LineUpPanel extends JPanel {
 
 		private String[] getInfoRow(Player p) {
 			String[] s = new String[9];
-			s[0] = p.getName();
-			System.out.println(p.getName());
-			s[1] = p.getPosition() + "";
-			s[2] = p.getHeight()[0] + "尺" + p.getHeight()[1] + "寸";
-			s[3] = p.getWeight() + "";
-			s[4] = p.getNumber() + "";
-			s[5] = p.getBirthday() + "";
-			s[6] = p.getExperience() + "年";
-			s[7] = p.getSchool();
+			//球员没有的时候
+			if(p!=null){
+				s[0] = p.getName();
+				System.out.println(p.getName());
+				s[1] = p.getPosition() + "";
+				s[2] = p.getHeight()[0] + "尺" + p.getHeight()[1] + "寸";
+				s[3] = p.getWeight() + "";
+				s[4] = p.getNumber() + "";
+				s[5] = p.getBirthday() + "";
+				s[6] = p.getExperience() + "年";
+				s[7] = p.getSchool();
+			}
+			
 
 			return s;
 		}
