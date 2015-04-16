@@ -44,7 +44,7 @@ public class HotAndKingPanel extends JPanel {
 		UIUtils.createFont("font"+File.separator+"Oswald-Bold.otf");
 		
 		String[] playerColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽" };
-		playerKingPanel = new KingLabelPanel("P", "每日 联盟数据王",
+		playerKingPanel = new KingLabelPanel("P", "赛季 联盟数据王",
 				playerColumnName, width*9/10, height / 4,bl,content);
 		playerKingPanel.setBounds(0, 0, width*9/10, height / 4);
 		this.add(playerKingPanel);

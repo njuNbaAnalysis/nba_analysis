@@ -39,9 +39,9 @@ public class KingLabelPanel extends HotLabelPanel {
 		this.content = content;
 		setTableHeadLabel();
 		setButton(type);
-		if(type.equals("P")||type.equals("T")){
-			setTableContent(type);
-		}
+		
+		setTableContent(type);
+		
 		
 	}
 
@@ -123,47 +123,50 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.setColor(Color.white);
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 头像
-			BufferedImage action = UIUtils.resize(players[0].getAction(),
-					contentWidth / 10, contentHeight);
-			g.drawImage(action, 0, 0, this);
-			// 排名
-			g.setColor(new Color(190, 157, 83));
-			g.setFont(new Font("微软雅黑", Font.BOLD, 50));
-			g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
-			// 姓名
+			if(players[0]!=null){
+				BufferedImage action = UIUtils.resize(players[0].getAction(),
+						contentWidth / 10, contentHeight);
+				g.drawImage(action, 0, 0, this);
+				// 排名
+				g.setColor(new Color(190, 157, 83));
+				g.setFont(new Font("微软雅黑", Font.BOLD, 50));
+				g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
+				// 姓名
 
-			playerNames[0].setText(players[0].getName());
+				playerNames[0].setText(players[0].getName());
 
-			// 号码
-			g.setColor(new Color(68, 68, 68));
-			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-			g.drawString(players[0].getNumber() + "", contentWidth / 5,
-					contentHeight * 3 / 5);
-			// 位置
-			g.setColor(new Color(68, 68, 68));
-			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-			g.drawString(players[0].getPosition(), contentWidth / 4,
-					contentHeight * 3 / 5);
-			// 球队
-			playerTeamNames[0].setText(players[0].getTeam());
-			// 数据、球队图标暂无
+				// 号码
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(Integer.toString(players[0].getNumber()), contentWidth / 5,
+						contentHeight * 3 / 5);
+				// 位置
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(players[0].getPosition(), contentWidth / 4,
+						contentHeight * 3 / 5);
+				// 球队
+				playerTeamNames[0].setText(players[0].getTeam());
+				// 数据、球队图标暂无
+				
+				String data = getPlayerData(players[0]);
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(data, contentWidth / 4,
+						contentHeight * 4 / 5);
+				
+				
+				
+				
+				
+				g.setColor(new Color(246, 246, 246));
+				g.fillRect(contentWidth / 2, 0, contentWidth / 10,
+						contentHeight * 9 / 10);
+			}
 			
-			String data = getPlayerData(players[0]);
-			g.setColor(new Color(68, 68, 68));
-			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-			g.drawString(data, contentWidth / 4,
-					contentHeight * 4 / 5);
-			
-			
-			
-			
-			
-			g.setColor(new Color(246, 246, 246));
-			g.fillRect(contentWidth / 2, 0, contentWidth / 10,
-					contentHeight * 9 / 10);
 
 			for (int i = 2; i <= num; i++) {
-				
+				if(players[i-1]!=null){
 					g.setColor(new Color(146, 144, 144));
 					g.setFont(new Font("Oswald-Bold", Font.PLAIN, 20));
 					g.drawString(i + "", contentWidth * 11 / 20, contentHeight
@@ -190,12 +193,14 @@ public class KingLabelPanel extends HotLabelPanel {
 							* (4 * i - 3) / 20);
 
 					// 没有球队图片，没有球员得分
-					data = getPlayerData(players[i-1]);
+					String data = getPlayerData(players[i-1]);
 					g.setColor(new Color(68, 68, 68));
 					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 					g.drawString(data, contentWidth * 17 / 20,
 							contentHeight
 							* (4 * i - 3) / 20);
+				}
+					
 				
 				
 			}
