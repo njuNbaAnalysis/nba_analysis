@@ -45,14 +45,18 @@ public class Test extends JFrame {
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
-		setBounds(1920, 0, 1920, 1080);
+		setBounds(0, 0, 1920, 1080);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		
 		//contentPane.add(new TeamBasicInfoLabel(bl.getAllTeams().get(0), 192*9, 200));
-		contentPane.add(new AllTeamPanel(192*9, 1080, bl,contentPane));
+		
+		//contentPane.add(new AllTeamPanel(192*9, 1080, bl,contentPane));
+		contentPane.add(new MatchInfoPanel(192*9, 1080, bl.getAllMatches().get(0),bl));
+		
+		
 		
 		/*MatchPanel matchPanel = new MatchPanel(0,0,bl);
 		JScrollPane scrollPane = new JScrollPane(matchPanel);
