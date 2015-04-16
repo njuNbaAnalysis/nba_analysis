@@ -208,6 +208,15 @@ public class BLController implements BLService {
 		}
 		return matchController.getTodayMatches(date);
 	}
+	
+    @Override
+    public Match getMatch(String date, String[] teamNameAbb) {
+        if(matchController == null){
+            matchController = MatchController.getInstance();
+        }
+        
+        return matchController.getMatch(date, teamNameAbb);
+    }
 
 	// team
 	@Override
@@ -263,12 +272,13 @@ public class BLController implements BLService {
 
 	@Override
 	public String getTime() {
-		// TODO Auto-generated method stub
 		if(matchController == null){
 			matchController = MatchController.getInstance();
         }
 		return matchController.getTime();
 	}
+
+
 
 	
 }
