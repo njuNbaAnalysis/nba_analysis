@@ -142,7 +142,7 @@ public class PlayerController {
 			if (playerList.get(i).getName().equals(name))
 				return playerList.get(i);
 		}
-		return null; // 没找到
+		return new Player(name, 0, null, null, 0, null, 0, 0, null); // 没找到
 	}
 
 	public ArrayList<Object> getResult(BLParameter parameter) {
