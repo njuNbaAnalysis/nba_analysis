@@ -207,6 +207,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 30));
 				result1 = 0;
 				result2 = 0;
+				//System.out.println(field);
 				switch(field){
 				case "point":
 				case "场均得分":

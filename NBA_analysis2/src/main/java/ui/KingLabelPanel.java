@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -64,7 +65,7 @@ public class KingLabelPanel extends HotLabelPanel {
 	private void setPlayerTableContent(Player[] players) {
 
 		tableContentLabel = new PlayerTableContentLabel(players, hotWidth,
-				hotHeight * 2 / 3);
+				hotHeight * 2 / 3,"point");
 		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
 				hotHeight * 2 / 3);
 		this.players = players;
@@ -84,8 +85,8 @@ public class KingLabelPanel extends HotLabelPanel {
 		((TeamTableContentLabel) tableContentLabel).setTeams(teams);
 	}
 
-	public void setPlayers(Player[] players) {
-		((PlayerTableContentLabel) tableContentLabel).setPlayers(players);
+	public void setPlayers(Player[] players,String field) {
+		((PlayerTableContentLabel) tableContentLabel).setPlayers(players,field);
 		this.players = players;
 	}
 
@@ -99,12 +100,13 @@ public class KingLabelPanel extends HotLabelPanel {
 		private int contentHeight;
 		private JLabel[] playerNames;
 		private JLabel[] playerTeamNames;
-
+		private String field;
 		public PlayerTableContentLabel(Player[] players, int contentWidth,
-				int contentHeight) {
+				int contentHeight,String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
+			this.field = field;
 			setPlayerNameLabel();
 
 		}
@@ -141,44 +143,115 @@ public class KingLabelPanel extends HotLabelPanel {
 			// 球队
 			playerTeamNames[0].setText(players[0].getTeam());
 			// 数据、球队图标暂无
-
+			
+			String data = getPlayerData(players[0]);
+			g.setColor(new Color(68, 68, 68));
+			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+			g.drawString(data, contentWidth / 4,
+					contentHeight * 4 / 5);
+			
+			
+			
+			
+			
 			g.setColor(new Color(246, 246, 246));
 			g.fillRect(contentWidth / 2, 0, contentWidth / 10,
 					contentHeight * 9 / 10);
 
 			for (int i = 2; i <= num; i++) {
-				g.setColor(new Color(146, 144, 144));
-				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 20));
-				g.drawString(i + "", contentWidth * 11 / 20, contentHeight
-						* (i - 1) / 5);
+				
+					g.setColor(new Color(146, 144, 144));
+					g.setFont(new Font("Oswald-Bold", Font.PLAIN, 20));
+					g.drawString(i + "", contentWidth * 11 / 20, contentHeight
+							* (i - 1) / 5);
 
-				BufferedImage image = UIUtils.resize(
-						players[i - 1].getPortrait(), contentWidth / 30,
-						contentHeight / 5);
+					BufferedImage image = UIUtils.resize(
+							players[i - 1].getPortrait(), contentWidth / 30,
+							contentHeight / 5);
 
-				g.drawImage(image, contentWidth * 3 / 5, contentHeight
-						* (8 * i - 13) / 40, this);
-				// 球员label
-				playerNames[i - 1].setText(players[i - 1].getName());
+					g.drawImage(image, contentWidth * 3 / 5, contentHeight
+							* (8 * i - 13) / 40, this);
+					// 球员label
+					playerNames[i - 1].setText(players[i - 1].getName());
 
-				g.setColor(new Color(68, 68, 68));
-				String str = Integer.toString(players[i - 1].getNumber()) + " "
-						+ players[i - 1].getPosition();
+					g.setColor(new Color(68, 68, 68));
+					String str = Integer.toString(players[i - 1].getNumber()) + " "
+							+ players[i - 1].getPosition();
 
-				// 球队label
-				playerTeamNames[i - 1].setText(players[i - 1].getTeam());
-				// JLabel team = new JLabel(players[i - 1].getTeam());
+					// 球队label
+					playerTeamNames[i - 1].setText(players[i - 1].getTeam());
+					// JLabel team = new JLabel(players[i - 1].getTeam());
 
-				g.drawString(str, contentWidth * 13 / 20, contentHeight
-						* (4 * i - 3) / 20);
+					g.drawString(str, contentWidth * 13 / 20, contentHeight
+							* (4 * i - 3) / 20);
 
-				// 没有球队图片，没有球员得分
+					// 没有球队图片，没有球员得分
+					data = getPlayerData(players[i-1]);
+					g.setColor(new Color(68, 68, 68));
+					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+					g.drawString(data, contentWidth * 17 / 20,
+							contentHeight
+							* (4 * i - 3) / 20);
+				
+				
 			}
 
 		}
 
-		public void setPlayers(Player[] players) {
+		private String getPlayerData(Player player) {
+			DecimalFormat df = new DecimalFormat("#0.0");
+			double result = 0;
+		//	System.out.println(field);
+			switch(field){
+			case "point":
+			case "场均得分":
+			case "得分":
+				
+				result = player.getAveragePoints();
+				break;
+			case "rebound":
+			case "场均篮板":
+			case "篮板":
+				result = player.getAverageRebounds();
+				break;
+			case "assist":
+			case "场均助攻":
+			case "助攻":
+				result = player.getAverageAssists();
+				break;
+			case "steal":
+			case "场均抢断":
+			case "抢断":
+				result = player.getAverageSteals();
+				break;
+			case "block":
+			case "blockShot":
+			case "场均盖帽":
+			case "盖帽":
+				result = player.getAverageBlockShots();
+				break;
+			case "三分%":
+			case "three":
+				result = player.getThreePointersPercentage()*100;
+				break;
+			
+			case  "%":
+			case "shot":
+				result = player.getFieldGoalsPercentage()*100;
+				break;
+			case "罚球%":
+			case "penalty":
+			    result = player.getFreeThrowsPercentage()*100;
+				break;
+			default:
+				System.out.println("Error in ImprovefLabelPanel.paintComponent()!!!"+field);	
+			}
+			return df.format(result);
+		}
+
+		public void setPlayers(Player[] players,String field) {
 			this.players = players;
+			this.field = field;
 			this.repaint();
 		}
 

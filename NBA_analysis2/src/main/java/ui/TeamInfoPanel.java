@@ -72,7 +72,7 @@ public class TeamInfoPanel extends JPanel {
 
 		KingLabelPanel playerKingPanel = new KingLabelPanel("TP", "常规赛 数据王",
 				columnName, width, height*1 / 3, bl,content);
-		playerKingPanel.setPlayers(players);
+		playerKingPanel.setPlayers(players,"point");
 		playerKingPanel.setBounds(0, 0, width, height*1 / 3);
 		js.add(playerKingPanel);
 
@@ -136,7 +136,7 @@ public class TeamInfoPanel extends JPanel {
 						KingLabelPanel playerKingPanel = new KingLabelPanel(
 								"TP", "常规赛 数据王", columnName, width, height / 3,
 								bl,content);
-						playerKingPanel.setPlayers(players);
+						playerKingPanel.setPlayers(players,"point");
 						playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 
 						js.removeAll();
