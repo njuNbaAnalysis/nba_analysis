@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -375,6 +376,7 @@ public class MatchPanel extends JPanel {
 			b1.setContentAreaFilled(false);
 			b1.setBorderPainted(false);
 			b1.setBounds(930, 150,200,30);
+			b1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			b1.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -398,6 +400,7 @@ public class MatchPanel extends JPanel {
 			b2.setContentAreaFilled(false);
 			b2.setBorderPainted(false);
 			b2.setBounds(930, 90,200,30);
+			b2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			b2.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -421,6 +424,7 @@ public class MatchPanel extends JPanel {
 			b3.setContentAreaFilled(false);
 			b3.setBorderPainted(false);
 			b3.setBounds(930, 210,200,30);
+			b3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			b3.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -445,6 +449,7 @@ public class MatchPanel extends JPanel {
 			b4.setContentAreaFilled(false);
 			b4.setBorderPainted(false);
 			b4.setBounds(1330, 90,200,30);
+			b4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			b4.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -469,6 +474,7 @@ public class MatchPanel extends JPanel {
 			b5.setContentAreaFilled(false);
 			b5.setBorderPainted(false);
 			b5.setBounds(1330, 150,200,30);
+			b5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			b5.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -493,6 +499,7 @@ public class MatchPanel extends JPanel {
 			b6.setContentAreaFilled(false);
 			b6.setBorderPainted(false);
 			b6.setBounds(1330, 210,200,30);
+			b6.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			b6.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
