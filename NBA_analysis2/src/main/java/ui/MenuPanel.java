@@ -1,6 +1,5 @@
 package ui;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,11 +25,12 @@ import logic.BLService;
 public class MenuPanel extends JPanel {
 	private int width;
 	private int height;
-	private int heightOfHead ;
+	private int heightOfHead;
 	private static Image logo;
 	int selectedNumber = -1;
 	boolean canFresh;
-	boolean hasFreshed;
+	boolean hasFreshed = true;
+	int currentType=1;
 	BLController bl;
 	ImageIcon playerIcon;
 	ImageIcon playerIconD;
@@ -51,7 +51,7 @@ public class MenuPanel extends JPanel {
 	ImageIcon exitIconR;
 	ImageIcon matchIcon;
 	ImageIcon matchIconD;
-	ImageIcon matchIconB;	
+	ImageIcon matchIconB;
 	ImageIcon hotPlayerIcon;
 	ImageIcon hotPlayerIconD;
 	ImageIcon hotPlayerIconB;
@@ -69,19 +69,21 @@ public class MenuPanel extends JPanel {
 	JButton exit;
 	JPanel content;
 	
+	MouseHandle freshListener;
+
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(31, 31, 31));
 		g.fillRect(0, 0, width, height);
 		g.drawImage(logo, 0, 0, this);
 	}
 
-	public MenuPanel(int width, int height, JPanel content,BLController bl) {
+	public MenuPanel(int width, int height, JPanel content, BLController bl) {
 		setLayout(null);
 		this.width = width / 10;
 		this.height = height;
-		this.heightOfHead = 116*height/(1080);
+		this.heightOfHead = 116 * height / (1080);
 		this.content = content;
-		this.bl=bl;
+		this.bl = bl;
 		loadImage();
 		initButton();
 		Thread fresh = new Thread(new Refresh());
@@ -119,9 +121,10 @@ public class MenuPanel extends JPanel {
 		try {
 			bufferLogo = ImageIO.read(new File("image" + File.separator
 					+ "logo3.png"));
-			//System.out.println(width+" "+bufferLogo.getWidth());
-			bufferLogo = this.resize(bufferLogo, width*25/24, (width*25*29)/(50*24));
-			//System.out.println(width+" "+bufferLogo.getWidth());
+			// System.out.println(width+" "+bufferLogo.getWidth());
+			bufferLogo = this.resize(bufferLogo, width * 25 / 24,
+					(width * 25 * 29) / (50 * 24));
+			// System.out.println(width+" "+bufferLogo.getWidth());
 			bufferPlayer = ImageIO.read(new File("image" + File.separator
 					+ "qiuyuan_l.png"));
 			bufferPlayer = this.resize_B(bufferPlayer);
@@ -173,7 +176,7 @@ public class MenuPanel extends JPanel {
 			bufferExitR = ImageIO.read(new File("image" + File.separator
 					+ "exit_r.png"));
 			bufferExitR = this.resize_B(bufferExitR);
-			
+
 			bufferMatchB = ImageIO.read(new File("image" + File.separator
 					+ "match_b.png"));
 			bufferMatchB = this.resize_B(bufferMatchB);
@@ -183,7 +186,7 @@ public class MenuPanel extends JPanel {
 			bufferMatchD = ImageIO.read(new File("image" + File.separator
 					+ "match_d.png"));
 			bufferMatchD = this.resize_B(bufferMatchD);
-			
+
 			bufferHotPlayerB = ImageIO.read(new File("image" + File.separator
 					+ "hotplayer_b.png"));
 			bufferHotPlayerB = this.resize_B(bufferHotPlayerB);
@@ -202,7 +205,7 @@ public class MenuPanel extends JPanel {
 			bufferFreshR = ImageIO.read(new File("image" + File.separator
 					+ "fresh_r.png"));
 			bufferFreshR = this.resize_B(bufferFreshR);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -239,8 +242,8 @@ public class MenuPanel extends JPanel {
 	public void initButton() {
 
 		statistics = new JButton();
-		statistics.setSize( width*25/24, (width*25*3)/(24*20));
-		statistics.setLocation(0, heightOfHead + 50*height/1080);
+		statistics.setSize(width * 25 / 24, (width * 25 * 3) / (24 * 20));
+		statistics.setLocation(0, heightOfHead + 50 * height / 1080);
 		statistics.setContentAreaFilled(false);
 		statistics.setBorderPainted(false);
 		statistics.setIcon(statisticsIcon);
@@ -250,8 +253,8 @@ public class MenuPanel extends JPanel {
 		this.add(statistics);
 
 		playerStat = new JButton();
-		playerStat.setSize( width*25/24, (width*25)/(24*8));
-		playerStat.setLocation(0, heightOfHead + 85*height/1080);
+		playerStat.setSize(width * 25 / 24, (width * 25) / (24 * 8));
+		playerStat.setLocation(0, heightOfHead + 85 * height / 1080);
 		playerStat.setContentAreaFilled(false);
 		playerStat.setBorderPainted(false);
 		playerStat.setIcon(playerStatisticsIcon);
@@ -261,8 +264,8 @@ public class MenuPanel extends JPanel {
 		this.add(playerStat);
 
 		teamStat = new JButton();
-		teamStat.setSize(width*25/24, (width*25)/(24*8));
-		teamStat.setLocation(0, heightOfHead + 110*height/1080);
+		teamStat.setSize(width * 25 / 24, (width * 25) / (24 * 8));
+		teamStat.setLocation(0, heightOfHead + 110 * height / 1080);
 		teamStat.setContentAreaFilled(false);
 		teamStat.setBorderPainted(false);
 		teamStat.setIcon(teamStatisticsIcon);
@@ -272,8 +275,8 @@ public class MenuPanel extends JPanel {
 		this.add(teamStat);
 
 		player = new JButton();
-		player.setSize( width*25/24, (width*25*3)/(24*20));
-		player.setLocation(0, heightOfHead + 160*height/1080);
+		player.setSize(width * 25 / 24, (width * 25 * 3) / (24 * 20));
+		player.setLocation(0, heightOfHead + 160 * height / 1080);
 		player.setContentAreaFilled(false);
 		player.setBorderPainted(false);
 		player.setIcon(playerIcon);
@@ -283,8 +286,8 @@ public class MenuPanel extends JPanel {
 		this.add(player);
 
 		team = new JButton();
-		team.setSize( width*25/24, (width*25*3)/(24*20));
-		team.setLocation(0, heightOfHead + 200*height/1080);
+		team.setSize(width * 25 / 24, (width * 25 * 3) / (24 * 20));
+		team.setLocation(0, heightOfHead + 200 * height / 1080);
 		team.setContentAreaFilled(false);
 		team.setBorderPainted(false);
 		team.setIcon(teamIcon);
@@ -292,10 +295,10 @@ public class MenuPanel extends JPanel {
 				teamIconB, 4);
 		team.addMouseListener(teamListener);
 		this.add(team);
-	
+
 		match = new JButton();
-		match.setSize( width*25/24, (width*25*3)/(24*20));
-		match.setLocation(0, heightOfHead + 240*height/1080);
+		match.setSize(width * 25 / 24, (width * 25 * 3) / (24 * 20));
+		match.setLocation(0, heightOfHead + 240 * height / 1080);
 		match.setContentAreaFilled(false);
 		match.setBorderPainted(false);
 		match.setIcon(matchIcon);
@@ -303,42 +306,40 @@ public class MenuPanel extends JPanel {
 				matchIconB, 6);
 		match.addMouseListener(matchListener);
 		this.add(match);
-		
+
 		hotPlayer = new JButton();
-		hotPlayer.setSize( width*25/24, (width*25*3)/(24*20));
-		hotPlayer.setLocation(0, heightOfHead + 280*height/1080);
+		hotPlayer.setSize(width * 25 / 24, (width * 25 * 3) / (24 * 20));
+		hotPlayer.setLocation(0, heightOfHead + 280 * height / 1080);
 		hotPlayer.setContentAreaFilled(false);
 		hotPlayer.setBorderPainted(false);
 		hotPlayer.setIcon(hotPlayerIcon);
-		MouseHandle hotPlayerListener = new MouseHandle(hotPlayerIconD, hotPlayerIcon,
-				hotPlayerIconB, 7);
+		MouseHandle hotPlayerListener = new MouseHandle(hotPlayerIconD,
+				hotPlayerIcon, hotPlayerIconB, 7);
 		hotPlayer.addMouseListener(hotPlayerListener);
 		this.add(hotPlayer);
 
 		fresh = new JButton();
-		fresh.setSize( width*25/24, (width*25*3)/(24*20));
-		fresh.setLocation(0,  height-120*height/1080);
+		fresh.setSize(width * 25 / 24, (width * 25 * 3) / (24 * 20));
+		fresh.setLocation(0, height - 120 * height / 1080);
 		fresh.setContentAreaFilled(false);
 		fresh.setBorderPainted(false);
 		fresh.setIcon(freshIcon);
-		MouseHandle freshListener = new MouseHandle(freshIcon,
-				freshIcon, freshIcon, 8);
+	    freshListener = new MouseHandle(freshIconD, freshIcon,
+				freshIcon, 8);
 		fresh.addMouseListener(freshListener);
 		this.add(fresh);
-		
+
 		exit = new JButton();
-		exit.setSize( width*25/24, (width*25*3)/(24*20));
-		exit.setLocation(0,  height-80*height/1080);
+		exit.setSize(width * 25 / 24, (width * 25 * 3) / (24 * 20));
+		exit.setLocation(0, height - 80 * height / 1080);
 		exit.setContentAreaFilled(false);
 		exit.setBorderPainted(false);
 		exit.setIcon(exitIcon);
-		MouseHandle exitStatListener = new MouseHandle(exitIconR,
-				exitIcon, exitIcon, 5);
+		MouseHandle exitStatListener = new MouseHandle(exitIconR, exitIcon,
+				exitIcon, 5);
 		exit.addMouseListener(exitStatListener);
 		this.add(exit);
-		
-		
-		
+
 	}
 
 	class MouseHandle extends MouseAdapter {
@@ -357,85 +358,101 @@ public class MenuPanel extends JPanel {
 
 		}
 
-		
-
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if ((selectedNumber != type)&&type!=8) {
+			if ((selectedNumber != type) && type != 8) {
 				((JButton) e.getSource()).setIcon(selIcon);
 				clearImage(selectedNumber);
 				selectedNumber = type;
 			}
-			
-			if(type==1){
-				
-				PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(width*10,height,bl,content);
-				teamRankTablePanel.setBounds(0, 0, width*9, height);
+
+			if (type == 1) {
+
+				PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(
+						width * 10, height, bl, content);
+				teamRankTablePanel.setBounds(0, 0, width * 9, height);
 				content.removeAll();
 				content.add(teamRankTablePanel);
 				content.updateUI();
-			
+				currentType=1;
+
 			}
-			
-			if(type==2){
-				TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(width*10,height,bl,content);
-				teamRankTablePanel.setBounds(0, 0, width*9, height);
+
+			if (type == 2) {
+				TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(
+						width * 10, height, bl, content);
+				teamRankTablePanel.setBounds(0, 0, width * 9, height);
 				content.removeAll();
 				content.add(teamRankTablePanel);
 				content.updateUI();
-				//teamRankTablePanel.refreshTablePanel(type);
-				
+				currentType=2;
+				// teamRankTablePanel.refreshTablePanel(type);
+
 			}
-			if(type==3){
-				
-				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(width*9,height,bl.getAllPlayers().get(0),bl,content);
-				teamRankTablePanel.setBounds(0, 0, width*9, height);
+			if (type == 3) {
+
+				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(
+						width * 9, height, bl.getAllPlayers().get(0), bl,
+						content);
+				teamRankTablePanel.setBounds(0, 0, width * 9, height);
 				teamRankTablePanel.startAnimation();
 				content.removeAll();
 				content.add(teamRankTablePanel);
 				content.updateUI();
-				
+				currentType=3;
 			}
-			if(type==4){
-				AllTeamPanel team = new AllTeamPanel(width*9, height, bl,content);
-				//TeamInfoPanel teamRankTablePanel = new TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl,content);
-				//team.setBounds(0, 0, width*9, height);
-				//teamRankTablePanel.startAnimation();
+			if (type == 4) {
+				AllTeamPanel team = new AllTeamPanel(width * 9, height, bl,
+						content);
+				// TeamInfoPanel teamRankTablePanel = new
+				// TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl,content);
+				// team.setBounds(0, 0, width*9, height);
+				// teamRankTablePanel.startAnimation();
 				content.removeAll();
 				content.setVisible(false);
 				content.add(team);
 				content.updateUI();
 				content.setVisible(true);
-				
+				currentType=4;
 			}
-			if(type==5){
+			if (type == 5) {
 				System.exit(0);
 			}
-			if(type==6){
-				//teamRankTablePanel.refreshTablePanel(type);
-				MatchPanel matchPanel = new MatchPanel(width*9,height,bl,content);
+			if (type == 6) {
+				// teamRankTablePanel.refreshTablePanel(type);
+				MatchPanel matchPanel = new MatchPanel(width * 9, height, bl,
+						content);
 				JScrollPane scrollPane = new JScrollPane(matchPanel);
-				scrollPane.setBounds(0, 0, width*9, height);
+				scrollPane.setBounds(0, 0, width * 9, height);
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 				content.removeAll();
 				content.add(scrollPane);
 				content.updateUI();
+				currentType=6;
 			}
-			if(type==7){
-				
-				
-				HotAndKingPanel hotAndKingPanel  = new HotAndKingPanel(width*10,height*6/5,bl,content);
-				hotAndKingPanel.setPreferredSize(new Dimension(width*10,height*6/5));
+			if (type == 7) {
+
+				HotAndKingPanel hotAndKingPanel = new HotAndKingPanel(
+						width * 10, height * 6 / 5, bl, content);
+				hotAndKingPanel.setPreferredSize(new Dimension(width * 10,
+						height * 6 / 5));
 				JScrollPane scrollPane = new JScrollPane(hotAndKingPanel);
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-				scrollPane.setBounds(0, 0, width*9, height);
+				scrollPane.setBounds(0, 0, width * 9, height);
 				content.removeAll();
 				content.add(scrollPane);
 				content.updateUI();
+				currentType=7;
 			}
-			
-			if(type==8){
-				((JButton) e.getSource()).setIcon(selIcon);
+
+			if (type == 8) {
+				// ((JButton) e.getSource()).setIcon(selIcon);
+				if (!hasFreshed) {
+					freshListener.oldIcon = freshIcon;
+					((JButton) e.getSource()).setIcon(freshIcon);
+					hasFreshed=true;
+				}
+				refresh();
 			}
 		}
 
@@ -486,30 +503,100 @@ public class MenuPanel extends JPanel {
 		}
 
 	}
-	
-	public BufferedImage resize_B(BufferedImage image){
-		double raw_width =(double)width*25/24 ;
-		return resize(image,(int)raw_width,(int)(raw_width*3/20));
-		
+
+	public BufferedImage resize_B(BufferedImage image) {
+		double raw_width = (double) width * 25 / 24;
+		return resize(image, (int) raw_width, (int) (raw_width * 3 / 20));
+
 	}
-	
-	public BufferedImage resize_S(BufferedImage image){
-		double raw_width =(double)width*25/24 ;
-		return resize(image,(int)raw_width,(int)(raw_width/8));
-		
+
+	public BufferedImage resize_S(BufferedImage image) {
+		double raw_width = (double) width * 25 / 24;
+		return resize(image, (int) raw_width, (int) (raw_width / 8));
+
 	}
-	
-	public static BufferedImage resize(BufferedImage image, int width, int height) {
+
+	public static BufferedImage resize(BufferedImage image, int width,
+			int height) {
 		BufferedImage bi = new BufferedImage(width, height,
 				BufferedImage.TRANSLUCENT);
-		
+
 		Graphics2D g2d = (Graphics2D) bi.createGraphics();
-		g2d.addRenderingHints(new RenderingHints(
-				RenderingHints.KEY_RENDERING,
+		g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
 				RenderingHints.VALUE_RENDER_QUALITY));
 		g2d.drawImage(image, 0, 0, width, height, null);
 		g2d.dispose();
 		return bi;
+	}
+
+	private void refresh(){
+		switch (currentType){
+		case 1:{
+			PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(
+					width * 10, height, bl, content);
+			teamRankTablePanel.setBounds(0, 0, width * 9, height);
+			content.removeAll();
+			content.add(teamRankTablePanel);
+			content.updateUI();
+			break;
+		}
+		case 2:{
+			TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(
+					width * 10, height, bl, content);
+			teamRankTablePanel.setBounds(0, 0, width * 9, height);
+			content.removeAll();
+			content.add(teamRankTablePanel);
+			content.updateUI();
+			break;
+		}
+		case 3:{
+			PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(
+					width * 9, height, bl.getAllPlayers().get(0), bl,
+					content);
+			teamRankTablePanel.setBounds(0, 0, width * 9, height);
+			teamRankTablePanel.startAnimation();
+			content.removeAll();
+			content.add(teamRankTablePanel);
+			content.updateUI();
+			break;
+		}
+		case 4:{
+			AllTeamPanel team = new AllTeamPanel(width * 9, height, bl,
+					content);
+			content.removeAll();
+			content.setVisible(false);
+			content.add(team);
+			content.updateUI();
+			content.setVisible(true);
+			break;
+		}
+		case 6:{
+			MatchPanel matchPanel = new MatchPanel(width * 9, height, bl,
+					content);
+			JScrollPane scrollPane = new JScrollPane(matchPanel);
+			scrollPane.setBounds(0, 0, width * 9, height);
+			scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+			content.removeAll();
+			content.add(scrollPane);
+			content.updateUI();
+			break;
+		}
+		case 7:{
+			HotAndKingPanel hotAndKingPanel = new HotAndKingPanel(
+					width * 10, height * 6 / 5, bl, content);
+			hotAndKingPanel.setPreferredSize(new Dimension(width * 10,
+					height * 6 / 5));
+			JScrollPane scrollPane = new JScrollPane(hotAndKingPanel);
+			scrollPane.getVerticalScrollBar().setUnitIncrement(20);
+			scrollPane.setBounds(0, 0, width * 9, height);
+			content.removeAll();
+			content.add(scrollPane);
+			content.updateUI();
+			currentType=7;
+			break;
+		}
+		}
+		
 	}
 	
 	class Refresh implements Runnable {
@@ -517,11 +604,13 @@ public class MenuPanel extends JPanel {
 		public void run() {
 			while (true) {
 				canFresh = bl.isMatchChanged();
-				
+
 				if (canFresh) {
-					fresh.setIcon(freshIconR);;
-				} 
-				
+					fresh.setIcon(freshIconR);
+					freshListener.oldIcon = freshIconR;
+					hasFreshed=false;
+				}
+
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -532,6 +621,5 @@ public class MenuPanel extends JPanel {
 		}
 
 	}
-	
 
 }
