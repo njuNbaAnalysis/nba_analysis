@@ -39,7 +39,10 @@ public class KingLabelPanel extends HotLabelPanel {
 		this.content = content;
 		setTableHeadLabel();
 		setButton(type);
-		setTableContent(type);
+		if(type.equals("P")||type.equals("T")){
+			setTableContent(type);
+		}
+		
 	}
 
 	public void setTableContent(String type) {
