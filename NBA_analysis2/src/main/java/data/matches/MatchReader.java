@@ -241,8 +241,12 @@ public class MatchReader {
 			return false;
 		} else {
 			String[] str = new String[numberOFcurrent - numberOFbefore];
-			for(int i=numberOFbefore;i<numberOFcurrent;i++){
-				str[i-numberOFbefore] = list[i];
+			for (int i = numberOFbefore; i < numberOFcurrent; i++) {
+				if (numberOFbefore >= 466) {
+					str[i - numberOFbefore] = list[i - 466]; // 466暂时硬编码，以后再想办法。
+				} else {
+					str[i - numberOFbefore] = list[i];
+				}
 			}
 			readText(str);
 			return true;

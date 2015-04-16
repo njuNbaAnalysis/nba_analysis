@@ -107,12 +107,13 @@ public class MatchController {
 		if (dataService == null)
 			dataService = DataController.getInstance();
 		matchList = dataService.getAllMatches();
+		Comparator<Match> comparator = new MatchComp();
+		Collections.sort(matchList, comparator);
 		ArrayList<Match> newMatchList = new ArrayList<Match>();
 		for (int i = MatchReader.numberOFbefore; i < MatchReader.numberOFcurrent; i++) {
 			newMatchList.add(matchList.get(i));
 		}
 		MatchReader.numberOFbefore = MatchReader.numberOFcurrent;
-		Comparator<Match> comparator = new MatchComp();
 		Collections.sort(newMatchList, comparator);
 		computeData(newMatchList);
 		PlayerController playcontrol = PlayerController.getInstance();

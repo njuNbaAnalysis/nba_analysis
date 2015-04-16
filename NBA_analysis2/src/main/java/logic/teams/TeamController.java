@@ -108,8 +108,6 @@ public class TeamController {
         Team team = getTeam(teamName);
         
         //得分，比赛场数赋值
-        System.out.println("team == null?" + (team == null));
-        System.out.println("teamName:" + teamName);
         team.setPoints(team.getPoints() + match.getPoints()[num]);
         team.setNumOfMatches(team.getNumOfMatches() + 1);
         
