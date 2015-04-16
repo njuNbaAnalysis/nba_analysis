@@ -66,7 +66,6 @@ public class TeamController {
         matchList = controller.getAllMatches();
         
         for(Match token:matchList){
-            System.out.println("token == null?" + token == null);
             parseRecordList(token,0);
             parseRecordList(token,1);
             
