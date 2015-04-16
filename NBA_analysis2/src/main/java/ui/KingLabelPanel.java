@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -294,9 +295,12 @@ public class KingLabelPanel extends HotLabelPanel {
 				}
 				playerNames[i].addMouseListener(new PlayerMouseAdapter());
 				playerNames[i].setOpaque(false);
+				playerNames[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
 
 				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
 				playerTeamNames[i].setOpaque(false);
+				playerTeamNames[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				this.add(playerNames[i]);
 				this.add(playerTeamNames[i]);
 			}
@@ -433,7 +437,7 @@ public class KingLabelPanel extends HotLabelPanel {
 							25));
 					teamNames[i].setBounds(contentWidth / 4,
 							contentHeight * 1 / 4, contentWidth / 8,
-							contentHeight * 3 / 20);
+							contentHeight * 13 / 80);
 
 				} else {
 
@@ -445,7 +449,7 @@ public class KingLabelPanel extends HotLabelPanel {
 							contentWidth * 1 / 15, contentHeight * (1) / 5);
 
 				}
-
+				teamNames[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				teamNames[i].addMouseListener(new TeamMouseAdapter());
 				teamNames[i].setOpaque(false);
 				this.add(teamNames[i]);

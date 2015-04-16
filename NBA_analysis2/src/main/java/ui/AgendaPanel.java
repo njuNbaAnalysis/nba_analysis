@@ -107,7 +107,6 @@ public class AgendaPanel extends JPanel{
 	                	int row = AgendaTable.this.getSelectedRow();
 	                	String teamName = (String)AgendaTable.this.getValueAt(row, column);
 	                	teamName = teamName.split(" ")[1];//空格在1位
-	                	System.out.println("球队名字"+teamName);
 	                	Team t = AgendaTable.this.bl.getTeamByName(teamName);
 	            		
 	            		TeamInfoPanel m = new TeamInfoPanel(width,height*3/2,t,AgendaTable.this.bl,AgendaTable.this.content);
@@ -137,7 +136,7 @@ public class AgendaPanel extends JPanel{
 			
 			DefaultTableModel model = new DefaultTableModel(null, agendaColumnName);
 			int size = matchList.size();
-			System.out.println("球员列表"+size);
+		//	System.out.println("球员列表"+size);
 			//imageList = new ArrayList<Image>();
 			
 			for(int i=0;i<12;i++){
