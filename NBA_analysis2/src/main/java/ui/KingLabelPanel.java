@@ -97,13 +97,16 @@ public class KingLabelPanel extends HotLabelPanel {
 		private Player[] players;
 		private int contentWidth;
 		private int contentHeight;
-		private JLabel teamName;
+		private JLabel[] playerNames;
+		private JLabel[] playerTeamNames;
 
 		public PlayerTableContentLabel(Player[] players, int contentWidth,
 				int contentHeight) {
 			this.players = players;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
+			setPlayerNameLabel();
+
 		}
 
 		public void paintComponent(Graphics g2) {
@@ -123,7 +126,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
 			// 姓名
 
-			setPlayerNameLabel();
+			playerNames[0].setText(players[0].getName());
 
 			// 号码
 			g.setColor(new Color(68, 68, 68));
@@ -136,10 +139,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.drawString(players[0].getPosition(), contentWidth / 4,
 					contentHeight * 3 / 5);
 			// 球队
-			g.setColor(new Color(68, 68, 68));
-			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-			g.drawString(players[0].getTeam(), contentWidth * 3 / 10,
-					contentHeight * 3 / 5);
+			playerTeamNames[0].setText(players[0].getTeam());
 			// 数据、球队图标暂无
 
 			g.setColor(new Color(246, 246, 246));
@@ -158,14 +158,17 @@ public class KingLabelPanel extends HotLabelPanel {
 
 				g.drawImage(image, contentWidth * 3 / 5, contentHeight
 						* (8 * i - 13) / 40, this);
+				// 球员label
+				playerNames[i - 1].setText(players[i - 1].getName());
 
-				g.setColor(Color.black);
-				g.setFont(new Font("Oswald-Bold", Font.PLAIN, 15));
-				g.drawString(players[i - 1].getName(), contentWidth * 13 / 20,
-						contentHeight * (4 * i - 5) / 20);
+				g.setColor(new Color(68, 68, 68));
 				String str = Integer.toString(players[i - 1].getNumber()) + " "
-						+ players[i - 1].getPosition() + " "
-						+ players[i - 1].getTeam();
+						+ players[i - 1].getPosition();
+
+				// 球队label
+				playerTeamNames[i - 1].setText(players[i - 1].getTeam());
+				// JLabel team = new JLabel(players[i - 1].getTeam());
+
 				g.drawString(str, contentWidth * 13 / 20, contentHeight
 						* (4 * i - 3) / 20);
 
@@ -180,22 +183,50 @@ public class KingLabelPanel extends HotLabelPanel {
 		}
 
 		private void setPlayerNameLabel() {
+			playerNames = new JLabel[5];
+			playerTeamNames = new JLabel[5];
+			// JLabel teamName = new JLabel(players[0].getName());
+			for (int i = 0; i < 5; i++) {
+				playerNames[i] = new JLabel();
+				playerTeamNames[i] = new JLabel();
+				if (i == 0) {
+					playerNames[i].setForeground(new Color(68, 68, 68));
+					playerNames[i].setFont(new Font("微软雅黑",
+							Font.ROMAN_BASELINE, 25));
+					playerNames[i].setBounds(contentWidth / 4,
+							contentHeight * 1 / 4, contentWidth / 8,
+							contentHeight * 3 / 20);
 
-			//JLabel teamName = new JLabel(players[0].getName());
-			if(teamName==null){
-				teamName = new JLabel(players[0].getName());
-			}else{
-				teamName.setText(players[0].getName());
+					playerTeamNames[i].setForeground(new Color(68, 68, 68));
+					playerTeamNames[i]
+							.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+					playerTeamNames[i].setBounds(contentWidth * 3 / 10,
+							contentHeight * 19 / 40, contentWidth / 8,
+							contentHeight * 3 / 20);
+				} else {
+					playerNames[i].setForeground(Color.black);
+					playerNames[i].setFont(new Font("Oswald-Bold", Font.PLAIN,
+							15));
+					playerNames[i].setBounds(contentWidth * 13 / 20,
+							contentHeight * (16 * i - 13) / 80,
+							contentWidth * 1 / 15, contentHeight * (1) / 5);
+
+					playerTeamNames[i].setForeground(Color.black);
+					playerTeamNames[i].setFont(new Font("Oswald-Bold",
+							Font.PLAIN, 15));
+					playerTeamNames[i].setBounds(contentWidth * 55 / 80,
+							(contentHeight * (8 * i - 3) / 40),
+							contentWidth * 1 / 20, contentHeight * (1) / 5);
+
+				}
+				playerNames[i].addMouseListener(new PlayerMouseAdapter());
+				playerNames[i].setOpaque(false);
+
+				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
+				playerTeamNames[i].setOpaque(false);
+				this.add(playerNames[i]);
+				this.add(playerTeamNames[i]);
 			}
-
-			teamName.setForeground(new Color(68, 68, 68));
-			teamName.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
-			teamName.setBounds(contentWidth / 4, contentHeight * 3 / 10,
-					contentWidth / 8, contentHeight*3 / 20);
-			teamName.addMouseListener(new PlayerMouseAdapter());
-			teamName.setOpaque(false);
-			this.add(teamName);
-		
 
 		}
 	}
@@ -204,10 +235,10 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Player p = KingLabelPanel.this.bl
-					.getPlayerByName(players[0].getName());
-			PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(
-					hotWidth, hotHeight * 3, p, KingLabelPanel.this.bl,
+			Player p = KingLabelPanel.this.bl.getPlayerByName(((JLabel) e
+					.getSource()).getText());
+			PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(hotWidth,
+					hotHeight * 3, p, KingLabelPanel.this.bl,
 					KingLabelPanel.this.content);
 			playInfoPanel.setBounds(0, 0, hotWidth, hotHeight * 3);
 			KingLabelPanel.this.content.removeAll();
@@ -219,17 +250,37 @@ public class KingLabelPanel extends HotLabelPanel {
 
 	}
 
+	private class TeamMouseAdapter extends MouseAdapter {
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			Team t = KingLabelPanel.this.bl.getTeamByName(((JLabel) e
+					.getSource()).getText());
+			TeamInfoPanel teamInfoPanel = new TeamInfoPanel(hotWidth,
+					hotHeight * 3, t, KingLabelPanel.this.bl,
+					KingLabelPanel.this.content);
+			teamInfoPanel.setBounds(0, 0, hotWidth, (int) (hotHeight * 3.5));
+			KingLabelPanel.this.content.removeAll();
+			KingLabelPanel.this.content.add(teamInfoPanel);
+			KingLabelPanel.this.content.updateUI();
+
+		}
+
+	}
+
 	private class TeamTableContentLabel extends JLabel {
 		private Team[] teams;
 		private int contentWidth;
 		private int contentHeight;
-		JLabel teamName;
+		// JLabel teamName;
+		JLabel[] teamNames;
 
 		public TeamTableContentLabel(Team[] teams, int contentWidth,
 				int contentHeight) {
 			this.teams = teams;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
+			setTeamNameLabel();
 		}
 
 		public void setTeams(Team[] teams) {
@@ -254,7 +305,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.setFont(new Font("default", Font.BOLD, 50));
 			g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
 			// 队名
-			setTeamNameLabel();
+			teamNames[0].setText(teams[0].getName());
 
 			// 联盟
 			g.setColor(new Color(68, 68, 68));
@@ -283,11 +334,10 @@ public class KingLabelPanel extends HotLabelPanel {
 						* (8 * i - 13) / 40, this);
 
 				g.setColor(Color.black);
-				g.setFont(new Font("default", Font.BOLD, 15));
-				
-				
-				g.drawString(teams[i - 1].getName(), contentWidth * 13 / 20,
-						contentHeight * (4 * i - 5) / 20);
+				g.setFont(new Font("default", Font.PLAIN, 15));
+
+				teamNames[i - 1].setText(teams[i - 1].getName());
+
 				String str = teams[i - 1].getConference()
 						+ teams[i - 1].getDivision();
 				g.drawString(str, contentWidth * 13 / 20, contentHeight
@@ -298,44 +348,38 @@ public class KingLabelPanel extends HotLabelPanel {
 		}
 
 		private void setTeamNameLabel() {
-			if(teamName==null){
-				teamName = new JLabel(teams[0].getName());
-			}else{
-				teamName.setText(teams[0].getName());
+
+			teamNames = new JLabel[5];
+			// JLabel teamName = new JLabel(players[0].getName());
+			for (int i = 0; i < 5; i++) {
+
+				teamNames[i] = new JLabel();
+				if (i == 0) {
+					teamNames[i].setForeground(new Color(68, 68, 68));
+					teamNames[i].setFont(new Font("微软雅黑", Font.ROMAN_BASELINE,
+							25));
+					teamNames[i].setBounds(contentWidth / 4,
+							contentHeight * 1 / 4, contentWidth / 8,
+							contentHeight * 3 / 20);
+
+				} else {
+
+					teamNames[i].setForeground(Color.black);
+					teamNames[i]
+							.setFont(new Font("Oswald-Bold", Font.PLAIN, 15));
+					teamNames[i].setBounds(contentWidth * 13 / 20,
+							contentHeight * (16 * i - 13) / 80,
+							contentWidth * 1 / 15, contentHeight * (1) / 5);
+
+				}
+
+				teamNames[i].addMouseListener(new TeamMouseAdapter());
+				teamNames[i].setOpaque(false);
+				this.add(teamNames[i]);
 			}
-			
-
-			teamName.setForeground(new Color(68, 68, 68));
-			teamName.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
-			teamName.setBounds(contentWidth / 4, contentHeight * 3 / 20,
-					contentWidth / 8, contentHeight / 5);
-			teamName.addMouseListener(new MouseAdapter() {
-				public void mouseEntered(MouseEvent e) {
-
-				}
-
-				public void mouseExited(MouseEvent e) {
-
-				}
-
-				public void mousePressed(MouseEvent e) {
-
-					Team t = KingLabelPanel.this.bl.getTeamByName(teams[0]
-							.getName());
-					TeamInfoPanel m = new TeamInfoPanel(hotWidth,
-							hotHeight * 3, t, KingLabelPanel.this.bl,
-							KingLabelPanel.this.content);
-					m.setBounds(0, 0, hotWidth, hotHeight * 3);
-					KingLabelPanel.this.content.removeAll();
-					KingLabelPanel.this.content.add(m);
-					KingLabelPanel.this.content.updateUI();
-
-				}
-			});
-			teamName.setOpaque(false);
-			this.add(teamName);
 
 		}
+
 	}
 
 }
