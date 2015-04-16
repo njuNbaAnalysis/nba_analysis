@@ -116,6 +116,20 @@ public class AgendaPanel extends JPanel{
 	            		AgendaTable.this.content.add(m);
 	            		AgendaTable.this.content.updateUI();
 	                }
+	               /* //暂时这样
+	                if ((column=AgendaTable.this.getSelectedColumn()) == 4) {
+	                	int row = AgendaTable.this.getSelectedRow();
+	                	String teamName = (String)AgendaTable.this.getValueAt(row, column);
+	                	teamName = teamName.split(" ")[1];//空格在1位
+	                	System.out.println("球队名字"+teamName);
+	                	Team t = AgendaTable.this.bl.getTeamByName(teamName);
+	            		
+	            		TeamInfoPanel m = new TeamInfoPanel(width,height*3/2,t,AgendaTable.this.bl,AgendaTable.this.content);
+	            		m.setBounds(0, 0, width, height*3/2);
+	            		AgendaTable.this.content.removeAll();
+	            		AgendaTable.this.content.add(m);
+	            		AgendaTable.this.content.updateUI();
+	                }*/
 	               
 	            }
 	        });
