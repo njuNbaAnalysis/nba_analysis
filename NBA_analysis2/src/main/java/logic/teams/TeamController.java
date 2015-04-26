@@ -202,11 +202,11 @@ public class TeamController {
         
         double incrementOfOffensiveRounds1 = fieldGoalAttempts1 + 0.4 * freeThrowAttemps1 - 1.07 * 
                 (1.0 * offensiveRebounds1 / (offensiveRebounds1 + defensiveRebounds2)
-                        * (fieldGoalAttempts1 + freeThrowAttemps1 - fieldGoalHits1 - freeThrowHits1)
+                        * (fieldGoalAttempts1 - fieldGoalHits1)
                         + 1.07 * turnOver1);
         double incrementOfOffensiveRounds2 = fieldGoalAttempts2 + 0.4 * freeThrowAttemps2 - 1.07 * 
                 (1.0 * offensiveRebounds2 / (offensiveRebounds2 + defensiveRebounds1)
-                        * (fieldGoalAttempts2 + freeThrowAttemps2 - fieldGoalHits2 - freeThrowHits2)
+                        * (fieldGoalAttempts2 - fieldGoalHits2)
                         + 1.07 * turnOver2);
         
         team1.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds1);
