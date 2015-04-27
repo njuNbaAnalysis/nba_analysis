@@ -80,66 +80,26 @@ public class DataController implements DataService{
         if(playerReader == null){  //通过对是否已经初始化的判断防止重复读取文件
             playerReader = new PlayerReader();
             playerReader.init();
-            /*Thread thread_readAction = new Thread(){
-                public void run(){
-                    playerReader.readAction();
-                }
-            };
-            Thread thread_readPortrait = new Thread(){
-                public void run(){
-                    playerReader.readPortrait();
-                }
-            };
-            thread_readAction.start();
-            thread_readPortrait.start();*/
-            
-            Thread thread_readImage = new Thread(){
-                public void run(){
-                    playerReader.readImage();
-                }
-            };
-            thread_readImage.start();
-        }
-        else{
-            /*Thread thread_readAction = new Thread(){
-                public void run(){
-                    playerReader.readAction();
-                }
-            };
-            Thread thread_readPortrait = new Thread(){
-                public void run(){
-                    playerReader.readPortrait();
-                }
-            };
-            thread_readAction.start();
-            thread_readPortrait.start();*/
-            
-            Thread thread_readImage = new Thread(){
-                public void run(){
-                    playerReader.readImage();
-                }
-            };
-            thread_readImage.start();
         }
         
         if(teamReader == null){
             teamReader = new TeamReader();
             teamReader.init();
-            Thread thread_readImage = new Thread(){
-                public void run(){
-                    teamReader.readImage();
-                }
-            };
-            thread_readImage.start();
         }
-        else{
-            Thread thread_readImage = new Thread(){
-                public void run(){
-                    teamReader.readImage();
-                }
-            };
-            thread_readImage.start();
-        }
+        
+        Thread thread_readImage = new Thread(){
+            public void run(){
+                playerReader.readImage();
+            }
+        };
+        thread_readImage.start();
+        
+        Thread thread_readImage2 = new Thread(){
+            public void run(){
+                teamReader.readImage();
+            }
+        };
+        thread_readImage2.start();
     }
 
 }

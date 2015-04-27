@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import logic.BLController;
 import logic.BLParameter;
+import logic.Console;
 import logic.BLParameter.Mode;
 import logic.BLParameter.Sort;
 import logic.matches.Match;
@@ -18,6 +19,8 @@ import data.DataService;
 
 
 public class TeamController {
+    public static boolean isDataAvailable = false;//判断一下数据是否已经计算完成，如果已经计算完成则无需重复计算
+    
     private ArrayList<Team> teamList = null;
     private static TeamController teamController = null;
     private DataService dataService;
@@ -27,6 +30,7 @@ public class TeamController {
      */
     private TeamController(){
         dataService = DataController.getInstance();
+        
         init();//此时做init为了使构造和init不能分开调用，防止BLController中的机制出错
     }
     
@@ -42,8 +46,11 @@ public class TeamController {
     
     public void init(){
         teamList = dataService.getAllTeams();
-        computeData();
         
+        if(!isDataAvailable){
+            computeData();
+            isDataAvailable = true;
+        }
         
 //        long current = System.currentTimeMillis();
 //        computeData();
@@ -59,6 +66,7 @@ public class TeamController {
     
     //对team数据进一步计算
     //包括对team被赛季的联盟排名进行赋值
+    //包括比赛数据的加载，不包括team数据加载
     private void computeData(){
         
         ArrayList<Match> matchList = new ArrayList<Match>();
@@ -68,7 +76,6 @@ public class TeamController {
         for(Match token:matchList){
             parseRecordList(token,0);
             parseRecordList(token,1);
-            
         }
         
         for(Match token:matchList){
@@ -104,8 +111,8 @@ public class TeamController {
     //对某一个recordList进行处理
     //对不包含对手team的属性进行赋值
     private void parseRecordList(Match match,int num){
-        String teamName = match.getTeams()[num];
-        Team team = getTeam(teamName);
+        String teamAbbreviation = match.getTeams()[num];
+        Team team = getTeam(teamAbbreviation);
         
         //得分，比赛场数赋值
         team.setPoints(team.getPoints() + match.getPoints()[num]);
@@ -151,6 +158,8 @@ public class TeamController {
                 team.getPlayerList().add(name);
             }
         }
+        
+        //System.out.println("teamName: " + team.getAbbreviation() + " offensiveRebounds:" + team.getOffensiveRebounds());;
         
     }
 
@@ -226,13 +235,13 @@ public class TeamController {
         team2.setPointsRival(team2.getPointsRival() + match.getPoints()[0]);
         for(RecordOfPlayer token:match.getFirstRecordList()){
             team2.setFieldGoalAttempsRival(team2.getFieldGoalAttempsRival() + token.getFieldGoalAttempts());
-            team2.setThreePointerAttemptsRival(team2.getThreePointerAttemptsRival() + token.getFreeThrowAttemps());
+            team2.setThreePointerAttemptsRival(team2.getThreePointerAttemptsRival() + token.getThreePointAttemps());
             team2.setOffenseReboundsRival(team2.getOffenseReboundsRival() + token.getOffensiveRebounds());
             team2.setDefenseReboundsRival(team2.getDefenseReboundsRival() + token.getDefensiveRebounds());
         }
         for(RecordOfPlayer token:match.getSecondRecordList()){
             team1.setFieldGoalAttempsRival(team1.getFieldGoalAttempsRival() + token.getFieldGoalAttempts());
-            team1.setThreePointerAttemptsRival(team1.getThreePointerAttemptsRival() + token.getFreeThrowAttemps());
+            team1.setThreePointerAttemptsRival(team1.getThreePointerAttemptsRival() + token.getThreePointAttemps());
             team1.setOffenseReboundsRival(team1.getOffenseReboundsRival() + token.getOffensiveRebounds());
             team1.setDefenseReboundsRival(team1.getDefenseReboundsRival() + token.getDefensiveRebounds());
         }
@@ -251,17 +260,19 @@ public class TeamController {
         }
     }
     
+    //自动化测试调用的方法
     public ArrayList<Object> getResult(BLParameter parameter){
+        
         
         ArrayList<Object> result = new ArrayList<Object>();
         
-        //进行数据加载
-        if(parameter.isHigh()){
+        //进行数据加载，在init中直接进行计算
+/*        if(parameter.isHigh()){
             computeHighInfo();
         }
         else{
             computeNormalInfo();
-        }
+        }*/
         
         //进行mode判断,如果是hot直接处理并返回
         Mode mode = parameter.getMode();
@@ -302,19 +313,24 @@ public class TeamController {
     }
     
     //只计算普通数据，为了数据通常这两个只有一个会被调用，根据matchList即时计算
+    //包含team数据加载
     private void computeNormalInfo(){
+        //加载所有的team数据
+        teamList = dataService.getAllTeams();
          
         MatchController controller = MatchController.getInstance();
         ArrayList<Match> matchList = controller.getAllMatches();
-        
         for(Match token:matchList){
             parseRecordList(token,0);
             parseRecordList(token,1);
         }
+        
     }
     
-    //只计算高阶数据，根据matchList即时计算 
+    //只计算高阶数据，根据matchList即时计算 ，包含team数据加载
     private void computeHighInfo(){
+        //加载所有的team数据
+        teamList = dataService.getAllTeams();
         computeData();  //所有数据必须在normalInfo上进行计算，故直接调用原有接口computeData
     }
 

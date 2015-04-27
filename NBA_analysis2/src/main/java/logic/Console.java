@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import logic.teams.Team;
 import util.Setting;
 
 public class Console {
     public void execute(java.io.PrintStream out,String[] args){
+        
         if(args[0].equals("--datasource")){
             Setting.setPath(args[1]);
         }
@@ -38,6 +40,7 @@ public class Console {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
     
 
