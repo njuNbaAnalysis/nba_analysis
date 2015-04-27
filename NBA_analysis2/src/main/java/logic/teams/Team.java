@@ -197,7 +197,9 @@ public class Team {
     }
     
     public double getOffensiveReboundsEfficiency(){
-        return this.getOffensiveRounds() * 1.0/(this.getOffensiveRebounds() + this.getDefenseReboundsRival());
+        return this.getOffensiveRebounds() * 1.0/(this.getOffensiveRebounds() + this.getDefenseReboundsRival());
+        
+        
     }
 
 
@@ -206,7 +208,7 @@ public class Team {
     }
     
     public double getDefensiveReboundsEfficiency(){
-        return this.getDefensiveRebounds() * 1.0 / (this.getDefensiveRebounds() * this.getOffenseReboundsRival());
+        return this.getDefensiveRebounds() * 1.0 / (this.getDefensiveRebounds() + this.getOffenseReboundsRival());
     }
 
 
@@ -555,7 +557,13 @@ public class Team {
         this.conference = conference;
     }
 
-    
+    public int getRankingInLeague() {
+        return rankingInLeague;
+    }
+
+    public void setRankingInLeague(int rankingInLeague) {
+        this.rankingInLeague = rankingInLeague;
+    }
     
     
     
@@ -580,7 +588,7 @@ public class Team {
         info.setOffendEfficient(this.getOffenseEfficiency());
         info.setOffendReboundEfficient(this.getOffensiveReboundsEfficiency());;
         info.setStealEfficient(this.getStealsEfficiency());
-        info.setTeamName(this.getName());
+        info.setTeamName(this.getAbbreviation());
         info.setWinRate(this.getWinningPercentage());
         
         return info;
@@ -632,14 +640,13 @@ public class Team {
             System.out.println("error in Team.getHotInfo: " + field);
         }
         
-        info.setLeague(this.getDivision());
-        info.setTeamName(this.getName());
+        info.setLeague(Character.toString(this.getConference()));
+        info.setTeamName(this.getAbbreviation());
         
         return info;
     }
     
     public TeamNormalInfo getNormalInfo(boolean isAverage){
-        
         TeamNormalInfo info = new TeamNormalInfo();
         
         if(isAverage){
@@ -662,12 +669,12 @@ public class Team {
             info.setSteal(this.getSteals());
             info.setFoul(this.getFouls());
             info.setFault(this.getTurnOver());
-            info.setDefendRebound(this.getDefensiveRounds());
+            info.setDefendRebound(this.getDefensiveRebounds());
             info.setOffendRebound(this.getOffensiveRebounds());
         }
         
         info.setNumOfGame(this.getNumOfMatches());
-        info.setTeamName(this.getName());
+        info.setTeamName(this.getAbbreviation());
         info.setShot(this.getFieldGoalsPercentage());
         info.setThree(this.getThreePointersPercentage());
         info.setPenalty(this.getFreeThrowsPercentage());
@@ -676,13 +683,7 @@ public class Team {
         return info;
     }
 
-    public int getRankingInLeague() {
-        return rankingInLeague;
-    }
 
-    public void setRankingInLeague(int rankingInLeague) {
-        this.rankingInLeague = rankingInLeague;
-    }
 
     //返回当前球队所涉及的所有比赛,根据日期进行升序排序并返回
     public ArrayList<MatchSimpleInfo> getMatchSimpleInfo(){

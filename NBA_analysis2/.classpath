@@ -19,7 +19,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/batik"/>
-	<classpathentry kind="lib" path="C:/Users/Lionel&apos;s PC/Desktop/NBA_analysis/NBA_analysis2/libs/testData.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lionel&apos;s PC/Desktop/NBA_analysis/NBA_analysis2/libs/testData.jar" sourcepath="C:/Users/Lionel&apos;s PC/Desktop/NBA_analysis/NBA_analysis2/libs/testData.src.zip"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
