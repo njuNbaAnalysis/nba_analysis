@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import logic.teams.Team;
+import logic.teams.TeamController;
 import util.Setting;
 
 public class Console {
@@ -29,18 +30,19 @@ public class Console {
     
     //仅作测试用
     public static void main(String[] args){
-        System.out.println("use ___ (three times) to split string,example: --datasource___D:nba// enter your command:");
+        System.out.println("use a space to split string,example: --datasource D:nba// ,notice that space in a path is not supported! enter your command:");
         
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String input = null;
         try {
                 input = reader.readLine();
                 Console c = new Console();
-                c.execute(System.out, input.trim().split("___"));
+                c.execute(System.out, input.trim().split(" "));
         } catch (IOException e) {
             e.printStackTrace();
         }
         
+        System.out.println("测试数据： " + TeamController.testValue);
     }
     
 

@@ -6,20 +6,22 @@ import java.util.Comparator;
 
 import logic.BLController;
 import logic.BLParameter;
-import logic.Console;
 import logic.BLParameter.Mode;
 import logic.BLParameter.Sort;
 import logic.matches.Match;
 import logic.matches.MatchController;
 import logic.matches.RecordOfPlayer;
+
 import compare.TeamComparator;
 import compare.TeamWinPercentageComp;
+
 import data.DataController;
 import data.DataService;
 
 
 public class TeamController {
     public static boolean isDataAvailable = false;//判断一下数据是否已经计算完成，如果已经计算完成则无需重复计算
+    public static double testValue = 0;
     
     private ArrayList<Team> teamList = null;
     private static TeamController teamController = null;
@@ -118,6 +120,16 @@ public class TeamController {
         team.setPoints(team.getPoints() + match.getPoints()[num]);
         team.setNumOfMatches(team.getNumOfMatches() + 1);
         
+/*        if(team.getAbbreviation().equals("POR")){
+            StringBuilder builder = new StringBuilder("");
+            builder.append("球队：").append(team.getAbbreviation() + "  ")
+            .append("日期：").append(match.getDate() + "  ")
+            .append("得分：").append(match.getPoints()[num] + "  ");
+            
+            System.out.println(builder);
+            testValue += match.getPoints()[num];
+        }*/
+        
         //胜利场数赋值
         //getRecordList&if win,plus one
         ArrayList<RecordOfPlayer> recordList = null;
@@ -211,18 +223,65 @@ public class TeamController {
         
         double incrementOfOffensiveRounds1 = fieldGoalAttempts1 + 0.4 * freeThrowAttemps1 - 1.07 * 
                 (1.0 * offensiveRebounds1 / (offensiveRebounds1 + defensiveRebounds2)
-                        * (fieldGoalAttempts1 - fieldGoalHits1)
-                        + 1.07 * turnOver1);
+                        * (fieldGoalAttempts1 - fieldGoalHits1))
+                        + 1.07 * turnOver1;
         double incrementOfOffensiveRounds2 = fieldGoalAttempts2 + 0.4 * freeThrowAttemps2 - 1.07 * 
                 (1.0 * offensiveRebounds2 / (offensiveRebounds2 + defensiveRebounds1)
-                        * (fieldGoalAttempts2 - fieldGoalHits2)
-                        + 1.07 * turnOver2);
+                        * (fieldGoalAttempts2 - fieldGoalHits2))
+                        + 1.07 * turnOver2;
         
+        //for debug in OffensiveRounds
+        {
+            /*if(team2.getAbbreviation().equals("POR")){
+                StringBuilder builder1 = new StringBuilder("");
+                builder1.append("teamAbbreviation: ").append(team1.getAbbreviation()).append("  ")
+                .append("日期： ").append(match.getDate() + "  ")
+                .append("投篮尝试数: ").append(fieldGoalAttempts1 + "  ")
+                .append("投篮命中数： ").append(fieldGoalHits1 + "  ")
+                .append("罚球尝试数: ").append(freeThrowAttemps1 + "  ")
+                .append("进攻篮板: ").append(offensiveRebounds1 + "  ")
+                .append("防守篮板: ").append(defensiveRebounds2 + "  ")
+                .append("投失球数: ").append(fieldGoalAttempts1 - fieldGoalHits1 + "  ")
+                .append("失误数: ").append(turnOver1 + "  ")
+                .append("进工回合数： ").append(incrementOfOffensiveRounds1);
+                
+                System.out.println(builder1);
+                testValue += incrementOfOffensiveRounds1;
+            }
+            
+            if(team1.getAbbreviation().equals("POR")){
+                StringBuilder builder2 = new StringBuilder("");
+                builder2.append("teamAbbreviation: ").append(team2.getAbbreviation()).append("  ")
+                .append("日期： ").append(match.getDate() + "  ")
+                .append("投篮尝试数: ").append(fieldGoalAttempts2 + "  ")
+                .append("投篮命中数： ").append(fieldGoalHits2 + "  ")
+                .append("罚球尝试数: ").append(freeThrowAttemps2 + "  ")
+                .append("进攻篮板: ").append(offensiveRebounds2 + "  ")
+                .append("防守篮板: ").append(defensiveRebounds1 + "  ")
+                .append("投失球数: ").append(fieldGoalAttempts2 - fieldGoalHits2 + "  ")
+                .append("失误数: ").append(turnOver2 + "  ")
+                .append("进工回合数： ").append(incrementOfOffensiveRounds2); 
+                
+                System.out.println(builder2);
+                testValue+= incrementOfOffensiveRounds2;
+            }*/
+            
+/*            if(team2.getAbbreviation().equals("SAS")
+                    && match.getDate().equals("13-14_2013-10-30")){
+                StringBuilder builder = new StringBuilder("");
+                for(RecordOfPlayer record:recordList2){
+                    builder.append(record.getDefensiveRebounds() + " ");
+                }
+                System.out.println(builder);
+            }*/
+        }
+
         team1.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds1);
         team2.setDefensiveRounds(team2.getDefensiveRounds() + incrementOfOffensiveRounds1);
-        //System.out.println("防守回合:" + record.getFreeThrowAttemps());
-        team2.setOffensiveRounds(team1.getOffensiveRounds() + incrementOfOffensiveRounds2);
-        team1.setDefensiveRounds(team2.getDefensiveRounds() + incrementOfOffensiveRounds2);
+   
+        team2.setOffensiveRounds(team2.getOffensiveRounds() + incrementOfOffensiveRounds2);
+        team1.setDefensiveRounds(team1.getDefensiveRounds() + incrementOfOffensiveRounds2);
+
     }
     
     //对对方各种属性赋值
@@ -233,6 +292,23 @@ public class TeamController {
         //对手各种属性累加赋值，
         team1.setPointsRival(team1.getPointsRival() + match.getPoints()[1]);
         team2.setPointsRival(team2.getPointsRival() + match.getPoints()[0]);
+        
+/*        if(team1.getAbbreviation().equals("POR")){
+            StringBuilder builder = new StringBuilder("");
+            builder.append("球队缩写： ").append(team2.getAbbreviation())
+            .append("比赛时间： ").append(match.getDate())
+            .append("得分： ").append(match.getPoints()[1]);
+            System.out.println(builder);
+        }
+        if(team2.getAbbreviation().equals("POR")){
+            StringBuilder builder = new StringBuilder("");
+            builder.append("球队缩写： ").append(team1.getAbbreviation())
+            .append("比赛时间： ").append(match.getDate())
+            .append("得分： ").append(match.getPoints()[0]);
+            System.out.println(builder);
+        } */
+        
+        
         for(RecordOfPlayer token:match.getFirstRecordList()){
             team2.setFieldGoalAttempsRival(team2.getFieldGoalAttempsRival() + token.getFieldGoalAttempts());
             team2.setThreePointerAttemptsRival(team2.getThreePointerAttemptsRival() + token.getThreePointAttemps());
@@ -251,9 +327,7 @@ public class TeamController {
     private void computeEfficiency(ArrayList<Team> teamList){
         for(Team team:teamList){
             team.setOffenseEfficiency(team.getPoints() * 1.0 / team.getOffensiveRounds() * 100);
-            team.setDefenseEfficiency(1.0 * team.getPoints() / team.getDefensiveRounds() * 100);
-/*            System.out.println("本队篮板: " + team.getRebounds());
-            System.out.println("对手篮板: " + team.getReboundsRival());*/
+            team.setDefenseEfficiency(1.0 * team.getPointsRival() / team.getDefensiveRounds() * 100); 
             team.setReboundsEfficiency(team.getRebounds() * 1.0 / (team.getRebounds() + team.getReboundsRival()));
             team.setStealsEfficiency(1.0 * team.getSteals() / team.getDefensiveRounds() * 100);
             team.setAssistsPercentage(1.0 * team.getAssists() / team.getOffensiveRounds() * 100);
