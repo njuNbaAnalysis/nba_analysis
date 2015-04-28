@@ -1,10 +1,8 @@
 package logic.players;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 import compare.PlayerComparator;
 import compare.PlayerUpgradeRateComp;
@@ -74,18 +72,47 @@ public class PlayerController {
 		ArrayList<RecordOfPlayer> ListOfPlayers2 = temp.getSecondRecordList();
 		for (int j = 0; j < ListOfPlayers1.size(); j++) {
 			UpdataPlayer(ListOfPlayers1.get(j), temp.getTeams()[0],
-					temp.getDate(), temp.getTeams()[1]);
+					temp.getDate(), temp.getTeams()[1], ListOfPlayers1,
+					ListOfPlayers2);
 		}
 		for (int j = 0; j < ListOfPlayers2.size(); j++) {
 			UpdataPlayer(ListOfPlayers2.get(j), temp.getTeams()[1],
-					temp.getDate(), temp.getTeams()[0]);
+					temp.getDate(), temp.getTeams()[0], ListOfPlayers2,
+					ListOfPlayers1);
 		}
 
 	}
 
 	private void UpdataPlayer(RecordOfPlayer record, String team, String Date,
-			String enemy) {
+			String enemy, ArrayList<RecordOfPlayer> List1,
+			ArrayList<RecordOfPlayer> List2) {
 		boolean isexit = false;
+		double sumOfTime = 0;
+		int sumOffieldGoalAttempts = 0;
+		int sumOfrebounds = 0;
+		int sumOfoffenseRebounds = 0;
+		int sumOfdefenseRebounds = 0;
+		int sumOfturnOver = 0;
+		int sumOffreeThrowAttempts = 0;
+		int sumOffieldGoalHits = 0;
+		int sumOfopponentrebounds = 0;
+		int sumOfopponentoffenserebounds = 0;
+		int sumOfopponentdefenseRebounds = 0;
+		for (int i = 0; i < List1.size(); i++) {
+			sumOfTime += List1.get(i).getMinutes();
+			sumOfdefenseRebounds += List1.get(i).getDefensiveRebounds();
+			sumOffieldGoalAttempts += List1.get(i).getFieldGoalAttempts();
+			sumOffieldGoalHits += List1.get(i).getFieldGoalHits();
+			sumOffreeThrowAttempts += List1.get(i).getFreeThrowAttemps();
+			sumOfoffenseRebounds += List1.get(i).getOffensiveRebounds();
+			sumOfrebounds += List1.get(i).getRebounds();
+			sumOfturnOver += List1.get(i).getTurnOver();
+		}
+		for (int i = 0; i < List2.size(); i++) {
+			sumOfopponentdefenseRebounds += List2.get(i).getDefensiveRebounds();
+			sumOfopponentoffenserebounds += List2.get(i).getOffensiveRebounds();
+			sumOfopponentrebounds += List2.get(i).getRebounds();
+		}
 		for (Player temp : playerList) {
 			if (temp.getName().equals(record.getPlayerName())) {
 				isexit = true;
@@ -117,6 +144,27 @@ public class PlayerController {
 				if (record.isStarted())
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
+				temp.setSumOfdefenseRebounds(temp.getSumOfdefenseRebounds()
+						+ sumOfdefenseRebounds);
+				temp.setSumOffieldGoalAttempts(temp.getSumOffieldGoalAttempts()
+						+ sumOffieldGoalAttempts);
+				temp.setSumOffieldGoalHits(temp.getSumOffieldGoalHits()
+						+ sumOffieldGoalHits);
+				temp.setSumOffreeThrowAttempts(temp.getSumOffreeThrowAttempts()
+						+ sumOffreeThrowAttempts);
+				temp.setSumOfoffenseRebounds(temp.getOffenseRebounds()
+						+ sumOfoffenseRebounds);
+				temp.setSumOfopponentdefenseRebounds(temp
+						.getSumOfopponentdefenseRebounds()
+						+ sumOfopponentdefenseRebounds);
+				temp.setSumOfopponentoffenserebounds(temp
+						.getSumOfopponentoffenserebounds()
+						+ sumOfopponentoffenserebounds);
+				temp.setSumOfopponentrebounds(temp.getSumOfopponentrebounds()
+						+ sumOfopponentrebounds);
+				temp.setSumOfrebounds(temp.getSumOfrebounds() + sumOfrebounds);
+				temp.setSumOfTime(temp.getSumOfTime() + sumOfTime);
+				temp.setSumOfturnOver(temp.getSumOfturnOver() + sumOfturnOver);
 				temp.AddRecord(record.getPoints(), record.getRebounds(),
 						record.getAssists(), record.getSteals(),
 						record.getBlocks(), Date, enemy);
@@ -144,7 +192,7 @@ public class PlayerController {
 		}
 		if (!isexit) {
 			addPlayer(record.getPlayerName(), record.getPosition());
-			UpdataPlayer(record, team, Date, enemy);
+			UpdataPlayer(record, team, Date, enemy, List1, List2);
 		}
 	}
 
@@ -209,7 +257,7 @@ public class PlayerController {
 				Sort sort = parameter.new Sort(field, false);
 				parameter.addSort(sort);
 				this.sort(PlayerAfterFliter, parameter);
-				for (int i = 0; i < 5; i++) {	// 默认5个
+				for (int i = 0; i < 5; i++) { // 默认5个
 					result.add(PlayerAfterFliter.get(i).getKingInfo(field));
 				}
 			}
