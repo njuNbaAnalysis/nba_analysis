@@ -865,8 +865,8 @@ public class Player {
 			info.setFoul(this.getFouls());
 			info.setFault(this.getTurnOver());
 			info.setDefend(this.getDefenseRebounds());
-			info.setEfficiency(this.getEfficiency());
-			info.setMinute(this.getMinutes());
+			info.setEfficiency(this.getAverageEfficiency()); 	// 待定
+			info.setMinute(this.getMinutes() / 60); 
 			info.setOffend(this.getOffenseRebounds());
 			info.setPoint(this.getPoints());
 		}
