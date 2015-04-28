@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+
 import compare.PlayerComparator;
 import compare.PlayerUpgradeRateComp;
 import compare.todayPlayerComp;
@@ -72,17 +73,22 @@ public class PlayerController {
 		ArrayList<RecordOfPlayer> ListOfPlayers1 = temp.getFirstRecordList();
 		ArrayList<RecordOfPlayer> ListOfPlayers2 = temp.getSecondRecordList();
 		for (int j = 0; j < ListOfPlayers1.size(); j++) {
-			UpdataPlayer(ListOfPlayers1.get(j), temp.getTeams()[0],temp.getDate(),temp.getTeams()[1]);
+			UpdataPlayer(ListOfPlayers1.get(j), temp.getTeams()[0],
+					temp.getDate(), temp.getTeams()[1]);
 		}
 		for (int j = 0; j < ListOfPlayers2.size(); j++) {
-			UpdataPlayer(ListOfPlayers2.get(j), temp.getTeams()[1],temp.getDate(),temp.getTeams()[0]);
+			UpdataPlayer(ListOfPlayers2.get(j), temp.getTeams()[1],
+					temp.getDate(), temp.getTeams()[0]);
 		}
 
 	}
 
-	private void UpdataPlayer(RecordOfPlayer record, String team,String Date,String enemy) {
+	private void UpdataPlayer(RecordOfPlayer record, String team, String Date,
+			String enemy) {
+		boolean isexit = false;
 		for (Player temp : playerList) {
 			if (temp.getName().equals(record.getPlayerName())) {
+				isexit = true;
 				temp.setAssists(temp.getAssists() + record.getAssists());
 				temp.setBlockShots(temp.getBlockShots() + record.getBlocks());
 				temp.setDefenseRebounds(temp.getDefenseRebounds()
@@ -112,7 +118,8 @@ public class PlayerController {
 					temp.setGameStarted(temp.getGameStarted() + 1);
 				temp.setGamePlayed(temp.getGamePlayed() + 1);
 				temp.AddRecord(record.getPoints(), record.getRebounds(),
-						record.getAssists(),record.getSteals(),record.getBlocks(),Date,enemy);
+						record.getAssists(), record.getSteals(),
+						record.getBlocks(), Date, enemy);
 				int flag = 0;// 用于计算两双或三双
 				if (record.getAssists() >= 10)
 					flag++;
@@ -135,6 +142,17 @@ public class PlayerController {
 				break;
 			}
 		}
+		if (!isexit) {
+			addPlayer(record.getPlayerName(), record.getPosition());
+			UpdataPlayer(record, team, Date, enemy);
+		}
+	}
+
+	private void addPlayer(String playerName, String position) {
+		// TODO Auto-generated method stub
+		int a[] = { 0, 0 };
+		playerList
+				.add(new Player(playerName, 0, position, a, 0, null, 0, 0, ""));
 	}
 
 	public Player getPlayer(String name) {
