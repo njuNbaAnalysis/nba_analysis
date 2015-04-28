@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import util.Setting;
+import data.matches.MatchMistake;
 import data.matches.MatchMistake.Kind;
 import logic.BLController;
 import logic.matches.Match;
@@ -205,6 +206,9 @@ public class MatchReader {
 				num[17] = ((num[3] - num[5]) * 2 + num[5] * 3 + num[7]);
 				ListOfMistake.add(new MatchMistake(name, Kind.POINT));
 			}
+		}
+		if (num[2] == -1) {
+			ListOfMistake.add(new MatchMistake(name, Kind.TIME));
 		}
 	}
 

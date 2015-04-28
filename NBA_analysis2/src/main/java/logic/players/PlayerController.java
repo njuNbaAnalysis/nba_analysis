@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.lang.model.element.Name;
+
 import compare.PlayerComparator;
 import compare.PlayerUpgradeRateComp;
 import compare.todayPlayerComp;
@@ -70,53 +72,89 @@ public class PlayerController {
 	public void addMatch(Match temp) {
 		ArrayList<RecordOfPlayer> ListOfPlayers1 = temp.getFirstRecordList();
 		ArrayList<RecordOfPlayer> ListOfPlayers2 = temp.getSecondRecordList();
+		int sumofTime = 4 * 12 * 60 * 5;
+		if (temp.getPointsList().size() > 4) {
+			sumofTime += (temp.getPointsList().size() - 4) * 5 * 60 * 5;
+		}
 		for (int j = 0; j < ListOfPlayers1.size(); j++) {
 			UpdataPlayer(ListOfPlayers1.get(j), temp.getTeams()[0],
 					temp.getDate(), temp.getTeams()[1], ListOfPlayers1,
-					ListOfPlayers2);
+					ListOfPlayers2, sumofTime);
 		}
 		for (int j = 0; j < ListOfPlayers2.size(); j++) {
 			UpdataPlayer(ListOfPlayers2.get(j), temp.getTeams()[1],
 					temp.getDate(), temp.getTeams()[0], ListOfPlayers2,
-					ListOfPlayers1);
+					ListOfPlayers1, sumofTime);
 		}
 
 	}
 
 	private void UpdataPlayer(RecordOfPlayer record, String team, String Date,
 			String enemy, ArrayList<RecordOfPlayer> List1,
-			ArrayList<RecordOfPlayer> List2) {
+			ArrayList<RecordOfPlayer> List2, int sumOfTime) {
 		boolean isexit = false;
-		double sumOfTime = 0;
-		int sumOffieldGoalAttempts = 0;
-		int sumOfrebounds = 0;
-		int sumOfoffenseRebounds = 0;
-		int sumOfdefenseRebounds = 0;
-		int sumOfturnOver = 0;
-		int sumOffreeThrowAttempts = 0;
-		int sumOffieldGoalHits = 0;
-		int sumOfopponentrebounds = 0;
-		int sumOfopponentoffenserebounds = 0;
-		int sumOfopponentdefenseRebounds = 0;
-		for (int i = 0; i < List1.size(); i++) {
-			sumOfTime += List1.get(i).getMinutes();
-			sumOfdefenseRebounds += List1.get(i).getDefensiveRebounds();
-			sumOffieldGoalAttempts += List1.get(i).getFieldGoalAttempts();
-			sumOffieldGoalHits += List1.get(i).getFieldGoalHits();
-			sumOffreeThrowAttempts += List1.get(i).getFreeThrowAttemps();
-			sumOfoffenseRebounds += List1.get(i).getOffensiveRebounds();
-			sumOfrebounds += List1.get(i).getRebounds();
-			sumOfturnOver += List1.get(i).getTurnOver();
-		}
-		for (int i = 0; i < List2.size(); i++) {
-			sumOfopponentdefenseRebounds += List2.get(i).getDefensiveRebounds();
-			sumOfopponentoffenserebounds += List2.get(i).getOffensiveRebounds();
-			sumOfopponentrebounds += List2.get(i).getRebounds();
-		}
 		for (Player temp : playerList) {
 			if (temp.getName().equals(record.getPlayerName())) {
 				isexit = true;
+
+				int sumOffieldGoalAttempts = 0;
+				int sumOfrebounds = 0;
+				int sumOfoffenseRebounds = 0;
+				int sumOfdefenseRebounds = 0;
+				int sumOfturnOver = 0;
+				int sumOffreeThrowAttempts = 0;
+				int sumOffieldGoalHits = 0;
+				int sumOfopponentrebounds = 0;
+				int sumOfopponentoffenserebounds = 0;
+				int sumOfopponentdefenseRebounds = 0;
+				int sumOfoppnentattempts = 0;// 两分出手次数
+				double sumOfoppnentDefensiveRounds = 0;// 对手进攻次数
+				int sumOfoppnentGoalsAttempts = 0;
+				int sumOfoppnentFreeAttempts = 0;
+				int woyaorigou = 0;
+				int turnover = 0;
+				for (int i = 0; i < List1.size(); i++) {
+					sumOfdefenseRebounds += List1.get(i).getDefensiveRebounds();
+					sumOffieldGoalAttempts += List1.get(i)
+							.getFieldGoalAttempts();
+					sumOffieldGoalHits += List1.get(i).getFieldGoalHits();
+					sumOffreeThrowAttempts += List1.get(i)
+							.getFreeThrowAttemps();
+					sumOfoffenseRebounds += List1.get(i).getOffensiveRebounds();
+					sumOfrebounds += List1.get(i).getRebounds();
+					sumOfturnOver += List1.get(i).getTurnOver();
+				}
+				for (int i = 0; i < List2.size(); i++) {
+					sumOfopponentdefenseRebounds += List2.get(i)
+							.getDefensiveRebounds();
+					sumOfopponentoffenserebounds += List2.get(i)
+							.getOffensiveRebounds();
+					sumOfopponentrebounds += List2.get(i).getRebounds();
+					sumOfoppnentattempts += (List2.get(i)
+							.getFieldGoalAttempts() - List2.get(i)
+							.getThreePointAttemps());
+					sumOfoppnentGoalsAttempts += List2.get(i)
+							.getFieldGoalAttempts();
+					sumOfoppnentFreeAttempts += List2.get(i)
+							.getFreeThrowAttemps();
+					woyaorigou += (List2.get(i).getFieldGoalAttempts()
+							+ List2.get(i).getThreePointAttemps()
+							- List2.get(i).getFieldGoalHits() - List2.get(i)
+							.getThreePointHits());
+					turnover += List2.get(i).getTurnOver();
+					// ：本队回合=投篮数+0.4*球队罚球数-1.07*（本队进攻篮板/（本队进攻篮
+					// 板+对手防守篮板）*投失球数）+1.07*失误数
+				}
+				sumOfoppnentDefensiveRounds = (sumOfoppnentGoalsAttempts
+						+ 0.4
+						* sumOfoppnentFreeAttempts
+						- 1.07
+						* (sumOfoffenseRebounds
+								/ (sumOfopponentoffenserebounds + sumOfdefenseRebounds) * woyaorigou) + 1.07 * turnover);
 				temp.setAssists(temp.getAssists() + record.getAssists());
+				if (temp.getName().equals("Russell Westbrook"))
+					System.out.println("dsadsada "
+							+ sumOfoppnentDefensiveRounds);
 				temp.setBlockShots(temp.getBlockShots() + record.getBlocks());
 				temp.setDefenseRebounds(temp.getDefenseRebounds()
 						+ record.getDefensiveRebounds());
@@ -152,7 +190,7 @@ public class PlayerController {
 						+ sumOffieldGoalHits);
 				temp.setSumOffreeThrowAttempts(temp.getSumOffreeThrowAttempts()
 						+ sumOffreeThrowAttempts);
-				temp.setSumOfoffenseRebounds(temp.getOffenseRebounds()
+				temp.setSumOfoffenseRebounds(temp.getSumOfoffenseRebounds()
 						+ sumOfoffenseRebounds);
 				temp.setSumOfopponentdefenseRebounds(temp
 						.getSumOfopponentdefenseRebounds()
@@ -162,8 +200,13 @@ public class PlayerController {
 						+ sumOfopponentoffenserebounds);
 				temp.setSumOfopponentrebounds(temp.getSumOfopponentrebounds()
 						+ sumOfopponentrebounds);
+				temp.setSumOfoppnentattempts(temp.getSumOfoppnentattempts()
+						+ sumOfoppnentattempts);
 				temp.setSumOfrebounds(temp.getSumOfrebounds() + sumOfrebounds);
 				temp.setSumOfTime(temp.getSumOfTime() + sumOfTime);
+				temp.setSumOfoppnentDefensiveRounds(temp
+						.getSumOfoppnentDefensiveRounds()
+						+ sumOfoppnentDefensiveRounds);
 				temp.setSumOfturnOver(temp.getSumOfturnOver() + sumOfturnOver);
 				temp.AddRecord(record.getPoints(), record.getRebounds(),
 						record.getAssists(), record.getSteals(),
@@ -192,7 +235,7 @@ public class PlayerController {
 		}
 		if (!isexit) {
 			addPlayer(record.getPlayerName(), record.getPosition());
-			UpdataPlayer(record, team, Date, enemy, List1, List2);
+			UpdataPlayer(record, team, Date, enemy, List1, List2, sumOfTime);
 		}
 	}
 

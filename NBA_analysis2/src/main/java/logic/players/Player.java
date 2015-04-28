@@ -351,6 +351,21 @@ public class Player {
 	public void setSumOfopponentdefenseRebounds(int sumOfopponentdefenseRebounds) {
 		this.sumOfopponentdefenseRebounds = sumOfopponentdefenseRebounds;
 	}
+	public int getSumOfoppnentattempts() {
+		return sumOfoppnentattempts;
+	}
+
+	public void setSumOfoppnentattempts(int sumOfoppnentattempts) {
+		this.sumOfoppnentattempts = sumOfoppnentattempts;
+	}
+
+	public double getSumOfoppnentDefensiveRounds() {
+		return sumOfoppnentDefensiveRounds;
+	}
+
+	public void setSumOfoppnentDefensiveRounds(double sumOfoppnentDefensiveRounds) {
+		this.sumOfoppnentDefensiveRounds = sumOfoppnentDefensiveRounds;
+	}
 
 	/*
 	 * 全队数据
@@ -366,6 +381,8 @@ public class Player {
 	private int sumOfopponentrebounds = 0;
 	private int sumOfopponentoffenserebounds = 0;
 	private int sumOfopponentdefenseRebounds = 0;
+	private int sumOfoppnentattempts = 0;//两分出手次数
+	private double sumOfoppnentDefensiveRounds = 0;//对手进攻次数
 
 	public void init() { // 每次得到这些高阶数据时，都需要init()
 		TeamController teamcontrol = TeamController.getInstance();
@@ -393,12 +410,11 @@ public class Player {
 					/ (minutes / (sumOfTime * 1.0 / 5) * (sumOffieldGoalHits) - (fieldGoalHits));
 			// 球员助攻数÷(球员上场时间÷(球队所有球员上场时间÷5)×球队总进球数-球员进球数)
 			stealsPercentage = 1.0 * steals * (sumOfTime * 1.0 / 5) / minutes
-					/ (teamName.getDefensiveRounds());// 球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
+					/ (sumOfoppnentDefensiveRounds);// 球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
 			blockShotsPercentage = blockShots
 					* (sumOfTime / 5)
 					/ minutes
-					/ (teamName.getFieldGoalAttempsRival() - teamName
-							.getThreePointerAttemptsRival());// 球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数
+					/ (sumOfoppnentattempts);// 球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数
 			turnOverPercentage = turnOver
 					/ ((fieldGoalAttempts - threePointerAttempts) + 0.44
 							* freeThrowAttempts + turnOver);// ：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
@@ -409,6 +425,14 @@ public class Player {
 			// ： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
 			// 上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
 			// 次数+球队所有球员失误次数)
+			if (name.equals("Gordon Hayward")) {
+				System.out.println("球员总上长时间： " + sumOfTime / 5 + "对手篮板: "
+						+ sumOfopponentrebounds + "总篮板：" + sumOfrebounds);
+				System.out.println("进攻篮板: " + sumOfopponentoffenserebounds
+						+ " 防守篮板:" + sumOfopponentdefenseRebounds + " 自己进攻篮板: "
+						+ sumOfoffenseRebounds + "   " + sumOfdefenseRebounds + "  "
+						+ gamePlayed);
+			}
 		}
 	}
 
@@ -460,7 +484,11 @@ public class Player {
 		super();
 		this.name = name;
 		this.number = number;
-		this.position = position;
+		if (!position.equals(""))
+			this.position = position;
+		else {
+			this.position = "All";
+		}
 		this.height = height;
 		this.weight = weight;
 		this.birthday = birthday;
