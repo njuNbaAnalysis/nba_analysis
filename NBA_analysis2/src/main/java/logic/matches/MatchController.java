@@ -52,8 +52,8 @@ public class MatchController {
 
 	private void computeData(ArrayList<Match> matchList) { // 脏数据处理
 		for (int i = 0; i < matchList.size(); i++) {
-			ArrayList<MatchMistake> ListOfMistake = matchList.get(i)
-					.getMatchMistakeList();
+			Match match = matchList.get(i);
+			ArrayList<MatchMistake> ListOfMistake = match.getMatchMistakeList();
 			if (ListOfMistake != null) {
 				for (int j = 0; j < ListOfMistake.size(); j++) {
 					MatchMistake temp = ListOfMistake.get(j);
@@ -94,6 +94,40 @@ public class MatchController {
 								}
 							}
 						}
+					} else if (temp.getKind() == Kind.TIME) {
+						int sumofTime = 4 * 12 * 60 * 5;
+						if (match.getPointsList().size() > 4) {
+							sumofTime += (match.getPointsList().size() - 4) * 5 * 60 * 5;
+						}
+						int sum1 = 0;
+						int sum2 = 0;
+						ArrayList<RecordOfPlayer> list1 = matchList.get(i)
+								.getFirstRecordList();
+						ArrayList<RecordOfPlayer> list2 = matchList.get(i)
+								.getSecondRecordList();
+						for (int a = 0; a < list1.size(); a++) {
+							if (list1.get(a).getMinutes() > 0)
+								sum1 += list1.get(a).getMinutes();
+						}
+						for (int a = 0; a < list2.size(); a++) {
+							if (list2.get(a).getMinutes() > 0)
+								sum2 += list2.get(a).getMinutes();
+						}
+						if (sumofTime != sum1) {
+							for (int a = 0; a < list1.size(); a++) {
+								if (list1.get(a).getPlayerName()
+										.equals(temp.getName()))
+									list1.get(a).setMinutes(sumofTime - sum1);
+							}
+						}
+						if (sumofTime != sum2) {
+							for (int a = 0; a < list2.size(); a++) {
+								if (list2.get(a).getPlayerName()
+										.equals(temp.getName()))
+									list2.get(a).setMinutes(sumofTime - sum2);
+							}
+						}
+						System.out.println(match.getTeams()[0]+"   "+ match.getTeams()[1] +"   "+match.getDate());
 					}
 				}
 			} else {
@@ -124,35 +158,35 @@ public class MatchController {
 		}
 	}
 
-	public ArrayList<Match> getTodayMatches(String date){
-	    ArrayList<Match> result = new ArrayList<Match>();
-	    for(Match match:matchList){
-	        if(match.getDate().equals(date)){
-	            result.add(match);
-	        }
-	    }
-	    return result;
+	public ArrayList<Match> getTodayMatches(String date) {
+		ArrayList<Match> result = new ArrayList<Match>();
+		for (Match match : matchList) {
+			if (match.getDate().equals(date)) {
+				result.add(match);
+			}
+		}
+		return result;
 	}
 
 	public String getTime() {
 		// TODO Auto-generated method stub
 		matchList = getAllMatches();
-		Match match = matchList.get(matchList.size()-1);
+		Match match = matchList.get(matchList.size() - 1);
 		return match.getDate();
 	}
 
-	public Match getMatch(Date date,String[] teamNameAbb){
-	    Match result = null;
-	    
-	    for(Match match:this.matchList){
-	        Date temp = match.getDateInDate();
-	        if(temp.getYear() == date.getYear()
-	                && temp.getMonth() == date.getMonth()
-	                && temp.getDate() == date.getDate()){
-	            result = match;
-	            break;
-	        }
-	    }
-	    return result;
+	public Match getMatch(Date date, String[] teamNameAbb) {
+		Match result = null;
+
+		for (Match match : this.matchList) {
+			Date temp = match.getDateInDate();
+			if (temp.getYear() == date.getYear()
+					&& temp.getMonth() == date.getMonth()
+					&& temp.getDate() == date.getDate()) {
+				result = match;
+				break;
+			}
+		}
+		return result;
 	}
 }
