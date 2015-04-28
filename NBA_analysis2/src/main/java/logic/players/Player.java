@@ -289,7 +289,7 @@ public class Player {
 					.getDefenseReboundsRival();
 			for (int i = 0; i < playerList.size(); i++) {
 				if (playercontrol.getPlayer(playerList.get(i)) == null)
-					continue; // 如果有血球员打了比赛，但是没有该球员的数据
+					continue; // 如果有些球员打了比赛，但是没有该球员的数据
 				sumOfTime += playercontrol.getPlayer(playerList.get(i))
 						.getMinutes();
 				sumOffieldGoalAttempts += playercontrol.getPlayer(
@@ -311,6 +311,12 @@ public class Player {
 			}
 			reboundsPercentage = rebounds * (sumOfTime * 1.0 / 5) / (minutes)
 					/ (sumOfrebounds + sumOfopponentrebounds);// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
+			// if (name.equals("DeAndre Liggins")) {
+			// System.out.println("offenseRebounds: " + offenseRebounds
+			// + " sumofTime: " + (sumOfTime * 1.0 / 5) + " minutes: "
+			// + minutes + " 球队总篮板: " + sumOfoffenseRebounds
+			// + " 对手总篮板： " + sumOfopponentoffenserebounds);
+			// }
 			offenseReboundsPercentage = offenseRebounds * (sumOfTime * 1.0 / 5)
 					/ (minutes)
 					/ (sumOfoffenseRebounds + sumOfopponentoffenserebounds);
@@ -318,9 +324,8 @@ public class Player {
 					/ (minutes)
 					/ (sumOfdefenseRebounds + sumOfopponentdefenseRebounds);
 			assistsPercentage = assists
-					/ (minutes / (sumOfTime * 1.0 / 5)
-							* (sumOffieldGoalHits + sumOffreeThrowHits) - (fieldGoalHits + freeThrowHits));// 球员助攻数÷(球员上场时间÷(球队所有球员上场时间÷5)×球队总进球数-球员进球数)
-
+					/ (minutes / (sumOfTime * 1.0 / 5) * (sumOffieldGoalHits) - (fieldGoalHits));
+			// 球员助攻数÷(球员上场时间÷(球队所有球员上场时间÷5)×球队总进球数-球员进球数)
 			stealsPercentage = 1.0 * steals * (sumOfTime * 1.0 / 5) / minutes
 					/ (teamName.getDefensiveRounds());// 球员抢断数×(球队所有球员上场时间÷5)÷球员上场时间÷对手进攻次数)
 			blockShotsPercentage = blockShots
@@ -330,8 +335,8 @@ public class Player {
 							.getThreePointerAttemptsRival());// 球员盖帽数×(球队所有球员上场时间÷5)÷球员上场时间÷对手两分球出手次数
 			turnOverPercentage = turnOver
 					/ ((fieldGoalAttempts - threePointerAttempts) + 0.44
-							* fieldGoalAttempts + turnOver);// ：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
-			usage = (fieldGoalAttempts + 0.44 * freeThrowAttempts)
+							* freeThrowAttempts + turnOver);// ：球员失误数÷(球员两分球出手次数+0.44×球员罚球次数+球员失误数)
+			usage = (fieldGoalAttempts + 0.44 * freeThrowAttempts + turnOver)
 					* (sumOfTime / 5)
 					/ (minutes)
 					/ (sumOffieldGoalAttempts + 0.44 * sumOffreeThrowAttempts + sumOfturnOver);
@@ -584,8 +589,8 @@ public class Player {
 	public double getGmsc() {
 		gmsc = points + 0.4 * fieldGoalHits - 0.7 * fieldGoalAttempts - 0.4
 				* (freeThrowAttempts - freeThrowHits) + 0.7 * offenseRebounds
-				+ 0.3 * defenseRebounds + 0.7 * assistsPercentage + 0.7
-				* assists - 0.4 * fouls - turnOver;
+				+ 0.3 * defenseRebounds + steals + 0.7 * assists + 0.7
+				* blockShots - 0.4 * fouls - turnOver;
 		// 得分+0.4×投篮命中数-0.7×投篮出手数-0.4×(罚球出手数-罚球命
 		// 中数)+0.7×前场篮板数+0.3×后场篮板数+抢断数+0.7×助攻数+0.7×盖帽数
 		// -0.4×犯规数-失误数
@@ -715,7 +720,10 @@ public class Player {
 		info.setFaultEfficient(getTurnOverPercentage());
 		info.setFrequency(getUsage());
 		info.setGmSc(getGmsc());
-		info.setLeague(conference + ""); // 暂定
+		if (conference == 'E')
+			info.setLeague("East"); // 暂定
+		else
+			info.setLeague("West"); // 暂定
 		info.setName(getName());
 		info.setOffendReboundEfficient(getOffenseReboundsPercentage());
 		info.setPosition(getPosition());
@@ -844,7 +852,7 @@ public class Player {
 			info.setFault(this.getAverageTurnOver());
 			info.setDefend(this.getAverageDefenseRebounds()); // 待定
 			info.setEfficiency(this.getAverageEfficiency());
-			info.setMinute(this.getAverageMinutes() * 60);
+			info.setMinute(this.getAverageMinutes());
 			info.setOffend(this.getAverageOffenseRebounds());
 			info.setPoint(this.getAveragePoints());
 
