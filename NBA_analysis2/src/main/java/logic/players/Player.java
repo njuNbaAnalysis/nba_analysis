@@ -264,51 +264,117 @@ public class Player {
 		return threedouble;
 	}
 
+	public double getSumOfTime() {
+		return sumOfTime;
+	}
+
+	public void setSumOfTime(double sumOfTime) {
+		this.sumOfTime = sumOfTime;
+	}
+
+	public int getSumOffieldGoalAttempts() {
+		return sumOffieldGoalAttempts;
+	}
+
+	public void setSumOffieldGoalAttempts(int sumOffieldGoalAttempts) {
+		this.sumOffieldGoalAttempts = sumOffieldGoalAttempts;
+	}
+
+	public int getSumOfrebounds() {
+		return sumOfrebounds;
+	}
+
+	public void setSumOfrebounds(int sumOfrebounds) {
+		this.sumOfrebounds = sumOfrebounds;
+	}
+
+	public int getSumOfoffenseRebounds() {
+		return sumOfoffenseRebounds;
+	}
+
+	public void setSumOfoffenseRebounds(int sumOfoffenseRebounds) {
+		this.sumOfoffenseRebounds = sumOfoffenseRebounds;
+	}
+
+	public int getSumOfdefenseRebounds() {
+		return sumOfdefenseRebounds;
+	}
+
+	public void setSumOfdefenseRebounds(int sumOfdefenseRebounds) {
+		this.sumOfdefenseRebounds = sumOfdefenseRebounds;
+	}
+
+	public int getSumOfturnOver() {
+		return sumOfturnOver;
+	}
+
+	public void setSumOfturnOver(int sumOfturnOver) {
+		this.sumOfturnOver = sumOfturnOver;
+	}
+
+	public int getSumOffreeThrowAttempts() {
+		return sumOffreeThrowAttempts;
+	}
+
+	public void setSumOffreeThrowAttempts(int sumOffreeThrowAttempts) {
+		this.sumOffreeThrowAttempts = sumOffreeThrowAttempts;
+	}
+
+	public int getSumOffieldGoalHits() {
+		return sumOffieldGoalHits;
+	}
+
+	public void setSumOffieldGoalHits(int sumOffieldGoalHits) {
+		this.sumOffieldGoalHits = sumOffieldGoalHits;
+	}
+
+	public int getSumOfopponentrebounds() {
+		return sumOfopponentrebounds;
+	}
+
+	public void setSumOfopponentrebounds(int sumOfopponentrebounds) {
+		this.sumOfopponentrebounds = sumOfopponentrebounds;
+	}
+
+	public int getSumOfopponentoffenserebounds() {
+		return sumOfopponentoffenserebounds;
+	}
+
+	public void setSumOfopponentoffenserebounds(int sumOfopponentoffenserebounds) {
+		this.sumOfopponentoffenserebounds = sumOfopponentoffenserebounds;
+	}
+
+	public int getSumOfopponentdefenseRebounds() {
+		return sumOfopponentdefenseRebounds;
+	}
+
+	public void setSumOfopponentdefenseRebounds(int sumOfopponentdefenseRebounds) {
+		this.sumOfopponentdefenseRebounds = sumOfopponentdefenseRebounds;
+	}
+
+	/*
+	 * 全队数据
+	 */
+	private double sumOfTime = 0;
+	private int sumOffieldGoalAttempts = 0;
+	private int sumOfrebounds = 0;
+	private int sumOfoffenseRebounds = 0;
+	private int sumOfdefenseRebounds = 0;
+	private int sumOfturnOver = 0;
+	private int sumOffreeThrowAttempts = 0;
+	private int sumOffieldGoalHits = 0;
+	private int sumOfopponentrebounds = 0;
+	private int sumOfopponentoffenserebounds = 0;
+	private int sumOfopponentdefenseRebounds = 0;
+
 	public void init() { // 每次得到这些高阶数据时，都需要init()
 		TeamController teamcontrol = TeamController.getInstance();
-		PlayerController playercontrol = PlayerController.getInstance();
 		Team teamName = teamcontrol.getTeam(team);
 		if (teamName != null) {
 			location = teamName.getLocation();
 			division = teamName.getDivision();
 			conference = teamName.getConference();
-			ArrayList<String> playerList = teamName.getPlayerList();
-			double sumOfTime = 0;
-			int sumOffieldGoalAttempts = 0;
-			int sumOfrebounds = 0;
-			int sumOfoffenseRebounds = 0;
-			int sumOfdefenseRebounds = 0;
-			int sumOfturnOver = 0;
-			int sumOffreeThrowAttempts = 0;
-			int sumOffreeThrowHits = 0;
-			int sumOffieldGoalHits = 0;
-			int sumOfopponentrebounds = teamName.getReboundsRival();
-			int sumOfopponentoffenserebounds = teamName
-					.getOffenseReboundsRival();
-			int sumOfopponentdefenseRebounds = teamName
-					.getDefenseReboundsRival();
-			for (int i = 0; i < playerList.size(); i++) {
-				if (playercontrol.getPlayer(playerList.get(i)) == null)
-					continue; // 如果有些球员打了比赛，但是没有该球员的数据
-				sumOfTime += playercontrol.getPlayer(playerList.get(i))
-						.getMinutes();
-				sumOffieldGoalAttempts += playercontrol.getPlayer(
-						playerList.get(i)).getFieldGoalAttempts();
-				sumOfrebounds += playercontrol.getPlayer(playerList.get(i))
-						.getRebounds();
-				sumOfdefenseRebounds += playercontrol.getPlayer(
-						playerList.get(i)).getDefenseRebounds();
-				sumOfoffenseRebounds += playercontrol.getPlayer(
-						playerList.get(i)).getOffenseRebounds();
-				sumOfturnOver += playercontrol.getPlayer(playerList.get(i))
-						.getTurnOver();
-				sumOffreeThrowAttempts += playercontrol.getPlayer(
-						playerList.get(i)).getFreeThrowAttempts();
-				sumOffreeThrowHits += playercontrol
-						.getPlayer(playerList.get(i)).getFreeThrowHits();
-				sumOffieldGoalHits += playercontrol
-						.getPlayer(playerList.get(i)).getFieldGoalHits();
-			}
+
 			reboundsPercentage = rebounds * (sumOfTime * 1.0 / 5) / (minutes)
 					/ (sumOfrebounds + sumOfopponentrebounds);// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
 			// if (name.equals("DeAndre Liggins")) {
@@ -800,22 +866,22 @@ public class Player {
 				FiveRebounds += ListOfRecord.get(i).getRebounds();
 				FiveAssists += ListOfRecord.get(i).getAssists();
 			}
-			if (getAveragePoints() != 0)
-				upgradeRate[0] = (FivePoints / 5 - (getPoints() - FivePoints)
-						/ (gamePlayed - 5))
-						/ (getAveragePoints());
-			else
+			if (gamePlayed > 5 && (getPoints() != FivePoints)) {
+				upgradeRate[0] = ((FivePoints * 1.0 / 5) - ((getPoints() - FivePoints) / (gamePlayed - 5)))
+						/ ((getPoints() - FivePoints) / (gamePlayed - 5));
+				if (name.equals("Robert Covington"))
+					System.out.println(gamePlayed + "   dasdasdadsaa "
+							+ getPoints() + "    " + FivePoints);
+			} else
 				upgradeRate[0] = 0;
-			if (getAverageRebounds() != 0)
-				upgradeRate[1] = (FiveRebounds / 5 - (getRebounds() - FiveRebounds)
-						/ (gamePlayed - 5))
-						/ (getAverageRebounds());
+			if (gamePlayed > 5 && (getRebounds() != FiveRebounds))
+				upgradeRate[1] = ((FiveRebounds / 5) - ((getRebounds() - FiveRebounds) / (gamePlayed - 5)))
+						/ ((getRebounds() - FiveRebounds) / (gamePlayed - 5));
 			else
 				upgradeRate[1] = 0;
-			if (getAssists() != 0)
-				upgradeRate[2] = (FiveAssists / 5 - (getAssists() - FiveAssists)
-						/ (gamePlayed - 5))
-						/ (getAverageAssists());
+			if (gamePlayed > 5 && (getAssists() != FiveAssists))
+				upgradeRate[2] = ((FiveAssists / 5) - ((getAssists() - FiveAssists) / (gamePlayed - 5)))
+						/ ((getAssists() - FiveAssists) / (gamePlayed - 5));
 			else
 				upgradeRate[2] = 0;
 		} else {
@@ -865,8 +931,8 @@ public class Player {
 			info.setFoul(this.getFouls());
 			info.setFault(this.getTurnOver());
 			info.setDefend(this.getDefenseRebounds());
-			info.setEfficiency(this.getAverageEfficiency()); 	// 待定
-			info.setMinute(this.getMinutes() / 60); 
+			info.setEfficiency(this.getAverageEfficiency()); // 待定
+			info.setMinute(this.getMinutes() / 60);
 			info.setOffend(this.getOffenseRebounds());
 			info.setPoint(this.getPoints());
 		}
