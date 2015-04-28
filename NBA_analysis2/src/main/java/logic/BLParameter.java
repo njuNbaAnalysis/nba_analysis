@@ -121,7 +121,12 @@ public class BLParameter {
       //采用从前往后理解的方式进行读取命令
         ArrayList<String> input = Tools.toArrayList(args);            
         
+        int debugTimes = 20;
         while(input.size() != 0){
+            debugTimes--;
+            if(debugTimes == 0)
+                break;
+            
             switch(input.get(0)){
             case "-player":
             	this.setPlayer(true);
@@ -188,16 +193,16 @@ public class BLParameter {
                 ArrayList<Filter> filterList = new ArrayList<Filter>();
                 StringBuffer filterParameterBuffer = new StringBuffer("");  
                 String[] listFilter = null;  
-                int deleteNumber = 0;   //到下标为这个的数据需要删除
+                int deleteNumber = 1;   //要删掉数据的数目
               //将filter参数压缩成一个stringBuffer
                 for(int i = 1;i < input.size();i++){
                     if(input.get(i).contains("-")){
-                        deleteNumber = i - 1;
                         break;
                     }
                     
                     else{
                         filterParameterBuffer.append(input.get(i));
+                        deleteNumber++;
                     }
                 }
                 
@@ -243,10 +248,9 @@ public class BLParameter {
                 }
                 this.setFilterList(filterList);
                 
-                //remove
-                for(int i = deleteNumber;i >= 0;i --){
-                    input.remove(i);
-                    System.out.println(deleteNumber);
+                //remove,删掉deleteNumber个数据
+                for(int i = deleteNumber;i >= 1;i --){
+                    input.remove(0);
                 }
                 break;
                 
@@ -272,7 +276,8 @@ public class BLParameter {
                 break;
             
             default:
-             //   System.out.println("BLParameter.constructor: " + input.get(0));
+                System.out.println("BLParameter.constructor: " + input.get(0));
+                break;
             }
             
         }
