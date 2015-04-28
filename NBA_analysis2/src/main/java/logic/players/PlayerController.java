@@ -197,10 +197,8 @@ public class PlayerController {
 		if (mode.getMode().equals("king")) {
 			String field = mode.getField();
 			if (mode.isDaily()) { // 暂时这样
-				Date now = new Date();
-				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-				String strDate = df.format(now);
-
+				MatchController matchController = MatchController.getInstance();
+				String strDate = matchController.getTime();
 				ArrayList<todayPlayer> todayPlayer = this.getTotalPlayer(
 						strDate, field);
 				if (todayPlayer.size() > 0)

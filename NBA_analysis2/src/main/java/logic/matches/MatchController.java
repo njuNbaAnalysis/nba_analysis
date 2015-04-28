@@ -137,7 +137,7 @@ public class MatchController {
 	public String getTime() {
 		// TODO Auto-generated method stub
 		matchList = getAllMatches();
-		Match match = matchList.get(matchList.size());
+		Match match = matchList.get(matchList.size()-1);
 		return match.getDate();
 	}
 

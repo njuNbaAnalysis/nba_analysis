@@ -719,7 +719,7 @@ public class Player {
 		info.setDefendReboundEfficient(getDefenseReboundsPercentage());
 		info.setFaultEfficient(getTurnOverPercentage());
 		info.setFrequency(getUsage());
-		info.setGmSc(getGmsc());
+		info.setGmSc(getAverageGmSc());
 		if (conference == 'E')
 			info.setLeague("East"); // 暂定
 		else
