@@ -190,7 +190,7 @@ public class BLParameter {
                 String[] listFilter = null;  
                 int deleteNumber = 0;   //到下标为这个的数据需要删除
               //将filter参数压缩成一个stringBuffer
-                for(int i = 1;i < input.size();i ++){
+                for(int i = 1;i < input.size();i++){
                     if(input.get(i).contains("-")){
                         deleteNumber = i - 1;
                         break;
@@ -207,7 +207,7 @@ public class BLParameter {
                 
                 for(String token:listFilter){
                     token = token.trim();
-                    String[] pair = token.split(".");
+                    String[] pair = token.split("\\.");
                     BLParameter.Filter filter = new BLParameter.Filter();
                     filter.setFilterName(pair[0]);
                     if(filter.getFilterName().equals("age")){
@@ -246,6 +246,7 @@ public class BLParameter {
                 //remove
                 for(int i = deleteNumber;i >= 0;i --){
                     input.remove(i);
+                    System.out.println(deleteNumber);
                 }
                 break;
                 
@@ -271,7 +272,7 @@ public class BLParameter {
                 break;
             
             default:
-                System.out.println("BLParameter.constructor: " + input.get(0));
+             //   System.out.println("BLParameter.constructor: " + input.get(0));
             }
             
         }

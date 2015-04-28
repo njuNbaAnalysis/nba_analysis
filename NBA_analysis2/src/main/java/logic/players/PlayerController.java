@@ -184,7 +184,7 @@ public class PlayerController {
 			Sort sort = parameter.new Sort(field, false);
 			parameter.addSort(sort);
 			this.sort(PlayerAfterFliter, parameter);
-			int num = 0;// 已经添加的球队数
+			int num = 0;// 已经添加的球员数
 			for (Player player : PlayerAfterFliter) {
 				if (num == 5)
 					break;
@@ -202,14 +202,16 @@ public class PlayerController {
 				ArrayList<todayPlayer> todayPlayer = this.getTotalPlayer(
 						strDate, field);
 				if (todayPlayer.size() > 0)
-					result.add(todayPlayer.get(0).getKingInfo(field));
-
+					for (int i = 0; i < 5; i++) { // 默认5个
+						result.add(todayPlayer.get(i).getKingInfo(field));
+					}
 			} else {
 				Sort sort = parameter.new Sort(field, false);
 				parameter.addSort(sort);
 				this.sort(PlayerAfterFliter, parameter);
-				Player player = PlayerAfterFliter.get(0);
-				result.add(player.getKingInfo(field));
+				for (int i = 0; i < 5; i++) {	// 默认5个
+					result.add(PlayerAfterFliter.get(i).getKingInfo(field));
+				}
 			}
 			return result;
 		} else {

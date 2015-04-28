@@ -12,11 +12,15 @@ public class PlayerComparator implements Comparator<Player> {
 
 	private ArrayList<Sort> sortList;
 	private boolean isAvarage;
+	private boolean isHot; // 如果是hot,则需要按照提升率排名
 
 	public PlayerComparator(BLParameter parameter) {
 		super();
 		this.sortList = parameter.getSortList();
 		this.isAvarage = parameter.isAvarage();
+		if (parameter.getMode().getMode().equals("hot")) {
+			isHot = true;
+		}
 	}
 
 	@Override
@@ -27,48 +31,74 @@ public class PlayerComparator implements Comparator<Player> {
 			switch (token.getField()) {
 			case "point":
 			case "score":
-				if (isAvarage) {
-					if (o1.getAveragePoints() < o2.getAveragePoints()) {
+				if (isHot) {
+					if (o1.getUpgradeRate()[0] < o2.getUpgradeRate()[0]) {
 						result = -1;
-					} else if (o1.getAveragePoints() > o2.getAveragePoints()) {
+					} else if (o1.getUpgradeRate()[0] > o2.getUpgradeRate()[0]) {
 						result = 1;
 					}
 				} else {
-					if (o1.getPoints() < o2.getPoints()) {
-						result = -1;
-					} else if (o1.getPoints() > o2.getPoints()) {
-						result = 1;
+					if (isAvarage) {
+						if (o1.getAveragePoints() < o2.getAveragePoints()) {
+							result = -1;
+						} else if (o1.getAveragePoints() > o2
+								.getAveragePoints()) {
+							result = 1;
+						}
+					} else {
+						if (o1.getPoints() < o2.getPoints()) {
+							result = -1;
+						} else if (o1.getPoints() > o2.getPoints()) {
+							result = 1;
+						}
 					}
 				}
 				break;
 			case "rebound":
-				if (isAvarage) {
-					if (o1.getAverageRebounds() < o2.getAverageRebounds()) {
+				if (isHot) {
+					if (o1.getUpgradeRate()[1] < o2.getUpgradeRate()[1]) {
 						result = -1;
-					} else if (o1.getAverageRebounds() > o2
-							.getAverageRebounds()) {
+					} else if (o1.getUpgradeRate()[1] > o2.getUpgradeRate()[1]) {
 						result = 1;
 					}
 				} else {
-					if (o1.getRebounds() < o2.getRebounds()) {
-						result = -1;
-					} else if (o1.getRebounds() > o2.getRebounds()) {
-						result = 1;
+					if (isAvarage) {
+						if (o1.getAverageRebounds() < o2.getAverageRebounds()) {
+							result = -1;
+						} else if (o1.getAverageRebounds() > o2
+								.getAverageRebounds()) {
+							result = 1;
+						}
+					} else {
+						if (o1.getRebounds() < o2.getRebounds()) {
+							result = -1;
+						} else if (o1.getRebounds() > o2.getRebounds()) {
+							result = 1;
+						}
 					}
 				}
 				break;
 			case "assist":
-				if (isAvarage) {
-					if (o1.getAverageAssists() < o2.getAverageAssists()) {
+				if (isHot) {
+					if (o1.getUpgradeRate()[2] < o2.getUpgradeRate()[2]) {
 						result = -1;
-					} else if (o1.getAverageAssists() > o2.getAverageAssists()) {
+					} else if (o1.getUpgradeRate()[2] > o2.getUpgradeRate()[2]) {
 						result = 1;
 					}
 				} else {
-					if (o1.getAssists() < o2.getAssists()) {
-						result = -1;
-					} else if (o1.getAssists() > o2.getAssists()) {
-						result = 1;
+					if (isAvarage) {
+						if (o1.getAverageAssists() < o2.getAverageAssists()) {
+							result = -1;
+						} else if (o1.getAverageAssists() > o2
+								.getAverageAssists()) {
+							result = 1;
+						}
+					} else {
+						if (o1.getAssists() < o2.getAssists()) {
+							result = -1;
+						} else if (o1.getAssists() > o2.getAssists()) {
+							result = 1;
+						}
 					}
 				}
 				break;
