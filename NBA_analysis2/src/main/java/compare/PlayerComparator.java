@@ -367,7 +367,7 @@ public class PlayerComparator implements Comparator<Player> {
 			}
 		}
 
-		return 0;
+		return o1.getName().compareTo(o2.getName());
 	}
 
 }
