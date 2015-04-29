@@ -137,24 +137,20 @@ public class PlayerController {
 							.getFieldGoalAttempts();
 					sumOfoppnentFreeAttempts += List2.get(i)
 							.getFreeThrowAttemps();
-					woyaorigou += (List2.get(i).getFieldGoalAttempts()
-							+ List2.get(i).getThreePointAttemps()
-							- List2.get(i).getFieldGoalHits() - List2.get(i)
-							.getThreePointHits());
+					woyaorigou += (List2.get(i).getFieldGoalAttempts() - List2
+							.get(i).getFieldGoalHits());
 					turnover += List2.get(i).getTurnOver();
 					// ：本队回合=投篮数+0.4*球队罚球数-1.07*（本队进攻篮板/（本队进攻篮
 					// 板+对手防守篮板）*投失球数）+1.07*失误数
 				}
-				sumOfoppnentDefensiveRounds = (sumOfoppnentGoalsAttempts
+				sumOfoppnentDefensiveRounds = sumOfoppnentGoalsAttempts
 						+ 0.4
 						* sumOfoppnentFreeAttempts
 						- 1.07
-						* (sumOfoffenseRebounds
-								/ (sumOfopponentoffenserebounds + sumOfdefenseRebounds) * woyaorigou) + 1.07 * turnover);
+						* ((sumOfopponentoffenserebounds*1.0)
+								/ (sumOfopponentoffenserebounds + sumOfdefenseRebounds) * woyaorigou) + 1.07 * turnover;
+				
 				temp.setAssists(temp.getAssists() + record.getAssists());
-				if (temp.getName().equals("Russell Westbrook"))
-					System.out.println("dsadsada "
-							+ sumOfoppnentDefensiveRounds);
 				temp.setBlockShots(temp.getBlockShots() + record.getBlocks());
 				temp.setDefenseRebounds(temp.getDefenseRebounds()
 						+ record.getDefensiveRebounds());

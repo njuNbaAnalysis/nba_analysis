@@ -116,18 +116,21 @@ public class MatchController {
 						if (sumofTime != sum1) {
 							for (int a = 0; a < list1.size(); a++) {
 								if (list1.get(a).getPlayerName()
-										.equals(temp.getName()))
-									list1.get(a).setMinutes(sumofTime - sum1);
+										.equals(temp.getName())) {
+									list1.get(a).setMinutes(sumofTime - sum1-1);
+									break;
+								}
 							}
 						}
 						if (sumofTime != sum2) {
 							for (int a = 0; a < list2.size(); a++) {
 								if (list2.get(a).getPlayerName()
-										.equals(temp.getName()))
-									list2.get(a).setMinutes(sumofTime - sum2);
+										.equals(temp.getName())) {
+									list2.get(a).setMinutes(sumofTime - sum2-1);
+									break;
+								}
 							}
 						}
-						System.out.println(match.getTeams()[0]+"   "+ match.getTeams()[1] +"   "+match.getDate());
 					}
 				}
 			} else {

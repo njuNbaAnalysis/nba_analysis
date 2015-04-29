@@ -425,14 +425,6 @@ public class Player {
 			// ： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
 			// 上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
 			// 次数+球队所有球员失误次数)
-			if (name.equals("Gordon Hayward")) {
-				System.out.println("球员总上长时间： " + sumOfTime / 5 + "对手篮板: "
-						+ sumOfopponentrebounds + "总篮板：" + sumOfrebounds);
-				System.out.println("进攻篮板: " + sumOfopponentoffenserebounds
-						+ " 防守篮板:" + sumOfopponentdefenseRebounds + " 自己进攻篮板: "
-						+ sumOfoffenseRebounds + "   " + sumOfdefenseRebounds + "  "
-						+ gamePlayed);
-			}
 		}
 	}
 
