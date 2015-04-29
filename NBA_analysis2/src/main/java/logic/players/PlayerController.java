@@ -58,6 +58,9 @@ public class PlayerController {
 		for (int i = 0; i < ListOfMatches.size(); i++) {
 			addMatch(ListOfMatches.get(i));
 		}
+		for (int i = 0; i < playerList.size(); i++) {
+			playerList.get(i).getTeamInfo();
+		}
 		double now = System.currentTimeMillis();
 		System.out.println("computeData_player:" + (now - current));
 	}
@@ -147,9 +150,10 @@ public class PlayerController {
 						+ 0.4
 						* sumOfoppnentFreeAttempts
 						- 1.07
-						* ((sumOfopponentoffenserebounds*1.0)
-								/ (sumOfopponentoffenserebounds + sumOfdefenseRebounds) * woyaorigou) + 1.07 * turnover;
-				
+						* ((sumOfopponentoffenserebounds * 1.0)
+								/ (sumOfopponentoffenserebounds + sumOfdefenseRebounds) * woyaorigou)
+						+ 1.07 * turnover;
+
 				temp.setAssists(temp.getAssists() + record.getAssists());
 				temp.setBlockShots(temp.getBlockShots() + record.getBlocks());
 				temp.setDefenseRebounds(temp.getDefenseRebounds()
@@ -327,7 +331,7 @@ public class PlayerController {
 			case "position":
 				if ((!filter.getFilterValue().equals("All"))
 						&& (!player.getPosition().contains(
-								filter.getFilterValue())))
+								filter.getFilterValue()))) 
 					return false;
 				break;
 			case "league":
@@ -338,8 +342,9 @@ public class PlayerController {
 				break;
 			case "age":
 				if (!(player.getAge() > filter.getRange()[0] && player.getAge() <= filter
-						.getRange()[0]))
+						.getRange()[1])){
 					return false;
+				}
 				break;
 			}
 		}
@@ -356,8 +361,8 @@ public class PlayerController {
 		ArrayList<Match> Matchlist = bl.getAllMatches();
 		ArrayList<Match> list = new ArrayList<Match>();
 		for (int i = 0; i < Matchlist.size(); i++) {
-			if (!(Matchlist.get(i).getDate().equals(strDate)))
-				list.add(Matchlist.get(0));
+			if ((Matchlist.get(i).getDate().equals(strDate)))
+				list.add(Matchlist.get(i));
 		}
 		ArrayList<todayPlayer> listTodayHotPlayer = new ArrayList<todayPlayer>();
 		for (Match m : list) {
