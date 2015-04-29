@@ -49,7 +49,7 @@ public class todayPlayerComp implements Comparator<todayPlayer>{
 		default:
 			System.out.println("error in TodayPlayer.compare: " + field);
 		}
-		return 0;
+		return t1.getName().compareTo(t2.getName());
 	}
 	
 }
