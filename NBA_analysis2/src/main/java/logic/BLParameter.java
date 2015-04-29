@@ -243,9 +243,9 @@ public class BLParameter {
 							range[1] = Integer.parseInt(pair[1].split("<=")[1]);
 						} else if (pair[1].contains("<=")) {
 							range[0] = Integer.MIN_VALUE;
-							range[1] = Integer.parseInt(pair[1].split("<=")[0]);
+							range[1] = Integer.parseInt(pair[1].split("<=")[1]);
 						} else if (pair[1].contains(">")) {
-							range[0] = Integer.parseInt(pair[1].split(">")[0]);
+							range[0] = Integer.parseInt(pair[1].split(">")[1]);
 							range[1] = Integer.MAX_VALUE;
 						} else {
 							System.out.println("error in parse -filter: "
@@ -270,10 +270,8 @@ public class BLParameter {
 			case "-sort":
 				String[] listSort = input.get(1).split(",");
 				for (String token : listSort) {
-					System.out.println(token);
 					String[] pair = token.split("\\.");
 					BLParameter.Sort sort = new BLParameter.Sort();
-					System.out.println(pair.length);
 					sort.setField(pair[0]);
 					if (pair[1].equals("asc")) {
 						sort.setAsc(true);

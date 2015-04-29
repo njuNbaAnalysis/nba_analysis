@@ -1,7 +1,5 @@
 package logic.players;
 
-import java.awt.Image;
-
 import test.data.PlayerKingInfo;
 
 public class todayPlayer {
@@ -14,11 +12,14 @@ public class todayPlayer {
 	private int steals;// 总抢断数
 	private int blockShots;// 总盖帽数
 
-	public todayPlayer(String name, String team, String position,
-			int Points, int Rebounds, int Assists,int steals,int blockShots) {
+	public todayPlayer(String name, String team, String position, int Points,
+			int Rebounds, int Assists, int steals, int blockShots) {
 		this.name = name;
 		this.team = team;
-		this.position = position;
+		if (!position.equals(""))
+			this.position = position;
+		else
+			this.position = "All";
 		this.Assists = Assists;
 		this.Points = Points;
 		this.Rebounds = Rebounds;
@@ -49,8 +50,6 @@ public class todayPlayer {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-
-	
 
 	public int getPoints() {
 		return Points;

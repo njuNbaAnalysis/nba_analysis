@@ -384,22 +384,19 @@ public class Player {
 	private int sumOfoppnentattempts = 0;//两分出手次数
 	private double sumOfoppnentDefensiveRounds = 0;//对手进攻次数
 
-	public void init() { // 每次得到这些高阶数据时，都需要init()
+	public void getTeamInfo(){
 		TeamController teamcontrol = TeamController.getInstance();
 		Team teamName = teamcontrol.getTeam(team);
 		if (teamName != null) {
 			location = teamName.getLocation();
 			division = teamName.getDivision();
 			conference = teamName.getConference();
-
+		}
+	}
+	
+	public void init() { // 每次得到这些高阶数据时，都需要init()
 			reboundsPercentage = rebounds * (sumOfTime * 1.0 / 5) / (minutes)
 					/ (sumOfrebounds + sumOfopponentrebounds);// 球员篮板数×(球队所有球员上场时间÷5)÷球员上场时间÷(球队总篮板+对手总篮板)
-			// if (name.equals("DeAndre Liggins")) {
-			// System.out.println("offenseRebounds: " + offenseRebounds
-			// + " sumofTime: " + (sumOfTime * 1.0 / 5) + " minutes: "
-			// + minutes + " 球队总篮板: " + sumOfoffenseRebounds
-			// + " 对手总篮板： " + sumOfopponentoffenserebounds);
-			// }
 			offenseReboundsPercentage = offenseRebounds * (sumOfTime * 1.0 / 5)
 					/ (minutes)
 					/ (sumOfoffenseRebounds + sumOfopponentoffenserebounds);
@@ -425,7 +422,7 @@ public class Player {
 			// ： (球员出手次数+0.44×球员罚球次数+球员失误次数)×(球队所有球员
 			// 上场时间÷5)÷球员上场时间÷(球队所有总球员出手次数+0.44×球队所有球员罚球
 			// 次数+球队所有球员失误次数)
-		}
+		
 	}
 
 	public int getPRA() {
@@ -889,9 +886,6 @@ public class Player {
 			if (gamePlayed > 5 && (getPoints() != FivePoints)) {
 				upgradeRate[0] = ((FivePoints * 1.0 / 5) - ((getPoints() - FivePoints) / (gamePlayed - 5)))
 						/ ((getPoints() - FivePoints) / (gamePlayed - 5));
-				if (name.equals("Robert Covington"))
-					System.out.println(gamePlayed + "   dasdasdadsaa "
-							+ getPoints() + "    " + FivePoints);
 			} else
 				upgradeRate[0] = 0;
 			if (gamePlayed > 5 && (getRebounds() != FiveRebounds))
