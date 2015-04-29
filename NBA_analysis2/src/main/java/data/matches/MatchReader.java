@@ -245,9 +245,17 @@ public class MatchReader {
 			return false;
 		} else {
 			String[] str = new String[numberOFcurrent - numberOFbefore];
+			int numberOfbreSeason = -1; // 表示赛季前半段比赛次数
+			if (list[0].charAt(6) == '0') {
+				numberOfbreSeason = 0;
+				for (int i = 0; i < list.length; i++) {
+					if (list[i].charAt(6) != '0')
+						numberOfbreSeason++;
+				}
+			}
 			for (int i = numberOFbefore; i < numberOFcurrent; i++) {
-				if (numberOFbefore >= 466) {
-					str[i - numberOFbefore] = list[i - 466]; // 466暂时硬编码，以后再想办法。
+				if (numberOfbreSeason > 0 && i >= numberOfbreSeason) {
+					str[i - numberOFbefore] = list[i - numberOfbreSeason]; // 466暂时硬编码，以后再想办法。
 				} else {
 					str[i - numberOFbefore] = list[i];
 				}
