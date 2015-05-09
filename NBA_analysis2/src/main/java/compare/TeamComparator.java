@@ -286,7 +286,7 @@ public class TeamComparator implements Comparator<Team> {
 			}
 		}
 
-		return 0;
+		return o1.getAbbreviation().compareTo(o2.getAbbreviation());
 	}
 
 }
