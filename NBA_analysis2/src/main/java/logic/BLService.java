@@ -31,10 +31,12 @@ public interface BLService {
     public ArrayList<Match> getTodayMatches(String date); //13-14_2014-01-01
     public String getTime();//得到当前日期：默认为最近一场比赛日期
     public Match getMatch(Date date,String[] teamNameAbb);//另一个为主客场的球队名缩写 
+    public ArrayList<Match> getLatestMatchesByTeam(String teamName);//根据球队名称返回最近十场比赛，比赛信息指：进攻（得分）、防守（失分）、节奏（48分钟的进攻回合数）、进攻防守比
     
     //team
     public ArrayList<Team> getSeasonKingTeam(String field,int num);//得到赛季的热门球队，格式同上，field可能值："得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%","罚球%" 
     public Team[] getTeamsByMatch(Match match);
     public Team getTeamByName(String teamName);
-    
+    public double getLineUpAbility(String teamName);//五个位置主力球员能力值:C,PG,SG,PF,SF,能力值取值(0~10)
+    public double getTeamAbility(String teamName);//内线(中锋加上大前锋能力综合)、外线(其他位置能力综合)、配合（每百回合的传球次数）、进攻（得分）、防守（失分）
 }
