@@ -16,8 +16,8 @@ public class GetConnection {
         //"jdbc:mysql://192.168.1.102:3306/nba?characterEncoding=utf-8"
 
         
-        String userName = "lijiaqi";
-        String userPwd = "lijiaqi";
+        String userName = "admin";
+        String userPwd = "123";
         try { 
             Class.forName(driverName);
             System.out.println("加载驱动成功");
