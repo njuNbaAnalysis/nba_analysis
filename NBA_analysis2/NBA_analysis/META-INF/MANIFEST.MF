@@ -1,0 +1,353 @@
+Manifest-Version: 1.0
+Class-Path: .
+Main-Class: ui.Start
+
+Name: org/hamcrest/core/StringContains.class
+SHA1-Digest: pu8qs7p88yolGqn4MOcbp8FDAjc=
+
+Name: org/hamcrest/MatcherAssert.class
+SHA1-Digest: sZNuvRAhj+svY1mY5PxKY/EjHIQ=
+
+Name: org/hamcrest/core/IsCollectionContaining.class
+SHA1-Digest: bQRmrOxjQ3YIe7lcce2fKpiDyrE=
+
+Name: org/hamcrest/SelfDescribing.class
+SHA1-Digest: WcsUm+3fbmO8DvCYRS0D1yIwYqo=
+
+Name: org/hamcrest/core/CombinableMatcher$CombinableEitherMatcher.clas
+ s
+SHA1-Digest: hQblfLVJ2nL4O1rMiatXZtty3TA=
+
+Name: org/hamcrest/core/CombinableMatcher$CombinableBothMatcher.class
+SHA1-Digest: 5xR6vBrgQXy+A6F5B2P4s0OJBaI=
+
+Name: org/hamcrest/internal/SelfDescribingValueIterator.class
+SHA1-Digest: zsuq8GXCdawJmm/Q91HPsq95TAg=
+
+Name: org/hamcrest/core/IsAnything.class
+SHA1-Digest: TMKsNmSuG1Q0zs9ocsej9PgcbGw=
+
+Name: org/hamcrest/core/AnyOf.class
+SHA1-Digest: +iiYKkyBj1qqsGQpyE+xgIU0Myw=
+
+Name: org/hamcrest/Condition$NotMatched.class
+SHA1-Digest: RrM4jxA/fXfCgY96fvOi2n/akI4=
+
+Name: plugin.properties
+SHA1-Digest: 3/0FVfoJv3WBQaqKNg1kl5EXTss=
+
+Name: org/hamcrest/core/StringStartsWith.class
+SHA1-Digest: Z0b6ygXAyxlxr528dThpYdhG6Ac=
+
+Name: about_files/LICENSE.txt
+SHA1-Digest: 1/XduEAjNSa+sw0ARl0ZSBZRQLQ=
+
+Name: org/w3c/dom/ls/
+Implementation-Title: org.w3c.dom.ls
+Implementation-Version: 1.0
+Specification-Vendor: World Wide Web Consortium
+Specification-Title: Document Object Model (DOM) Level 3 Load and Save
+Comment: xml-commons for http://xml.apache.org/ subproject's use
+Specification-Version: 1.0
+Implementation-URL: http://www.w3c.org/DOM/
+Implementation-Vendor: World Wide Web Consortium
+
+Name: org/hamcrest/Condition$Matched.class
+SHA1-Digest: W3ZXuZwsfHXJBiDNICpuBx6f054=
+
+Name: org/hamcrest/core/AllOf.class
+SHA1-Digest: p6FDPSbEuLb+Fpf84ey+x/mQuT4=
+
+Name: runtime
+Implementation-Title: runtime 
+Implementation-Version: 2.6.0
+Specification-Vendor: Princeton University 
+Specification-Title: Runtime component of JCup
+Comment: Runtime component of JCup 
+Specification-Version: 0.10k 
+Implementation-URL: http://www.cs.princeton.edu/~appel/modern/java/CUP
+ / 
+Implementation-Vendor: Princeton University  
+
+Name: org/hamcrest/CustomMatcher.class
+SHA1-Digest: PW0DFrUDT9usao9g9797qDp62tU=
+
+Name: org/hamcrest/core/SubstringMatcher.class
+SHA1-Digest: uKjqLy6HOZziNuKL63cKhfl0wNA=
+
+Name: org/apache/bcel
+Implementation-Title: org.apache.bcel
+Implementation-Version: 2.6.0
+Specification-Vendor: Markus Dahm 
+Specification-Title: Byte Code Engineering Library 
+Comment: Byte Code Engineering Library 
+Specification-Version: 5.0 rc1 
+Implementation-URL: http://jakarta.apache.org/bcel
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/hamcrest/core/Every.class
+SHA1-Digest: AQczxN6u6s8lUBooHeLrBa+1e64=
+
+Name: org/hamcrest/core/IsEqual.class
+SHA1-Digest: 1Wi6c9l9MRgqXxyiQOyzQ9HmmC4=
+
+Name: org/apache/xerces/impl/Version
+Implementation-Title: org.apache.xerces.impl.Version
+Comment: @impl.name@ for http://xml.apache.org/xerces2-j 
+Implementation-Version: 2.5.0
+Implementation-URL: http://xml.apache.org/xerces2-j/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/apache/xmlcommons/Version
+Implementation-Title: org.apache.xmlcommons.Version
+Comment: XmlCommonsExternal for http://xml.apache.org/ subproject's us
+ e
+Implementation-Version: 1.3.04
+Implementation-URL: http://xml.apache.org/commons/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/hamcrest/core/IsNull.class
+SHA1-Digest: 7OcSVrMHmaUlLe/PrWwFDnn2mcM=
+
+Name: org/hamcrest/Description$NullDescription.class
+SHA1-Digest: 95dte12biJVnTuUnS1YWVs8z474=
+
+Name: org/hamcrest/Description.class
+SHA1-Digest: pjOzs9R982+biM5dFH2PoNqnInQ=
+
+Name: org/hamcrest/TypeSafeDiagnosingMatcher.class
+SHA1-Digest: wSMTreG+uw44hZchDRsian49Htg=
+
+Name: org/hamcrest/Condition$Step.class
+SHA1-Digest: Pgjc154RjbSjxYuFPn+6omCMqL8=
+
+Name: org/apache/xalan/xsltc
+Implementation-Title: org.apache.xalan.xsltc
+Implementation-Version: 2.6.0
+Specification-Vendor: Sun Microsystems Inc.
+Specification-Title: Java API for XML Processing
+Comment: Main XSLTC engine implementing TrAX/JAXP
+Specification-Version: 1.2
+Implementation-URL: http://xml.apache.org/xalan-j/dist/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/apache/regexp
+Implementation-Title: org.apache.regexp
+Implementation-Version: 2.6.0
+Specification-Vendor: Apache Software Foundation 
+Specification-Title: Java Regular Expression package 
+Comment: Java Regular Expression package 
+Specification-Version: 1.2
+Implementation-URL: http://jakarta.apache.org/regexp
+Implementation-Vendor: Apache Software Foundation
+
+Name: javax/xml/transform/
+Implementation-Title: javax.xml.transform
+Implementation-Version: 1.2
+Specification-Vendor: Sun Microsystems Inc.
+Specification-Title: Java API for XML Processing
+Comment: based on jaxp-tck-1_2_0 branch of xml-commons
+Specification-Version: 1.2
+Implementation-URL: http://java.sun.com/xml/jaxp.html
+Implementation-Vendor: Sun Microsystems Inc.
+
+Name: org/hamcrest/BaseDescription.class
+SHA1-Digest: Mqt/L2HnSanYYDkA/R3xawgXtf0=
+
+Name: org/hamcrest/core/IsSame.class
+SHA1-Digest: h8+NhAlZq0oY+O+w1R2vZaSYOn4=
+
+Name: org/hamcrest/Condition$1.class
+SHA1-Digest: Bg1JPYcAg789mG8d6Azr3hFpPSg=
+
+Name: org/hamcrest/core/DescribedAs.class
+SHA1-Digest: JKl9l+/awtBAI5PfiYgqWExGiWY=
+
+Name: org/hamcrest/BaseMatcher.class
+SHA1-Digest: YEOYCbaSj5/fKqAxnWwJY2YokcM=
+
+Name: org/hamcrest/FeatureMatcher.class
+SHA1-Digest: VOeYAyYBW4KGYlCH04Ziz5lDKZs=
+
+Name: org/hamcrest/core/ShortcutCombination.class
+SHA1-Digest: qcOkFY29xwys+DsU7RaLmdO9lfU=
+
+Name: org/hamcrest/CustomTypeSafeMatcher.class
+SHA1-Digest: uNq6kXV+qXVQedkTV8WAl4clLGg=
+
+Name: org/apache/xml
+Implementation-Title: org.apache.xml
+Comment: DTM implementation and utilities
+Implementation-Version: 2.6.0
+Implementation-URL: http://xml.apache.org/xalan-j/dist/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/apache/xpath
+Implementation-Title: org.apache.xpath
+Comment: XPath engine
+Implementation-Version: 2.6.0
+Implementation-URL: http://xml.apache.org/xalan-j/dist/
+Implementation-Vendor: Apache Software Foundation
+
+Name: javax/xml/xpath/
+Implementation-Title: javax.xml.xpath
+Implementation-Version: 1.3.04
+Specification-Vendor: Sun Microsystems Inc.
+Specification-Title: JSR 206 Java API for XML Processing 1.3
+Comment: xml-commons for http://xml.apache.org/ subproject's use
+Specification-Version: 1.3
+Implementation-URL: http://xml.apache.org/commons/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/hamcrest/core/IsNot.class
+SHA1-Digest: z7uINsfXW8PXwRZypmB7N5ejlpE=
+
+Name: org/hamcrest/Condition.class
+SHA1-Digest: 5Jguh06s1lPituKwX8fLJ3XeEZs=
+
+Name: org/hamcrest/internal/SelfDescribingValue.class
+SHA1-Digest: vrt8sWViUHI5BgOhsZ3l0E8Y0K4=
+
+Name: org/hamcrest/CoreMatchers.class
+SHA1-Digest: WcP8+M7sh4Nhvgy0zBKYaLZ5Hu4=
+
+Name: org/hamcrest/core/CombinableMatcher.class
+SHA1-Digest: kj451yCivYJmjCakfB/tYvId3gU=
+
+Name: about.html
+SHA1-Digest: dqHqa04wvMYr9CxL2umQcCOYfzM=
+
+Name: org/hamcrest/internal/ReflectiveTypeFinder.class
+SHA1-Digest: Jtd9JQsT/wzFjXfjAG6vXoHRLsg=
+
+Name: org/w3c/dom/svg/
+Implementation-Title: org.w3c.dom.svg
+Implementation-Version: 1.1
+Specification-Vendor: World Wide Web Consortium
+Specification-URL: http://www.w3.org/TR/SVG11/
+Specification-Title: Document Object Model (DOM) for Scalable Vector G
+ raphics (SVG)
+Specification-Version: 1.1
+Implementation-URL: http://www.w3.org/TR/SVG11/java.html
+Implementation-Vendor: World Wide Web Consortium
+
+Name: org/hamcrest/core/StringEndsWith.class
+SHA1-Digest: Z5h/Yi3AocOzDTY9JqZNdRRiapo=
+
+Name: javax/xml/datatype/
+Implementation-Title: javax.xml.datatype
+Implementation-Version: 1.3.04
+Specification-Vendor: Sun Microsystems Inc.
+Specification-Title: JSR 206 Java API for XML Processing 1.3
+Comment: xml-commons for http://xml.apache.org/ subproject's use
+Specification-Version: 1.3
+Implementation-URL: http://xml.apache.org/commons/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/w3c/dom/smil/
+Specification-Title: Document Object Model (DOM) for Synchronized Mult
+ imedia Integration Language (SMIL)
+Implementation-Title: org.w3c.dom.smil
+Implementation-URL: http://dev.w3.org/cvsweb/java/classes/org/w3c/dom/
+ smil/
+Specification-Vendor: World Wide Web Consortium
+Specification-URL: http://www.w3.org/TR/SMIL2/
+Implementation-Vendor: World Wide Web Consortium
+
+Name: javax/xml/validation/
+Implementation-Title: javax.xml.validation
+Implementation-Version: 1.3.04
+Specification-Vendor: Sun Microsystems Inc.
+Specification-Title: JSR 206 Java API for XML Processing 1.3
+Comment: xml-commons for http://xml.apache.org/ subproject's use
+Specification-Version: 1.3
+Implementation-URL: http://xml.apache.org/commons/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/apache/xalan
+Implementation-Title: org.apache.xalan
+Implementation-Version: 2.6.0
+Specification-Vendor: Sun Microsystems Inc.
+Specification-Title: Java API for XML Processing
+Comment: Main Xalan engine implementing TrAX/JAXP
+Specification-Version: 1.2
+Implementation-URL: http://xml.apache.org/xalan-j/dist/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/hamcrest/Factory.class
+SHA1-Digest: tVJseJ+KStqzuGNls0Oo0g9bMe4=
+
+Name: javax/xml/parsers/
+Implementation-Title: javax.xml.parsers
+Implementation-Version: 1.2
+Specification-Vendor: Sun Microsystems Inc.
+Specification-Title: Java API for XML Processing
+Comment: based on jaxp-tck-1_2_0 branch of xml-commons
+Specification-Version: 1.2
+Implementation-URL: http://java.sun.com/xml/jaxp.html
+Implementation-Vendor: Sun Microsystems Inc.
+
+Name: org/hamcrest/internal/ArrayIterator.class
+SHA1-Digest: 8pwhC56cWF+J2hkiserum3oescw=
+
+Name: org/hamcrest/DiagnosingMatcher.class
+SHA1-Digest: 3oy6spITLFFkKRjRzlbRADhg7RU=
+
+Name: org/hamcrest/core/Is.class
+SHA1-Digest: MSaMAUIGvyi7kJUJxDwPdKhOgTQ=
+
+Name: org/xml/sax/
+Implementation-Title: org.xml.sax
+Implementation-Version: 2.0 + small bugfixes
+Specification-Vendor: David Megginson
+Specification-Title: Simple API for XML
+Comment: based on jaxp-tck-1_2_0 branch of xml-commons
+Specification-Version: 2.0 
+Implementation-URL: http://www.saxproject.org
+Implementation-Vendor: David Megginson
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: KyT9FF7C7t86NoBoa2kZT3ZJBfw=
+
+Name: org/hamcrest/Matcher.class
+SHA1-Digest: Cg9JJiYQGifyg890oX4mfhiKbkk=
+
+Name: org.apache.xerces.xni/
+Implementation-Title: org.apache.xerces.xni
+Implementation-Version: 1.1
+Specification-Vendor: Apache Software Foundation
+Specification-Title: Xerces Native Interface
+Comment: Xerces Native Interface
+Specification-Version: 1.1
+Implementation-URL: http://xml.apache.org/xerces2-j/
+Implementation-Vendor: Apache Software Foundation
+
+Name: org/hamcrest/StringDescription.class
+SHA1-Digest: 4865dLuSiJRsnoOZe81+bPj2Udk=
+
+Name: org/hamcrest/TypeSafeMatcher.class
+SHA1-Digest: ifW1TQPe9gR210Nsykt0jFCcEi0=
+
+Name: org/w3c/dom/
+Implementation-Title: org.w3c.dom
+Implementation-Version: 1.0
+Specification-Vendor: World Wide Web Consortium
+Specification-Title: Document Object Model, Level 2 Core
+Comment: based on jaxp-tck-1_2_0 branch of xml-commons
+Specification-Version: 1.0
+Implementation-URL: http://www.w3c.org/DOM/
+Implementation-Vendor: World Wide Web Consortium
+
+Name: org/w3c/css/sac/
+Implementation-Title: org.w3c.css.sac
+Implementation-Version: 1.3
+Specification-Vendor: World Wide Web Consortium
+Specification-URL: http://www.w3.org/Style/CSS/SAC/
+Specification-Title: Simple API for CSS
+Specification-Version: 1.3
+Implementation-URL: http://www.w3.org/Style/CSS/SAC/
+Implementation-Vendor: World Wide Web Consortium
+
+Name: org/hamcrest/core/IsInstanceOf.class
+SHA1-Digest: oJ1bT+OSgDxpK8QrWxem50fEue4=
+
