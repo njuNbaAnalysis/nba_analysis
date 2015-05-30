@@ -10,6 +10,36 @@ public class HotZone {
 	
 	
 	
+	
+	
+	public HotZone(Position position, double seasonHitRate,
+			int[] seasonHitsShots, double latest5HitRate, int[] latest5HitsShots) {
+		super();
+		this.position = position;
+		this.seasonHitRate = seasonHitRate;
+		this.seasonHitsShots = seasonHitsShots;
+		this.latest5HitRate = latest5HitRate;
+		this.latest5HitsShots = latest5HitsShots;
+	}
+	
+	public Position getPosition() {
+		return position;
+	}
+	public double getSeasonHitRate() {
+		return seasonHitRate;
+	}
+	public int[] getSeasonHitsShots() {
+		return seasonHitsShots;
+	}
+	public double getLatest5HitRate() {
+		return latest5HitRate;
+	}
+	public int[] getLatest5HitsShots() {
+		return latest5HitsShots;
+	}
+	
+	
+	
 }
 
 
