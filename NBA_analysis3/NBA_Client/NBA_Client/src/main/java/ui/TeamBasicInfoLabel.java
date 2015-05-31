@@ -14,7 +14,7 @@ import logic.players.Player;
 import logic.teams.Team;
 
 public class TeamBasicInfoLabel extends JLabel {
-	private Team team;
+	private Teamvo team;
 	private int width;
 	private int height;
 
@@ -66,7 +66,7 @@ public class TeamBasicInfoLabel extends JLabel {
 
 	}
 
-	public TeamBasicInfoLabel(Team team, int width, int height) {
+	public TeamBasicInfoLabel(Teamvo team, int width, int height) {
 		super();
 
 		this.team = team;

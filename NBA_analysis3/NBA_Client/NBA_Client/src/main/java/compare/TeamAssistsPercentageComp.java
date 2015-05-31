@@ -4,11 +4,11 @@ import java.util.Comparator;
 
 import logic.teams.Team;
 
-public class TeamAssistsPercentageComp implements Comparator<Team> {
+public class TeamAssistsPercentageComp implements Comparator<Teamvo> {
 
 
 	@Override
-	public int compare(Team o1, Team o2) {
+	public int compare(Teamvo o1, Teamvo o2) {
 		double p1 = o1.getAssistsPercentage();
 		double p2 = o2.getAssistsPercentage();
 		if(p1>p2){

@@ -19,7 +19,7 @@ import logic.players.Player;
 import logic.teams.Team;
 
 public class PlayerBasicInfoLabel extends JLabel {
-	private Player player;
+	private Playervo player;
 	private int width;
 	private int height;
 	private JPanel content;
@@ -84,7 +84,7 @@ public class PlayerBasicInfoLabel extends JLabel {
 			public void mousePressed(MouseEvent e) {
 				
 
-            	Team t = PlayerBasicInfoLabel.this.bl.getTeamByName(player.getTeam());
+            	Teamvo t = PlayerBasicInfoLabel.this.bl.getTeamByName(player.getTeam());
         		
         		TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content);
         		m.setBounds(0, 0, width, height*4);
@@ -101,7 +101,7 @@ public class PlayerBasicInfoLabel extends JLabel {
 		this.add(teamName);
 	}
 
-	public PlayerBasicInfoLabel(Player player, int width, int height,JPanel content,BLService bl) {
+	public PlayerBasicInfoLabel(Playervo player, int width, int height,JPanel content,BLService bl) {
 		super();
 		this.bl = bl;
 		this.player = player;

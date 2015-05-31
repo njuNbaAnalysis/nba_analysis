@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 import logic.players.Player;
 
-public class PlayerGameStartedComp implements Comparator<Player> {
+public class PlayerGameStartedComp implements Comparator<Playervo> {
 
-	public int compare(Player o1, Player o2) {
+	public int compare(Playervo o1, Playervo o2) {
 		int p1 = o1.getGameStarted();
 		int p2 = o2.getGameStarted();
 		if(p1>p2){

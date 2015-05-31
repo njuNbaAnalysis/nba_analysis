@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 import logic.teams.Team;
 
-public class TeamNameComp implements Comparator<Team> {
+public class TeamNameComp implements Comparator<Teamvo> {
 
-	public int compare(Team o1, Team o2) {
+	public int compare(Teamvo o1, Teamvo o2) {
 		
 		String p1 = o1.getName();
 		String p2 = o2.getName();

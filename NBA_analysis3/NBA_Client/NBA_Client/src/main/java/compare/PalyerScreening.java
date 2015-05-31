@@ -16,7 +16,7 @@ public class PalyerScreening {
 		this.depend = depend;
 	}
 
-	public ArrayList<Player> screening(ArrayList<Player> list) {
+	public ArrayList<Playervo> screening(ArrayList<Playervo> list) {
 
 		String div = null;
 		char conference = 0;
@@ -70,10 +70,10 @@ public class PalyerScreening {
 
 	}
 
-	private ArrayList<Player> screening(ArrayList<Player> list, String div,
+	private ArrayList<Playervo> screening(ArrayList<Playervo> list, String div,
 			char conference, char position) {
-		ArrayList<Player> result = new ArrayList<Player>();
-		for (Player p : list) {
+		ArrayList<Playervo> result = new ArrayList<Playervo>();
+		for (Playervo p : list) {
 
 			if (div != null && !(p.getDivision()==null)&&!p.getDivision().contains(div)) {
 				continue;

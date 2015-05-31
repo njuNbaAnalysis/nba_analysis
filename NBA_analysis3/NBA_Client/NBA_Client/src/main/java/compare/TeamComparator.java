@@ -7,7 +7,7 @@ import logic.BLParameter;
 import logic.BLParameter.Sort;
 import logic.teams.Team;
 
-public class TeamComparator implements Comparator<Team> {
+public class TeamComparator implements Comparator<Teamvo> {
 
 	private ArrayList<Sort> sortList;
 	private boolean isAvarage;
@@ -19,7 +19,7 @@ public class TeamComparator implements Comparator<Team> {
 	}
 
 	@Override
-	public int compare(Team o1, Team o2) {
+	public int compare(Teamvo o1, Teamvo o2) {
 		for (Sort token : sortList) {
 			int result = 0;
 			// 默认升序排列，如果降序则取负

@@ -4,10 +4,10 @@ import java.util.Comparator;
 
 import logic.players.Player;
 
-public class PlayerPRAComp implements Comparator<Player> {
+public class PlayerPRAComp implements Comparator<Playervo> {
 
 	@Override
-	public int compare(Player o1, Player o2) {
+	public int compare(Playervo o1, Playervo o2) {
 		
 		return o2.getPRA()-o1.getPRA();
 	}

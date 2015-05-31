@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 import logic.players.Player;
 
-public class PlayerOffenseReboundsPercentageComp implements Comparator<Player> {
+public class PlayerOffenseReboundsPercentageComp implements Comparator<Playervo> {
 
-	public int compare(Player o1, Player o2) {
+	public int compare(Playervo o1, Playervo o2) {
 		double p1 = o1.getOffenseReboundsPercentage();
 		double p2 = o2.getOffenseReboundsPercentage();
 		if (p1 > p2) {
