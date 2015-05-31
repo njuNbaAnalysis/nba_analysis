@@ -2,7 +2,7 @@ package compare;
 
 import java.util.Comparator;
 
-import logic.players.Player;
+import vo.Playervo;
 
 public class PlayerUpgradeRateComp implements Comparator<Playervo> {
 	int filed = 0;

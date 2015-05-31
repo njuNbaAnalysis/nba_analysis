@@ -2,7 +2,8 @@ package compare;
 
 import java.util.Comparator;
 
-import logic.teams.Team;
+import vo.Teamvo;
+
 
 public class TeamAveragePointsComp implements Comparator<Teamvo> {
 	public int compare(Teamvo o1, Teamvo o2) {

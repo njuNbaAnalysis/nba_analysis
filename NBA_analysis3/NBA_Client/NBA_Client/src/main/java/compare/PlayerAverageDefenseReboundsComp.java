@@ -2,7 +2,9 @@ package compare;
 
 import java.util.Comparator;
 
-import logic.players.Player;
+import vo.Playervo;
+
+
 
 public class PlayerAverageDefenseReboundsComp implements Comparator<Playervo> {
 

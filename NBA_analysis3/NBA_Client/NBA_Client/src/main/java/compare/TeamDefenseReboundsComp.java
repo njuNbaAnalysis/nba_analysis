@@ -2,7 +2,8 @@ package compare;
 
 import java.util.Comparator;
 
-import logic.teams.Team;
+import vo.Teamvo;
+
 
 public class TeamDefenseReboundsComp implements Comparator<Teamvo> {
 
