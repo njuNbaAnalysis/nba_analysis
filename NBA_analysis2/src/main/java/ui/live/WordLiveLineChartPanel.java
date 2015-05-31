@@ -108,7 +108,10 @@ public class WordLiveLineChartPanel extends JPanel {
 		public void mousePressed(MouseEvent e) {
 			if ((selectedNumber != type)) {
 				((JButton) e.getSource()).setBackground(newColor);
-				btArray[selectedNumber].setBackground(oldColor);
+				if(selectedNumber!=-1){
+					btArray[selectedNumber].setBackground(oldColor);
+				}
+				
 				selectedNumber = type;
 			}
 			if (type == 0) {
