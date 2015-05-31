@@ -7,7 +7,7 @@ import vo.Playervo;
 
 
 public class PlayerAverageAssistsComp implements Comparator<Playervo> {
-
+	
 	@Override
 	public int compare(Playervo o1, Playervo o2) {
 		double p1 = o1.getAverageAssists();
