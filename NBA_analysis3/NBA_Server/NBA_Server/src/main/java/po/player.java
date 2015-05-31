@@ -11,7 +11,7 @@ public class player {
 	private String highschool;
 	private String university;
 	private String number;
-	private String selected; // ѡ�����
+	private String selected; // 选秀情况
 	private String salary;
 	public player(String Pid, String name, String position, double height,
 			double weight, String birthday, String city, String highschool,
@@ -126,5 +126,14 @@ public class player {
 		this.selected = selected;
 	}
 	
+	private playerItem CurrentPlayerItem;		//当前赛季的球员数据，默认为null
+	
+	public playerItem getCurrentPlayerItem() {
+		return CurrentPlayerItem;
+	}
+
+	public void setCurrentPlayerItem(playerItem currentItem) {
+		CurrentPlayerItem = currentItem;
+	}
 	
 }
