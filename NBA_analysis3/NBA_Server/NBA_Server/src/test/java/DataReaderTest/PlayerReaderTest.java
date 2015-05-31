@@ -65,4 +65,13 @@ public class PlayerReaderTest {
 		System.out.println(list.size());
 		assertTrue(result);
 	}
+	
+	@Test
+	public void testGetPlayersBySeason2() {
+		PlayerReader pr = new PlayerReader();
+		ArrayList<player> list = pr.getPlayersBySeason("65-66");
+		boolean result = (list.size() == 0);
+		System.out.println(list.size());
+		assertTrue(result);
+	}
 }
