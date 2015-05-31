@@ -29,7 +29,7 @@ import util.UIUtils;
 public class KingLabelPanel extends HotLabelPanel {
 	private String type;// 有球员和球队数据王两种，分别用"P"和"T"表示
 	private int num = 5;
-	private Player[] players;
+	private Playervo[] players;
 	private JPanel content;
 
 	KingLabelPanel(String type, String headName, String[] columnName,
@@ -48,16 +48,16 @@ public class KingLabelPanel extends HotLabelPanel {
 	public void setTableContent(String type) {
 		if (type.equals("P")) {
 			Object[] o = bl.getAllPlayers().subList(0, num).toArray();
-			Player[] p = new Player[num];
+			Playervo[] p = new Playervo[num];
 			for (int i = 0; i < num; i++) {
-				p[i] = (Player) o[i];
+				p[i] = (Playervo) o[i];
 			}
 			setPlayerTableContent(p);
 		} else if (type.equals("T")) {
 			Object[] o = bl.getAllTeams().subList(0, num).toArray();
-			Team[] t = new Team[num];
+			Teamvo[] t = new Teamvo[num];
 			for (int i = 0; i < num; i++) {
-				t[i] = (Team) o[i];
+				t[i] = (Teamvo) o[i];
 			}
 			setTeamTableContent(t);
 		} else {
@@ -66,7 +66,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 	}
 
-	private void setPlayerTableContent(Player[] players) {
+	private void setPlayerTableContent(Playervo[] players) {
 
 		tableContentLabel = new PlayerTableContentLabel(players, hotWidth,
 				hotHeight * 2 / 3,"point");
@@ -76,7 +76,7 @@ public class KingLabelPanel extends HotLabelPanel {
 		this.add(tableContentLabel);
 	}
 
-	private void setTeamTableContent(Team[] teams) {
+	private void setTeamTableContent(Teamvo[] teams) {
 		tableContentLabel = new TeamTableContentLabel(teams, hotWidth,
 				hotHeight * 2 / 3);
 		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
@@ -85,27 +85,27 @@ public class KingLabelPanel extends HotLabelPanel {
 
 	}
 
-	public void setTeams(Team[] teams) {
+	public void setTeams(Teamvo[] teams) {
 		((TeamTableContentLabel) tableContentLabel).setTeams(teams);
 	}
 
-	public void setPlayers(Player[] players,String field) {
+	public void setPlayers(Playervo[] players,String field) {
 		((PlayerTableContentLabel) tableContentLabel).setPlayers(players,field);
 		this.players = players;
 	}
 
-	public Player[] getPlayers() {
+	public Playervo[] getPlayers() {
 		return players;
 	}
 
 	private class PlayerTableContentLabel extends JLabel {
-		private Player[] players;
+		private Playervo[] players;
 		private int contentWidth;
 		private int contentHeight;
 		private JLabel[] playerNames;
 		private JLabel[] playerTeamNames;
 		private String field;
-		public PlayerTableContentLabel(Player[] players, int contentWidth,
+		public PlayerTableContentLabel(Playervo[] players, int contentWidth,
 				int contentHeight,String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
@@ -207,7 +207,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		}
 
-		private String getPlayerData(Player player) {
+		private String getPlayerData(Playervo player) {
 			DecimalFormat df = new DecimalFormat("#0.0");
 			double result = 0;
 		//	System.out.println(field);
@@ -258,7 +258,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			return df.format(result);
 		}
 
-		public void setPlayers(Player[] players,String field) {
+		public void setPlayers(Playervo[] players,String field) {
 			this.players = players;
 			this.field = field;
 			this.repaint();
@@ -320,7 +320,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Player p = KingLabelPanel.this.bl.getPlayerByName(((JLabel) e
+			Playervo p = KingLabelPanel.this.bl.getPlayerByName(((JLabel) e
 					.getSource()).getText());
 			PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(hotWidth,
 					hotHeight * 3, p, KingLabelPanel.this.bl,
@@ -339,7 +339,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Team t = KingLabelPanel.this.bl.getTeamByName(((JLabel) e
+			Teamvo t = KingLabelPanel.this.bl.getTeamByName(((JLabel) e
 					.getSource()).getText());
 			TeamInfoPanel teamInfoPanel = new TeamInfoPanel(hotWidth,
 					hotHeight * 3, t, KingLabelPanel.this.bl,
@@ -354,13 +354,13 @@ public class KingLabelPanel extends HotLabelPanel {
 	}
 
 	private class TeamTableContentLabel extends JLabel {
-		private Team[] teams;
+		private Teamvo[] teams;
 		private int contentWidth;
 		private int contentHeight;
 		// JLabel teamName;
 		JLabel[] teamNames;
 
-		public TeamTableContentLabel(Team[] teams, int contentWidth,
+		public TeamTableContentLabel(Teamvo[] teams, int contentWidth,
 				int contentHeight) {
 			this.teams = teams;
 			this.contentWidth = contentWidth;
@@ -368,7 +368,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			setTeamNameLabel();
 		}
 
-		public void setTeams(Team[] teams) {
+		public void setTeams(Teamvo[] teams) {
 			this.teams = teams;
 			this.repaint();
 		}

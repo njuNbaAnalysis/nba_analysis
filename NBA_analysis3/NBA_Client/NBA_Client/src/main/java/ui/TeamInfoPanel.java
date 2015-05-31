@@ -30,15 +30,15 @@ public class TeamInfoPanel extends JPanel {
 	private int height;
 	private TeamBasicInfoLabel teamBasicInfoPanel;
 	private static String[] tabName = { "赛程", "数据王", "阵容" };
-	private Team team;
+	private Teamvo team;
 	private BLService bl;
 	private JPanel content;
 	private JScrollPane js;
-	private Player[] players;
-	private ArrayList<Player> playerList;
+	private Playervo[] players;
+	private ArrayList<Playervo> playerList;
 	private int num = 5;
 
-	public TeamInfoPanel(int width, int height, Team team, BLService bl,JPanel content) {
+	public TeamInfoPanel(int width, int height, Teamvo team, BLService bl,JPanel content) {
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
@@ -48,8 +48,8 @@ public class TeamInfoPanel extends JPanel {
 		this.content = content;
 
 		ArrayList<String> nameList = team.getPlayerList();
-		players = new Player[num];
-		playerList = new ArrayList<Player>();
+		players = new Playervo[num];
+		playerList = new ArrayList<Playervo>();
 		for (int i = 0; i < nameList.size(); i++) {
 			if (i < num) {
 				players[i] = (bl.getPlayerByName(nameList.get(i)));

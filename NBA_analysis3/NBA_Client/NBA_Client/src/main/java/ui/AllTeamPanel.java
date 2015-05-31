@@ -17,7 +17,7 @@ import logic.teams.Team;
 
 public class AllTeamPanel extends JPanel{
 	
-	ArrayList<Team> teams;
+	ArrayList<Teamvo> teams;
 	int width;
 	int height;
 	private JPanel content;

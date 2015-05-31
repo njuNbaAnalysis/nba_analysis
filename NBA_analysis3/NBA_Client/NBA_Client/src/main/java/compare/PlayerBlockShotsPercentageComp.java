@@ -4,10 +4,10 @@ import java.util.Comparator;
 
 import logic.players.Player;
 
-public class PlayerBlockShotsPercentageComp implements Comparator<Player> {
+public class PlayerBlockShotsPercentageComp implements Comparator<Playervo> {
 
 	@Override
-	public int compare(Player o1, Player o2) {
+	public int compare(Playervo o1, Playervo o2) {
 		if(o1.getBlockShotsPercentage()>o2.getBlockShotsPercentage()){
 			return -1;
 		}else if(o1.getBlockShotsPercentage()<o2.getBlockShotsPercentage()){

@@ -4,10 +4,10 @@ import java.util.Comparator;
 
 import logic.teams.Team;
 
-public class TeamFreeThrowsPercentageComp implements Comparator<Team> {
+public class TeamFreeThrowsPercentageComp implements Comparator<Teamvo> {
 
 	@Override
-	public int compare(Team o1, Team o2) {
+	public int compare(Teamvo o1, Teamvo o2) {
 		double p1 = o1.getFreeThrowsPercentage();
 		double p2 = o2.getFreeThrowsPercentage();
 		if (p1 > p2) {

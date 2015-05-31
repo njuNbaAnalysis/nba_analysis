@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 import logic.players.Player;
 
-public class PlayerAveragePointsComp implements Comparator<Player> {
+public class PlayerAveragePointsComp implements Comparator<Playervo> {
 
-	public int compare(Player o1, Player o2) {
+	public int compare(Playervo o1, Playervo o2) {
 		double p1 = o1.getAveragePoints();
 		double p2 = o2.getAveragePoints();
 		if (p1 > p2) {

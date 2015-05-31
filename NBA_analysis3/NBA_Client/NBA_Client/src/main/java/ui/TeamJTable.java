@@ -85,7 +85,7 @@ public class TeamJTable extends StatJTable {
 	private static String[] totalColumn = { "排名", "球队", "场数", "命中", "出手",
 			"3分命中", "3分出手", "罚球命中", "罚球出手", "进攻篮板", "防守篮板", "篮板", "助攻", "抢断",
 			"盖帽", "失误", "犯规", "得分" };
-	private ArrayList<Team> list;
+	private ArrayList<Teamvo> list;
 	private JPanel content;
 	private int width;
 	private int height;
@@ -113,7 +113,7 @@ public class TeamJTable extends StatJTable {
                 	int row = TeamJTable.this.getSelectedRow();
                 	String teamName = (String)TeamJTable.this.getValueAt(row, column);
 
-                	Team t = TeamJTable.this.bl.getTeamByName(teamName);
+                	Teamvo t = TeamJTable.this.bl.getTeamByName(teamName);
             		
             		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,TeamJTable.this.bl,TeamJTable.this.content);
             		m.setBounds(0, 0, width, height*10/9);
@@ -125,7 +125,7 @@ public class TeamJTable extends StatJTable {
         });
 	}
 
-	private String[] getAverageDataRow(Team t, int i) {
+	private String[] getAverageDataRow(Teamvo t, int i) {
 
 		String[] s = new String[22];
 		s[0] = (i + 1) + "";
@@ -155,7 +155,7 @@ public class TeamJTable extends StatJTable {
 
 	}
 
-	private String[] getTotalDataRow(Team t, int i) {
+	private String[] getTotalDataRow(Teamvo t, int i) {
 		String[] s = new String[18];
 		s[0] = (i + 1) + " ";
 		s[1] = t.getName() + "";

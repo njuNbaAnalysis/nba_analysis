@@ -12,10 +12,10 @@ import logic.matches.Match;
 public class MatchInfoPanel extends JPanel {
 	int width;
 	int height;
-	Match match;
+	Matchvo match;
 	
 	
-	public MatchInfoPanel(int width,int height,Match match,BLController bl){
+	public MatchInfoPanel(int width,int height,Matchvo match,BLController bl){
 		this.width = width;
 		this.height = height;
 		this.match = match;

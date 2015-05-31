@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 import logic.players.Player;
 
-public class PlayerFoulsComp implements Comparator<Player> {
+public class PlayerFoulsComp implements Comparator<Playervo> {
 
-	public int compare(Player o1, Player o2) {
+	public int compare(Playervo o1, Playervo o2) {
 		// TODO Auto-generated method stub
 		return (int)(o2.getFouls() - o1.getFouls());
 	}

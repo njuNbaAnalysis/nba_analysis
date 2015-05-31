@@ -194,7 +194,7 @@ public class LineUpPanel extends JPanel {
 	                	int row = LineUpTable.this.getSelectedRow();
 	                	String playerName = (String)LineUpTable.this.getValueAt(row, column);
 
-	                	Player p = LineUpTable.this.bl.getPlayerByName(playerName);
+	                	Playervo p = LineUpTable.this.bl.getPlayerByName(playerName);
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*3/2,p,LineUpTable.this.bl,LineUpTable.this.content);
 	            		
@@ -237,7 +237,7 @@ public class LineUpPanel extends JPanel {
 			//存疑
 			for (int i = 0; i < size; i++) {
 				String[] s = null;
-				Player player = bl.getPlayerByName(playersName.get(i));
+				Playervo player = bl.getPlayerByName(playersName.get(i));
 				if(player==null){
 					s = new String[1];
 					s[0] = playersName.get(i);
@@ -264,7 +264,7 @@ public class LineUpPanel extends JPanel {
 			this.repaint();
 		}
 
-		private String[] getInfoRow(Player p) {
+		private String[] getInfoRow(Playervo p) {
 			String[] s = new String[9];
 			//球员没有的时候
 			if(p!=null){
@@ -283,7 +283,7 @@ public class LineUpPanel extends JPanel {
 			return s;
 		}
 
-		private String[] getDataRow(Player p) {
+		private String[] getDataRow(Playervo p) {
 
 			String[] s = new String[16];
 			s[0] = p.getName() + "";

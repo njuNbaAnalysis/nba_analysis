@@ -4,8 +4,8 @@ import java.util.Comparator;
 
 import logic.teams.Team;
 
-public class TeamAveragePointsComp implements Comparator<Team> {
-	public int compare(Team o1, Team o2) {
+public class TeamAveragePointsComp implements Comparator<Teamvo> {
+	public int compare(Teamvo o1, Teamvo o2) {
 		double t1 = o1.getAveragePoints();
 		double t2 = o2.getAveragePoints();
 
