@@ -43,9 +43,27 @@ public class PlayerItemReaderTest {
 	}
 
 	@Test
+	public void testgetPlayerItemById2() {
+		PlayerItemReader pr = new PlayerItemReader();
+		ArrayList<playerItem> list = pr.getPlayerItemById("05000");
+		boolean result = (list.size() == 0);
+		System.out.println(list.size());
+		assertTrue(result);
+	}
+
+	@Test
 	public void testgetPlayerItemBySeason() {
 		PlayerItemReader pr = new PlayerItemReader();
 		ArrayList<playerItem> list = pr.getPlayerItemBySeason("14-15");
+		boolean result = (list.size() != 0);
+		System.out.println(list.size());
+		assertTrue(result);
+	}
+
+	@Test
+	public void testgetPlayerItemBySeason2() {
+		PlayerItemReader pr = new PlayerItemReader();
+		ArrayList<playerItem> list = pr.getPlayerItemBySeason("65-66");
 		boolean result = (list.size() != 0);
 		System.out.println(list.size());
 		assertTrue(result);
