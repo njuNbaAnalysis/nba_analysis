@@ -4,6 +4,17 @@ public class pointsItem {
 	private String Mid;
 	private int period;            //节数，第几节
 	private int home_points;		//主场得分
+	private int away_points;		//客场得分
+	
+	
+	public pointsItem(String mid, int period, int home_points, int away_points) {
+		super();
+		Mid = mid;
+		this.period = period;
+		this.home_points = home_points;
+		this.away_points = away_points;
+	}
+	
 	public String getMid() {
 		return Mid;
 	}
@@ -28,5 +39,4 @@ public class pointsItem {
 	public void setAway_points(int away_points) {
 		this.away_points = away_points;
 	}
-	private int away_points;		//客场得分
 }
