@@ -104,5 +104,7 @@ public class PlayerItemReader {
 		GetConnection.free(rs, conn, statement);
 		return result;
 	}
+	
+	
 
 }

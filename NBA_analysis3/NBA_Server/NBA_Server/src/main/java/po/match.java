@@ -14,6 +14,7 @@ public class match {
 	private int away_points;
 	private ArrayList<matchItem> matchItemList = new ArrayList<matchItem>();       //记录每场比赛中每个人的具体信息
 	private ArrayList<pointsItem> pointsItemList = new ArrayList<pointsItem>();			//记录每场比赛的每节得分
+	private pointsItem pointsItem;
 
 	public match(String Mid, String date, String season, String home_team,
 			String away_team, boolean isplayoff, int home_points,
@@ -92,6 +93,11 @@ public class match {
 		this.away_points = away_points;
 	}
 
+	
+	public void setMatchItemList(ArrayList<matchItem> matchItemList) {
+		this.matchItemList = matchItemList;
+	}
+
 	public ArrayList<matchItem> getMatchItemList() {
 		return matchItemList;
 	}
@@ -103,5 +109,14 @@ public class match {
 	public void setPointsItemList(ArrayList<pointsItem> pointsItemList) {
 		this.pointsItemList = pointsItemList;
 	}
+
+	public pointsItem getPointsItem() {
+		return pointsItem;
+	}
+
+	public void setPointsItem(pointsItem pointsItem) {
+		this.pointsItem = pointsItem;
+	}
+	
 	
 }
