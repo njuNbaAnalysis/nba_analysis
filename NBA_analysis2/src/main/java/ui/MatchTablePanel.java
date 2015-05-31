@@ -78,7 +78,6 @@ public class MatchTablePanel extends JPanel {
 		Image teamImage2 = bl.getTeamByName(match.getTeams()[1]).getLogo(
 				width / 20, height / 20);
 		g.drawImage(teamImage2, 0, height * 10 / 20, this);
-
 	}
 
 	private class MatchJTable extends BaseJTable {
