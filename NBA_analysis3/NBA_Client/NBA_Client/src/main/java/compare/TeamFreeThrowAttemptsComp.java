@@ -2,7 +2,7 @@ package compare;
 
 import java.util.Comparator;
 
-import logic.teams.Team;
+import vo.Teamvo;
 
 public class TeamFreeThrowAttemptsComp implements Comparator<Teamvo> {
 

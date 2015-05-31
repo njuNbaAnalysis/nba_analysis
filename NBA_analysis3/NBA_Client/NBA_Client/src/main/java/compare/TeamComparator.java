@@ -3,9 +3,9 @@ package compare;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import logic.BLParameter;
-import logic.BLParameter.Sort;
-import logic.teams.Team;
+import vo.Teamvo;
+
+
 
 public class TeamComparator implements Comparator<Teamvo> {
 

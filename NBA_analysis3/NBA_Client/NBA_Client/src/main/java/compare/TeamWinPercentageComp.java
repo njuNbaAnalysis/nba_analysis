@@ -2,7 +2,7 @@ package compare;
 
 import java.util.Comparator;
 
-import logic.teams.Team;
+import vo.Teamvo;
 
 //在TeamController中也被复用
 //本排序为降序排列!!!

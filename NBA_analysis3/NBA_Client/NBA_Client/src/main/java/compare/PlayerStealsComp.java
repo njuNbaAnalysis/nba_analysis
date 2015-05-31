@@ -2,7 +2,7 @@ package compare;
 
 import java.util.Comparator;
 
-import logic.players.Player;
+import vo.Playervo;
 
 public class PlayerStealsComp implements Comparator<Playervo> {
 

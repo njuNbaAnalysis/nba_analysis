@@ -3,7 +3,8 @@ package compare;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import logic.players.Player;
+import vo.Playervo;
+
 
 public class PalyerScreening {
 	String location;
