@@ -12,6 +12,8 @@ import data.GetConnection;
 
     //调用者需要手动init,finish
 public class TeamNameListData{
+    
+    //
 
     Connection conn;
     PreparedStatement pstm;
