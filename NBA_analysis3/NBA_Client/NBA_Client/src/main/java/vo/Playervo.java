@@ -517,5 +517,96 @@ public class Playervo implements Serializable{
 		return sumOfoppnentDefensiveRounds;
 	}
 
+	public double getAverageRebounds() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getRebounds() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageOffenseRebounds() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getOffenseRebounds() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageDefenseRebounds() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getDefenseRebounds() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageAssists() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getAssists() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageBlockShots() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getBlockShots() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageSteals() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getSteals() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageTurnOver() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getTurnOver() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageMinutes() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getMinutes() * 1.0 / gamePlayed / 60;
+	}
+
+	public double getAverageEfficiency() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getEfficiency() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageGmSc() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getGmsc() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageFouls() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getFouls() * 1.0 / gamePlayed;
+	}
+
+	public double getAveragePoints() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getPoints() * 1.0 / gamePlayed;
+	}
+
+	public double getAverageDoubleTwo() {
+		if (gamePlayed == 0) {
+			return 0;
+		}
+		return getDoubledouble() * 1.0 / gamePlayed;
+	}
+	
 	
 }
