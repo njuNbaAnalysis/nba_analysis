@@ -12,8 +12,6 @@ import data.GetConnection;
 
     //调用者需要手动init,finish
 public class TeamNameListData{
-    
-    //
 
     Connection conn;
     PreparedStatement pstm;
@@ -90,7 +88,7 @@ public class TeamNameListData{
      * @param rawParameter
      * @return sql like语句中合适的参数
      */
-    private String getParameterString(String rawParameter){
+    public static String getParameterString(String rawParameter){
         if(rawParameter == null || rawParameter.equals("")){
             return "%";
         }
