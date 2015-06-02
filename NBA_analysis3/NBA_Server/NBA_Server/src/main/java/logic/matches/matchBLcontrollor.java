@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import po.player;
+import po.playerItem;
 import vo.EventVo;
 import vo.Matchvo;
 import vo.Playervo;
@@ -45,8 +47,10 @@ public class matchBLcontrollor implements matchBLservice{
 	}
 	
 	public Playervo changePlayertoVO(player p){
-		
-		Playervo pvo = new 
+		playerItem temp = p.getCurrentPlayerItem();
+		if(temp!=null){}
+			
+		return null;
 	}
 
 }
