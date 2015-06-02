@@ -11,7 +11,7 @@ public class GetConnection {
 	public static Connection getConnection() { // 链接数据库
 		Connection conn = null;
 		String driverName = "com.mysql.jdbc.Driver";
-		String dbURL = "jdbc:mysql://192.168.1.102:3306/nba?characterEncoding=utf-8";
+		String dbURL = "jdbc:mysql://localhost:3306/nba?characterEncoding=utf-8";
 
 		// "jdbc:mysql://192.168.1.102:3306/nba?characterEncoding=utf-8"
 
