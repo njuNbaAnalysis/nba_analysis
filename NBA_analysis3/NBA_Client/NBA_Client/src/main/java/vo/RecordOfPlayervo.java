@@ -1,7 +1,9 @@
 package vo;
 
+import java.io.Serializable;
+
 //每一个球队的记录
-public class RecordOfPlayervo{
+public class RecordOfPlayervo implements Serializable{
     private String playerName;
     private String position;
     private int minutes;    //在场时间，以秒为单位

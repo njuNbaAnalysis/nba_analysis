@@ -1,5 +1,6 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * 相对与一支球队来说的
  * 一场比赛的日期，结果，比分，对手，以及主客场
  */
-public class MatchSimpleInfovo {
+public class MatchSimpleInfovo implements Serializable{
     private Date date;//月份为0~11 
     private boolean isWin;
     private int[] points;//2元数组,传入的球队在前
