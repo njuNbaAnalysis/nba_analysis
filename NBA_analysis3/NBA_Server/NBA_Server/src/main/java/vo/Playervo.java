@@ -1,9 +1,10 @@
 package vo;
 
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Playervo {
+public class Playervo implements Serializable{
 	private String name;
 	private int number; // 球衣号
 	private String position; // G,G-F 类似格式

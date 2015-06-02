@@ -1,9 +1,11 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import util.SvgImage;
 
-public class Teamvo {
+public class Teamvo implements Serializable{
     //raw data
 	private String name;                   //球队名
 	private String abbreviation;           //缩写
