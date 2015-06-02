@@ -22,11 +22,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/workspace/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/libs/batik-1.7/batik.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/libs/batik-1.7/batik-rasterizer.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/libs/batik-1.7/batik-slideshow.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/libs/batik-1.7/batik-squiggle.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/libs/batik-1.7/batik-svgpp.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/libs/batik-1.7/batik-ttf2svg.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/batik"/>
+	<classpathentry kind="lib" path="C:/Users/Lionel&apos;s PC/Desktop/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/libs/mysql-connector-java-5.1.26-bin.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
