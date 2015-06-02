@@ -1,6 +1,8 @@
 package vo;
 
-public class HotZone {
+import java.io.Serializable;
+
+public class HotZone implements Serializable{
 	Position position;
 	double seasonHitRate;  //赛季命中率
 	int[]  seasonHitsShots;    //赛季命中数和出手数

@@ -31,7 +31,7 @@ public class MatchControllorTest {
 	@Test
 	public void testUpdateNewMatch() {
 		matchBLcontrollor mb = new matchBLcontrollor();
-		mb.updateNewMatch("2015-05-27");
+		mb.updateNewMatch("2015-06-02");
 		assertTrue(true);
 	}
 	
