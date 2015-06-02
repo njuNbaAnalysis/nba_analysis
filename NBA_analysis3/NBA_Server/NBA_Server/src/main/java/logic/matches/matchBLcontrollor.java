@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import vo.EventVo;
 import vo.Matchvo;
+import vo.Playervo;
 import BLservice.matchBLservice;
 
 public class matchBLcontrollor implements matchBLservice{
@@ -41,6 +42,11 @@ public class matchBLcontrollor implements matchBLservice{
             System.out.println(e);
         }
 		
+	}
+	
+	public Playervo changePlayertoVO(player p){
+		
+		Playervo pvo = new 
 	}
 
 }
