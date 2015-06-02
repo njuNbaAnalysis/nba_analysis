@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import po.TeamRecordItem;
 import data.GetConnection;
@@ -63,7 +64,61 @@ public class TeamRecordItemData {
         }
     }
 
-    //public ArrayList<>
+    public ArrayList<TeamRecordItem> getTeamRecords(TeamRecordItem item){
+        ArrayList<TeamRecordItem> resultList = new  ArrayList<TeamRecordItem>();
+        
+        String sql = "select * from teamrecorditem where dataType like ? "
+                + "and teamNameEn like ? "
+                + "and beginYear like ? "
+                + "and playerId like ? "
+                + "and isSeason = ?";
+        try {
+            pstm = conn.prepareStatement(sql);
+            
+            pstm.setString(1, TeamNameListData.getParameterString(item.getDataType()));
+            pstm.setString(2, TeamNameListData.getParameterString(item.getTeamNameEn()));
+            pstm.setString(3, TeamNameListData.getParameterString(item.getBeginYear()));
+            pstm.setString(4, TeamNameListData.getParameterString(item.getPlayerId()));
+            pstm.setBoolean(5, item.isSeason());
+            rs = pstm.executeQuery();
+            
+            while(rs.next()){
+                resultList.add(new TeamRecordItem(rs.getString("dataType"),
+                        rs.getString("teamNameEn"),
+                        rs.getBoolean("isSeason"),
+                        rs.getString("beginYear"),
+                        rs.getString("playerId"),
+                        rs.getInt("showUpNumbers"),
+                        rs.getInt("startingTimes"),
+                        rs.getDouble("during"),
+                        rs.getDouble("fieldGoalsPercentage"),
+                        rs.getDouble("fieldGoalHitsAverage"),
+                        rs.getDouble("fieldGoalAttempsAverage"),
+                        rs.getDouble("threePointerPercentage"),
+                        rs.getDouble("threePointerHitsAverage"),
+                        rs.getDouble("threePointerAttemptsAverage"),
+                        rs.getDouble("freeThrowPercentage"),
+                        rs.getDouble("freeThrowHitsAverage"),
+                        rs.getDouble("freeThrowAttemptsAverage"),
+                        rs.getDouble("reboundsAverage"),
+                        rs.getDouble("offensiveReboundsAverage"),
+                        rs.getDouble("defensiveReboundsAverage"),
+                        rs.getDouble("assistsAverage"),
+                        rs.getDouble("stealsAverage"),
+                        rs.getDouble("blockShotsAverage"),
+                        rs.getDouble("turnOversAverage"),
+                        rs.getDouble("foulsAverage"),
+                        rs.getDouble("pointsAverage"),
+                        rs.getInt("numOfVictory"),
+                        rs.getInt("numOfFailure")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return resultList;
+    }
     
     public void init(){
         conn = GetConnection.getConnection();
@@ -72,6 +127,5 @@ public class TeamRecordItemData {
     public void finish(){
         GetConnection.free(rs, conn, pstm);
     }
-
 
 }
