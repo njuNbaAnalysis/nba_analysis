@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Playervo implements Serializable{
 	private String name;
-	private int number; // 球衣号
+	private String number; // 球衣号
 	private String position; // G,G-F 类似格式
 	private int[] height; // int[0]: foot,int[1]: inch
 	private int weight;
@@ -82,7 +82,7 @@ public class Playervo implements Serializable{
 	private double sumOfoppnentDefensiveRounds = 0;//对手进攻次数
 	
 	
-	public Playervo(String name, int number, String position, int[] height,
+	public Playervo(String name, String number, String position, int[] height,
 			int weight, Date birthday, int age, int experience, String school,
 			Image portrait, Image action, String team, String location,
 			String division, char conference, int gamePlayed, int gameStarted,
@@ -183,7 +183,7 @@ public class Playervo implements Serializable{
 	}
 
 
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
@@ -607,6 +607,5 @@ public class Playervo implements Serializable{
 		}
 		return getDoubledouble() * 1.0 / gamePlayed;
 	}
-	
 	
 }
