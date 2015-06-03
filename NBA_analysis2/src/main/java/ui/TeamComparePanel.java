@@ -163,7 +163,7 @@ class LineChartPanel extends JPanel {
 	
 	private void initButtons() {
 		//默认初始状态-->选择第一张表 
-		ChartButton first = new ChartButton(modules[0], 295, 117);
+		ChartButton first = new ChartButton(modules[0], 295, 117,this);
 		first.isChosen=true;
 		first.setLocation(0, 0);
 		chartButtons.add(first);
@@ -171,7 +171,7 @@ class LineChartPanel extends JPanel {
 		
 		
 		for (int i = 1; i < modules.length; i++) {
-			ChartButton tem = new ChartButton(modules[i], 295, 117);
+			ChartButton tem = new ChartButton(modules[i], 295, 117,this);
 			tem.setLocation(0, 120 * i);
 			chartButtons.add(tem);
 			this.add(tem);
@@ -206,7 +206,7 @@ class ChartButton extends JLabel implements MouseListener {
 	int height;
 	boolean isChosen;
 	boolean isMouseEntered;
-
+	LineChartPanel parent;
 	public void paintComponent(Graphics g2) {
 		super.paintComponent(g2);
 		Graphics2D g = (Graphics2D) g2.create();
@@ -252,14 +252,14 @@ class ChartButton extends JLabel implements MouseListener {
 
 	}
 
-	public ChartButton(String name, int width, int height) {
+	public ChartButton(String name, int width, int height,LineChartPanel parent) {
 		super();
 		this.name = name;
 		this.isChosen = false;
 		this.isMouseEntered = false;
 		this.width = width;
 		this.height = height;
-
+		this.parent = parent;
 		this.setSize(width, height);
 		this.addMouseListener(this);
 
@@ -299,6 +299,7 @@ class ChartButton extends JLabel implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		isChosen = true;
+		parent.updateChart(name);
 		repaint();
 
 	}
