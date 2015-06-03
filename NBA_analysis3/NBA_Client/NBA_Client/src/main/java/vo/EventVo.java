@@ -11,25 +11,21 @@ public class EventVo implements Serializable{
 	int num;// 0表示第一个队，1表示第二个队
 	String time;
 	String points;// 得到两队比分
-	Image playerPortrait;
 	String playerName;
 	String description;
 	String teamName;
-	Image teamImage;
 
 	public EventVo(int section, int num, String time, String points,
-			Image playerPortrait, String playerName, String description,
-			String teamName, Image teamImage) {
+			String playerName, String description,
+			String teamName) {
 		super();
 		this.section = section;
 		this.num = num;
 		this.time = time;
 		this.points = points;
-		this.playerPortrait = playerPortrait;
 		this.playerName = playerName;
 		this.description = description;
 		this.teamName = teamName;
-		this.teamImage = teamImage;
 	}
 
 	public int getNum() {
@@ -48,9 +44,6 @@ public class EventVo implements Serializable{
 		return points;
 	}
 
-	public Image getPlayerPortrait() {
-		return playerPortrait;
-	}
 
 	public String getPlayerName() {
 		return playerName;
@@ -64,9 +57,6 @@ public class EventVo implements Serializable{
 		return teamName;
 	}
 
-	public Image getTeamImage() {
-		return teamImage;
-	}
 
 	// 以秒数的形式返回时间
 	public int getTimeInSecond() {
