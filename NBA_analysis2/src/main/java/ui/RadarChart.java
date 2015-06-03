@@ -60,6 +60,7 @@ public class RadarChart extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
@@ -97,14 +98,17 @@ public class RadarChart extends JPanel {
 		g2.setColor(new Color(221, 61, 66, 127));
 		g2.fillPolygon(bx_now, by_now, dimension);
 		// 画多边形边界
+		
 		g2.setColor(Color.white);
+		Stroke stroke = g2.getStroke();
+		Stroke lineStroke = new BasicStroke(1.5f);
+		g2.setStroke(lineStroke);
 		g2.drawPolygon(ax_now, ay_now, dimension);
 		g2.drawPolygon(bx_now, by_now, dimension);
 		// 画坐标系
 		g2.setColor(Color.white);
-		Stroke stroke = g2.getStroke();
-		Stroke lineStroke = new BasicStroke(3.0f);
-		g2.setStroke(lineStroke);
+		
+	
 		for (int k = 0; k <= seg; k++) {
 			double r = k * separator;
 
