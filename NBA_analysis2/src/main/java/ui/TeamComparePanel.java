@@ -656,7 +656,7 @@ class HotZonePanel extends JPanel{
 		for(HotZone each :hotZones){
 			if(each.position==positions[index]){
 				position_l.setText(posNames[index]);
-				position_l.setLocation(350-(posNames[index].length()-4)*30, 100);
+				position_l.setLocation(450- position_l.getFontMetrics(position_l.getFont()).stringWidth(posNames[index]) , 100);
 				seasonHitRate_l.setText(each.latest5HitRate*100+"%");
 				latest5HitRate_l.setText(each.latest5HitRate*100+"%");
 				position_r.setText(posNames[index]);
