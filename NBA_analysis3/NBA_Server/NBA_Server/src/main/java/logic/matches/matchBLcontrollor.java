@@ -69,6 +69,21 @@ public class matchBLcontrollor implements matchBLservice {
 		}
 	}
 	
+	public void NBALiveCompare() {
+
+		InvokeLiveCompare NBALiveCompare = new InvokeLiveCompare("0041400311");
+		NBALiveCompare.run();
+		try {
+			ArrayList<String> Live = NBALiveCompare.getLive();
+			for (int i = 0; i < Live.size(); i++) {
+				System.out.println(Live.get(i));
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 	public Playervo changePlayertoVO(player p) {
 		playerItem temp = p.getCurrentPlayerItem();
@@ -80,6 +95,6 @@ public class matchBLcontrollor implements matchBLservice {
 
 	public static void main(String[] args) {
 		matchBLcontrollor mb = new matchBLcontrollor();
-		mb.NBALiveMatchItem();
+		mb.NBALiveCompare();
 	}
 }
