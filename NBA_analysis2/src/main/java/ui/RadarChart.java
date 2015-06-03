@@ -32,6 +32,7 @@ public class RadarChart extends JPanel {
 
 		this.width = width;
 		this.height = height;
+		this.setSize(width,height);
 		// System.out.println(this.height);
 		threadDelay = 5;
 		this.pa_limit = pa;
@@ -131,8 +132,7 @@ public class RadarChart extends JPanel {
 
 	}
 
-	private class BarChartThread implements Runnable {
-
+	private class RadarChartThread implements Runnable {
 		@Override
 		public void run() {
 			while (!drawComplete()) {
@@ -165,13 +165,6 @@ public class RadarChart extends JPanel {
 				}
 			}
 
-			// 修正属性
-			/*
-			 * for (int i = 0; i < barsize; i++) { barNum[i] = numLimits[i]; }
-			 */
-
-			// repaint();
-
 		}
 
 	}
@@ -191,7 +184,7 @@ public class RadarChart extends JPanel {
 
 	// 务必调用这个方法启动动画
 	public void go() {
-		Thread s = new Thread(new BarChartThread());
+		Thread s = new Thread(new RadarChartThread());
 		s.start();
 
 	}
@@ -199,10 +192,10 @@ public class RadarChart extends JPanel {
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setBounds(0, 0, 1280, 1080);
-		double[] pa = { 2, 4, 6, 8, 4, 3, 1, 9 };
-		double[] pb = { 1, 3, 0, 1, 8, 1, 5, 7 };
+		double[] pa = { 2, 4, 6, 8};
+		double[] pb = { 1, 3, 6, 1};
 		double limit = 10;
-		RadarChart chart = new RadarChart(8, 5, 960, 720, pa, pb, limit);
+		RadarChart chart = new RadarChart(4, 5, 1280, 1080, pa, pb, limit);
 		chart.setBounds(0, 0, 1280, 1080);
 		f.setLayout(null);
 		f.add(chart);
