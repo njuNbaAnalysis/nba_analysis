@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -7,6 +8,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -94,7 +96,7 @@ public class TeamComparePanel extends JPanel {
 		double[] pb = { 1, 3, 0, 1, 8, 1, 5, 7 };
 		double limit = 10;
 		radar = new RadarChart(8, 5, 654, 562, pa, pb, limit);
-		radar.setBounds(537, 130, 654, 562);
+		radar.setBounds(539, 130, 654, 562);
 		this.add(radar);
 		radar.go();
 		this.repaint();
@@ -109,6 +111,11 @@ public class TeamComparePanel extends JPanel {
 
 }
 
+
+/*
+ * 折线图展示窗口
+ * 包括折线图表和选择按钮
+ */
 class LineChartPanel extends JPanel {
 	int width;
 	int height;
@@ -132,7 +139,26 @@ class LineChartPanel extends JPanel {
 		g.fillRect(0, 0, width, height);
 		g.setColor(new Color(83, 82, 100));
 		g.fillRect(280, 0, 20, height);
-
+		
+		Stroke stroke = g.getStroke();
+		Stroke lineStroke = new BasicStroke(1f);
+		g.setStroke(lineStroke);
+		g.setColor(new Color(221, 61, 66));
+		g.drawLine(1480, 154, 1509, 126);
+		g.drawLine(1509, 126, 1530, 153);
+		g.drawLine(1530, 153, 1563, 128);
+		g.drawLine(1563, 128, 1578, 145);
+		g.setColor(new Color(6, 74, 150));
+		g.drawLine(1480, 514, 1509, 486);
+		g.drawLine(1509, 486, 1530, 513);
+		g.drawLine(1530, 513, 1563, 488);
+		g.drawLine(1563, 488, 1578, 505);
+		
+		g.setFont(new Font("微软雅黑",Font.PLAIN,30));
+		g.setColor(Color.white);
+		g.drawString(team1.getName(),1610,147);
+		g.drawString(team2.getName(),1610,507);
+		
 	}
 
 	public LineChartPanel(int width, int height, Team team1, Team team2) {
@@ -186,7 +212,7 @@ class LineChartPanel extends JPanel {
 			}
 		}
 
-		if (currentChosen != -1) {
+		if (currentChosen != index) {
 			chartButtons.get(currentChosen).recover();
 		}
 		
@@ -200,6 +226,9 @@ class LineChartPanel extends JPanel {
 
 }
 
+/*
+ * 折线图窗口中的按钮
+ */
 class ChartButton extends JLabel implements MouseListener {
 	String name;
 	int width;
@@ -305,3 +334,8 @@ class ChartButton extends JLabel implements MouseListener {
 	}
 
 }
+
+
+
+
+
