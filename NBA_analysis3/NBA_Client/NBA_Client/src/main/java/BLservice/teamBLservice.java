@@ -1,5 +1,11 @@
 package BLservice;
 
-public class teamBLservice {
+import java.util.ArrayList;
 
+import vo.Teamvo;
+
+
+
+public interface teamBLservice {
+	
 }
