@@ -85,21 +85,21 @@ public class LivePanel extends JPanel {
 			g.setColor(new Color(246, 246, 246));
 			g.fillRect(0, 0, labelWidth, labelHeight/10);
 			g.setColor(new Color(122, 122, 122));
-			g.fillRect(0, labelWidth*5/ 12, labelWidth/ 6, labelHeight / 10);
+			g.fillRect(labelWidth*5/ 12, 0, labelWidth/ 6, labelHeight / 10);
 			g.setColor(new Color(190, 157, 83));
 			g.drawLine(0, labelHeight / 10, labelWidth, labelHeight / 10);
-			g.drawLine(0, labelHeight, labelWidth, labelHeight);
+
 			
 			g.setColor(Color.WHITE);
-			g.fillRect(0, labelHeight / 10 + 1, labelWidth, labelHeight * 19 / 20 - 1);
+			g.fillRect(0, labelHeight / 10 + 1, labelWidth, labelHeight * 9 / 10 - 1);
 			
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("default", Font.BOLD, 20));
 			int strWidth = g.getFontMetrics(g.getFont()).stringWidth("结束");
 			g.drawString("结束",labelWidth/2-strWidth/2 ,labelHeight * 1 / 10-8);//这个结束需要修改
 			
-			g.drawImage(teams[0].getLogo(120, 100), labelWidth*9/36, labelHeight/3, this);
-			g.drawImage(teams[1].getLogo(120, 100), labelWidth*8/12, labelHeight/3,this);
+			g.drawImage(teams[0].getLogo(120, 100), labelWidth*12/36, labelHeight*7/24, this);
+			g.drawImage(teams[1].getLogo(120, 100), labelWidth*83/144, labelHeight*7/24,this);
 			
 			
 			g.setColor(Color.black);
@@ -121,36 +121,40 @@ public class LivePanel extends JPanel {
 							+ (teams[1].getNumOfMatches() - teams[1]
 									.getNumOfVictory()), labelWidth*30/36, labelHeight*7/12);
 			
-			g.setFont(new Font("default", Font.PLAIN, 40));
+			g.setFont(new Font("default", Font.PLAIN, 80));
 			strWidth = g.getFontMetrics(g.getFont()).stringWidth("VS");
-			g.drawString("VS",labelWidth/2-strWidth/2 ,labelHeight * 5 / 12);
+			g.drawString("VS",labelWidth/2-strWidth/2 ,labelHeight  *7/ 12);
 			
 			g.setFont(new Font("default", Font.PLAIN, 15));
 			
 			
-			g.drawString("1", labelWidth*11/24, labelHeight*2/3);
-			g.drawString("2", labelWidth*12/24, labelHeight*2/3);
-			g.drawString("3", labelWidth*13/24, labelHeight*2/3);
-			g.drawString("4", labelWidth*14/24, labelHeight*2/3);
+			g.drawString("1", labelWidth*10/24, labelHeight*2/3);
+			g.drawString("2", labelWidth*11/24, labelHeight*2/3);
+			g.drawString("3", labelWidth*12/24, labelHeight*2/3);
+			g.drawString("4", labelWidth*13/24, labelHeight*2/3);
 			
 			
 			g.setFont(new Font("default", Font.PLAIN, 30));
-			g.drawString(match.getTeams()[0], labelWidth*3/8, labelHeight*19/24);
-			g.drawString(match.getTeams()[1], labelWidth*3/8, labelHeight*22/24);
-			g.drawString(match.getPointsList().get(0)[0] + "", labelWidth*11/24, labelHeight*19/24);
-			g.drawString(match.getPointsList().get(1)[0] + "", labelWidth*12/24, labelHeight*19/24);
-			g.drawString(match.getPointsList().get(2)[0] + "", labelWidth*13/24, labelHeight*19/24);
-			g.drawString(match.getPointsList().get(3)[0] + "", labelWidth*14/24, labelHeight*19/24);
-
+			g.drawString(match.getTeams()[0], labelWidth*8/24, labelHeight*19/24);
+			g.drawString(match.getTeams()[1], labelWidth*8/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(0)[0] + "", labelWidth*10/24, labelHeight*19/24);
+			g.drawString(match.getPointsList().get(1)[0] + "", labelWidth*11/24, labelHeight*19/24);
+			g.drawString(match.getPointsList().get(2)[0] + "", labelWidth*12/24, labelHeight*19/24);
+			g.drawString(match.getPointsList().get(3)[0] + "", labelWidth*13/24, labelHeight*19/24);
+			g.drawString(match.getPoints()[0]+"", labelWidth*14/24, labelHeight*19/24);
 			g.setColor(new Color(169, 11, 51));
 			
-			g.drawString(match.getPointsList().get(0)[1] + "", labelWidth*11/24, labelHeight*22/24);
-			g.drawString(match.getPointsList().get(1)[1] + "", labelWidth*12/24, labelHeight*22/24);
-			g.drawString(match.getPointsList().get(2)[1] + "", labelWidth*13/24, labelHeight*22/24);
-			g.drawString(match.getPointsList().get(3)[1] + "", labelWidth*14/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(0)[1] + "", labelWidth*10/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(1)[1] + "", labelWidth*11/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(2)[1] + "", labelWidth*12/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(3)[1] + "", labelWidth*13/24, labelHeight*22/24);
+			g.drawString(match.getPoints()[1]+"", labelWidth*14/24, labelHeight*22/24);
 			
-			
-			
+			g.setFont(new Font("default", Font.PLAIN, 70));
+			g.setColor(Color.black);
+			g.drawString(match.getPoints()[0]+"", labelWidth*6/24, labelHeight*13/24);
+			g.setColor(new Color(169, 11, 51));
+			g.drawString(match.getPoints()[1]+"", labelWidth*16/24, labelHeight*13/24);
 		}
 	}
 

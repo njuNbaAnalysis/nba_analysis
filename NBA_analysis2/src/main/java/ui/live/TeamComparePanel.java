@@ -59,10 +59,7 @@ public class TeamComparePanel extends JPanel {
 		content.setBounds(0, height / 20,width, height * 19 / 20);
 		
 		content.setLayout(null);
-		//content.setPreferredSize(new Dimension(width,height));
-		
-		
-		
+
 		CompareBarChartPanel chartPanel = new CompareBarChartPanel(width, height * 17 / 20,
 				attribute, attributeNames, getTeamValue(m), getRivalValue(m),
 				cof);
