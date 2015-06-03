@@ -8,7 +8,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class GetConnection {
-	public static Connection getConnection() { // 链接数据库
+    public static Connection connection = null;
+    
+    public static Connection getConnection(){
+        if(connection == null){
+            connection = connect();
+        }
+        return connection;
+    }
+    
+	private static Connection connect() { // 链接数据库
 		Connection conn = null;
 		String driverName = "com.mysql.jdbc.Driver";
 		String dbURL = "jdbc:mysql://localhost:3306/nba?characterEncoding=utf-8";
@@ -34,8 +43,7 @@ public class GetConnection {
 		return conn;
 	}
 
-	public static void free(ResultSet rs, Connection conn,
-			PreparedStatement pstm) { // 断开数据库
+	public static void free(ResultSet rs, Connection conn,PreparedStatement pstm) { // 断开数据库
 		try {
 			if (rs != null) {
 				rs.close();

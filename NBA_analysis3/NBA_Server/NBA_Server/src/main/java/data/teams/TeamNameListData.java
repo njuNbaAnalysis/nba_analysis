@@ -79,9 +79,9 @@ public class TeamNameListData{
         conn = GetConnection.getConnection();
     }
 
-    public void finish(){
+/*    public void finish(){
         GetConnection.free(rs, conn, pstm);
-    }
+    }*/
     
     /**
      * 
