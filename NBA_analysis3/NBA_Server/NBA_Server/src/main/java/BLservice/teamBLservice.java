@@ -15,7 +15,7 @@ public class teamBLservice {
         TeamNameListData data = new TeamNameListData();
         data.init();
         ArrayList<TeamListItem> list = data.getTeamList(item);
-        data.finish();
+        //data.finish();
         
         System.out.println(list.size() );
     }

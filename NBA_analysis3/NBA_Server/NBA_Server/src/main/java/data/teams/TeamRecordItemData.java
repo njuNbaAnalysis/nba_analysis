@@ -124,8 +124,8 @@ public class TeamRecordItemData {
         conn = GetConnection.getConnection();
     }
 
-    public void finish(){
+/*    public void finish(){
         GetConnection.free(rs, conn, pstm);
-    }
+    }*/
 
 }
