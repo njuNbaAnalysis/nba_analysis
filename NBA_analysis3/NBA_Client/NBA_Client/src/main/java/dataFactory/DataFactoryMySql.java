@@ -2,6 +2,7 @@ package dataFactory;
 
 import java.rmi.Naming;
 
+import BLservice.BLservice;
 import BLservice.matchBLservice;
 import BLservice.playerBLservice;
 import BLservice.teamBLservice;
@@ -43,5 +44,18 @@ public class DataFactoryMySql implements DataFactory {
 		}
 		return null;
 	}
+	
+	public BLservice getBLservice() {
+		// TODO Auto-generated method stub
+		try {
+			return (BLservice) Naming.lookup("rmi://" + "ip" + ":" + "port"
+					+ "/" + "BLservice");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 }
