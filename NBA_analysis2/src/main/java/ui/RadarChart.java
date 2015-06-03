@@ -1,7 +1,11 @@
 package ui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Stroke;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -56,6 +60,11 @@ public class RadarChart extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(new Color(158,158,158));
+		g2.fillRect(0, 0, width, height);
 		double offset = 360 / dimension;
 		double rad = Math.PI / 180;
 		int anchor_x = width / 2;
@@ -68,8 +77,7 @@ public class RadarChart extends JPanel {
 		int bx_now[] = new int[dimension];// 雷达区B的横坐标
 		int by_now[] = new int[dimension];// 雷达区B的纵坐标
 		// 设置多边形坐标
-		System.out.println("max" + max);
-		System.out.println("limit" + limit);
+
 		for (int i = 0; i < dimension; i++) {
 
 			double ra = pa_now[i] * max / limit;
@@ -83,17 +91,20 @@ public class RadarChart extends JPanel {
 
 		}
 		// 画多边形，最后一位透明度
-		g.setColor(new Color(56, 167, 229, 255));
-
-		g.fillPolygon(ax_now, ay_now, dimension);
-		g.setColor(new Color(206, 206, 206, 127));
-		g.fillPolygon(bx_now, by_now, dimension);
+		g2.setColor(new Color(6, 74, 150, 255));
+		
+		g2.fillPolygon(ax_now, ay_now, dimension);
+		g2.setColor(new Color(221, 61, 66, 127));
+		g2.fillPolygon(bx_now, by_now, dimension);
 		// 画多边形边界
-		g.setColor(Color.black);
-		g.drawPolygon(ax_now, ay_now, dimension);
-		g.drawPolygon(bx_now, by_now, dimension);
+		g2.setColor(Color.white);
+		g2.drawPolygon(ax_now, ay_now, dimension);
+		g2.drawPolygon(bx_now, by_now, dimension);
 		// 画坐标系
-		g.setColor(Color.black);
+		g2.setColor(Color.white);
+		Stroke stroke = g2.getStroke();
+		Stroke lineStroke = new BasicStroke(3.0f);
+		g2.setStroke(lineStroke);
 		for (int k = 0; k <= seg; k++) {
 			double r = k * separator;
 
@@ -108,27 +119,28 @@ public class RadarChart extends JPanel {
 						* Math.cos(offset * i * rad));
 				int y3 = (int) (anchor_y - (max + 15)
 						* Math.sin(offset * i * rad));
-				g.drawString(i + 1 + "", x3, y3);
+				g2.drawString(i + 1 + "", x3, y3);
 
-				g.drawLine(x1, y1, x2, y2);
+				g2.drawLine(x1, y1, x2, y2);
 
 			}
 		}
 		for (int i = 0; i < dimension; i++) {
 			int x4 = (int) (anchor_x + max * Math.cos(offset * i * rad));
 			int y4 = (int) (anchor_y + max * Math.sin(offset * i * rad));
-			g.setColor(Color.black);
+			
 
-			g.drawLine(anchor_x, anchor_y, x4, y4);
+			g2.drawLine(anchor_x, anchor_y, x4, y4);
 
 		}
-
+		
 		// 画坐标系上的值
 		// System.out.println("separator:"+separator);
 		for (int k = 0; k <= seg; k++) {
-			g.drawString((int) (k * limit / seg) + "", anchor_x,
+			g2.drawString((int) (k * limit / seg) + "", anchor_x,
 					(int) (anchor_y - k * separator));
 		}
+		g2.setStroke(stroke);
 
 	}
 
@@ -192,7 +204,7 @@ public class RadarChart extends JPanel {
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setBounds(0, 0, 1280, 1080);
-		double[] pa = { 2, 4, 6, 8};
+		double[] pa = { 2, 4, 2, 4};
 		double[] pb = { 1, 3, 6, 1};
 		double limit = 10;
 		RadarChart chart = new RadarChart(4, 5, 1280, 1080, pa, pb, limit);
