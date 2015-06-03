@@ -2,6 +2,8 @@ package ui.live;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -20,6 +22,8 @@ public class WordLiveTablePanel extends JPanel{
 	private SectionButton[] btArray;
 	private WordLiveTable eventTable;
 	private JScrollPane jspane;
+	private int selected = 0;
+	private ArrayList<EventVo> eventList;
 	public WordLiveTablePanel(String[] columnNames,String[] buttonNames,int width,int height,ArrayList<EventVo> eventList) {
 		this.setLayout(null);
 		this.setSize(width, height);
@@ -28,12 +32,13 @@ public class WordLiveTablePanel extends JPanel{
 		this.width = width;
 		this.height = height;
 		this.sectionSize = buttonNames.length;
+		this.eventList = eventList;
 		setButton();
 		
 		jspane = new JScrollPane();
 		jspane.setBounds(0, height/10, width, height*9/10);
 
-		eventTable = new WordLiveTable(width,columnNames,eventList);
+		eventTable = new WordLiveTable(width,columnNames,eventList,selected);
 
 		jspane.setViewportView(eventTable);
 		this.add(jspane);
@@ -44,9 +49,9 @@ public class WordLiveTablePanel extends JPanel{
 		g.fillRect(0, 0, width, height / 10);
 	}
 	
-	public void refresh(EventVo event){
+	/*public void refresh(EventVo event){
 		eventTable.refresh(event);
-	}
+	}*/
 	
 	private void setButton(){
 		
@@ -56,7 +61,29 @@ public class WordLiveTablePanel extends JPanel{
 			btArray[i].setBounds(width * i / 8, 0,
 					width / 8, height / 10);
 			this.add(btArray[i]);
+			
 		}
+	}
+	
+	private class SectionButtonListener implements ActionListener{
+		int type;
+		SectionButtonListener(int i){
+			type = i;
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(selected!=type){
+				selected = type;				
+				eventTable = new WordLiveTable(width,columnNames,eventList,selected);
+				jspane.removeAll();
+				jspane.setViewportView(eventTable);
+				WordLiveTablePanel.this.add(jspane);
+				jspane.updateUI();
+				jspane.repaint();
+			}
+			
+		}
+		
 	}
 	
 
