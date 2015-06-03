@@ -20,7 +20,7 @@ def find_live(game_id, period):
     game = requests.get(aim)
     game.encoding = 'utf-8'
     if game.status_code >= 400:
-        print('no suck game ' + str(game.status_code))
+        print('no such game ' + str(game.status_code))
         return
 
     events = game.json()['payload']['playByPlays'][0]['events']
@@ -32,16 +32,13 @@ def find_live(game_id, period):
             #print events[x]
         
 if __name__ == '__main__':
-    playoff_date_code = '004'
-    season = 14
-    round_of = '{:03}'.format(3)
-    rank = 0
-    kth = 1
-
-    #period = int(sys.argv[1])
-    period = 1
-
-    find_live(playoff_date_code +
-              str(season) + round_of +
-              str(rank) + str(kth), period)
+    #playoff_date_code = '004'
+    #season = 14
+    #round_of = '{:03}'.format(3)
+    #rank = 0
+    #kth = 1
+    #ID = playoff_date_code + str(season) + round_of + str(rank) + str(kth)
+    ID = sys.argv[1]
+    period = int(sys.argv[2])
+    find_live(ID , period)
 
