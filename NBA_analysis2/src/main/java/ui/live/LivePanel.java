@@ -2,6 +2,9 @@ package ui.live;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -33,11 +36,13 @@ public class LivePanel extends JPanel {
 	private Match match;
 	private BLService bl;
 
-	LivePanel(int width, int height,BLService bl) {
+	LivePanel(int width, int height,BLService bl,Match match) {
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
+		this.match = match;
+		this.setSize(width,height);
 		setLabel();
 		setButton();
 		setContent();
@@ -55,15 +60,97 @@ public class LivePanel extends JPanel {
 	}
 
 	private void setLabel() {
-		// TODO Auto-generated method stub
+		InfoLabel infoLabel = new InfoLabel(width,height/4,match);
+		infoLabel.setLocation(0,0);
+		this.add(infoLabel);
 
 	}
 
 	private class InfoLabel extends JLabel {
-
-		InfoLabel() {
-
+		private int labelWidth;
+		private int labelHeight;
+		private Team [] teams;
+		InfoLabel(int width,int height,Match match) {
+			this.labelWidth = width;
+			this.labelHeight = height;
 			this.setLayout(null);
+			this.setSize(width, height);
+			teams = bl.getTeamsByMatch(match);
+
+		}
+		public void paintComponent(Graphics g2){
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setColor(new Color(246, 246, 246));
+			g.fillRect(0, 0, labelWidth, labelHeight/10);
+			g.setColor(new Color(122, 122, 122));
+			g.fillRect(0, labelWidth*5/ 12, labelWidth/ 6, labelHeight / 10);
+			g.setColor(new Color(190, 157, 83));
+			g.drawLine(0, labelHeight / 10, labelWidth, labelHeight / 10);
+			g.drawLine(0, labelHeight, labelWidth, labelHeight);
+			
+			g.setColor(Color.WHITE);
+			g.fillRect(0, labelHeight / 10 + 1, labelWidth, labelHeight * 19 / 20 - 1);
+			
+			g.setColor(Color.BLACK);
+			g.setFont(new Font("default", Font.BOLD, 20));
+			int strWidth = g.getFontMetrics(g.getFont()).stringWidth("结束");
+			g.drawString("结束",labelWidth/2-strWidth/2 ,labelHeight * 1 / 10-8);//这个结束需要修改
+			
+			g.drawImage(teams[0].getLogo(120, 100), labelWidth*9/36, labelHeight/3, this);
+			g.drawImage(teams[1].getLogo(120, 100), labelWidth*8/12, labelHeight/3,this);
+			
+			
+			g.setColor(Color.black);
+			g.setFont(new Font("default", Font.PLAIN, 30));
+			g.drawString(match.getTeams()[0], labelWidth*5/36, labelHeight*5/12);
+			g.drawString(match.getTeams()[1], labelWidth*30/36, labelHeight*5/12);
+			
+			
+			g.setFont(new Font("default", Font.PLAIN, 15));
+
+			g.drawString(
+					"球队战绩"+teams[0].getNumOfVictory()
+							+ "-"
+							+ (teams[0].getNumOfMatches() - teams[0]
+									.getNumOfVictory()), labelWidth*4/36, labelHeight*7/12);
+			g.drawString(
+					"球队战绩"+teams[1].getNumOfVictory()
+							+ "-"
+							+ (teams[1].getNumOfMatches() - teams[1]
+									.getNumOfVictory()), labelWidth*30/36, labelHeight*7/12);
+			
+			g.setFont(new Font("default", Font.PLAIN, 40));
+			strWidth = g.getFontMetrics(g.getFont()).stringWidth("VS");
+			g.drawString("VS",labelWidth/2-strWidth/2 ,labelHeight * 5 / 12);
+			
+			g.setFont(new Font("default", Font.PLAIN, 15));
+			
+			
+			g.drawString("1", labelWidth*11/24, labelHeight*2/3);
+			g.drawString("2", labelWidth*12/24, labelHeight*2/3);
+			g.drawString("3", labelWidth*13/24, labelHeight*2/3);
+			g.drawString("4", labelWidth*14/24, labelHeight*2/3);
+			
+			
+			g.setFont(new Font("default", Font.PLAIN, 30));
+			g.drawString(match.getTeams()[0], labelWidth*3/8, labelHeight*19/24);
+			g.drawString(match.getTeams()[1], labelWidth*3/8, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(0)[0] + "", labelWidth*11/24, labelHeight*19/24);
+			g.drawString(match.getPointsList().get(1)[0] + "", labelWidth*12/24, labelHeight*19/24);
+			g.drawString(match.getPointsList().get(2)[0] + "", labelWidth*13/24, labelHeight*19/24);
+			g.drawString(match.getPointsList().get(3)[0] + "", labelWidth*14/24, labelHeight*19/24);
+
+			g.setColor(new Color(169, 11, 51));
+			
+			g.drawString(match.getPointsList().get(0)[1] + "", labelWidth*11/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(1)[1] + "", labelWidth*12/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(2)[1] + "", labelWidth*13/24, labelHeight*22/24);
+			g.drawString(match.getPointsList().get(3)[1] + "", labelWidth*14/24, labelHeight*22/24);
+			
+			
+			
 		}
 	}
 
@@ -201,9 +288,9 @@ public class LivePanel extends JPanel {
 
 		}
 		Match m = bl.getAllMatches().get(0);
-		LivePanel chart = new LivePanel(1280, 1080,bl);
+		LivePanel chart = new LivePanel(1280, 1080,bl,m);
 		chart.setBounds(0, 0, 1280, 1080);
-		chart.setMatch(m);
+		//chart.setMatch(m);
 		f.setLayout(null);
 		f.add(chart);
 		f.setVisible(true);
