@@ -82,6 +82,7 @@ public class Playervo implements Serializable{
 	private double sumOfoppnentDefensiveRounds = 0;//对手进攻次数
 	
 	
+	
 	public Playervo(String name, String number, String position, int[] height,
 			int weight, Date birthday, int age, int experience, String school,
 			Image portrait, Image action, String team, String location,
