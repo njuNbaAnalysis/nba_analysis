@@ -71,10 +71,4 @@ public class HotAndKingPanel extends JPanel {
 		this.add(hotPlayerPanel);
 
 	}
-	
-
-	
-
-	
-
 }

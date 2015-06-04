@@ -20,6 +20,7 @@ public class LineChart extends JPanel {
 	private int width;
 	private int height;
 	private String[] x_name;
+	private String[] y_name;
 	private double[] a_value;
 	private double[] b_value;
 
@@ -31,6 +32,9 @@ public class LineChart extends JPanel {
 	private double[] by_array_limit;
 	private double[] by_array_now;
 
+	private String[] labelContent_a;
+	private String[] labelContent_b;
+	
 	private Color a_color = new Color(92, 132, 158);
 	private Color b_color = new Color(216, 200, 129);
 
@@ -43,15 +47,18 @@ public class LineChart extends JPanel {
 	private DecimalFormat df = new DecimalFormat("#0.0");
 
 	LineChart(int num, int seg, int width, int height, double limit,
-			String[] x_name, double[] a_value, double[] b_value) {
+			String[] x_name, String [] y_name,double[] a_value, double[] b_value,String [] labelContent_a,String [] labelContent_b) {
 		this.num = num;
 		this.width = width;
 		this.height = height;
 		this.seg = seg;
 		this.limit = limit;
 		this.x_name = x_name;
+		this.y_name = y_name;
 		this.a_value = a_value;
 		this.b_value = b_value;
+		this.labelContent_a = labelContent_a;
+		this.labelContent_b = labelContent_b;
 		this.setLayout(null);
 		init();
 		LineChartListener l = new LineChartListener();
@@ -90,7 +97,13 @@ public class LineChart extends JPanel {
 			}
 			// System.out.println(i+" start"+ax_array_now[i]+" "+ay_array_now[i]);
 		}
-
+		if(y_name==null){
+			y_name = new String [seg+1];
+			for(int i=0;i<=seg;i++){
+				y_name[i] = i * limit / seg + "";
+			}
+		}
+		
 	}
 
 	public void paintComponent(Graphics g) {
@@ -126,7 +139,7 @@ public class LineChart extends JPanel {
 					width * 19 / 20, (int) (height * 19 / 20 - i * y_separator));
 			g2.setStroke(stroke);
 			g2.setColor(Color.black);
-			g2.drawString(i * limit / seg + "", width / 40,
+			g2.drawString(y_name[i], width / 40,
 					(int) (height * 19 / 20 - i * y_separator));
 		}
 		g2.setStroke(stroke);
@@ -235,16 +248,7 @@ public class LineChart extends JPanel {
 
 	}
 
-	// 顺滑动画
-	private class RectMoveThread implements Runnable {
 
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-
-		}
-
-	}
 
 	private class LineChartListener extends MouseAdapter {
 		double chartheight = height * 18 / 20;
@@ -255,11 +259,6 @@ public class LineChart extends JPanel {
 		public void mousePressed(MouseEvent e) {
 
 		}
-
-		/*
-		 * public void mouseEntered(MouseEvent e) { int x = e.getX(); int y =
-		 * e.getY(); System.out.println(x + " " + y); }
-		 */
 
 		public void mouseExited(MouseEvent e) {
 
@@ -281,30 +280,30 @@ public class LineChart extends JPanel {
 						LineChart.this.updateUI();
 						block_now = i;
 						NodeLabel node1 = new NodeLabel(a_color,
-								df.format(a_value[i]) + "");
+								labelContent_a[i]);
 
-						node1.setSize((int) x_separator, (int) y_separator / 4);
+						node1.setSize((int) chartwidth/10, (int) chartheight / 20);
 
 						NodeLabel node2 = new NodeLabel(b_color,
-								df.format(b_value[i]) + "");
+								labelContent_b[i]);
 
-						node2.setSize((int) x_separator + 10,
-								(int) y_separator / 4);
+						node2.setSize((int) chartwidth/10 + 10,
+								(int) chartheight / 20);
 						if (block_now < num / 2) {
 							node1.setLocation((int) x_array_limit[i],
-									(int) (ay_array_limit[i] - y_separator / 8));
+									(int) (ay_array_limit[i] - chartheight / 40));
 							node1.setTowards(true);
 							node2.setLocation((int) x_array_limit[i],
-									(int) (by_array_limit[i] - y_separator / 8));
+									(int) (by_array_limit[i] - chartheight / 40));
 							node2.setTowards(true);
 						} else {
 							node1.setLocation(
-									(int) (x_array_limit[i] - x_separator),
-									(int) (ay_array_limit[i] - y_separator / 8));
+									(int) (x_array_limit[i] - chartwidth/10),
+									(int) (ay_array_limit[i] - chartheight / 40));
 							node1.setTowards(false);
 							node2.setLocation((int) (x_array_limit[i]
-									- x_separator - 10),
-									(int) (by_array_limit[i] - y_separator / 8));
+									- chartwidth/10 - 10),
+									(int) (by_array_limit[i] - chartheight / 40));
 							node2.setTowards(false);
 						}
 
@@ -331,9 +330,6 @@ public class LineChart extends JPanel {
 			this.borderColor = borderColor;
 			this.content = content;
 			setOpaque(true);
-			// setBorder(BorderFactory.createLineBorder(borderColor));
-			// setBackground(new Color(220,220,223,127));
-			// setText(content);
 
 		}
 
@@ -393,7 +389,9 @@ public class LineChart extends JPanel {
 			g2.setStroke(stroke);
 
 			g2.setColor(Color.black);
-			g2.drawString(content, lableWidth * 2 / 5, lableHeight*3 / 5);
+			
+			int strWidth = g2.getFontMetrics(g2.getFont()).stringWidth(content);
+			g2.drawString(content, lableWidth /2 - strWidth/2, lableHeight*3 / 5);
 		}
 	}
 
@@ -403,15 +401,17 @@ public class LineChart extends JPanel {
 
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setBounds(0, 0, 1280, 1080);
 		double[] value = { 3, 1, 4, 8, 5, 7, 8, 7, 1, 4 };
+		String[] stringvalue = { "3", "1", "4", "8", "5", "7", "8", "7", "1", "4" };
 		double[] value2 = { 1, 5, 7, 3, 8, 3, 5, 3, 6, 2 };
+		String[] stringvalue2 = { "1", "5", "7", "3", "8", "3", "5", "3", "6", "2" };
 		String[] name = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 		double limit = 10;
-		LineChart chart = new LineChart(10, 5, 960, 720, limit, name, value,
-				value2);
+		LineChart chart = new LineChart(10, 5, 960, 720, limit, name, null,value,
+				value2,stringvalue,stringvalue2);
 		chart.setBounds(100, 100, 1280, 1080);
 		f.setLayout(null);
 		f.add(chart);
@@ -419,5 +419,5 @@ public class LineChart extends JPanel {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		chart.go();
 		f.repaint();
-	}
+	}*/
 }
