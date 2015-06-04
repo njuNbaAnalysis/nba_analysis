@@ -12,12 +12,13 @@ public class Playervo implements Serializable {
 	private String name;
 	private String number; // 球衣号
 	private String position; // G,G-F 类似格式
-	private int[] height; // int[0]: foot,int[1]: inch
-	private int weight;
-	private Date birthday; // year,month,day
-	private int age;
-	private int experience; // 打了几年球，取值可能为R，如果为R则存储0
-	private String school;
+	private double height; // 
+	private double weight;
+	private String birthday; // year,month,day
+	private String selected; //选举情况
+	private String salary; // 薪水
+	private String Highschool;
+	private String University;
 	// not raw data
 	// 以***结尾的说明此项数据不需要存储
 	private String team; // current team
@@ -83,20 +84,23 @@ public class Playervo implements Serializable {
 	private int sumOfoppnentattempts = 0;// 两分出手次数
 	private double sumOfoppnentDefensiveRounds = 0;// 对手进攻次数
 
-	public Playervo(String name, String number, String position, int[] height,
-			int weight, Date birthday, int age, int experience, String school,
-			String team, String location, String division, char conference,
-			int gamePlayed, int gameStarted, int rebounds, int assists,
-			int minutes, int offenseRebounds, int defenseRebounds, int steals,
-			int blockShots, int turnOver, int fouls, int points,
-			double fieldGoalsPercentage, double threePointersPercentage,
-			double freeThrowsPercentage, double trueShootingPercentage,
-			double reboundsPercentage, double offenseReboundsPercentage,
-			double defenseReboundsPercentage, double assistsPercentage,
-			double stealsPercentage, double blockShotsPercentage,
-			double turnOverPercentage, double usage, double[] upgradeRate,
-			double efficiency, double gmsc, double shootingEfficiency,
-			int fieldGoalHits, int fieldGoalAttempts, int threePointerHits,
+
+
+	public Playervo(String name, String number, String position, double height,
+			double weight, String birthday, String selected, String salary,
+			String highschool, String university, String team, String location,
+			String division, char conference, int gamePlayed, int gameStarted,
+			int rebounds, int assists, int minutes, int offenseRebounds,
+			int defenseRebounds, int steals, int blockShots, int turnOver,
+			int fouls, int points, double fieldGoalsPercentage,
+			double threePointersPercentage, double freeThrowsPercentage,
+			double trueShootingPercentage, double reboundsPercentage,
+			double offenseReboundsPercentage, double defenseReboundsPercentage,
+			double assistsPercentage, double stealsPercentage,
+			double blockShotsPercentage, double turnOverPercentage,
+			double usage, double[] upgradeRate, double efficiency, double gmsc,
+			double shootingEfficiency, int fieldGoalHits,
+			int fieldGoalAttempts, int threePointerHits,
 			int threePointerAttempts, int freeThrowHits, int freeThrowAttempts,
 			int doubledouble, int threedouble, int fourdouble, int fivedouble,
 			int pRA, double pRAaverage, double sumOfTime,
@@ -113,9 +117,10 @@ public class Playervo implements Serializable {
 		this.height = height;
 		this.weight = weight;
 		this.birthday = birthday;
-		this.age = age;
-		this.experience = experience;
-		this.school = school;
+		this.selected = selected;
+		this.salary = salary;
+		Highschool = highschool;
+		University = university;
 		this.team = team;
 		this.location = location;
 		this.division = division;
@@ -174,42 +179,68 @@ public class Playervo implements Serializable {
 		this.sumOfoppnentattempts = sumOfoppnentattempts;
 		this.sumOfoppnentDefensiveRounds = sumOfoppnentDefensiveRounds;
 	}
+	
+	
 
 	public String getName() {
 		return name;
 	}
 
+
+
 	public String getNumber() {
 		return number;
 	}
+
+
 
 	public String getPosition() {
 		return position;
 	}
 
-	public int[] getHeight() {
+
+
+	public double getHeight() {
 		return height;
 	}
 
-	public int getWeight() {
+
+
+	public double getWeight() {
 		return weight;
 	}
 
-	public Date getBirthday() {
+
+
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public int getAge() {
-		return age;
+
+
+	public String getSelected() {
+		return selected;
 	}
 
-	public int getExperience() {
-		return experience;
+
+
+	public String getSalary() {
+		return salary;
 	}
 
-	public String getSchool() {
-		return school;
+
+
+	public String getHighschool() {
+		return Highschool;
 	}
+
+
+
+	public String getUniversity() {
+		return University;
+	}
+
+
 
 	public Image getPortrait() {
 		Image image = null;
