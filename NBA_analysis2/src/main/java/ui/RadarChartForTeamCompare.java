@@ -18,6 +18,7 @@ public class RadarChartForTeamCompare extends JPanel{
 		init();
 		RadarChart chart = new RadarChart(5, 5, 1280, 1080, value_a, value_b, limit,attr);
 		chart.setBounds(0, 0, 1280, 1080);
+		chart.go();
 	}
 	private void init() {
 		value_a = new double [5];
