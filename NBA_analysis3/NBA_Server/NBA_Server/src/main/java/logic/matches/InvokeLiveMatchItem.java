@@ -9,15 +9,17 @@ import java.util.concurrent.BlockingQueue;
 public class InvokeLiveMatchItem {
 
 	 private String ID;
+	 private boolean ishome;
 	    private BlockingQueue<ArrayList<String>> queue = new ArrayBlockingQueue<>(10);
 
-	    public InvokeLiveMatchItem(String ID) {
+	    public InvokeLiveMatchItem(String ID,boolean ishome) {
 	        this.ID = ID;
+	        this.ishome = ishome;
 	    }
 
 	    public void run() {
 	        try {
-	            ProcessBuilder pb = new ProcessBuilder("python", "Spider-NBA/NBALiveMatchItem.py", ID);
+	            ProcessBuilder pb = new ProcessBuilder("python", "Spider-NBA/NBALiveMatchItem.py", ID,""+ishome);
 	            Process p = pb.start();
 	            InputStreamReader isr=new InputStreamReader(p.getInputStream(),"GBK");
 	            BufferedReader in = new BufferedReader(isr);

@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class EventVo implements Serializable{
 	int section;
-	int num;// 0表示第一个队，1表示第二个队
+	int num;// 0表示第主队，1表示第客队
 	String time;
 	String points;// 得到两队比分
 	String playerName;

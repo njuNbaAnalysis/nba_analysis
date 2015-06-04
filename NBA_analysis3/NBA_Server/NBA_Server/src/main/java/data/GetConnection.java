@@ -20,7 +20,7 @@ public class GetConnection {
 	private static Connection connect() { // 链接数据库
 		Connection conn = null;
 		String driverName = "com.mysql.jdbc.Driver";
-		String dbURL = "jdbc:mysql://localhost:3306/nba?characterEncoding=utf-8";
+		String dbURL = "jdbc:mysql://172.25.134.229:3306/nba?characterEncoding=utf-8";
 
 		// "jdbc:mysql://192.168.1.102:3306/nba?characterEncoding=utf-8"
 

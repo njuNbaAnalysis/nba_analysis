@@ -14,12 +14,11 @@ import BLservice.BLservice;
 
 public class BLController implements BLservice,Serializable{
 	private static BLController blController = null;
-	public static int progress = 0;
-	public static int maxProgress = 9;
 	
 	private matchBLcontrollor matchController = null;
 
 	private BLController() {
+		matchController = matchBLcontrollor.getInstance();
 	}
 
 	public static BLController getInstance() {
@@ -34,13 +33,15 @@ public class BLController implements BLservice,Serializable{
 	@Override
 	public Matchvo getLiveMatchInfo() {
 		// TODO Auto-generated method stub
-		return null;
+		matchController = matchBLcontrollor.getInstance();
+		return matchController.getLiveMatchInfo();
 	}
 
 	@Override
 	public ArrayList<EventVo> getLiveEvent() {
 		// TODO Auto-generated method stub
-		return null;
+		matchController = matchBLcontrollor.getInstance();
+		return matchController.getLiveEvent();
 	}
 
 	@Override

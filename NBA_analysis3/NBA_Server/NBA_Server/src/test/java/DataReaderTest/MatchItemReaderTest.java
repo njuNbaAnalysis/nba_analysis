@@ -61,7 +61,7 @@ public class MatchItemReaderTest {
 	@Test
 	public void testgetMatchItemByPlayerId2() {
 		MatchItemReader mr = new MatchItemReader();
-		ArrayList<matchItem> list = mr.getMatchItemByPlayerId("0500");
+		ArrayList<matchItem> list = mr.getMatchItemByPlayerId("50000");
 		boolean result = (list.size() == 0);
 		System.out.println(list.size());
 		assertTrue(result);
