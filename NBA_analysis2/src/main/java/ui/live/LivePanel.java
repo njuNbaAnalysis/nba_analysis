@@ -294,7 +294,7 @@ public class LivePanel extends JPanel {
 		Match m = bl.getAllMatches().get(0);
 		LivePanel chart = new LivePanel(1280, 1080,bl,m);
 		chart.setBounds(0, 0, 1280, 1080);
-		//chart.setMatch(m);
+	
 		f.setLayout(null);
 		f.add(chart);
 		f.setVisible(true);
@@ -310,21 +310,21 @@ public class LivePanel extends JPanel {
 			@Override
 			public void run() {
 				int i = 0;
-				while (i++ < 12) {
+				while (i++ < 47) {
 					EventVo event1;
 					EventVo event2;
 					if (i % 2 == 0) {
-						event1 = new EventVo(1, 0, i + ":13.1", (i + 2) + "-"
+						event1 = new EventVo(i/12+1, 0, i%12 + ":13.1", (i + 2) + "-"
 								+ (i + 1), a.getPortrait(), a.getName(),
 								"睿神好帅啊", a.getTeam(), t.getLogo(30, 30));
-						event2 = new EventVo(1, 1, i + ":12.1", (i + 1) + "-"
+						event2 = new EventVo(i/12+1, 1, i%12 + ":12.1", (i + 1) + "-"
 								+ (i + 4), a2.getPortrait(), a2.getName(),
 								"孙梦溪好美啊", a2.getTeam(), t2.getLogo(30, 30));
 					} else {
-						event1 = new EventVo(1, 0, i + ":5.1", (i + 3) + "-"
+						event1 = new EventVo(i/12+1, 0, i%12 + ":5.1", (i + 3) + "-"
 								+ (i + 5), a.getPortrait(), a.getName(),
 								"睿神好帅啊", a.getTeam(), t.getLogo(30, 30));
-						event2 = new EventVo(1, 1, i + ":11.1", (i + 5) + "-"
+						event2 = new EventVo(i/12+1, 1, i%12 + ":11.1", (i + 5) + "-"
 								+ (i + 1), a2.getPortrait(), a2.getName(),
 								"孙梦溪好美啊", a2.getTeam(), t2.getLogo(30, 30));
 					}
@@ -338,6 +338,8 @@ public class LivePanel extends JPanel {
 					}
 					f.repaint();
 				}
+				
+				
 
 			}
 		});

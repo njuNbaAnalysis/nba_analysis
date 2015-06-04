@@ -72,6 +72,14 @@ public class EventVo {
 		String[] array = time.split(":");
 		int minute = Integer.parseInt(array[0]);
 		double second = Double.parseDouble(array[1]);
+		for(int i=1;i<section;i++){
+			minute +=12;
+		}
+		for(int i=4;i<section;i++){
+			minute +=5;
+		}
+		
+		
 		return (int) (minute * 60 + second);
 	}
 
