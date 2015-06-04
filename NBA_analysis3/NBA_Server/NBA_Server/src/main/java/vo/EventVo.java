@@ -1,7 +1,11 @@
 package vo;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+
+import javax.imageio.ImageIO;
 
 /* 比赛直播中的更新事件
  * 事件属性：所在节(1~4，加时用5之后的数字表示)、时间（格式：mm:ss.ms,例如：10:10.1,表示本节还剩10分10.1秒）、比分(xx-xx)、参与球员（球员头像、球员姓名）、事件描述、球队（球队名、队标）
@@ -57,6 +61,23 @@ public class EventVo implements Serializable{
 		return teamName;
 	}
 
+	public Image getTeamImage(){
+		Image image = null;
+        try {
+            image = ImageIO.read(new File("./Data/teamImage/" + getTeamName() + ".gif"));
+        } catch (IOException e) {
+        }
+        return image;
+	}
+	
+	public Image getPlayerImage(){
+		Image image = null;
+        try {
+            image = ImageIO.read(new File("./Data/PlayerImage/" + getPlayerName() + ".png"));
+        } catch (IOException e) {
+        }
+        return image;
+	}
 
 	// 以秒数的形式返回时间
 	public int getTimeInSecond() {
