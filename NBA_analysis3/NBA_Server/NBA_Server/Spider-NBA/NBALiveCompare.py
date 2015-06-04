@@ -6,9 +6,6 @@ import sys
 
 import CsvHelper
 
-__author__ = 'zzt'
-
-
 def find_MatchItemlive(game_id):
     # http://china.nba.com/wap/static/data/game/snapshot_0041400311.json
     aim = 'http://china.nba.com/wap/static/data/game/snapshot_' \
@@ -20,9 +17,12 @@ def find_MatchItemlive(game_id):
         print('no such game ' + str(game.status_code))
         return
 
+    events = game.json()['payload']['homeTeam']['profile']
+    CsvHelper.dict_to_csv_stream(events, False)
     events = game.json()['payload']['homeTeam']['score']
     CsvHelper.dict_to_csv_stream(events, False)
-
+    events = game.json()['payload']['awayTeam']['profile']
+    CsvHelper.dict_to_csv_stream(events, False)
     events = game.json()['payload']['awayTeam']['score']
     CsvHelper.dict_to_csv_stream(events, False)
     

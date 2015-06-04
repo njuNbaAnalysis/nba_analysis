@@ -1,8 +1,6 @@
 import csv
 import sys
 
-__author__ = 'zzt'
-
 
 def dict_to_csv(stats, filename, has_header=True, mode='w'):
     with open(filename, mode, encoding='utf-8') as fp:
