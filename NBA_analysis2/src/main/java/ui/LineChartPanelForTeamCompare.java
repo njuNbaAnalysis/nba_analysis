@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
@@ -24,20 +25,24 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private int seg;
 	private int limit;
 	private DecimalFormat df = new DecimalFormat("#0.0");
-
+	
+	private Color a_color;
+	private Color b_color;
 	LineChartPanelForTeamCompare(int width, int height, String type, Team t1,
-			Team t2, BLService bl) {
+			Team t2, Color a_color,Color b_color,BLService bl) {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
 		this.t1 = t1;
 		this.t2 = t2;
 		this.setSize(width, height);
+		this.a_color = a_color;
+		this.b_color = b_color;
 		this.setLayout(null);
 		init(type);
 		LineChart chart = new LineChart(x_name.length, seg, width, height,
 				limit, x_name, y_name, t1_value, t2_value, labelContent_t1,
-				labelContent_t2);
+				labelContent_t2,a_color,b_color);
 		chart.setBounds(0, 0, width, height);
 		this.add(chart);
 		chart.go();
@@ -199,7 +204,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		Team t1 = bl.getAllTeams().get(0);
 		Team t2 = bl.getAllTeams().get(1);
 		LineChartPanelForTeamCompare chart = new LineChartPanelForTeamCompare(
-				960, 720, "进攻", t1, t2, bl);
+				960, 720, "进攻", t1, t2, new Color(221, 61, 66),new Color(6, 74, 150),bl);
 		chart.setBounds(100, 100, 1280, 1080);
 		f.setLayout(null);
 		f.add(chart);

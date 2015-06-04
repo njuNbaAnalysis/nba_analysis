@@ -35,8 +35,8 @@ public class LineChart extends JPanel {
 	private String[] labelContent_a;
 	private String[] labelContent_b;
 	
-	private Color a_color = new Color(92, 132, 158);
-	private Color b_color = new Color(216, 200, 129);
+	private Color a_color;
+	private Color b_color;
 
 	private int finished = 1;// 表示已经画完的点数
 	private int threadDelay = 5;
@@ -47,7 +47,7 @@ public class LineChart extends JPanel {
 	private DecimalFormat df = new DecimalFormat("#0.0");
 
 	LineChart(int num, int seg, int width, int height, double limit,
-			String[] x_name, String [] y_name,double[] a_value, double[] b_value,String [] labelContent_a,String [] labelContent_b) {
+			String[] x_name, String [] y_name,double[] a_value, double[] b_value,String [] labelContent_a,String [] labelContent_b,Color a_color,Color b_color) {
 		this.num = num;
 		this.width = width;
 		this.height = height;
@@ -59,6 +59,8 @@ public class LineChart extends JPanel {
 		this.b_value = b_value;
 		this.labelContent_a = labelContent_a;
 		this.labelContent_b = labelContent_b;
+		this.a_color = a_color;
+		this.b_color = b_color;
 		this.setLayout(null);
 		init();
 		LineChartListener l = new LineChartListener();
