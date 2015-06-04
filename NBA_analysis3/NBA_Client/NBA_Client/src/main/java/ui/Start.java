@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import dataFactory.DataFactoryMySql;
 import BLservice.BLservice;
-import logic.BLController;
-import logic.teams.Team;
+
 
 public class Start {
 
@@ -14,16 +13,17 @@ public class Start {
 
 		long past = System.currentTimeMillis();
 		
-		final BLservice bl = 
+		final BLservice bl = DataFactoryMySql.getInstance().getBLservice();
 		
-		final AnimationFrame animation = new AnimationFrame(bl);
-
+		final ImageReader reader = ImageReader.getInstance();
+		final AnimationFrame animation = new AnimationFrame(reader);
+		
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				while (bl.getProgress() < 9) {
-					System.out.println(bl.getProgress());
+				while (reader.getProgress() < 9) {
+					System.out.println(reader.getProgress());
 				    try {
 	                    Thread.sleep(300);
 	                } catch (InterruptedException e) {

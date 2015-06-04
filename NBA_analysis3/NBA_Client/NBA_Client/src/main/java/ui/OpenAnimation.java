@@ -31,7 +31,7 @@ public class OpenAnimation {
 	}
 
 	public void animation() {
-		j = new DisplayJPanel(image,gameFrame.bl);
+		j = new DisplayJPanel(image,gameFrame.reader);
 		j.setOpaque(false);
 		gameFrame.lp.add(j, new Integer(300));
 

@@ -75,29 +75,29 @@ public class TeamsMapsPanel extends JPanel implements MouseMotionListener,MouseL
 		this.setBackground(Color.black);
 		this.allTeamPanel = teamPanel;
 		
-		// ��ȡͼƬ
-		try {
-			for (int i = 1; i <= 29; i++) {
-				// ��ȡԭʼͼƬ�����Ҵ����������б�
-				String path = "image" + File.separator + "z" + i + ".png";
-				BufferedImage temp = ImageIO.read(new File(path));
-				imageList.add(temp);
-				imageToDraw.add(temp);
-
-				// ��ȡ����ͼƬ
-				path = "image" + File.separator + "x" + i + ".png";
-				imageList_highlight.add(ImageIO.read(new File(path)));
-			}
-		} catch (IOException e) {
-			// TODO �Զ����ɵ� catch ��
-			e.printStackTrace();
-		}
+		ImageReader reader = ImageReader.getInstance();
+		imageList = reader.getMap_imageList();
+		imageList_highlight = reader.getMap_imageList_highlight();
+		imageToDraw = reader.getMap_imageToDraw();
+		
+//		try {
+//			for (int i = 1; i <= 29; i++) {
+//				String path = "image" + File.separator + "z" + i + ".png";
+//				BufferedImage temp = ImageIO.read(new File(path));
+//				imageList.add(temp);
+//				imageToDraw.add(temp);
+//
+//				path = "image" + File.separator + "x" + i + ".png";
+//				imageList_highlight.add(ImageIO.read(new File(path)));
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		// TODO �Զ����ɵķ������
 	}
 
 	@Override
