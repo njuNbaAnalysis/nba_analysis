@@ -59,5 +59,11 @@ public class BLController implements BLservice,Serializable{
     public HotZonevo getHotZone(String teamNameEn, boolean isSeason, boolean isTotal) {
         return TeamController.getInstance().getHotZone(teamNameEn, isSeason, isTotal);
     }
+
+    @Override
+    public double[] getTeamAbility(String teamNameEn) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 	
 }

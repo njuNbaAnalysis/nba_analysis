@@ -1,5 +1,6 @@
 package BLservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 import vo.EventVo;
@@ -8,7 +9,7 @@ import vo.Matchvo;
 import vo.Playervo;
 import vo.Teamvo;
 
-public interface BLservice {
+public interface BLservice extends Remote{
 	/**
 	 * 得到当前正在直播的比赛信息
 	 */
@@ -39,9 +40,14 @@ public interface BLservice {
 	 * @param teamNameEn 球队的3大写字母名称
 	 * @param isSeason true表示常规赛，false表示季后赛
 	 * @param isTotal 此项为true时，返回所有球队的热区总计数据，此时teamNameEn项被忽略
-	 * @return 请参见HotZonevo的注释
+	 * @return
 	 */
 	public HotZonevo getHotZone(String teamNameEn,boolean isSeason,boolean isTotal);
 	
-	
+	/**
+	 * in abeyance,waiting for the formulas
+	 * @param teamNameEn
+	 * @return 内线(中锋加上大前锋能力综合)、外线(其他位置能力综合)、配合（每百回合的传球次数）、进攻（得分）、防守（失分）
+	 */
+	public double[] getTeamAbility(String teamNameEn);
 }
