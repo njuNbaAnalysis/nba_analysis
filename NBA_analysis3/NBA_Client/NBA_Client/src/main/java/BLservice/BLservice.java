@@ -2,6 +2,7 @@ package BLservice;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import vo.EventVo;
 import vo.HotZonevo;
@@ -50,4 +51,36 @@ public interface BLservice extends Remote{
 	 * @return 内线(中锋加上大前锋能力综合)、外线(其他位置能力综合)、配合（每百回合的传球次数）、进攻（得分）、防守（失分）
 	 */
 	public double[] getTeamAbility(String teamNameEn);
+
+	/**
+	 * @param string 例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期 
+	 * 
+	 * @return
+	 */
+	public Collection<? extends Matchvo> getTodayMatches(String string);
+
+	/**
+	 * 
+	 * @param match 
+	 * @return
+	 */
+	public Teamvo[] getTeamsByMatch(Matchvo match);
+
+	/**
+	 * 
+	 * @param nameOfReboundsKing
+	 * @return
+	 */
+	public Playervo getPlayerByName(String nameOfReboundsKing);
+
+	/**
+	 * 
+	 * @param playerName
+	 * @param season
+	 * @param isPlayOff
+	 * @return
+	 */
+	public Teamvo getTeamByPlayerName(String playerName, String season, boolean isPlayOff);
+
+	
 }

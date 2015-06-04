@@ -47,6 +47,11 @@ public class Matchvo implements Serializable{
 	public ArrayList<RecordOfPlayervo> getSecondRecordList() {
 		return secondRecordList;
 	}
+
+	public KingsOfMatchvo[] getKingsOfMatch() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
 	
 
 }
