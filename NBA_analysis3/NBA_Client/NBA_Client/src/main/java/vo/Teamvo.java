@@ -1,7 +1,12 @@
 package vo;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import util.SvgImage;
 
@@ -14,7 +19,6 @@ public class Teamvo implements Serializable {
 	private String division;
 	private String homeCourt; // 主场
 	private int setUpTime; // 建立时间
-	private SvgImage logo; // 队标
 
 	// not raw data
 	private ArrayList<String> playerList = new ArrayList<String>(); // 球员列表
@@ -67,7 +71,7 @@ public class Teamvo implements Serializable {
 
 	public Teamvo(String name, String abbreviation, String location,
 			char conference, String division, String homeCourt, int setUpTime,
-			SvgImage logo, ArrayList<String> playerList, int numOfMatches,
+			ArrayList<String> playerList, int numOfMatches,
 			int numOfVictory, int fieldGoalAttemps, int fieldGoalHits,
 			int threePointerAttempts, int threePointerHits,
 			int freeThrowAttempts, int freeThrowHits, int offensiveRebounds,
@@ -87,7 +91,6 @@ public class Teamvo implements Serializable {
 		this.division = division;
 		this.homeCourt = homeCourt;
 		this.setUpTime = setUpTime;
-		this.logo = logo;
 		this.playerList = playerList;
 		this.numOfMatches = numOfMatches;
 		this.numOfVictory = numOfVictory;
@@ -148,8 +151,13 @@ public class Teamvo implements Serializable {
 		return setUpTime;
 	}
 
-	public SvgImage getLogo() {
-		return logo;
+	public Image getLogo() {
+		Image image = null;
+        try {
+            image = ImageIO.read(new File("./Data/teamImage/" + getName() + ".gif"));
+        } catch (IOException e) {
+        }
+        return image;
 	}
 
 	public ArrayList<String> getPlayerList() {
@@ -412,10 +420,9 @@ public class Teamvo implements Serializable {
 	public double[] getLatestDefend() {
 		return null;
 	}
-	
+
 	// 得到近十场的节奏(每一场的回合数)
 	public double[] getLatestTempo() {
 		return null;
 	}
-
 }
