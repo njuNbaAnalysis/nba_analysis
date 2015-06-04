@@ -84,7 +84,7 @@ public class HotZoneData {
         }
         
         try {
-            pstm.setString(1, Tools.getParameterString(hotZone.getTeamNameEn()));
+            pstm.setString(1, Tools.getParameterString(hotZone.getType()));
             pstm.setString(2, Tools.getParameterString(hotZone.getZone()));
             pstm.setBoolean(3, hotZone.isSeason());
             

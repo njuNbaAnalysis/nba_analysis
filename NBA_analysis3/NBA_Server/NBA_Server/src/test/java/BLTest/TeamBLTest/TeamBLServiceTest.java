@@ -35,7 +35,7 @@ public class TeamBLServiceTest {
 
     @Test
     public void testGetHotZone() {
-        HotZonevo vo = service.getHotZone("", true, true);
+        HotZonevo vo = service.getHotZone("CHI", true, false);
         
         System.out.println(vo.getTotal());
         

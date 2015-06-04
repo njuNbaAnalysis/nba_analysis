@@ -74,6 +74,9 @@ public class HotZonevo {
             this.disPct = disPct;
         }
         
+        public String toString(){
+            return this.getAttempted() + " " + this.getMade() + " " + this.getPct() + " " + this.getDisPct();
+        }
         
     }
 
