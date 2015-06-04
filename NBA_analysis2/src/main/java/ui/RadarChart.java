@@ -82,11 +82,11 @@ public class RadarChart extends JPanel {
 		for (int i = 0; i < dimension; i++) {
 
 			double ra = pa_now[i] * max / limit;
-			// System.out.println(i + " " + pa_now[i] + " " + ra);
+			
 			ax_now[i] = (int) (anchor_x + ra * Math.cos(offset * i * rad));
 			ay_now[i] = (int) (anchor_y - ra * Math.sin(offset * i * rad));
 			double rb = pb_now[i] * max / limit;
-			// System.out.println(i + " " + pb_now[i] + " " + rb);
+			
 			bx_now[i] = (int) (anchor_x + rb * Math.cos(offset * i * rad));
 			by_now[i] = (int) (anchor_y - rb * Math.sin(offset * i * rad));
 

@@ -301,12 +301,12 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 		double[] value2 = { 1, 5, 7, 3, 8, 3, 5, 3, 6, 2 };
 		String[] name = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 		double limit = 10;
-		lineChart = new LineChart(10, 5, 1180, height, limit, name, value,
+		/*lineChart = new LineChart(10, 5, 1180, height, limit, name, value,
 				value2);
 		lineChart.setBounds(295, 0, 1180, height);
 		this.add(lineChart);
 		lineChart.go();
-		this.repaint();
+		this.repaint();*/
 	}
 
 	private void initButtons() {
