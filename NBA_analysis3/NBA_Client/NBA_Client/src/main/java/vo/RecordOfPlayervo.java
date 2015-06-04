@@ -123,6 +123,24 @@ public class RecordOfPlayervo implements Serializable{
 	public double getFieldGoalsPercentage() {
 		return fieldGoalsPercentage;
 	}
+	
+	
+	public int getFieldGoalPercentage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int getThreePointPercentage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int getFreeThrowPercentage() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int getEfficiency() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
     
     
 }
