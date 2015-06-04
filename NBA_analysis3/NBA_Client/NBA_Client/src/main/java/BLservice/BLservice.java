@@ -82,5 +82,10 @@ public interface BLservice extends Remote{
 	 */
 	public Teamvo getTeamByPlayerName(String playerName, String season, boolean isPlayOff);
 
-	
+	/**
+	 * 
+	 * @param teamName
+	 * @return teamvo
+	 */
+	public Teamvo getTeamByTeamName(String teamName);
 }
