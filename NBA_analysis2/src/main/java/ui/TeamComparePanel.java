@@ -1,6 +1,5 @@
 package ui;
 
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import logic.BLService;
 import logic.teams.Team;
 
 interface ModuleButtonListener {
@@ -42,16 +42,15 @@ interface ModuleButtonPainter {
 public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	private Team team1;
 	private Team team2;
-	private RadarChart radar;
-	
-	
+	private RadarChartForTeamCompare radar;
+	BLService bl;
 	int width;
 	int height;
-	
+
 	int currentChosen = 0;
 	ArrayList<JPanel> panels = new ArrayList<JPanel>();
 	ArrayList<ModuleButton> buttons = new ArrayList<ModuleButton>();
-	String modules[] = { "近期表现", "热区对比", "当家球星","炜神预测" };
+	String modules[] = { "近期表现", "热区对比", "当家球星", "炜神预测" };
 
 	public void paintComponent(Graphics g2) {
 		super.paintComponent(g2);
@@ -102,12 +101,12 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 				1668 - 537 * team2.getNumOfVictory() / 82, 593);
 	}
 
-	public TeamComparePanel(Team team1, Team team2, int width, int height) {
+	public TeamComparePanel(Team team1, Team team2, int width, int height,BLService bl) {
 		this.team1 = team1;
 		this.team2 = team2;
 		this.width = width;
 		this.height = height;
-
+		this.bl = bl;
 		this.setSize(width, height);
 		this.setLayout(null);
 		setBackground(new Color(148, 148, 148));
@@ -119,37 +118,38 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	}
 
 	private void initRadar() {
-		double[] pa = { 2, 4, 6, 8, 4, 3, 1, 9 };
-		double[] pb = { 1, 3, 0, 1, 8, 1, 5, 7 };
-		double limit = 10;
-		radar = new RadarChart(8, 5, 654, 562, pa, pb, limit);
+		
+		radar = new RadarChartForTeamCompare(654, 562, team1, team2);
 		radar.setBounds(539, 130, 654, 562);
 		this.add(radar);
-		radar.go();
+		radar.setVisible(true);
 		this.repaint();
+	
 
 	}
 
 	private void initPanels() {
-		LineChartPanel lineChartPanel = new LineChartPanel(width, 730, team1, team2);
+		LineChartPanel lineChartPanel = new LineChartPanel(width, 730, team1,
+				team2,bl);
 		lineChartPanel.setLocation(0, 808);
 		panels.add(lineChartPanel);
 		this.add(lineChartPanel);
 		lineChartPanel.setVisible(true);
-		
+
 		HotZonePanel hotZonePanel = new HotZonePanel(width, 700);
 		hotZonePanel.setLocation(0, 808);
 		panels.add(hotZonePanel);
 		this.add(hotZonePanel);
 		hotZonePanel.setVisible(false);
-		
+
 	}
 
 	private void initButtons() {
 		// 默认初始状态-->选择第一张表
 		MainButtonPainter painter = new MainButtonPainter();
 
-		ModuleButton first = new ModuleButton(modules[0], 430, 100, this,painter);
+		ModuleButton first = new ModuleButton(modules[0], 430, 100, this,
+				painter);
 		first.isChosen = true;
 		first.setLocation(0, 707);
 		buttons.add(first);
@@ -177,15 +177,14 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 			buttons.get(currentChosen).recover();
 		}
 		currentChosen = index;
-		
-		for(int i = 0;i<panels.size();i++){
+
+		for (int i = 0; i < panels.size(); i++) {
 			JPanel each = panels.get(i);
-			if(i!=index){
+			if (i != index) {
 				each.setVisible(false);
 			}
 		}
 		panels.get(index).setVisible(true);
-		
 
 	}
 
@@ -241,8 +240,8 @@ class MainButtonPainter implements ModuleButtonPainter {
 class LineChartPanel extends JPanel implements ModuleButtonListener {
 	int width;
 	int height;
-
-	private LineChart lineChart;
+	BLService bl;
+	private LineChartPanelForTeamCompare lineChart;
 	Team team1;
 	Team team2;
 
@@ -283,12 +282,13 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 
 	}
 
-	public LineChartPanel(int width, int height, Team team1, Team team2) {
+	public LineChartPanel(int width, int height, Team team1, Team team2,BLService bl) {
 		super();
 		this.width = width;
 		this.height = height;
 		this.team1 = team1;
 		this.team2 = team2;
+		this.bl = bl;
 		this.setLayout(null);
 		this.setSize(width, height);
 
@@ -297,16 +297,12 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 	}
 
 	private void initChart() {
-		double[] value = { 3, 1, 4, 8, 5, 7, 8, 7, 1, 4 };
-		double[] value2 = { 1, 5, 7, 3, 8, 3, 5, 3, 6, 2 };
-		String[] name = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-		double limit = 10;
-		/*lineChart = new LineChart(10, 5, 1180, height, limit, name, value,
-				value2);
+		
+		lineChart = new LineChartPanelForTeamCompare(1180, height,"进攻", team1, team2,new Color(221,61,66), new Color(6,74,150), bl); 
 		lineChart.setBounds(295, 0, 1180, height);
 		this.add(lineChart);
-		lineChart.go();
-		this.repaint();*/
+		
+		 
 	}
 
 	private void initButtons() {
@@ -342,10 +338,11 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 		}
 
 		currentChosen = index;
-
-		/*
-		 * 在这里更新折线图 接口未定
-		 */
+		this.remove(lineChart);
+		lineChart = new LineChartPanelForTeamCompare(1180, height, module, team1, team2, new Color(221,61,66), new Color(6,74,150), bl);
+		lineChart.setBounds(295, 0, 1180, height);
+		this.add(lineChart);
+		this.repaint();
 
 	}
 
@@ -495,7 +492,7 @@ class ModuleButton extends JLabel implements MouseListener {
 
 }
 
-class HotZonePanel extends JPanel{
+class HotZonePanel extends JPanel {
 	int width;
 	int height;
 	JLabel position_l;
@@ -505,49 +502,23 @@ class HotZonePanel extends JPanel{
 	JLabel seasonHitRate_r;
 	JLabel latest5HitRate_r;
 	ArrayList<HotZone> hotZones = new ArrayList<HotZone>();
-	
-	Position positions[] = {
-			Position.l24Plus,
-			Position.l1624_1,   
-			Position.l816_1,	
-			Position.c08_4,		
-			Position.r816_1,		
-			Position.r1624_1,	
-			Position.r24Plus_1,
-			Position.lc1624_1,
-			Position.c816_2,	
-			Position.c1624_2,	
-			Position.rc1624_1,	
-			Position.lc24Plus_1,	
-			Position.c24Plus_1, 
-			Position.rc24Plus_1
-	};
-	
-	String posNames[]={
-			"左侧24英尺以外",
-			"左侧16-24英尺",
-			"左侧8-16英尺",
-			"8英尺以内",
-			"右侧8-16英尺",
-			"右侧16-24英尺",
-			"右侧24英尺以外",
-			"左侧居中16-24英尺",
-			"中间8-16英尺",
-			"中间16-24英尺",
-			"右侧居中16-24英尺",
-			"左侧居中24英尺以外",
-			"中间24英尺以外",
-			"右侧居中24英尺以外"
-	};
-	
-	
+
+	Position positions[] = { Position.l24Plus, Position.l1624_1,
+			Position.l816_1, Position.c08_4, Position.r816_1, Position.r1624_1,
+			Position.r24Plus_1, Position.lc1624_1, Position.c816_2,
+			Position.c1624_2, Position.rc1624_1, Position.lc24Plus_1,
+			Position.c24Plus_1, Position.rc24Plus_1 };
+
+	String posNames[] = { "左侧24英尺以外", "左侧16-24英尺", "左侧8-16英尺", "8英尺以内",
+			"右侧8-16英尺", "右侧16-24英尺", "右侧24英尺以外", "左侧居中16-24英尺", "中间8-16英尺",
+			"中间16-24英尺", "右侧居中16-24英尺", "左侧居中24英尺以外", "中间24英尺以外", "右侧居中24英尺以外" };
+
 	public void paintComponent(Graphics g2) {
 		super.paintComponent(g2);
 		Graphics2D g = (Graphics2D) g2.create();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		
-	
+
 		g.setColor(Color.white);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		g.drawString("投篮区域", 330, 50);
@@ -556,13 +527,13 @@ class HotZonePanel extends JPanel{
 		g.drawString("投篮区域", 1280, 50);
 		g.drawString("赛季表现", 1280, 245);
 		g.drawString("最近五场表现", 1280, 450);
-	
+
 	}
 
 	public HotZonePanel(int width, int height) {
 
-		//自己做桩
-		int tem[]={10,20};
+		// 自己做桩
+		int tem[] = { 10, 20 };
 		hotZones.add(new HotZone(Position.c08_4, 0.5, tem, 0.5, tem));
 		hotZones.add(new HotZone(Position.c1624_2, 0.5, tem, 0.5, tem));
 		hotZones.add(new HotZone(Position.c24Plus_1, 0.5, tem, 0.5, tem));
@@ -577,109 +548,108 @@ class HotZonePanel extends JPanel{
 		hotZones.add(new HotZone(Position.r816_1, 0.5, tem, 0.5, tem));
 		hotZones.add(new HotZone(Position.rc1624_1, 0.5, tem, 0.5, tem));
 		hotZones.add(new HotZone(Position.rc24Plus_1, 0.5, tem, 0.5, tem));
-		//以上是假数据
-		
+		// 以上是假数据
+
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
 		this.setBackground(new Color(46, 46, 46));
-		JPanel hotZonePic = new HotZonePicPanel(686, 678,this);
+		JPanel hotZonePic = new HotZonePicPanel(686, 678, this);
 		this.add(hotZonePic);
 		hotZonePic.setSize(686, 678);
-		hotZonePic.setLocation((width-686)/2, 0);
+		hotZonePic.setLocation((width - 686) / 2, 0);
 		hotZonePic.setVisible(true);
 		hotZonePic.setOpaque(true);
-		
+
 		initLabel();
 	}
-	
-	private void initLabel(){
-		
+
+	private void initLabel() {
+
 		position_l = new JLabel();
 		position_l.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		position_l.setForeground(Color.white);
 		position_l.setSize(300, 60);
-		position_l.setLocation(200,100);
+		position_l.setLocation(200, 100);
 		position_l.setText("");
 		position_l.setVisible(true);
 		this.add(position_l);
-		
+
 		seasonHitRate_l = new JLabel();
 		seasonHitRate_l.setFont(new Font("default", Font.PLAIN, 50));
-		seasonHitRate_l.setForeground(new Color(221,61,66));
+		seasonHitRate_l.setForeground(new Color(221, 61, 66));
 		seasonHitRate_l.setSize(300, 60);
-		seasonHitRate_l.setLocation(320,275);
+		seasonHitRate_l.setLocation(320, 275);
 		seasonHitRate_l.setText("");
 		seasonHitRate_l.setVisible(true);
 		this.add(seasonHitRate_l);
-		
+
 		latest5HitRate_l = new JLabel();
 		latest5HitRate_l.setFont(new Font("default", Font.PLAIN, 50));
-		latest5HitRate_l.setForeground(new Color(221,61,66));
+		latest5HitRate_l.setForeground(new Color(221, 61, 66));
 		latest5HitRate_l.setSize(300, 60);
-		latest5HitRate_l.setLocation(320,480);
+		latest5HitRate_l.setLocation(320, 480);
 		latest5HitRate_l.setText("");
 		latest5HitRate_l.setVisible(true);
 		this.add(latest5HitRate_l);
-		
+
 		position_r = new JLabel();
 		position_r.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		position_r.setForeground(Color.white);
 		position_r.setSize(300, 60);
-		position_r.setLocation(1280,100);
+		position_r.setLocation(1280, 100);
 		position_r.setText("");
 		position_r.setVisible(true);
 		this.add(position_r);
-		
+
 		seasonHitRate_r = new JLabel();
 		seasonHitRate_r.setFont(new Font("default", Font.PLAIN, 50));
-		seasonHitRate_r.setForeground(new Color(6,74,150));
+		seasonHitRate_r.setForeground(new Color(6, 74, 150));
 		seasonHitRate_r.setSize(300, 60);
-		seasonHitRate_r.setLocation(1280,275);
+		seasonHitRate_r.setLocation(1280, 275);
 		seasonHitRate_r.setText("");
 		seasonHitRate_r.setVisible(true);
 		this.add(seasonHitRate_r);
-		
+
 		latest5HitRate_r = new JLabel();
 		latest5HitRate_r.setFont(new Font("default", Font.PLAIN, 50));
-		latest5HitRate_r.setForeground(new Color(6,74,150));
+		latest5HitRate_r.setForeground(new Color(6, 74, 150));
 		latest5HitRate_r.setSize(300, 60);
-		latest5HitRate_r.setLocation(1280,480);
+		latest5HitRate_r.setLocation(1280, 480);
 		latest5HitRate_r.setText("");
 		latest5HitRate_r.setVisible(true);
 		this.add(latest5HitRate_r);
-		
+
 	}
-	
-	public void update(int index){
-		for(HotZone each :hotZones){
-			if(each.position==positions[index]){
+
+	public void update(int index) {
+		for (HotZone each : hotZones) {
+			if (each.position == positions[index]) {
 				position_l.setText(posNames[index]);
-				position_l.setLocation(450- position_l.getFontMetrics(position_l.getFont()).stringWidth(posNames[index]) , 100);
-				seasonHitRate_l.setText(each.latest5HitRate*100+"%");
-				latest5HitRate_l.setText(each.latest5HitRate*100+"%");
+				position_l.setLocation(
+						450 - position_l.getFontMetrics(position_l.getFont())
+								.stringWidth(posNames[index]), 100);
+				seasonHitRate_l.setText(each.latest5HitRate * 100 + "%");
+				latest5HitRate_l.setText(each.latest5HitRate * 100 + "%");
 				position_r.setText(posNames[index]);
-				seasonHitRate_r.setText(each.latest5HitRate*100+"%");
-				latest5HitRate_r.setText(each.latest5HitRate*100+"%");
+				seasonHitRate_r.setText(each.latest5HitRate * 100 + "%");
+				latest5HitRate_r.setText(each.latest5HitRate * 100 + "%");
 			}
 		}
-		
+
 	}
-	
+
 	public class HotZone {
 		Position position;
-		double seasonHitRate;  //璧涘鍛戒腑锟??
-		int[]  seasonHitsShots;    //璧涘鍛戒腑鏁板拰鍑烘墜锟??
-		double latest5HitRate; //杩戜簲鍦哄懡涓巼
-		int[]  latest5HitsShots;    //杩戜簲鍦哄懡涓暟鍜屽嚭鎵嬫暟
-		
-		
-		
-		
-		
+		double seasonHitRate; // 璧涘鍛戒腑锟??
+		int[] seasonHitsShots; // 璧涘鍛戒腑鏁板拰鍑烘墜锟??
+		double latest5HitRate; // 杩戜簲鍦哄懡涓巼
+		int[] latest5HitsShots; // 杩戜簲鍦哄懡涓暟鍜屽嚭鎵嬫暟
+
 		public HotZone(Position position, double seasonHitRate,
-				int[] seasonHitsShots, double latest5HitRate, int[] latest5HitsShots) {
+				int[] seasonHitsShots, double latest5HitRate,
+				int[] latest5HitsShots) {
 			super();
 			this.position = position;
 			this.seasonHitRate = seasonHitRate;
@@ -687,45 +657,47 @@ class HotZonePanel extends JPanel{
 			this.latest5HitRate = latest5HitRate;
 			this.latest5HitsShots = latest5HitsShots;
 		}
-		
+
 		public Position getPosition() {
 			return position;
 		}
+
 		public double getSeasonHitRate() {
 			return seasonHitRate;
 		}
+
 		public int[] getSeasonHitsShots() {
 			return seasonHitsShots;
 		}
+
 		public double getLatest5HitRate() {
 			return latest5HitRate;
 		}
+
 		public int[] getLatest5HitsShots() {
 			return latest5HitsShots;
 		}
-		
-		
-		
+
 	}
 
-	enum Position{
-		l24Plus,	//宸︿晶24鑻卞昂浠ュ
-		l1624_1,    //宸︿晶16-24鑻卞昂
-		l816_1,		//宸︿晶8-16鑻卞昂
-		c08_4,		//8鑻卞昂浠ュ唴
-		r816_1,		//鍙充晶8-16鑻卞昂
-		r1624_1,	//鍙充晶16-24鑻卞昂
-		r24Plus_1,	//鍙充晶24鑻卞昂浠ュ
-		c816_2,		//涓棿8-16鑻卞昂
-		lc1624_1,	//宸︿晶灞呬腑16-24鑻卞昂
-		c1624_2,	//涓棿16-24鑻卞昂
-		rc1624_1,	//鍙充晶灞呬腑16-24鑻卞昂
-		lc24Plus_1,	//宸︿晶灞呬腑24鑻卞昂浠ュ
-		c24Plus_1, 	//涓棿24鑻卞昂浠ュ
-		rc24Plus_1, //鍙充晶灞呬腑24鑻卞昂浠ュ
-		
+	enum Position {
+		l24Plus, // 宸︿晶24鑻卞昂浠ュ
+		l1624_1, // 宸︿晶16-24鑻卞昂
+		l816_1, // 宸︿晶8-16鑻卞昂
+		c08_4, // 8鑻卞昂浠ュ唴
+		r816_1, // 鍙充晶8-16鑻卞昂
+		r1624_1, // 鍙充晶16-24鑻卞昂
+		r24Plus_1, // 鍙充晶24鑻卞昂浠ュ
+		c816_2, // 涓棿8-16鑻卞昂
+		lc1624_1, // 宸︿晶灞呬腑16-24鑻卞昂
+		c1624_2, // 涓棿16-24鑻卞昂
+		rc1624_1, // 鍙充晶灞呬腑16-24鑻卞昂
+		lc24Plus_1, // 宸︿晶灞呬腑24鑻卞昂浠ュ
+		c24Plus_1, // 涓棿24鑻卞昂浠ュ
+		rc24Plus_1, // 鍙充晶灞呬腑24鑻卞昂浠ュ
+
 	}
-	
+
 	class HotZonePicPanel extends JPanel implements MouseMotionListener {
 
 		int width;
@@ -799,7 +771,8 @@ class HotZonePanel extends JPanel{
 					}
 					// 修改当前高亮部分序号
 					currentHighLight = index;
-					imageToDraw.set(index - 1, imageList_highlight.get(index - 1));
+					imageToDraw.set(index - 1,
+							imageList_highlight.get(index - 1));
 					// 修改右侧数据
 					hotZonePanel.update(index - 1);
 					repaint();
@@ -809,5 +782,5 @@ class HotZonePanel extends JPanel{
 
 		}
 	}
-	
+
 }
