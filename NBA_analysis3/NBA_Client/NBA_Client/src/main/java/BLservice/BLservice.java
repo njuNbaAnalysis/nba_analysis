@@ -39,7 +39,7 @@ public interface BLservice {
 	 * @param teamNameEn 球队的3大写字母名称
 	 * @param isSeason true表示常规赛，false表示季后赛
 	 * @param isTotal 此项为true时，返回所有球队的热区总计数据，此时teamNameEn项被忽略
-	 * @return
+	 * @return 请参见HotZonevo的注释
 	 */
 	public HotZonevo getHotZone(String teamNameEn,boolean isSeason,boolean isTotal);
 	
