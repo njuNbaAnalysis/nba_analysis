@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import po.player;
 import po.playerItem;
 import vo.Playervo;
-import BLservice.matchBLservice;
-
-public class matchBLcontrollor implements matchBLservice {
+public class matchBLcontrollor {
 
 	public void updateNewMatch(String time) { // 只需每天运行一次
 	// Date now = new Date();
