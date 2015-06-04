@@ -32,6 +32,9 @@ import logic.players.Player;
 
 public class PlayerStatTablePanel extends StatTablePanel {
 
+	String season="2014";
+	boolean isPlayOff=false;
+	
 	private SelectPanel selectPanel;
 
 	public PlayerStatTablePanel(int width, int height, BLService bl,JPanel content) {
@@ -42,7 +45,6 @@ public class PlayerStatTablePanel extends StatTablePanel {
 		selectPanel.setBounds(0, 50 * height / (1080), width,
 				66 * height / (1080));
 		this.add(selectPanel);
-		
 		
 		jspane = new JScrollPane();
 		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116

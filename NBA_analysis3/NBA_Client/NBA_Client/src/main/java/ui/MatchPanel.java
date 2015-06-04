@@ -23,11 +23,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import logic.BLController;
-import logic.matches.KingsOfMatch;
-import logic.matches.Match;
-import logic.players.Player;
-import logic.teams.Team;
+import vo.KingsOfMatchvo;
+import vo.Matchvo;
+import vo.Playervo;
+import vo.Teamvo;
+import BLservice.BLservice;
+
+
 
 public class MatchPanel extends JPanel {
 
@@ -35,16 +37,18 @@ public class MatchPanel extends JPanel {
 	private int width;
 	private int height;
 	private boolean isFolded = false;
+	String season;
+	boolean isPlayOff;
 	int currentIndex = 0;
 	JPanel content;
 	MatchTablePanel table;
-	BLController bl;
+	BLservice bl;
 	Thread thread;
 	Date date;
-	ArrayList<Match> matchList;
+	ArrayList<Matchvo> matchList;
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-	public MatchPanel(int width1, int height1, BLController bl,JPanel content) {
+	public MatchPanel(int width1, int height1, BLservice bl,JPanel content,String season,boolean isPlayOff) {
 		super();
 		/*
 		 * this.width=width1; this.height = height1;
@@ -55,6 +59,8 @@ public class MatchPanel extends JPanel {
 		this.height = height1;
 		this.setBounds(0, 0, width, height);
 		this.setLayout(null);
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		setBackground(Color.white);
 		try {
 			date = df.parse("2014-01-01");
@@ -62,7 +68,7 @@ public class MatchPanel extends JPanel {
 			e.printStackTrace();
 		}
 
-		this.matchList = new ArrayList<Match>(
+		this.matchList = new ArrayList<Matchvo>(
 				bl.getTodayMatches("13-14_2014-01-01"));
 		addChildren();
 
@@ -241,9 +247,9 @@ public class MatchPanel extends JPanel {
 		int height;
 		JButton stat;
 		String date;
-		Match match;
-		Team[] teams;
-		KingsOfMatch[] kings;
+		Matchvo match;
+		Teamvo[] teams;
+		KingsOfMatchvo[] kings;
 		JButton b1;
 		JButton b2;
 		JButton b3;
@@ -345,7 +351,7 @@ public class MatchPanel extends JPanel {
 
 		}
 
-		public InfoLabel(int x, int y, int width, int height, Match match) {
+		public InfoLabel(int x, int y, int width, int height, Matchvo match) {
 			this.width = width;
 			this.height = height;
 			this.match = match;
@@ -381,7 +387,7 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfReboundsKing());
+	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfReboundsKing());
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
@@ -405,7 +411,7 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfPointsKing());
+	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfPointsKing());
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
@@ -429,7 +435,7 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfAssistsKing());
+	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfAssistsKing());
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
@@ -454,7 +460,7 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfPointsKing());
+	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfPointsKing());
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
@@ -479,7 +485,7 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfReboundsKing());
+	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfReboundsKing());
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
@@ -504,7 +510,7 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	Player p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfAssistsKing());
+	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfAssistsKing());
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
@@ -553,7 +559,7 @@ public class MatchPanel extends JPanel {
 				date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
 
 				head.currentLabel.setText(df.format(date));
-				MatchPanel.this.matchList = new ArrayList<Match>(
+				MatchPanel.this.matchList = new ArrayList<Matchvo>(
 						bl.getTodayMatches("13-14_" + df.format(date)));
 				MatchPanel.this.removeAll();
 				MatchPanel.this.addChildren();
@@ -562,7 +568,7 @@ public class MatchPanel extends JPanel {
 			if (type == 2) {
 				date = new Date(date.getTime() + 24 * 60 * 60 * 1000);
 				head.currentLabel.setText(df.format(date));
-				MatchPanel.this.matchList = new ArrayList<Match>(
+				MatchPanel.this.matchList = new ArrayList<Matchvo>(
 						bl.getTodayMatches("13-14_" + df.format(date)));
 				MatchPanel.this.removeAll();
 				MatchPanel.this.addChildren();

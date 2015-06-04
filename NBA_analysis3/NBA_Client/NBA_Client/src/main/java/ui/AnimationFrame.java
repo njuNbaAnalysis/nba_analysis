@@ -5,13 +5,14 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
-import logic.BLController;
+import BLservice.BLservice;
+
 
 public class AnimationFrame  extends JFrame{
 	 public JLayeredPane lp = null;
-	 public BLController bl =null;
+	 public BLservice bl =null;
 	@SuppressWarnings("restriction")
-	public AnimationFrame(BLController bl) {
+	public AnimationFrame(BLservice bl) {
 		this.bl = bl;
 		lp = this.getLayeredPane();
 		int height = Toolkit.getDefaultToolkit().getScreenSize().height;

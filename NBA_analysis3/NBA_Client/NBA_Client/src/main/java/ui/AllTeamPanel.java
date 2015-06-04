@@ -11,16 +11,19 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import logic.BLController;
-import logic.teams.Team;
+import BLservice.BLservice;
+import vo.Teamvo;
+
 
 public class AllTeamPanel extends JPanel{
 	
-	ArrayList<Team> teams;
+	ArrayList<Teamvo> teams;
 	int width;
 	int height;
+	String season;
+	boolean isPlayOff;
 	private JPanel content;
-	BLController bl;
+	BLservice bl;
 	private TeamBasicInfoLabel teamBasicInfoPanel;
 	
 	public void paintComponent(Graphics g2) {
@@ -43,16 +46,18 @@ public class AllTeamPanel extends JPanel{
 		
 	}
 	
-	public AllTeamPanel(final int width, final int height, final BLController bl,JPanel content){
+	public AllTeamPanel(final int width, final int height, final BLservice bl,JPanel content,String season,boolean isPlayOff){
 		this.width=width;
 		this.height=height;
 		this.content = content;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setBounds(0, 0, width, height);
 		this.setLayout(null);
 		setBackground(Color.white);
 		
-	    teams = bl.getAllTeams();
+	    teams = bl.getAllTeams(season,false);
 		
 	    JPanel teamsMapsPanel = new TeamsMapsPanel(1366,768,this);
  	    this.add(teamsMapsPanel);
@@ -93,7 +98,7 @@ public class AllTeamPanel extends JPanel{
 	}
 	
 	public void enterTeam(String name){
-		for(Team each:teams){
+		for(Teamvo each:teams){
 			if(each.getAbbreviation().equals(name)){
 				TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,each,bl,AllTeamPanel.this.content);
 				m.setBounds(0, 0, width, height*10/9);
@@ -107,7 +112,7 @@ public class AllTeamPanel extends JPanel{
 	}
 	
 	public void updateTopLabe(String name){
-		for(Team each:teams){
+		for(Teamvo each:teams){
 			if(each.getAbbreviation().equals(name)){
 				AllTeamPanel.this.remove(teamBasicInfoPanel);
 				teamBasicInfoPanel = new TeamBasicInfoLabel(each , width, height / 4,Color.black);

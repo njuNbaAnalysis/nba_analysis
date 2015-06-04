@@ -8,13 +8,11 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 
-import logic.BLController;
-import logic.BLService;
-import logic.players.Player;
-import logic.teams.Team;
+import vo.Teamvo;
+
 
 public class TeamBasicInfoLabel extends JLabel {
-	private Team team;
+	private Teamvo team;
 	private int width;
 	private int height;
 	private Color color;
@@ -75,7 +73,7 @@ public class TeamBasicInfoLabel extends JLabel {
 
 	}
 
-	public TeamBasicInfoLabel(Team team, int width, int height) {
+	public TeamBasicInfoLabel(Teamvo team, int width, int height) {
 		super();
 
 		this.team = team;
@@ -89,7 +87,7 @@ public class TeamBasicInfoLabel extends JLabel {
 
 	}
 
-	public TeamBasicInfoLabel(Team team, int width, int height, Color color) {
+	public TeamBasicInfoLabel(Teamvo team, int width, int height, Color color) {
 		super();
 
 		this.team = team;

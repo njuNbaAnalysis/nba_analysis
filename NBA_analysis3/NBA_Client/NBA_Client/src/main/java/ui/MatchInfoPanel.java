@@ -6,16 +6,17 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 import ui.MatchPanel.InfoLabel;
-import logic.BLController;
-import logic.matches.Match;
+import vo.Matchvo;
+import BLservice.BLservice;
+
 
 public class MatchInfoPanel extends JPanel {
 	int width;
 	int height;
-	Match match;
+	Matchvo match;
 	
 	
-	public MatchInfoPanel(int width,int height,Match match,BLController bl){
+	public MatchInfoPanel(int width,int height,Matchvo match,BLservice bl){
 		this.width = width;
 		this.height = height;
 		this.match = match;

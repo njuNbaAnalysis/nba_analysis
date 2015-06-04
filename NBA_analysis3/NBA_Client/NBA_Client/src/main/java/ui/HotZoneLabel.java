@@ -12,16 +12,17 @@ import java.text.DecimalFormat;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import logic.BLService;
-import logic.players.Player;
-import logic.teams.Team;
+import vo.Playervo;
+import BLservice.BLservice;
+
+
 
 public class HotZoneLabel extends JLabel{
-	private Player player;
+	private Playervo player;
 	private int width;
 	private int height;
 	private JPanel content;
-	private BLService bl;
+	private BLservice bl;
 
 	public void paintComponent(Graphics g2) {
 		Graphics2D g = (Graphics2D) g2.create();
