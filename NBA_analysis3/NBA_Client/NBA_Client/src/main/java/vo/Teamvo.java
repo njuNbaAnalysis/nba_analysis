@@ -159,16 +159,6 @@ public class Teamvo implements Serializable {
         }
         return image;
 	}
-	
-	public Image getLogo(int width,int height) {
-		Image image = null;
-        try {
-            image = ImageIO.read(new File("./Data/teamImage/" + getName() + ".gif"));
-        } catch (IOException e) {
-        }
-        return image;
-	}
-	
 
 	public ArrayList<String> getPlayerList() {
 		return playerList;
