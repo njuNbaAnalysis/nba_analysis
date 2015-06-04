@@ -54,17 +54,23 @@ public class WordLiveTablePanel extends JPanel {
 
 	private void setButton() {
 		sectionSize = getSectionNum();
-		btArray = new SectionButton[sectionSize];
-		for (int i = 0; i < sectionSize; i++) {
-			btArray[i] = new SectionButton(buttonNames[i], i);
-			btArray[i].setBounds(width * i / 8, 0, width / 8, height / 10);
-			this.add(btArray[i]);
+		if (sectionSize > 0) {
+			btArray = new SectionButton[sectionSize];
+			for (int i = 0; i < sectionSize; i++) {
+				btArray[i] = new SectionButton(buttonNames[i], i);
+				btArray[i].setBounds(width * i / 8, 0, width / 8, height / 10);
+				SectionButtonListener l = new SectionButtonListener(i);
+				btArray[i].addActionListener(l);
+				this.add(btArray[i]);
 
+			}
 		}
+
 	}
 
 	private int getSectionNum() {
 		int section = -1;
+
 		for (EventVo event : eventList) {
 			if (event.getSection() > section) {
 				section = event.getSection();
@@ -75,12 +81,13 @@ public class WordLiveTablePanel extends JPanel {
 
 	private ArrayList<EventVo> getSectionEvent(int sectionNum) {
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
+		
 		for (EventVo event : eventList) {
 			if (event.getSection() == sectionNum) {
 				list.add(event);
 			}
 		}
-
+		System.out.println(list.size());
 		return list;
 	}
 
@@ -95,13 +102,15 @@ public class WordLiveTablePanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (selected != type) {
 				selected = type;
-				eventTable = new WordLiveTable(width, columnNames, getSectionEvent(selected+1),
-						selected);
-				jspane.removeAll();
-				jspane.setViewportView(eventTable);
-				WordLiveTablePanel.this.add(jspane);
+				jspane.remove(eventTable);
+				eventTable = new WordLiveTable(width, columnNames,
+						getSectionEvent(selected + 1), selected);
+				System.out.println("第几节:" + selected);
+				jspane.add(eventTable);
+
 				jspane.updateUI();
 				jspane.repaint();
+				WordLiveTablePanel.this.repaint();
 			}
 
 		}
