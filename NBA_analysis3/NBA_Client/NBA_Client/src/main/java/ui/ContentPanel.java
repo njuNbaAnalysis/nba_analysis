@@ -10,7 +10,6 @@ public class ContentPanel extends JPanel {
 	private PlayerStatTablePanel teamRankTablePanel;
 	
 	public ContentPanel(int width,int height, BLController bl) {
-		//setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setLayout(null);
 		content = new JPanel();
 		content.setBounds(width/10, 0, width-width/10, height);

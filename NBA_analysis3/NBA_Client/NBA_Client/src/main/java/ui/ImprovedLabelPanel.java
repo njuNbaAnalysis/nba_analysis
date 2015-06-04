@@ -20,10 +20,10 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	private String field;
 	private int num = 5;
 
-	private Playervo[] players;
+	private Player[] players;
 
 	public ImprovedLabelPanel(String headName, String type,
-			String[] columnName,Playervo[] players, int hotWidth, int hotHeight,
+			String[] columnName,Player[] players, int hotWidth, int hotHeight,
 			BLService bl) {
 		super(headName, columnName, hotWidth, hotHeight, bl);
 		this.type = type;
@@ -63,7 +63,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	}
 
 
-	public void setPlayers(Playervo[] players,String field) {
+	public void setPlayers(Player[] players,String field) {
 		((HotTableContentLabel) tableContentLabel).setPlayers(players);
 		((HotTableContentLabel) tableContentLabel).setType(field);
 		this.field = field;
@@ -71,13 +71,13 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	}
 
 	private class HotTableContentLabel extends JLabel {
-		private Playervo[] players;
+		private Player[] players;
 		private int contentWidth;
 		private int contentHeight;
 		private String field;
 		protected DecimalFormat df = new DecimalFormat("#0.00");
 
-		public HotTableContentLabel(Playervo[] players, int contentWidth,
+		public HotTableContentLabel(Player[] players, int contentWidth,
 				int contentHeight,String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
@@ -90,7 +90,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 			
 		}
 
-		public void setPlayers(Playervo[] players) {
+		public void setPlayers(Player[] players) {
 			this.players = players;
 			this.repaint();
 		}
@@ -183,7 +183,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 				g.drawString(i + "", contentWidth / 12, posh + contentHeight
 						/ 16);
 				// 头像
-				Playervo player = bl.getPlayerByName(players[i-1].getName());
+				Player player = bl.getPlayerByName(players[i-1].getName());
 				BufferedImage image = UIUtils.resize(
 						player.getPortrait(), contentWidth / 25,
 						contentHeight / 10);
