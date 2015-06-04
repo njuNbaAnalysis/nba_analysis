@@ -9,7 +9,7 @@ public class DataFactoryMySql implements DataFactory {
 	public BLservice getBLservice() {
 		// TODO Auto-generated method stub
 		try {
-			return (BLservice) Naming.lookup("rmi://" + "ip" + ":" + "port"
+			return (BLservice) Naming.lookup("rmi://" + "localhost" + ":" + "6600"
 					+ "/" + "BLservice");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
