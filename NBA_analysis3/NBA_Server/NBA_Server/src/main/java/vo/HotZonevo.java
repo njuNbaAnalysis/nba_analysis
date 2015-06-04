@@ -1,8 +1,9 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class HotZonevo {
+public class HotZonevo  implements Serializable{
     private String teamNameEn;
     private boolean isSeason;   //是否为常规赛
     private boolean isTotal;    //是否是所有球队的总计数据

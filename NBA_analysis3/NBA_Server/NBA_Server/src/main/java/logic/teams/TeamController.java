@@ -1,5 +1,6 @@
 package logic.teams;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,7 +9,7 @@ import vo.HotZonevo;
 import vo.HotZonevo.Data;
 import data.teams.HotZoneData;
 
-public class TeamController {
+public class TeamController implements Serializable{
     private static TeamController teamController = null;
     
     private TeamController(){
