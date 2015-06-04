@@ -18,7 +18,7 @@ public interface BLservice extends Remote{
 	/**
 	 * 得到当前正在直播的直播事件
 	 */
-	public ArrayList<EventVo> getLiveEvent();
+	public ArrayList<EventVo> getLiveEvent();   //返回本节的所有信息
 
 	/**
 	 * 得到赛季的所有球员

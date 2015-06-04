@@ -30,7 +30,7 @@ public class MatchReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
@@ -54,7 +54,7 @@ public class MatchReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
@@ -78,7 +78,7 @@ public class MatchReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
@@ -102,7 +102,7 @@ public class MatchReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
@@ -126,7 +126,7 @@ public class MatchReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 
 		return result;
 	}

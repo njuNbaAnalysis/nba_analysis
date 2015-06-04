@@ -33,7 +33,7 @@ public class PlayerReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 		return result;
 	}
 
@@ -58,7 +58,7 @@ public class PlayerReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 		return listOfPlayer;
 	}
 
@@ -112,7 +112,7 @@ public class PlayerReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 		return listOfPlayer;
 	}
 }

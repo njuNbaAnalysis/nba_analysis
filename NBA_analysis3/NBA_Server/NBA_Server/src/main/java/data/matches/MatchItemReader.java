@@ -37,7 +37,7 @@ public class MatchItemReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
@@ -68,7 +68,7 @@ public class MatchItemReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GetConnection.free(rs, conn, statement);
+//		GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
