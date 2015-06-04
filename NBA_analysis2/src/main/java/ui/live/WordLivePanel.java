@@ -229,13 +229,14 @@ public class WordLivePanel extends JPanel {
 	}
 
 	public void refresh(ArrayList<EventVo> eventList) {
+		//如果选择折线图,先把比赛事件缓存下来
 		if (selectedNumber == 0) {
 			this.eventList = eventList;
 		}
 
 		if (selectedNumber == 1) {
 			String[] columnNames = { "时间", "比分", "参与球员", "文字直播", "球队" };
-			String[] btNames = { "第一节", "第二节", "第三节", "第四节" };// 暂时没有加时
+			String[] btNames = { "第一节", "第二节", "第三节", "第四节" ,"加时1","加时2","加时3"};// 暂定3加时
 			WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(
 					columnNames, btNames, width, height * 9 / 10, eventList);
 			wordLivePanel.setLocation(0, 0);
