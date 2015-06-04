@@ -730,7 +730,12 @@ class HotZonePanel extends JPanel {
 			this.setLayout(null);
 			this.addMouseMotionListener(this);
 
-			// 读取图片
+			ImageReader reader = ImageReader.getInstance();
+			imageList = reader.getHot_imageList();
+			imageList_highlight = reader.getHot_imageList_highlight();
+			imageToDraw = reader.getHot_imageToDraw();
+			
+			/*// 读取图片
 			try {
 				for (int i = 1; i <= 14; i++) {
 					// 读取原始图片，并且存入待绘组件列表
@@ -746,7 +751,7 @@ class HotZonePanel extends JPanel {
 			} catch (IOException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();
-			}
+			}*/
 
 		}
 

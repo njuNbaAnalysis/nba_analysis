@@ -11,6 +11,8 @@ import dataFactory.DataFactoryMySql;
 
 public class ImageReader {
 
+	int progress;
+	
 	ArrayList<BufferedImage> map_imageList = new ArrayList<BufferedImage>();
 	ArrayList<BufferedImage> map_imageList_highlight = new ArrayList<BufferedImage>();
 	ArrayList<BufferedImage> map_imageToDraw = new ArrayList<BufferedImage>();
@@ -30,6 +32,13 @@ public class ImageReader {
     }
 	
 	
+	
+	public int getProgress() {
+		return progress;
+	}
+
+
+
 	public ArrayList<BufferedImage> getMap_imageList() {
 		return map_imageList;
 	}
@@ -60,9 +69,6 @@ public class ImageReader {
 	}
 
 
-	public static ImageReader getReader() {
-		return reader;
-	}
 
 
 	private  ImageReader() {
@@ -76,15 +82,23 @@ public class ImageReader {
 				path = "image" + File.separator + "x" + i + ".png";
 				map_imageList_highlight.add(ImageIO.read(new File(path)));
 				
-			    path = "image" + File.separator + "q" + i + ".png";
-				temp = ImageIO.read(new File(path));
+				progress = i/5+1;
+			}
+			
+			for (int i = 1; i <= 14; i++) {
+				// 读取原始图片，并且存入待绘组件列表
+				String path = "image" + File.separator + "q" + i + ".png";
+				BufferedImage temp = ImageIO.read(new File(path));
 				hot_imageList.add(temp);
 				hot_imageToDraw.add(temp);
 
 				// 读取高亮图片
 				path = "image" + File.separator + "p" + i + ".png";
 				hot_imageList_highlight.add(ImageIO.read(new File(path)));
+				
+				progress=6+(i+1)/5;
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

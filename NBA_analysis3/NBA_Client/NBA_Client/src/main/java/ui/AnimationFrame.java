@@ -10,10 +10,10 @@ import BLservice.BLservice;
 
 public class AnimationFrame  extends JFrame{
 	 public JLayeredPane lp = null;
-	 public BLservice bl =null;
+	 public ImageReader reader =null;
 	@SuppressWarnings("restriction")
-	public AnimationFrame(BLservice bl) {
-		this.bl = bl;
+	public AnimationFrame(ImageReader reader) {
+		this.reader = reader;
 		lp = this.getLayeredPane();
 		int height = Toolkit.getDefaultToolkit().getScreenSize().height;
 	    int width = Toolkit.getDefaultToolkit().getScreenSize().width;
