@@ -30,22 +30,20 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import logic.BLController;
-import logic.BLService;
-import logic.players.Player;
-import logic.teams.MatchSimpleInfo;
-import logic.teams.Team;
+import BLservice.BLservice;
 import util.UIUtils;
+import vo.MatchSimpleInfovo;
+import vo.Teamvo;
 
 public class AgendaPanel extends JPanel{
 	private int width;
 	private int height;
-	private ArrayList<MatchSimpleInfo> matches;
+	private ArrayList<MatchSimpleInfovo> matches;
 	private JScrollPane js;
-	private BLService bl;
+	private BLservice bl;
 	private JPanel content;
 
-	AgendaPanel(int width, int height, ArrayList<MatchSimpleInfo> matches,BLService bl,JPanel content) {
+	AgendaPanel(int width, int height, ArrayList<MatchSimpleInfovo> matches,BLservice bl,JPanel content) {
 		this.width = width;
 		this.height = height;
 		this.matches = matches;
@@ -84,12 +82,12 @@ public class AgendaPanel extends JPanel{
 		
 		private ArrayList<Image> imageList;
 		private String[] agendaColumnName = { "日期", "对手", "结果", "比分"};
-		private BLService bl;
+		private BLservice bl;
 		private JPanel content;
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM月dd日");
 
 		// type :0表示信息，1表示数据
-		public AgendaTable(ArrayList<MatchSimpleInfo> matchList,BLService bl,JPanel content) {
+		public AgendaTable(ArrayList<MatchSimpleInfovo> matchList,BLservice bl,JPanel content) {
 			this.bl = bl;
 			this.content = content;
 			this.setShowGrid(false);
@@ -111,7 +109,7 @@ public class AgendaPanel extends JPanel{
 	                	int row = AgendaTable.this.getSelectedRow();
 	                	String teamName = (String)AgendaTable.this.getValueAt(row, column);
 	                	teamName = teamName.split(" ")[1];//空格在1位
-	                	Team t = AgendaTable.this.bl.getTeamByName(teamName);
+	                	Teamvo t = AgendaTable.this.bl.getTeamByTeamName(teamName);
 	            		
 	            		TeamInfoPanel m = new TeamInfoPanel(width,height*3/2,t,AgendaTable.this.bl,AgendaTable.this.content);
 	            		m.setBounds(0, 0, width, height*3/2);
@@ -161,8 +159,8 @@ public class AgendaPanel extends JPanel{
 			//imageList = new ArrayList<Image>();
 			
 			for(int i=0;i<12;i++){
-				ArrayList<MatchSimpleInfo> subList = new ArrayList<MatchSimpleInfo>();
-				for(MatchSimpleInfo info:matchList){
+				ArrayList<MatchSimpleInfovo> subList = new ArrayList<MatchSimpleInfovo>();
+				for(MatchSimpleInfovo info:matchList){
 					if(info.getDate().getMonth()==i){
 						subList.add(info);
 					}
@@ -173,7 +171,7 @@ public class AgendaPanel extends JPanel{
 					s[0] = (i+1)+"月";
 					model.addRow(s);
 					//subList.sort();
-					for(MatchSimpleInfo info:subList){
+					for(MatchSimpleInfovo info:subList){
 						s = getInfoRow(info);
 						model.addRow(s);
 					}
@@ -193,7 +191,7 @@ public class AgendaPanel extends JPanel{
 			this.repaint();
 		}
 
-		private String[] getInfoRow(MatchSimpleInfo info) {
+		private String[] getInfoRow(MatchSimpleInfovo info) {
 			String[] s = new String[5];
 			s[0] = (info.getDate().getMonth()+1)+"月"+(info.getDate().getDay()+1)+"日";
 			if(info.isAtHome()){

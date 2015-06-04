@@ -18,22 +18,21 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import logic.BLController;
-import logic.BLService;
-import logic.matches.Match;
-import logic.matches.RecordOfPlayer;
+import BLservice.BLservice;
+import vo.Matchvo;
+import vo.RecordOfPlayervo;
 
 public class MatchTablePanel extends JPanel {
-	protected Match match;
+	protected Matchvo match;
 	protected MatchJTable matchTable;
-	private BLService bl;
+	private BLservice bl;
 	private int width;
 	private int height;
 	private static String[] columnName = { "姓名", "位置", "分钟", "%", "命中", "出手",
 			"三分%", "三分命中", "三分出手", "罚球%", "罚球命中", "罚球出手", "+/-", "进攻", "防守",
 			"篮板", "助攻", "犯规", "抢断", "失误", "盖帽", "得分" };
 
-	public MatchTablePanel(int width, int height, Match match, BLService bl) {
+	public MatchTablePanel(int width, int height, Matchvo match, BLservice bl) {
 		this.width = width;
 		this.height = height;
 		this.match = match;
@@ -64,8 +63,7 @@ public class MatchTablePanel extends JPanel {
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
 		g.drawString(match.getTeams()[0], width / 20, height / 20);
 
-		Image teamImage1 = bl.getTeamByName(match.getTeams()[0]).getLogo(
-				width / 20, height / 20);
+		Image teamImage1 = bl.getTeamByTeamName(match.getTeams()[0]).getLogo();
 		g.drawImage(teamImage1, 0, 0, this);
 
 		g.setColor(new Color(238, 238, 238));
@@ -75,16 +73,15 @@ public class MatchTablePanel extends JPanel {
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
 		g.drawString(match.getTeams()[1], width / 20, height * 11 / 20);
 
-		Image teamImage2 = bl.getTeamByName(match.getTeams()[1]).getLogo(
-				width / 20, height / 20);
+		Image teamImage2 = bl.getTeamByTeamName(match.getTeams()[1]).getLogo();
 		g.drawImage(teamImage2, 0, height * 10 / 20, this);
 	}
 
 	private class MatchJTable extends BaseJTable {
 		protected DecimalFormat df = new DecimalFormat("#0.0");
-		private ArrayList<RecordOfPlayer> recordList;
+		private ArrayList<RecordOfPlayervo> recordList;
 
-		public MatchJTable(ArrayList<RecordOfPlayer> recordList) {
+		public MatchJTable(ArrayList<RecordOfPlayervo> recordList) {
 			this.recordList = recordList;
 
 			this.setShowGrid(false);
@@ -123,19 +120,19 @@ public class MatchTablePanel extends JPanel {
 			return null;
 		}
 
-		private String[] getIndividualDataRow(RecordOfPlayer recordOfPlayer) {
+		private String[] getIndividualDataRow(RecordOfPlayervo recordOfPlayer) {
 
 			String[] data = new String[22];
 			data[0] = recordOfPlayer.getPlayerName();
 			data[1] = recordOfPlayer.getPosition();
-			data[2] = Integer.toString(recordOfPlayer.getMinutes()/60);
-			data[3] = df.format(recordOfPlayer.getFieldGoalPercentage()*100);
+			data[2] = Integer.toString(recordOfPlayer.getMinutes() / 60);
+			data[3] = df.format(recordOfPlayer.getFieldGoalPercentage() * 100);
 			data[4] = Integer.toString(recordOfPlayer.getFieldGoalHits());
 			data[5] = Integer.toString(recordOfPlayer.getFieldGoalAttempts());
-			data[6] = df.format(recordOfPlayer.getThreePointPercentage()*100);
+			data[6] = df.format(recordOfPlayer.getThreePointPercentage() * 100);
 			data[7] = Integer.toString(recordOfPlayer.getThreePointHits());
 			data[8] = Integer.toString(recordOfPlayer.getThreePointAttemps());
-			data[9] = df.format(recordOfPlayer.getFreeThrowPercentage()*100);
+			data[9] = df.format(recordOfPlayer.getFreeThrowPercentage() * 100);
 			data[10] = Integer.toString(recordOfPlayer.getFreeThrowHits());
 			data[11] = Integer.toString(recordOfPlayer.getFreeThrowAttemps());
 			data[12] = Integer.toString(recordOfPlayer.getEfficiency());
@@ -184,22 +181,5 @@ public class MatchTablePanel extends JPanel {
 			}
 
 		}
-	}
-
-	public static void main(String[] args) {
-
-		BLService bl = BLController.getInstance();
-		bl.init();
-		while (bl.getProgress() < 9) {
-			System.out.println(bl.getProgress());
-		}
-
-		MatchTablePanel m = new MatchTablePanel(1280, 800, bl.getAllMatches()
-				.get(0), bl);
-		m.setBounds(0, 0, 1280, 800);
-		JFrame f = new JFrame();
-		f.add(m);
-		f.setSize(1920, 1280);
-		f.setVisible(true);
 	}
 }

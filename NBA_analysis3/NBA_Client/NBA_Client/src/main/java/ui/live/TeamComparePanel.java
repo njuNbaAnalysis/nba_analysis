@@ -24,9 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import logic.matches.Match;
-import logic.teams.Team;
 import util.UIUtils;
+import vo.Matchvo;
 
 public class TeamComparePanel extends JPanel {
 	private boolean[] attribute;
@@ -43,9 +42,9 @@ public class TeamComparePanel extends JPanel {
 	boolean selected = false;
 	private JScrollPane content;
 	
-	private Match m;
+	private Matchvo m;
 
-	TeamComparePanel(int width, int height, String[] attributeNames, Match m) {
+	TeamComparePanel(int width, int height, String[] attributeNames, Matchvo m) {
 		this.width = width;
 		this.height = height;
 		this.attributeNames = attributeNames;
@@ -59,10 +58,7 @@ public class TeamComparePanel extends JPanel {
 		content.setBounds(0, height / 20,width, height * 19 / 20);
 		
 		content.setLayout(null);
-		//content.setPreferredSize(new Dimension(width,height));
-		
-		
-		
+
 		CompareBarChartPanel chartPanel = new CompareBarChartPanel(width, height * 17 / 20,
 				attribute, attributeNames, getTeamValue(m), getRivalValue(m),
 				cof);
@@ -71,8 +67,9 @@ public class TeamComparePanel extends JPanel {
 		this.add(content);
 		repaint();
 	}
-
-	private double[] getTeamValue(Match m) {
+	
+	//以下是假数据
+	private double[] getTeamValue(Matchvo m) {
 		double[] teamData = new double[attributeNames.length];
 		for (int i = 0; i < attributeNames.length; i++) {
 			teamData[i] = i * 1024 % 100;
@@ -80,7 +77,7 @@ public class TeamComparePanel extends JPanel {
 		return teamData;
 	}
 
-	private double[] getRivalValue(Match m) {
+	private double[] getRivalValue(Matchvo m) {
 		double[] teamData = new double[attributeNames.length];
 		for (int i = 0; i < attributeNames.length; i++) {
 			teamData[i] = (i + 3) * 1024 % 100;

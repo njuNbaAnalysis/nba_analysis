@@ -15,17 +15,18 @@ import javax.swing.JPanel;
 
 
 
+
+
+import BLservice.BLservice;
 import util.UIUtils;
-import logic.BLService;
-import logic.players.Player;
-import logic.players.todayPlayer;
-import logic.teams.Team;
+import vo.Playervo;
+
 
 public class HotAndKingPanel extends JPanel {
 	private int num = 5;
 	private int width;
 	private int height;
-	private BLService bl;
+	private BLservice bl;
 	private static String FONT_OF_HOT = "微软雅黑";
 	private static String [] typeArray = {"T","P","HP"};
 	private KingLabelPanel teamKingPanel;
@@ -33,7 +34,7 @@ public class HotAndKingPanel extends JPanel {
 	private ImprovedLabelPanel hotPlayerPanel;
 	private JPanel content;
 
-	public HotAndKingPanel(int width, int height, BLService bl,JPanel content) {
+	public HotAndKingPanel(int width, int height, BLservice bl,JPanel content) {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
@@ -59,8 +60,8 @@ public class HotAndKingPanel extends JPanel {
 		
 		// 设置player
 		
-		ArrayList<Player> playerList = bl.getMostImprovedPlayer("point", 5);
-		Player [] players = new Player[5];
+		ArrayList<Playervo> playerList = bl.getMostImprovedPlayer("point", 5);
+		Playervo [] players = new Playervo[5];
 		for(int i=0;i<5;i++){
 			players[i] = playerList.get(i);
 		}
