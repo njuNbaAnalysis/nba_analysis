@@ -1,5 +1,6 @@
 package logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import logic.matches.matchBLcontrollor;
@@ -11,7 +12,7 @@ import vo.Playervo;
 import vo.Teamvo;
 import BLservice.BLservice;
 
-public class BLController implements BLservice {
+public class BLController implements BLservice,Serializable{
 	private static BLController blController = null;
 	public static int progress = 0;
 	public static int maxProgress = 9;

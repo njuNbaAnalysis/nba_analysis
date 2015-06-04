@@ -1,5 +1,6 @@
 package BLservice;
 
+import java.rmi.Remote;
 import java.util.ArrayList;
 
 import vo.EventVo;
@@ -8,7 +9,7 @@ import vo.Matchvo;
 import vo.Playervo;
 import vo.Teamvo;
 
-public interface BLservice {
+public interface BLservice extends Remote{
 	/**
 	 * 得到当前正在直播的比赛信息
 	 */
