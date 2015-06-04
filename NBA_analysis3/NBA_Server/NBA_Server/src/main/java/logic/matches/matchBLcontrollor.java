@@ -1,6 +1,7 @@
 package logic.matches;
 
 import java.io.File;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +13,7 @@ import vo.Matchvo;
 import vo.Playervo;
 import vo.RecordOfPlayervo;
 
-public class matchBLcontrollor {
+public class matchBLcontrollor implements Serializable{
 	private int period = 1;
 
 	private static matchBLcontrollor matchController = null;

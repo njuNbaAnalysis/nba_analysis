@@ -1,10 +1,14 @@
 package vo;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Playervo implements Serializable{
+import javax.imageio.ImageIO;
+
+public class Playervo implements Serializable {
 	private String name;
 	private String number; // 球衣号
 	private String position; // G,G-F 类似格式
@@ -14,8 +18,6 @@ public class Playervo implements Serializable{
 	private int age;
 	private int experience; // 打了几年球，取值可能为R，如果为R则存储0
 	private String school;
-	private Image portrait;
-	private Image action;
 	// not raw data
 	// 以***结尾的说明此项数据不需要存储
 	private String team; // current team
@@ -78,26 +80,23 @@ public class Playervo implements Serializable{
 	private int sumOfopponentrebounds = 0;
 	private int sumOfopponentoffenserebounds = 0;
 	private int sumOfopponentdefenseRebounds = 0;
-	private int sumOfoppnentattempts = 0;//两分出手次数
-	private double sumOfoppnentDefensiveRounds = 0;//对手进攻次数
-	
-	
-	
+	private int sumOfoppnentattempts = 0;// 两分出手次数
+	private double sumOfoppnentDefensiveRounds = 0;// 对手进攻次数
+
 	public Playervo(String name, String number, String position, int[] height,
 			int weight, Date birthday, int age, int experience, String school,
-			Image portrait, Image action, String team, String location,
-			String division, char conference, int gamePlayed, int gameStarted,
-			int rebounds, int assists, int minutes, int offenseRebounds,
-			int defenseRebounds, int steals, int blockShots, int turnOver,
-			int fouls, int points, double fieldGoalsPercentage,
-			double threePointersPercentage, double freeThrowsPercentage,
-			double trueShootingPercentage, double reboundsPercentage,
-			double offenseReboundsPercentage, double defenseReboundsPercentage,
-			double assistsPercentage, double stealsPercentage,
-			double blockShotsPercentage, double turnOverPercentage,
-			double usage, double[] upgradeRate, double efficiency, double gmsc,
-			double shootingEfficiency, int fieldGoalHits,
-			int fieldGoalAttempts, int threePointerHits,
+			String team, String location, String division, char conference,
+			int gamePlayed, int gameStarted, int rebounds, int assists,
+			int minutes, int offenseRebounds, int defenseRebounds, int steals,
+			int blockShots, int turnOver, int fouls, int points,
+			double fieldGoalsPercentage, double threePointersPercentage,
+			double freeThrowsPercentage, double trueShootingPercentage,
+			double reboundsPercentage, double offenseReboundsPercentage,
+			double defenseReboundsPercentage, double assistsPercentage,
+			double stealsPercentage, double blockShotsPercentage,
+			double turnOverPercentage, double usage, double[] upgradeRate,
+			double efficiency, double gmsc, double shootingEfficiency,
+			int fieldGoalHits, int fieldGoalAttempts, int threePointerHits,
 			int threePointerAttempts, int freeThrowHits, int freeThrowAttempts,
 			int doubledouble, int threedouble, int fourdouble, int fivedouble,
 			int pRA, double pRAaverage, double sumOfTime,
@@ -117,8 +116,6 @@ public class Playervo implements Serializable{
 		this.age = age;
 		this.experience = experience;
 		this.school = school;
-		this.portrait = portrait;
-		this.action = action;
 		this.team = team;
 		this.location = location;
 		this.division = division;
@@ -178,341 +175,283 @@ public class Playervo implements Serializable{
 		this.sumOfoppnentDefensiveRounds = sumOfoppnentDefensiveRounds;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-
 
 	public String getNumber() {
 		return number;
 	}
 
-
 	public String getPosition() {
 		return position;
 	}
-
 
 	public int[] getHeight() {
 		return height;
 	}
 
-
 	public int getWeight() {
 		return weight;
 	}
-
 
 	public Date getBirthday() {
 		return birthday;
 	}
 
-
 	public int getAge() {
 		return age;
 	}
-
 
 	public int getExperience() {
 		return experience;
 	}
 
-
 	public String getSchool() {
 		return school;
 	}
 
-
 	public Image getPortrait() {
-		return portrait;
+		Image image = null;
+        try {
+            image = ImageIO.read(new File("./Data/PlayerAction/" + getName() + ".png"));
+        } catch (IOException e) {
+        }
+        return image;
 	}
-
 
 	public Image getAction() {
-		return action;
+		Image image = null;
+        try {
+            image = ImageIO.read(new File("./Data/PlayerImage/" + getName() + ".png"));
+        } catch (IOException e) {
+        }
+        return image;
 	}
-
 
 	public String getTeam() {
 		return team;
 	}
 
-
 	public String getLocation() {
 		return location;
 	}
-
 
 	public String getDivision() {
 		return division;
 	}
 
-
 	public char getConference() {
 		return conference;
 	}
-
 
 	public int getGamePlayed() {
 		return gamePlayed;
 	}
 
-
 	public int getGameStarted() {
 		return gameStarted;
 	}
-
 
 	public int getRebounds() {
 		return rebounds;
 	}
 
-
 	public int getAssists() {
 		return assists;
 	}
-
 
 	public int getMinutes() {
 		return minutes;
 	}
 
-
 	public int getOffenseRebounds() {
 		return offenseRebounds;
 	}
-
 
 	public int getDefenseRebounds() {
 		return defenseRebounds;
 	}
 
-
 	public int getSteals() {
 		return steals;
 	}
-
 
 	public int getBlockShots() {
 		return blockShots;
 	}
 
-
 	public int getTurnOver() {
 		return turnOver;
 	}
-
 
 	public int getFouls() {
 		return fouls;
 	}
 
-
 	public int getPoints() {
 		return points;
 	}
-
 
 	public double getFieldGoalsPercentage() {
 		return fieldGoalsPercentage;
 	}
 
-
 	public double getThreePointersPercentage() {
 		return threePointersPercentage;
 	}
-
 
 	public double getFreeThrowsPercentage() {
 		return freeThrowsPercentage;
 	}
 
-
 	public double getTrueShootingPercentage() {
 		return trueShootingPercentage;
 	}
-
 
 	public double getReboundsPercentage() {
 		return reboundsPercentage;
 	}
 
-
 	public double getOffenseReboundsPercentage() {
 		return offenseReboundsPercentage;
 	}
-
 
 	public double getDefenseReboundsPercentage() {
 		return defenseReboundsPercentage;
 	}
 
-
 	public double getAssistsPercentage() {
 		return assistsPercentage;
 	}
-
 
 	public double getStealsPercentage() {
 		return stealsPercentage;
 	}
 
-
 	public double getBlockShotsPercentage() {
 		return blockShotsPercentage;
 	}
-
 
 	public double getTurnOverPercentage() {
 		return turnOverPercentage;
 	}
 
-
 	public double getUsage() {
 		return usage;
 	}
-
 
 	public double[] getUpgradeRate() {
 		return upgradeRate;
 	}
 
-
 	public double getEfficiency() {
 		return efficiency;
 	}
-
 
 	public double getGmsc() {
 		return gmsc;
 	}
 
-
 	public double getShootingEfficiency() {
 		return shootingEfficiency;
 	}
-
 
 	public int getFieldGoalHits() {
 		return fieldGoalHits;
 	}
 
-
 	public int getFieldGoalAttempts() {
 		return fieldGoalAttempts;
 	}
-
 
 	public int getThreePointerHits() {
 		return threePointerHits;
 	}
 
-
 	public int getThreePointerAttempts() {
 		return threePointerAttempts;
 	}
-
 
 	public int getFreeThrowHits() {
 		return freeThrowHits;
 	}
 
-
 	public int getFreeThrowAttempts() {
 		return freeThrowAttempts;
 	}
-
 
 	public int getDoubledouble() {
 		return doubledouble;
 	}
 
-
 	public int getThreedouble() {
 		return threedouble;
 	}
-
 
 	public int getFourdouble() {
 		return fourdouble;
 	}
 
-
 	public int getFivedouble() {
 		return fivedouble;
 	}
-
 
 	public int getPRA() {
 		return PRA;
 	}
 
-
 	public double getPRAaverage() {
 		return PRAaverage;
 	}
-
 
 	public double getSumOfTime() {
 		return sumOfTime;
 	}
 
-
 	public int getSumOffieldGoalAttempts() {
 		return sumOffieldGoalAttempts;
 	}
-
 
 	public int getSumOfrebounds() {
 		return sumOfrebounds;
 	}
 
-
 	public int getSumOfoffenseRebounds() {
 		return sumOfoffenseRebounds;
 	}
-
 
 	public int getSumOfdefenseRebounds() {
 		return sumOfdefenseRebounds;
 	}
 
-
 	public int getSumOfturnOver() {
 		return sumOfturnOver;
 	}
-
 
 	public int getSumOffreeThrowAttempts() {
 		return sumOffreeThrowAttempts;
 	}
 
-
 	public int getSumOffieldGoalHits() {
 		return sumOffieldGoalHits;
 	}
-
 
 	public int getSumOfopponentrebounds() {
 		return sumOfopponentrebounds;
 	}
 
-
 	public int getSumOfopponentoffenserebounds() {
 		return sumOfopponentoffenserebounds;
 	}
-
 
 	public int getSumOfopponentdefenseRebounds() {
 		return sumOfopponentdefenseRebounds;
 	}
 
-
 	public int getSumOfoppnentattempts() {
 		return sumOfoppnentattempts;
 	}
-
 
 	public double getSumOfoppnentDefensiveRounds() {
 		return sumOfoppnentDefensiveRounds;
@@ -608,5 +547,5 @@ public class Playervo implements Serializable{
 		}
 		return getDoubledouble() * 1.0 / gamePlayed;
 	}
-	
+
 }
