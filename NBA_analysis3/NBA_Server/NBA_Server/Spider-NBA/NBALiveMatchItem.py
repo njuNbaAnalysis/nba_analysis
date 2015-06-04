@@ -6,10 +6,7 @@ import sys
 
 import CsvHelper
 
-__author__ = 'zzt'
-
-
-def find_MatchItemlive(game_id):
+def find_MatchItemlive(game_id,ishome):
     # http://china.nba.com/wap/static/data/game/snapshot_0041400311.json
     aim = 'http://china.nba.com/wap/static/data/game/snapshot_' \
           + str(game_id) + '.json'
@@ -20,20 +17,22 @@ def find_MatchItemlive(game_id):
         print('no such game ' + str(game.status_code))
         return
 
-    events = game.json()['payload']['homeTeam']['gamePlayers']
-    for x in range(0, len(events)):
-        CsvHelper.dict_to_csv_stream(events[x]['profile'], False)
-        CsvHelper.dict_to_csv_stream(events[x]['boxscore'], False)
-        CsvHelper.dict_to_csv_stream(events[x]['statTotal'], False)
-
-    events = game.json()['payload']['awayTeam']['gamePlayers']
-    for x in range(0, len(events)):
-        CsvHelper.dict_to_csv_stream(events[x]['profile'], False)
-        CsvHelper.dict_to_csv_stream(events[x]['boxscore'], False)
-        CsvHelper.dict_to_csv_stream(events[x]['statTotal'], False)
+    if(ishome):
+        events = game.json()['payload']['homeTeam']['gamePlayers']
+        for x in range(0, len(events)):
+            CsvHelper.dict_to_csv_stream(events[x]['profile'], False)
+            CsvHelper.dict_to_csv_stream(events[x]['boxscore'], False)
+            CsvHelper.dict_to_csv_stream(events[x]['statTotal'], False)
+    else:
+        events = game.json()['payload']['awayTeam']['gamePlayers']
+        for x in range(0, len(events)):
+            CsvHelper.dict_to_csv_stream(events[x]['profile'], False)
+            CsvHelper.dict_to_csv_stream(events[x]['boxscore'], False)
+            CsvHelper.dict_to_csv_stream(events[x]['statTotal'], False)
         
         
 if __name__ == '__main__':
     ID = sys.argv[1]
-    find_MatchItemlive(ID)
+    ishome = bool(sys.argv[2])
+    find_MatchItemlive(ID,ishome)
 
