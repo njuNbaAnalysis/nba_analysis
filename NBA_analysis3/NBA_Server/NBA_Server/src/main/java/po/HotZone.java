@@ -20,20 +20,22 @@ public class HotZone {
         super();
     }
     
-    
-    public HotZone(String teamNameEn, boolean isSeason, boolean isTotal, String type, String zone, int attempted,
+    public HotZone(String teamNameEn, String type, String zone, boolean isSeason, boolean isTotal, int attempted,
             int made, double pct, double disPct) {
         super();
         this.teamNameEn = teamNameEn;
-        this.isSeason = isSeason;
-        this.isTotal = isTotal;
         this.type = type;
         this.zone = zone;
+        this.isSeason = isSeason;
+        this.isTotal = isTotal;
         this.attempted = attempted;
         this.made = made;
         this.pct = pct;
         this.disPct = disPct;
     }
+
+
+
 
 
     public String getTeamNameEn() {
@@ -93,11 +95,11 @@ public class HotZone {
     
     public HotZone clone(){
         return new HotZone(this.teamNameEn,
-        this.isSeason,
-        this.isTotal,
         this.type,
         this.zone,
-        this.attempted ,
+        this.isSeason,
+        this.isTotal,
+        this.attempted,
         this.made,
         this.pct,
         this.disPct);

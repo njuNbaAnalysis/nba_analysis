@@ -43,4 +43,18 @@ public class Tools {
         date.setDate(Integer.parseInt(temp[2]));
         return date;
     }
+    
+    /**
+     * 
+     * @param rawParameter
+     * @return sql like语句中合适的参数
+     */
+    public static String getParameterString(String rawParameter){
+        if(rawParameter == null || rawParameter.equals("")){
+            return "%";
+        }
+        else{
+            return rawParameter;
+        }
+    }
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class HotZonevo {
     private String teamNameEn;
     private boolean isSeason;   //是否为常规赛
+    private boolean isTotal;    //是否是所有球队的总计数据
     
   //键值为zone,zone可取值为total,c08,c1624,c24Plus,c816,l1624,l24Plus,l816,lc1624,lc24Plus,r1624,r24Plus,r816,rc1624,rc24Plus
     //当键值取total时，值为所有区域的总和，其中只有attempted是有定义的。
@@ -15,15 +16,23 @@ public class HotZonevo {
         super();
     }
     
-    public HotZonevo(String teamNameEn, boolean isSeason, HashMap<String, Data> last5, HashMap<String, Data> total) {
+
+    
+    
+
+    public HotZonevo(String teamNameEn, boolean isSeason, boolean isTotal, HashMap<String, Data> last5,
+            HashMap<String, Data> total) {
         super();
         this.teamNameEn = teamNameEn;
         this.isSeason = isSeason;
+        this.isTotal = isTotal;
         this.last5 = last5;
         this.total = total;
     }
-    
-    
+
+
+
+
 
     public class Data{
         private int attempted;
@@ -100,6 +109,22 @@ public class HotZonevo {
 
     public void setTotal(HashMap<String, Data> total) {
         this.total = total;
+    }
+
+
+
+
+
+    public boolean isTotal() {
+        return isTotal;
+    }
+
+
+
+
+
+    public void setTotal(boolean isTotal) {
+        this.isTotal = isTotal;
     }
     
 }

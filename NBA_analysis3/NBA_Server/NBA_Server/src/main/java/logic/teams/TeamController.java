@@ -1,6 +1,12 @@
 package logic.teams;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import po.HotZone;
 import vo.HotZonevo;
+import vo.HotZonevo.Data;
+import data.teams.HotZoneData;
 
 public class TeamController {
     private static TeamController teamController = null;
@@ -24,7 +30,37 @@ public class TeamController {
      * @return
      */
     public HotZonevo getHotZone(String teamNameEn, boolean isSeason, boolean isTotal) {
-        return null;
+        HotZonevo vo = new HotZonevo();
+        
+        //得到符合条件的hotZone list
+        HotZoneData data = new HotZoneData();
+        data.init();
+        HotZone para = new HotZone();
+        para.setTeamNameEn(teamNameEn);
+        para.setSeason(isSeason);
+        para.setTotal(isTotal);
+        ArrayList<HotZone> list = data.getHotZones(para);
+        
+        vo.setTotal(isTotal);
+        vo.setSeason(isSeason);
+        vo.setTeamNameEn(teamNameEn);
+        
+        //对所有的hashMap赋值
+        HashMap<String,Data> last5 = new HashMap<String,Data>();
+        HashMap<String,Data> total = new HashMap<String,Data>();
+        
+        for(HotZone hotZone:list){
+            if(hotZone.getType().equals("last5")){
+                last5.put(hotZone.getZone(), vo.new Data(hotZone.getAttempted(), hotZone.getMade(), hotZone.getPct(), hotZone.getDisPct()));
+            }
+            else{
+                total.put(hotZone.getZone(), vo.new Data(hotZone.getAttempted(), hotZone.getMade(), hotZone.getPct(), hotZone.getDisPct()));
+            }
+        }
+        vo.setLast5(last5);
+        vo.setTotal(total);
+        
+        return vo;
     }
     
     
