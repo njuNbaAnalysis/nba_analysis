@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import data.players.PlayerReader;
 import po.player;
 import po.playerItem;
 import vo.EventVo;
@@ -13,7 +14,7 @@ import vo.Matchvo;
 import vo.Playervo;
 import vo.RecordOfPlayervo;
 
-public class matchBLcontrollor implements Serializable{
+public class matchBLcontrollor implements Serializable {
 	private int period = 1;
 
 	private static matchBLcontrollor matchController = null;
@@ -228,11 +229,4 @@ public class matchBLcontrollor implements Serializable{
 		return this.period;
 	}
 
-	private Playervo changePlayertoVO(player p) {
-		playerItem temp = p.getCurrentPlayerItem();
-		if (temp != null) {
-		}
-
-		return null;
-	}
 }
