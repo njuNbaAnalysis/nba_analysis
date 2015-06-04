@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import util.SvgImage;
-
 public class Teamvo implements Serializable {
 	// raw data
 	private String name; // 球队名
