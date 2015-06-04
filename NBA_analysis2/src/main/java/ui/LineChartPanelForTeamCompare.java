@@ -102,7 +102,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		y_name[1] = "lose";
 		y_name[2] = "win";
 		y_name[3] = "above";
-		// t1_value = t1.getLatestWinOrLose();
+		//t1_value = t1.getLatestWinOrLose();
 		// labelContent_t1 = t1.getLatestPoints(t1,t2);
 		for (int i = 0; i < t1_value.length; i++) {
 			t1_value[i] = (i + 1) % 2 + 1;
