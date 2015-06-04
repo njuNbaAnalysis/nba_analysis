@@ -241,10 +241,10 @@ class MainButtonPainter implements ModuleButtonPainter {
 class LineChartPanel extends JPanel implements ModuleButtonListener {
 	int width;
 	int height;
-	BLService bl;
+	BLservice bl;
 	private LineChartPanelForTeamCompare lineChart;
-	Team team1;
-	Team team2;
+	Teamvo team1;
+	Teamvo team2;
 
 	int currentChosen = 0;
 
@@ -283,7 +283,7 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 
 	}
 
-	public LineChartPanel(int width, int height, Team team1, Team team2,BLService bl) {
+	public LineChartPanel(int width, int height, Teamvo team1, Teamvo team2,BLservice bl) {
 		super();
 		this.width = width;
 		this.height = height;
