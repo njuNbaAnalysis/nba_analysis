@@ -44,5 +44,10 @@ public interface BLservice extends Remote{
 	 */
 	public HotZonevo getHotZone(String teamNameEn,boolean isSeason,boolean isTotal);
 	
-	
+	/**
+	 * in abeyance,waiting for the formulas
+	 * @param teamNameEn
+	 * @return 内线(中锋加上大前锋能力综合)、外线(其他位置能力综合)、配合（每百回合的传球次数）、进攻（得分）、防守（失分）
+	 */
+	public double[] getTeamAbility(String teamNameEn);
 }
