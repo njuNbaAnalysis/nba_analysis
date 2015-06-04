@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import dataFactory.DataFactory;
+import dataFactory.DataFactoryMySql;
 import BLservice.BLservice;
 import ui.MatchTablePanel;
 import vo.EventVo;
@@ -269,9 +271,23 @@ public class LivePanel extends JPanel {
 		}
 	}
 
-	public void refresh(EventVo event) {
+	public void refresh(ArrayList<EventVo> newEventList) {
 		if(wordLivePanel!=null){
-			eventList.add(event);
+			int latestTime = 0;
+			for(EventVo event:eventList){
+				if(latestTime>event.getTimeInSecond()){
+					latestTime = event.getTimeInSecond();
+				}
+			}
+			
+			int newTime = eventList.get(0).getTimeInSecond();
+			for(EventVo event:newEventList){
+				if(event.getTimeInSecond()>latestTime){
+					eventList.add(event);
+				}
+			}
+			
+			
 			wordLivePanel.refresh(eventList);
 		}
 		
@@ -282,17 +298,13 @@ public class LivePanel extends JPanel {
 	}
 
 	public static void main(String[] args) {
-		JFrame f = new JFrame();
+		final JFrame f = new JFrame();
 		f.setBounds(0, 0, 1280, 1080);
+		DataFactory factory = DataFactoryMySql.getInstance();
+		final BLservice bl = factory.getBLservice();
 
-		final BLController bl = BLController.getInstance();
-		bl.init();
-		while (bl.getProgress() < 9) {
-			System.out.println(bl.getProgress());
-
-		}
-		Match m = bl.getAllMatches().get(0);
-		LivePanel chart = new LivePanel(1280, 1080,bl,m);
+		Matchvo m = bl.getLiveMatchInfo();
+		final LivePanel chart = new LivePanel(1280, 1080,bl,m);
 		chart.setBounds(0, 0, 1280, 1080);
 	
 		f.setLayout(null);
@@ -300,37 +312,20 @@ public class LivePanel extends JPanel {
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Player a = bl.getAllPlayers().get(0);
-		Team t = bl.getAllTeams().get(0);
-		Player a2 = bl.getAllPlayers().get(1);
-		Team t2 = bl.getAllTeams().get(1);
 		// ArrayList<EventVo> eventList = new ArrayList<EventVo>();
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				int i = 0;
-				while (i++ < 47) {
-					EventVo event1;
-					EventVo event2;
-					if (i % 2 == 0) {
-						event1 = new EventVo(i/12+1, 0, i%12 + ":13.1", (i + 2) + "-"
-								+ (i + 1), a.getPortrait(), a.getName(),
-								"睿神好帅啊", a.getTeam(), t.getLogo(30, 30));
-						event2 = new EventVo(i/12+1, 1, i%12 + ":12.1", (i + 1) + "-"
-								+ (i + 4), a2.getPortrait(), a2.getName(),
-								"孙梦溪好美啊", a2.getTeam(), t2.getLogo(30, 30));
-					} else {
-						event1 = new EventVo(i/12+1, 0, i%12 + ":5.1", (i + 3) + "-"
-								+ (i + 5), a.getPortrait(), a.getName(),
-								"睿神好帅啊", a.getTeam(), t.getLogo(30, 30));
-						event2 = new EventVo(i/12+1, 1, i%12 + ":11.1", (i + 5) + "-"
-								+ (i + 1), a2.getPortrait(), a2.getName(),
-								"孙梦溪好美啊", a2.getTeam(), t2.getLogo(30, 30));
-					}
+				while (true) {
+					ArrayList<EventVo> eventList = bl.getLiveEvent();
 
-					chart.refresh(event1);
-					chart.refresh(event2);
+					
+					Matchvo m = bl.getLiveMatchInfo();
+					
+					chart.refresh(eventList);
+					chart.setMatch(m);
 					try {
 						Thread.sleep(300);
 					} catch (InterruptedException e) {
@@ -345,4 +340,6 @@ public class LivePanel extends JPanel {
 		});
 		thread.start();
 	}
+
+	
 }
