@@ -62,7 +62,7 @@ public class PlayerReader {
 		return listOfPlayer;
 	}
 
-	public ArrayList<player> getPlayersBySeason(String season) {             //得到某个赛季所有比赛球员
+	public ArrayList<player> getPlayersBySeason(String season,boolean isPlayoff) {             //得到某个赛季所有比赛球员
 		ArrayList<player> listOfPlayer = new ArrayList<player>();
 		Connection conn = GetConnection.getConnection();
 		ResultSet rs = null;
@@ -72,7 +72,7 @@ public class PlayerReader {
 			statement = conn.createStatement();
 			rs = statement
 					.executeQuery("SELECT * FROM playerlist p1, playeritem p2 WHERE p1.Pid = p2.Pid AND p2.season =  '"
-							+ season + "'");
+							+ season + "' AND p2.isplayoff = "+isPlayoff);
 			while (rs.next()) {
 				player p = new player(rs.getString(1), rs.getString(2),
 						rs.getString(3), rs.getDouble(4), rs.getDouble(5),

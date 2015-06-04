@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import logic.matches.matchBLcontrollor;
 import logic.teams.TeamController;
+import logic.players.playerBLcontrollor;
 import vo.EventVo;
 import vo.HotZonevo;
 import vo.Matchvo;
@@ -16,9 +17,11 @@ public class BLController implements BLservice,Serializable{
 	private static BLController blController = null;
 	
 	private matchBLcontrollor matchController = null;
+	private playerBLcontrollor playerBLcontrollor = null;
 
 	private BLController() {
 		matchController = matchBLcontrollor.getInstance();
+		playerBLcontrollor = playerBLcontrollor.getInstance();
 	}
 
 	public static BLController getInstance() {
@@ -47,7 +50,8 @@ public class BLController implements BLservice,Serializable{
 	@Override
 	public ArrayList<Playervo> getAllPlayers(String Season, boolean isPlayOff) {
 		// TODO Auto-generated method stub
-		return null;
+		playerBLcontrollor = playerBLcontrollor.getInstance();
+		return playerBLcontrollor.getAllPlayers(Season,isPlayOff);
 	}
 
 	@Override
