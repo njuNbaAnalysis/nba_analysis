@@ -11,21 +11,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logic.BLController;
-import logic.BLService;
+import BLservice.BLservice;
+
+
 
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private Dimension screenSize ;
-	BLService bl;
+	BLservice bl;
 	
 
 	/**
 	 * Create the frame.
 	 * @param bl 
 	 */
-	public MainFrame(BLController  bl) {
+	public MainFrame(BLservice  bl) {
 		this.bl=bl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	//	setUndecorated(true);

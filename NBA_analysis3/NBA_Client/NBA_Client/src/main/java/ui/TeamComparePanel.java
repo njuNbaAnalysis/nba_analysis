@@ -18,12 +18,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import logic.BLService;
-import logic.teams.Team;
+import vo.Teamvo;
+import BLservice.BLservice;
+
+
 
 interface ModuleButtonListener {
 	public void update(String module);
@@ -40,10 +41,10 @@ interface ModuleButtonPainter {
 }
 
 public class TeamComparePanel extends JPanel implements ModuleButtonListener {
-	private Team team1;
-	private Team team2;
+	private Teamvo team1;
+	private Teamvo team2;
 	private RadarChartForTeamCompare radar;
-	BLService bl;
+	BLservice bl;
 	int width;
 	int height;
 
@@ -101,7 +102,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 				1668 - 537 * team2.getNumOfVictory() / 82, 593);
 	}
 
-	public TeamComparePanel(Team team1, Team team2, int width, int height,BLService bl) {
+	public TeamComparePanel(Teamvo team1, Teamvo team2, int width, int height,BLservice bl) {
 		this.team1 = team1;
 		this.team2 = team2;
 		this.width = width;

@@ -19,8 +19,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import logic.BLController;
-import logic.BLService;
+import BLservice.BLservice;
+
+
 
 public class MenuPanel extends JPanel {
 	private int width;
@@ -31,7 +32,9 @@ public class MenuPanel extends JPanel {
 	boolean canFresh;
 	boolean hasFreshed = true;
 	int currentType=1;
-	BLController bl;
+	String season;
+	boolean isPlayOff;
+	BLservice bl;
 	ImageIcon playerIcon;
 	ImageIcon playerIconD;
 	ImageIcon teamIcon;
@@ -77,13 +80,15 @@ public class MenuPanel extends JPanel {
 		g.drawImage(logo, 0, 0, this);
 	}
 
-	public MenuPanel(int width, int height, JPanel content, BLController bl) {
+	public MenuPanel(int width, int height, JPanel content, BLservice bl ,String season,boolean isPlayOff ) {
 		setLayout(null);
 		this.width = width / 10;
 		this.height = height;
 		this.heightOfHead = 116 * height / (1080);
 		this.content = content;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		loadImage();
 		initButton();
 		Thread fresh = new Thread(new Refresh());
@@ -392,7 +397,7 @@ public class MenuPanel extends JPanel {
 			if (type == 3) {
 
 				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(
-						width * 9, height, bl.getAllPlayers().get(0), bl,
+						width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
 						content);
 				teamRankTablePanel.setBounds(0, 0, width * 9, height);
 				teamRankTablePanel.startAnimation();
@@ -403,7 +408,7 @@ public class MenuPanel extends JPanel {
 			}
 			if (type == 4) {
 				AllTeamPanel team = new AllTeamPanel(width * 9, height, bl,
-						content);
+						content, season, isPlayOff);
 				// TeamInfoPanel teamRankTablePanel = new
 				// TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl,content);
 				// team.setBounds(0, 0, width*9, height);
@@ -421,7 +426,7 @@ public class MenuPanel extends JPanel {
 			if (type == 6) {
 				// teamRankTablePanel.refreshTablePanel(type);
 				MatchPanel matchPanel = new MatchPanel(width * 9, height, bl,
-						content);
+						content,season,isPlayOff);
 				JScrollPane scrollPane = new JScrollPane(matchPanel);
 				scrollPane.setBounds(0, 0, width * 9, height);
 				scrollPane.getVerticalScrollBar().setUnitIncrement(20);
@@ -551,7 +556,7 @@ public class MenuPanel extends JPanel {
 		}
 		case 3:{
 			PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(
-					width * 9, height, bl.getAllPlayers().get(0), bl,
+					width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
 					content);
 			teamRankTablePanel.setBounds(0, 0, width * 9, height);
 			teamRankTablePanel.startAnimation();
@@ -562,7 +567,7 @@ public class MenuPanel extends JPanel {
 		}
 		case 4:{
 			AllTeamPanel team = new AllTeamPanel(width * 9, height, bl,
-					content);
+					content, season, isPlayOff);
 			content.removeAll();
 			content.setVisible(false);
 			content.add(team);
@@ -572,7 +577,7 @@ public class MenuPanel extends JPanel {
 		}
 		case 6:{
 			MatchPanel matchPanel = new MatchPanel(width * 9, height, bl,
-					content);
+					content, season, isPlayOff);
 			JScrollPane scrollPane = new JScrollPane(matchPanel);
 			scrollPane.setBounds(0, 0, width * 9, height);
 			scrollPane.getVerticalScrollBar().setUnitIncrement(20);
@@ -603,8 +608,8 @@ public class MenuPanel extends JPanel {
 
 		public void run() {
 			while (true) {
-				canFresh = bl.isMatchChanged();
-
+				//canFresh = bl.isMatchChanged();
+				canFresh = false;
 				if (canFresh) {
 					fresh.setIcon(freshIconR);
 					freshListener.oldIcon = freshIconR;

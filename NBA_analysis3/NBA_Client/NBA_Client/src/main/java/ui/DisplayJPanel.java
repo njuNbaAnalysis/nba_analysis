@@ -6,14 +6,16 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
-import logic.BLController;
+import BLservice.BLservice;
+
+
 
 public class DisplayJPanel extends JPanel implements Runnable {
 	
 	private static final long serialVersionUID = 1903514087174132006L;
 	Image image =null;
 	int progress=0;
-	BLController bl =null;
+	BLservice bl =null;
 	public void paintComponent(Graphics g){ 
 		    
     		g.drawImage(image, 0, 0, this);  
@@ -21,7 +23,7 @@ public class DisplayJPanel extends JPanel implements Runnable {
 			g.fillRect(0, 638, progress, 10);
    	}
     	
-	public DisplayJPanel(Image image, BLController bl){
+	public DisplayJPanel(Image image, BLservice bl){
     	this.image = image;
     	this.bl = bl;
     	

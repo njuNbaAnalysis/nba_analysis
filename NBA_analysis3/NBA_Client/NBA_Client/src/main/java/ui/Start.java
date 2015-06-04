@@ -2,6 +2,8 @@ package ui;
 
 import java.util.ArrayList;
 
+import dataFactory.DataFactoryMySql;
+import BLservice.BLservice;
 import logic.BLController;
 import logic.teams.Team;
 
@@ -12,7 +14,7 @@ public class Start {
 
 		long past = System.currentTimeMillis();
 		
-		final BLController bl = BLController.getInstance();
+		final BLservice bl = 
 		
 		final AnimationFrame animation = new AnimationFrame(bl);
 
@@ -36,7 +38,6 @@ public class Start {
 			}
 		});
 		thread.start();
-		bl.init();
 		try {
             thread.join();
         } catch (InterruptedException e) {
