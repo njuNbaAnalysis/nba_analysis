@@ -27,11 +27,12 @@ public class WordLiveTable extends BaseJTable{
 	private int logoWidth = 20;
 	private int logoHeight = 20;
 	private int width;
-	WordLiveTable(int width,String [] columnName,ArrayList<EventVo> eventList){
+	private int type;//用来表示是第几节
+	WordLiveTable(int width,String [] columnName,ArrayList<EventVo> eventList,int type){
 		this.eventList = eventList;	
 		this.columnNames = columnName;
 		this.width = width;
-		//this.setColumnModel(getColumn(this, width));
+		this.type = type;
 		adjustHeader();
 		updateRowHeights();
 		resizeColumnWidth();
@@ -47,12 +48,6 @@ public class WordLiveTable extends BaseJTable{
 			tc.setCellRenderer(new RowRenderer());
 			tc.setPreferredWidth((int)(width*widthCoefficient[i]));
 		}
-	}
-	
-	//外部事件出现，更新表格
-	public void refresh(EventVo event){
-		eventList.add(event);
-		refreshTabelModel();
 	}
 
 	private void refreshTabelModel(){
@@ -99,7 +94,7 @@ public class WordLiveTable extends BaseJTable{
 			// 设置图片
 			if (column == 2) {
 
-				ImageIcon icon = new ImageIcon(UIUtils.resize(eventList.get(row).getPlayerPortrait(),
+				ImageIcon icon = new ImageIcon(UIUtils.resize(eventList.get(row).getPlayerImage(),
 						portraitWidth, portraitHeight));
 				setIcon(icon);
 
