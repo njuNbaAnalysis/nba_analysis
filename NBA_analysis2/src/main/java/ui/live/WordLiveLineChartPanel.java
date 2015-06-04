@@ -20,9 +20,10 @@ public class WordLiveLineChartPanel extends JPanel {
 	private int width;
 	private int height;
 	private SectionButton[] btArray;
+	private ArrayList<EventVo> eventList;
 	int sectionSize;
 	int selectedNumber = -1;// 默认选中“全部”
-
+	LiveLineChart chart;
 	WordLiveLineChartPanel(String[] btNames, int width, int height,
 			ArrayList<EventVo> eventList) {
 		this.setLayout(null);
@@ -30,8 +31,13 @@ public class WordLiveLineChartPanel extends JPanel {
 		this.width = width;
 		this.height = height;
 		this.sectionSize = btNames.length;
+		this.eventList = eventList;
 		setButton(btNames);
+		setLineChart(eventList);
+		
+	}
 
+	private void setLineChart(ArrayList<EventVo> eventList) {
 		ArrayList<EventVo> a_events = new ArrayList<EventVo>();
 		ArrayList<EventVo> b_events = new ArrayList<EventVo>();
 		for (int i = 0; i < eventList.size(); i++) {
@@ -65,13 +71,23 @@ public class WordLiveLineChartPanel extends JPanel {
 			seg[(i - min) / separator] = i;
 		}
 
-		LiveLineChart chart = new LiveLineChart(seg, width, height * 9 / 10,
+		chart = new LiveLineChart(seg, width, height * 9 / 10,
 				a_events, b_events);
 		chart.setLocation(0, height / 10);
 		this.add(chart);
 		chart.go();
+		
 	}
-
+	
+	
+	//刷新方法暂时没写
+	private void updateLineChart(int type) {
+		if(type==0){
+			
+		}else{
+			
+		}
+	}
 	private void setButton(String[] buttonNames) {
 
 		btArray = new SectionButton[sectionSize];
@@ -113,14 +129,16 @@ public class WordLiveLineChartPanel extends JPanel {
 				}
 				
 				selectedNumber = type;
+				
+				for(int i=0;i<sectionSize;i++){
+					if(type==i){
+						updateLineChart(type);
+					}
+					
+				}
+				
 			}
-			if (type == 0) {
-
-			}
-
-			if (type == 1) {
-
-			}
+			
 
 		}
 

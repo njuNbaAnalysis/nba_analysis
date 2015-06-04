@@ -32,7 +32,6 @@ public class WordLiveTable extends BaseJTable{
 		this.columnNames = columnName;
 		this.width = width;
 		this.type = type;
-		//this.setColumnModel(getColumn(this, width));
 		adjustHeader();
 		updateRowHeights();
 		resizeColumnWidth();
@@ -49,12 +48,6 @@ public class WordLiveTable extends BaseJTable{
 			tc.setPreferredWidth((int)(width*widthCoefficient[i]));
 		}
 	}
-	
-	//外部事件出现，更新表格
-	/*public void refresh(EventVo event){
-		eventList.add(event);
-		refreshTabelModel();
-	}*/
 
 	private void refreshTabelModel(){
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);

@@ -169,12 +169,18 @@ public class LineChart extends JPanel {
 			ay_temp[i] = (int) ay_array_now[i];
 			by_temp[i] = (int) by_array_now[i];
 		}
+		
+		
+		Stroke blod = new BasicStroke(2.0f);
+		g2.setStroke(blod);
+		
 		synchronized (this) {
 			if (finished < num) {
 				g2.setColor(a_color);
+				
 				g2.drawPolyline(x_temp, ay_temp, finished + 1);
 				g2.setColor(b_color);
-				// System.out.println("finished" + finished);
+				
 				g2.drawPolyline(x_temp, by_temp, finished + 1);
 			} else {
 				g2.setColor(a_color);
@@ -183,6 +189,7 @@ public class LineChart extends JPanel {
 				g2.drawPolyline(x_temp, by_temp, finished);
 			}
 		}
+		g2.setStroke(stroke);
 
 		// 画鼠标监听的横线以及数字框
 		if (y_now > height / 20 && y_now < (chartheight + height / 20)) {
