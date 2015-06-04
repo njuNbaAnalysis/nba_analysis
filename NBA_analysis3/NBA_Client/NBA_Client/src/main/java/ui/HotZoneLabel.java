@@ -8,17 +8,15 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import logic.BLController;
 import logic.BLService;
 import logic.players.Player;
 import logic.teams.Team;
 
-public class PlayerBasicInfoLabel extends JLabel {
+public class HotZoneLabel extends JLabel{
 	private Player player;
 	private int width;
 	private int height;
@@ -69,47 +67,12 @@ public class PlayerBasicInfoLabel extends JLabel {
 
 	}
 	
-	private void setLabel(){
-		JLabel teamName = new JLabel(player.getTeam());
-		teamName.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				
-			}
+	
 
-			public void mouseExited(MouseEvent e) {
-				
-			}
-
-			
-			public void mousePressed(MouseEvent e) {
-				
-
-            	Team t = PlayerBasicInfoLabel.this.bl.getTeamByName(player.getTeam());
-        		
-        		TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content);
-        		m.setBounds(0, 0, width, height*4);
-        		PlayerBasicInfoLabel.this.content.removeAll();
-        		PlayerBasicInfoLabel.this.content.add(m);
-        		PlayerBasicInfoLabel.this.content.updateUI();
-				
-			}
-		});
-		teamName.setForeground(new Color(30, 81, 140));
-		teamName.setFont(new Font("default", Font.PLAIN, 20));
-		teamName.setBounds(598, 48, 100, 50);
-		teamName.setOpaque(false);
-		this.add(teamName);
-	}
-
-	public PlayerBasicInfoLabel(Player player, int width, int height,JPanel content,BLService bl) {
+	public HotZoneLabel() {
 		super();
-		this.bl = bl;
-		this.player = player;
-		this.height = height;
-		this.width = width;
-		this.content = content;
-		this.setSize(width, height);
-		setLabel();
+		
+		
 
 	}
 

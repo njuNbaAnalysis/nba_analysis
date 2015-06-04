@@ -24,7 +24,7 @@ import logic.matches.Match;
 import logic.matches.RecordOfPlayer;
 
 public class MatchTablePanel extends JPanel {
-	protected Matchvo match;
+	protected Match match;
 	protected MatchJTable matchTable;
 	private BLService bl;
 	private int width;
@@ -33,7 +33,7 @@ public class MatchTablePanel extends JPanel {
 			"三分%", "三分命中", "三分出手", "罚球%", "罚球命中", "罚球出手", "+/-", "进攻", "防守",
 			"篮板", "助攻", "犯规", "抢断", "失误", "盖帽", "得分" };
 
-	public MatchTablePanel(int width, int height, Matchvo match, BLService bl) {
+	public MatchTablePanel(int width, int height, Match match, BLService bl) {
 		this.width = width;
 		this.height = height;
 		this.match = match;
@@ -78,14 +78,13 @@ public class MatchTablePanel extends JPanel {
 		Image teamImage2 = bl.getTeamByName(match.getTeams()[1]).getLogo(
 				width / 20, height / 20);
 		g.drawImage(teamImage2, 0, height * 10 / 20, this);
-
 	}
 
 	private class MatchJTable extends BaseJTable {
 		protected DecimalFormat df = new DecimalFormat("#0.0");
-		private ArrayList<RecordOfPlayervo> recordList;
+		private ArrayList<RecordOfPlayer> recordList;
 
-		public MatchJTable(ArrayList<RecordOfPlayervo> recordList) {
+		public MatchJTable(ArrayList<RecordOfPlayer> recordList) {
 			this.recordList = recordList;
 
 			this.setShowGrid(false);
@@ -124,7 +123,7 @@ public class MatchTablePanel extends JPanel {
 			return null;
 		}
 
-		private String[] getIndividualDataRow(RecordOfPlayervo recordOfPlayer) {
+		private String[] getIndividualDataRow(RecordOfPlayer recordOfPlayer) {
 
 			String[] data = new String[22];
 			data[0] = recordOfPlayer.getPlayerName();

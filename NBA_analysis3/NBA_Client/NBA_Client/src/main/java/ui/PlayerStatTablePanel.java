@@ -59,6 +59,8 @@ public class PlayerStatTablePanel extends StatTablePanel {
 		this.validate();
 		this.repaint();
 	}
+	
+	
 
 	public void refreshBySelect(PalyerScreening palyerSelect) {
 		statTable.refreshByScreening(palyerSelect);

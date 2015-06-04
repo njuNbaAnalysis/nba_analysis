@@ -24,7 +24,7 @@ public class PlayerInfoPanel extends JPanel {
 
 	}
 
-	public PlayerInfoPanel(int width, int height, Playervo player,BLService bl,JPanel content) {
+	public PlayerInfoPanel(int width, int height, Player player,BLService bl,JPanel content) {
 		this.bl = bl;
 		this.setLayout(null);
 		this.content = content;

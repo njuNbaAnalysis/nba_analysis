@@ -59,8 +59,8 @@ public class HotAndKingPanel extends JPanel {
 		
 		// 设置player
 		
-		ArrayList<Playervo> playerList = bl.getMostImprovedPlayer("point", 5);
-		Playervo [] players = new Playervo[5];
+		ArrayList<Player> playerList = bl.getMostImprovedPlayer("point", 5);
+		Player [] players = new Player[5];
 		for(int i=0;i<5;i++){
 			players[i] = playerList.get(i);
 		}
@@ -71,10 +71,4 @@ public class HotAndKingPanel extends JPanel {
 		this.add(hotPlayerPanel);
 
 	}
-	
-
-	
-
-	
-
 }

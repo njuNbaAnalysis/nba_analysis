@@ -44,8 +44,6 @@ public class HotLabelPanel extends JPanel{
 		int size = columnName.length;
 		btArray = new HotTableButton[size];
 		for (int i = 0; i < size; i++) {
-			//System.out.println(columnName[i]);
-			//System.out.println("hotHieght"+hotHeight);
 			btArray[i] = new HotTableButton(columnName[i],type,this,bl);
 			btArray[i].setBounds(hotWidth * i / size, hotHeight / 6,
 					hotWidth / size, hotHeight / 8);

@@ -30,7 +30,7 @@ import logic.players.Player;
 
 public class PlayerDetailPanel extends JPanel {
 	private static String FONT_OF_DETAIL = "微软雅黑";
-	private Playervo player;
+	private Player player;
 	private int width;
 	private int height;
 	private int[] barPositonx;
@@ -54,7 +54,7 @@ public class PlayerDetailPanel extends JPanel {
 	private JLabel freeThrow;
 	private JLabel threePointers;
 
-	PlayerDetailPanel(Playervo player, double[] allianceAverage, int width,
+	PlayerDetailPanel(Player player, double[] allianceAverage, int width,
 			int height) {
 		this.setLayout(null);
 		this.player = player;
