@@ -3,7 +3,9 @@ package logic;
 import java.util.ArrayList;
 
 import logic.matches.matchBLcontrollor;
+import logic.teams.TeamController;
 import vo.EventVo;
+import vo.HotZonevo;
 import vo.Matchvo;
 import vo.Playervo;
 import vo.Teamvo;
@@ -51,5 +53,10 @@ public class BLController implements BLservice {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public HotZonevo getHotZone(String teamNameEn, boolean isSeason, boolean isTotal) {
+        return TeamController.getInstance().getHotZone(teamNameEn, isSeason, isTotal);
+    }
 	
 }

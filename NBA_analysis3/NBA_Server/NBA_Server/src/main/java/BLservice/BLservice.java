@@ -3,6 +3,7 @@ package BLservice;
 import java.util.ArrayList;
 
 import vo.EventVo;
+import vo.HotZonevo;
 import vo.Matchvo;
 import vo.Playervo;
 import vo.Teamvo;
@@ -33,4 +34,14 @@ public interface BLservice {
 	 * @param isPlayOff true为季后赛，false为常规赛
 	 */
 	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff);
+
+	/**
+	 * @param teamNameEn 球队的3大写字母名称
+	 * @param isSeason true表示常规赛，false表示季后赛
+	 * @param isTotal 此项为true时，返回所有球队的热区总计数据，此时teamNameEn项被忽略
+	 * @return
+	 */
+	public HotZonevo getHotZone(String teamNameEn,boolean isSeason,boolean isTotal);
+	
+	
 }
