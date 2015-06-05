@@ -115,5 +115,7 @@ public class EventVo implements Serializable {
 		String[] array = points.split("-");
 		return Integer.parseInt(array[1 - num]);
 	}
+	
+	
 
 }
