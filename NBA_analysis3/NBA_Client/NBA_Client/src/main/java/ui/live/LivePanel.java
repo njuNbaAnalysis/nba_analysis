@@ -79,7 +79,8 @@ public class LivePanel extends JPanel {
 			this.setLayout(null);
 			this.setSize(width, height);
 			try {
-				teams = bl.getTeamsByMatch(match.getTeams());
+				teams[0] = bl.getTeamByTeamName(match.getTeams()[0],match.getSeason(),match.isIsplayoff());
+				teams[1] = bl.getTeamByTeamName(match.getTeams()[1],match.getSeason(),match.isIsplayoff());
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -280,20 +281,24 @@ public class LivePanel extends JPanel {
 	public void refresh(ArrayList<EventVo> newEventList) {
 		if(wordLivePanel!=null&&newEventList.size()>0){
 			int latestTime = 0;
+			EventVo latestEvent = null;
 			if(eventList.size()!=0){
 				for(EventVo event:eventList){
 					if(latestTime>event.getTimeInSecond()){
+						latestEvent = event;
 						latestTime = event.getTimeInSecond();
 					}
 				}
 			}
 			
 			
-			//最新的事件在第一个
-			for(int i=0;i<newEventList.size();i++){
+			//最新的事件在newEventList的第一个
+			for(int i=newEventList.size()-1;i>=0;i--){
 				EventVo event = newEventList.get(i);
-				if(event.getTimeInSecond()>latestTime){
-					eventList.add(event);
+				if(event.getTimeInSecond()>=latestTime){
+					if(latestEvent==null||!event.getDescription().equals(latestEvent.getDescription())){
+						eventList.add(event);
+					}				
 				}
 			}
 			
@@ -338,7 +343,6 @@ public class LivePanel extends JPanel {
 
 			@Override
 			public void run() {
-				int i = 0;
 				while (true) {
 					ArrayList<EventVo> eventList = null;
 					Matchvo m = null;
