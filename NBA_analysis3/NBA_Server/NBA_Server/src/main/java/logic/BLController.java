@@ -1,6 +1,8 @@
 package logic;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 import logic.matches.matchBLcontrollor;
@@ -13,14 +15,15 @@ import vo.Playervo;
 import vo.Teamvo;
 import BLservice.BLservice;
 
-public class BLController implements BLservice,Serializable{
+public class BLController extends UnicastRemoteObject implements BLservice{
 	private static BLController blController = null;
 	
 
-	private BLController() {
+	private BLController() throws RemoteException{
+		super();
 	}
 
-	public static BLController getInstance() {
+	public static BLController getInstance() throws RemoteException {
 		if (blController != null) {
 			return blController;
 		} else {
@@ -30,39 +33,39 @@ public class BLController implements BLservice,Serializable{
 	}
 
 	@Override
-	public Matchvo getLiveMatchInfo() {
+	public Matchvo getLiveMatchInfo() throws RemoteException{
 		// TODO Auto-generated method stub
 		matchBLcontrollor matchController = matchBLcontrollor.getInstance();
 		return matchController.getLiveMatchInfo();
 	}
 
 	@Override
-	public ArrayList<EventVo> getLiveEvent() {
+	public ArrayList<EventVo> getLiveEvent() throws RemoteException{
 		// TODO Auto-generated method stub
 		matchBLcontrollor matchController = matchBLcontrollor.getInstance();
 		return matchController.getLiveEvent();
 	}
 
 	@Override
-	public ArrayList<Playervo> getAllPlayers(String Season, boolean isPlayOff) {
+	public ArrayList<Playervo> getAllPlayers(String Season, boolean isPlayOff) throws RemoteException{
 		// TODO Auto-generated method stub
 		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
 		return playerBLcontro.getAllPlayers(Season,isPlayOff);
 	}
 
 	@Override
-	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff) {
+	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff) throws RemoteException{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
     @Override
-    public HotZonevo getHotZone(String teamNameEn, boolean isSeason, boolean isTotal) {
+    public HotZonevo getHotZone(String teamNameEn, boolean isSeason, boolean isTotal) throws RemoteException{
         return TeamController.getInstance().getHotZone(teamNameEn, isSeason, isTotal);
     }
 
     @Override
-    public double[] getTeamAbility(String teamNameEn) {
+    public double[] getTeamAbility(String teamNameEn)throws RemoteException {
         // TODO Auto-generated method stub
         return null;
     }
