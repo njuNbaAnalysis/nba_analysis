@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,8 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import logic.BLController;
-import logic.matches.Match;
+import dataFactory.DataFactoryMySql;
+import BLservice.BLservice;
+
+
 
 public class Test extends JFrame {
 
@@ -38,11 +41,7 @@ public class Test extends JFrame {
 	 * Create the frame.
 	 */
 	public Test() {
-		final BLController bl = BLController.getInstance();
-		bl.init();
-		while(bl.getProgress()!=9){
-			System.out.println(bl.getProgress());
-		}
+		final BLservice bl = DataFactoryMySql.getInstance().getBLservice();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		setBounds(0, 0, 1920, 1080);
@@ -57,7 +56,13 @@ public class Test extends JFrame {
 		//contentPane.add(new MatchInfoPanel(192*9, 1080, bl.getAllMatches().get(0),bl));
 		//contentPane.add(new TeamComparePanel(bl.getAllTeams().get(0), bl.getAllTeams().get(1), 1728, 1080));
 		
-		TeamComparePanel matchPanel = new TeamComparePanel(bl.getAllTeams().get(0), bl.getAllTeams().get(1), 1728, 1080,bl);
+		TeamComparePanel matchPanel = null;
+		try {
+			matchPanel = new TeamComparePanel(bl.getAllTeams("13-14",false).get(0), bl.getAllTeams("13-14",false).get(1), 1728, 1080,bl);
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 		JScrollPane scrollPane = new JScrollPane(matchPanel);
 		scrollPane.setBounds(0, 0, 1728, 1080);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
