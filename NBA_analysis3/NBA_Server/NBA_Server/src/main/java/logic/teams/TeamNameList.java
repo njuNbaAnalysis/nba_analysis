@@ -73,7 +73,16 @@ public class TeamNameList {
      * @param zhAbbr
      * @return 未找到返回null
      */
-    public String getEnAbbrByZhAbbr(String zhAbbr){
+    public String getEnAbbrByZhAbbr(String zhAbbr,String season){
+        if(zhAbbr.equals("篮网")){
+            if(season.equals("11-12")){
+                return "NJN";
+            }
+            else{
+                return "BKN";
+            }
+        }
+        
         for(TeamListItem item:teamList){
             if(item.getTeamNameZhAbbr().equals(zhAbbr)){
                 return item.getTeamNameEn();
