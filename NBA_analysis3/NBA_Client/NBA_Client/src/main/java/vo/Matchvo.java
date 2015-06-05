@@ -144,4 +144,8 @@ public class Matchvo implements Serializable{
 		return isplayoff;
 	}
 	
+	public String getSeason(){
+		
+		return date.split("_")[0];
+	}
 }
