@@ -312,7 +312,12 @@ public class LivePanel extends JPanel {
 		f.setBounds(0, 0, 1280, 1080);
 		DataFactory factory = DataFactoryMySql.getInstance();
 		final BLservice bl = factory.getBLservice();
-
+		try {
+			bl.initNBALive();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		Matchvo m = null;
 		try {
 			m = bl.getLiveMatchInfo();
