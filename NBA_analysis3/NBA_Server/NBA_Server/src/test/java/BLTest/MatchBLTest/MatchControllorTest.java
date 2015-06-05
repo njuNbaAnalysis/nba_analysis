@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import logic.matches.NBALiveBLControllor;
 import logic.matches.matchBLcontrollor;
 
 import org.junit.After;
@@ -42,7 +43,7 @@ public class MatchControllorTest {
 
 	@Test
 	public void testLiveMatchInfo() {
-		matchBLcontrollor mb = matchBLcontrollor.getInstance();
+		NBALiveBLControllor mb = NBALiveBLControllor.getInstance();
 		Matchvo m = mb.getLiveMatchInfo();
 		Boolean result = (m!=null);
 		assertTrue(result);
@@ -50,7 +51,7 @@ public class MatchControllorTest {
 	
 	@Test
 	public void testgetLiveEvent() {
-		matchBLcontrollor mb = matchBLcontrollor.getInstance();
+		NBALiveBLControllor mb = NBALiveBLControllor.getInstance();
 		ArrayList<EventVo> m = mb.getLiveEvent();
 		Boolean result = (m!=null);
 		assertTrue(result);
