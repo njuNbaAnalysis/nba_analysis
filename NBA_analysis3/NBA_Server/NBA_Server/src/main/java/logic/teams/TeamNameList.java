@@ -53,4 +53,62 @@ public class TeamNameList {
     public ArrayList<TeamListItem> getTeamList(){
         return teamList;
     }
+
+    /**
+     * 根据中文全名得到英文缩写
+     * @param fullZh
+     * @return 未找到返回null
+     */
+    public String getEnAbbrByFullZh(String fullZh){
+        for(TeamListItem item:teamList){
+            if(item.getTeamNameZh().equals(fullZh)){
+                return item.getTeamNameEn();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 根据中文缩写得到英文缩写
+     * @param zhAbbr
+     * @return 未找到返回null
+     */
+    public String getEnAbbrByZhAbbr(String zhAbbr){
+        for(TeamListItem item:teamList){
+            if(item.getTeamNameZhAbbr().equals(zhAbbr)){
+                return item.getTeamNameEn();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 根据英文缩写得到中文全名
+     * @param enAbbr
+     * @return 未找到返回null
+     */
+    public String getFullZhByEnAbbr(String enAbbr){
+        for(TeamListItem item:teamList){
+            if(item.getTeamNameEn().equals(enAbbr)){
+                return item.getTeamNameZh();
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * 根据英文缩写得到中文缩写
+     * @param enAbbr
+     * @return 未找到返回null
+     */
+    public String getZhAbbrByEnAbbr(String enAbbr){
+        for(TeamListItem item:teamList){
+            if(item.getTeamNameEn().equals(enAbbr)){
+                return item.getTeamNameZhAbbr();
+            }
+        }
+        return null;
+    }
+    
+    
 }

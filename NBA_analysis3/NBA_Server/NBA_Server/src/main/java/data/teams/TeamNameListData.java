@@ -52,7 +52,9 @@ public class TeamNameListData{
         String sql = "select * from teamnamelist where teamNameEn like ? "
                 + "and teamNameZh like ? "
                 + "and conference like ? "
-                + "and division like ?";
+                + "and division like ? "
+                + "and teamNameZhAbbr like ? "
+                + "and homecourt like ? ";
         try {
             pstm = conn.prepareStatement(sql);
             
@@ -60,13 +62,17 @@ public class TeamNameListData{
             pstm.setString(2, getParameterString(item.getTeamNameZh()));
             pstm.setString(3, getParameterString(item.getConference()));
             pstm.setString(4, getParameterString(item.getDivision()));
+            pstm.setString(5, getParameterString(item.getTeamNameZhAbbr()));
+            pstm.setString(6, getParameterString(item.getHomecourt()));
             rs = pstm.executeQuery();
             
             while(rs.next()){
                 resultList.add(new TeamListItem(rs.getString("teamNameEn"),
                         rs.getString("teamNameZh"),
                         rs.getString("conference"),
-                        rs.getString("division")));
+                        rs.getString("division"),
+                        rs.getString("teamNameZhAbbr"),
+                        rs.getString("homecourt")));
             }
 
         } catch (SQLException e) {
