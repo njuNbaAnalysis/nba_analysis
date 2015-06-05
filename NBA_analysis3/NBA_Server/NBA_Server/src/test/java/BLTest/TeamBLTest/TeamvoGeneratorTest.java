@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.rmi.RemoteException;
 
-import logic.BLController;
+import logic.teams.TeamvoGenerator;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,12 +12,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import vo.HotZonevo;
-import BLservice.BLservice;
+import vo.Teamvo;
 
-public class TeamBLServiceTest {
-    
-    BLservice service;
+public class TeamvoGeneratorTest {
+    TeamvoGenerator generator;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
@@ -29,7 +27,7 @@ public class TeamBLServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        service = BLController.getInstance();
+        generator = TeamvoGenerator.getInstance();
     }
 
     @After
@@ -37,14 +35,9 @@ public class TeamBLServiceTest {
     }
 
     @Test
-    public void testGetHotZone() {
-        HotZonevo vo;
-		try {
-			vo = service.getHotZone("CHI", true, false);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void testGeneratorTeamvo() {
+        Teamvo vo = generator.getTeamvo("CHI", "14-15", false);
+        System.out.println(vo.toString());
         
         assertTrue(true);
     }
