@@ -13,6 +13,10 @@ import vo.Teamvo;
 
 public interface BLservice extends Remote{
 	/**
+	 * 直播前调用的初始化
+	 * */
+	public boolean initNBALive() throws RemoteException;
+	/**
 	 * 得到当前正在直播的比赛信息
 	 * @throws RemoteException 
 	 */

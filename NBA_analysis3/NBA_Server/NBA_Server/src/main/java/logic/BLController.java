@@ -1,11 +1,11 @@
 package logic;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import logic.matches.NBALiveBLControllor;
 import logic.matches.matchBLcontrollor;
 import logic.teams.TeamController;
 import logic.players.playerBLcontrollor;
@@ -18,7 +18,6 @@ import BLservice.BLservice;
 
 public class BLController extends UnicastRemoteObject implements BLservice{
 	private static BLController blController = null;
-	
 
 	private BLController()throws RemoteException {
 	}
@@ -35,15 +34,15 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 	@Override
 	public Matchvo getLiveMatchInfo() throws RemoteException{
 		// TODO Auto-generated method stub
-		matchBLcontrollor matchController = matchBLcontrollor.getInstance();
-		return matchController.getLiveMatchInfo();
+		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
+		return NBALive.getLiveMatchInfo();
 	}
 
 	@Override
 	public ArrayList<EventVo> getLiveEvent() throws RemoteException{
 		// TODO Auto-generated method stub
-		matchBLcontrollor matchController = matchBLcontrollor.getInstance();
-		return matchController.getLiveEvent();
+		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
+		return NBALive.getLiveEvent();
 	}
 
 	@Override
@@ -74,7 +73,8 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 	public Collection<? extends Matchvo> getTodayMatches(String string)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		matchBLcontrollor matchBL = matchBLcontrollor.getInstance();
+		return matchBL.getTodayMatched(string);
 	}
 
 	@Override
@@ -101,6 +101,13 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 	public Teamvo getTeamByTeamName(String teamName) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean initNBALive() throws RemoteException {
+		// TODO Auto-generated method stub
+		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
+		return NBALive.setPeriod(1);
 	}
 	
 }
