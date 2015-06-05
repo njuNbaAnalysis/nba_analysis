@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Matchvo implements Serializable{
+
 	private String date;    //例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期
 	private boolean isplayoff;
 	private String[] teams;// 对阵队伍 2容量的teams数组,这里面存的是缩写！！！
@@ -143,7 +144,6 @@ public class Matchvo implements Serializable{
 	public boolean isIsplayoff() {
 		return isplayoff;
 	}
-	
 	public String getSeason(){
 		
 		return date.split("_")[0];
