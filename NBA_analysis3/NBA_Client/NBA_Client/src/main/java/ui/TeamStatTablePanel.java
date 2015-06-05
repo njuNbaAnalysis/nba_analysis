@@ -3,11 +3,12 @@ package ui;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import logic.BLService;
+import BLservice.BLservice;
+
 
 public class TeamStatTablePanel extends StatTablePanel {
 
-	public TeamStatTablePanel(int width, int height, BLService bl,JPanel content) {
+	public TeamStatTablePanel(int width, int height, BLservice bl,JPanel content) {
 		super(width, height, bl);
 
 		jspane = new JScrollPane();

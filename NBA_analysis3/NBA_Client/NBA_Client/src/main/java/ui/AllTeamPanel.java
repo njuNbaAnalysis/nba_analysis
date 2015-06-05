@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -46,7 +47,7 @@ public class AllTeamPanel extends JPanel{
 		
 	}
 	
-	public AllTeamPanel(final int width, final int height, final BLservice bl,JPanel content,String season,boolean isPlayOff){
+	public AllTeamPanel(final int width, final int height, final BLservice bl,JPanel content,String season,boolean isPlayOff) throws RemoteException{
 		this.width=width;
 		this.height=height;
 		this.content = content;

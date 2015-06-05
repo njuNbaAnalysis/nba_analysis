@@ -27,12 +27,10 @@ public class WordLiveTable extends BaseJTable{
 	private int logoWidth = 20;
 	private int logoHeight = 20;
 	private int width;
-	private int type;//用来表示是第几节
-	WordLiveTable(int width,String [] columnName,ArrayList<EventVo> eventList,int type){
+	WordLiveTable(int width,String [] columnName,ArrayList<EventVo> eventList){
 		this.eventList = eventList;	
 		this.columnNames = columnName;
 		this.width = width;
-		this.type = type;
 		adjustHeader();
 		updateRowHeights();
 		resizeColumnWidth();

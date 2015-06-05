@@ -10,7 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicLabelUI;
-import logic.BLService;
+
+import BLservice.BLservice;
 
 
 public class HotLabelPanel extends JPanel{
@@ -22,9 +23,9 @@ public class HotLabelPanel extends JPanel{
 	protected JLabel tableContentLabel;
 	protected int hotWidth;
 	protected int hotHeight;
-	protected BLService bl;
+	protected BLservice bl;
 	HotLabelPanel(String headName, String[] columnName,
-			int kingWidth, int kingHeight,BLService bl) {
+			int kingWidth, int kingHeight,BLservice bl) {
 		this.headName = headName;
 		this.columnName = columnName;
 		this.hotWidth = kingWidth;

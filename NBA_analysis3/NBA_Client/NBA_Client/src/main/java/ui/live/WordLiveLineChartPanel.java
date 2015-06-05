@@ -29,15 +29,15 @@ public class WordLiveLineChartPanel extends JPanel {
 	int selectedNumber = -1;// 默认选中“全部”
 	LiveLineChart chart;
 
-	WordLiveLineChartPanel(String[] btNames, int width, int height,
+	WordLiveLineChartPanel(int width, int height,
 			ArrayList<EventVo> eventList) {
 		this.setLayout(null);
 		this.setSize(width, height);
 		this.width = width;
 		this.height = height;
-		this.sectionSize = btNames.length;
+
 		this.eventList = eventList;
-		setButton(btNames);
+		setButton();
 		setLineChart(eventList);
 
 	}
@@ -139,8 +139,6 @@ public class WordLiveLineChartPanel extends JPanel {
 				}
 			}
 		}
-	//	a_events.sort(new EventVoComp());
-	//	b_events.sort(new EventVoComp());
 		
 		int separator = 5;
 		min = (min / separator) * separator;
@@ -164,11 +162,11 @@ public class WordLiveLineChartPanel extends JPanel {
 		
 	}
 
-	private void setButton(String[] buttonNames) {
-
+	private void setButton() {
+		sectionSize = Tools.getSectionNum(eventList);
 		btArray = new SectionButton[sectionSize];
 		for (int i = 0; i < sectionSize; i++) {
-			btArray[i] = new SectionButton(buttonNames[i], i);
+			btArray[i] = new SectionButton(Tools.getSectionInChinese(i+1), i);
 			btArray[i].setBounds(width * i / 8, 0, width / 8, height / 10);
 			MouseHandle mouseHandle = new MouseHandle(new Color(69, 69, 69),
 					new Color(87, 89, 91), i);

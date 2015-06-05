@@ -3,7 +3,6 @@ package ui;
 import javax.swing.JPanel;
 
 import BLservice.BLservice;
-import logic.BLController;
 
 public class ContentPanel extends JPanel {
 	private MenuPanel menu;

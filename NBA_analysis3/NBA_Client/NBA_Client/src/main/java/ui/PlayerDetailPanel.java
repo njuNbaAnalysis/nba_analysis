@@ -23,14 +23,13 @@ import javax.swing.plaf.basic.BasicLabelUI;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import vo.Playervo;
 import compare.PalyerScreening;
-import logic.BLController;
-import logic.BLService;
-import logic.players.Player;
+
 
 public class PlayerDetailPanel extends JPanel {
 	private static String FONT_OF_DETAIL = "微软雅黑";
-	private Player player;
+	private Playervo player;
 	private int width;
 	private int height;
 	private int[] barPositonx;
@@ -54,7 +53,7 @@ public class PlayerDetailPanel extends JPanel {
 	private JLabel freeThrow;
 	private JLabel threePointers;
 
-	PlayerDetailPanel(Player player, double[] allianceAverage, int width,
+	PlayerDetailPanel(Playervo player, double[] allianceAverage, int width,
 			int height) {
 		this.setLayout(null);
 		this.player = player;
@@ -361,7 +360,7 @@ public class PlayerDetailPanel extends JPanel {
 		}
 	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		BLService bl = BLController.getInstance();
 		bl.init();
 		while (bl.getProgress() < 9) {
@@ -378,5 +377,5 @@ public class PlayerDetailPanel extends JPanel {
 		// f.repaint();
 		f.setVisible(true);
 		p.go();
-	}
+	}*/
 }

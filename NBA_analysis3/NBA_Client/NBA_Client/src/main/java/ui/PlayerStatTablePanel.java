@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import BLservice.BLservice;
 import compare.PalyerScreening;
 import compare.PlayerAveragePointsComp;
 import compare.PlayerPointsComp;
@@ -32,14 +33,17 @@ import logic.players.Player;
 
 public class PlayerStatTablePanel extends StatTablePanel {
 
-	String season="2014";
-	boolean isPlayOff=false;
+	private String season;
+	private boolean isPlayOff;
 	
 	private SelectPanel selectPanel;
+	
 
-	public PlayerStatTablePanel(int width, int height, BLService bl,JPanel content) {
+	public PlayerStatTablePanel(int width, int height, BLservice bl,JPanel content,String season,boolean isPlayOff) {
 		super(width, height, bl);
-
+		this.season = season;
+		this.isPlayOff = isPlayOff;
+		
 		
 		selectPanel = new SelectPanel(width, 66 * height / (1080), this);
 		selectPanel.setBounds(0, 50 * height / (1080), width,

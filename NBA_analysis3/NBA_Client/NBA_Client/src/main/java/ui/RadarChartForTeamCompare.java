@@ -5,18 +5,18 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import logic.BLController;
-import logic.teams.Team;
+import vo.Teamvo;
+
 
 public class RadarChartForTeamCompare extends JPanel {
-	private Team t1;
-	private Team t2;
+	private Teamvo t1;
+	private Teamvo t2;
 	private double[] value_a;
 	private double[] value_b;
 	private String[] attr = { "内线", "外线", "配合", "进攻", "得分" };
 	int limit = 10;
 
-	RadarChartForTeamCompare(int width, int height, Team t1, Team t2) {
+	RadarChartForTeamCompare(int width, int height, Teamvo t1, Teamvo t2) {
 		this.setLayout(null);
 		this.t1 = t1;
 		this.t2 = t2;
@@ -42,7 +42,7 @@ public class RadarChartForTeamCompare extends JPanel {
 		}
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setBounds(0, 0, 1280, 1080);
 		final BLController bl = BLController.getInstance();
@@ -64,5 +64,5 @@ public class RadarChartForTeamCompare extends JPanel {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		f.repaint();
-	}
+	}*/
 }

@@ -32,7 +32,6 @@ import javax.swing.table.TableRowSorter;
 
 import util.UIUtils;
 import compare.PalyerScreening;
-import logic.players.Player;
 
 public abstract class StatJTable extends BaseJTable {
 	protected DecimalFormat df = new DecimalFormat("#0.0");

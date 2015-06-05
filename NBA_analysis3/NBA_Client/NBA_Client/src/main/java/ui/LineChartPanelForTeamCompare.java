@@ -6,9 +6,8 @@ import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import logic.BLController;
-import logic.BLService;
-import logic.teams.Team;
+import BLservice.BLservice;
+import vo.Teamvo;
 
 public class LineChartPanelForTeamCompare extends JPanel {
 	private int width;
@@ -19,17 +18,17 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private double[] t2_value = new double[10];
 	private String[] labelContent_t1 = new String[10];
 	private String[] labelContent_t2 = new String[10];
-	private Team t1;
-	private Team t2;
-	private BLService bl;
+	private Teamvo t1;
+	private Teamvo t2;
+	private BLservice bl;
 	private int seg;
 	private int limit;
 	private DecimalFormat df = new DecimalFormat("#0.0");
 	
 	private Color a_color;
 	private Color b_color;
-	LineChartPanelForTeamCompare(int width, int height, String type, Team t1,
-			Team t2, Color a_color,Color b_color,BLService bl) {
+	LineChartPanelForTeamCompare(int width, int height, String type, Teamvo t1,
+			Teamvo t2, Color a_color,Color b_color,BLservice bl) {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
@@ -192,7 +191,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 
 	}
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setBounds(0, 0, 1280, 1080);
 		final BLController bl = BLController.getInstance();
@@ -212,5 +211,5 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		f.repaint();
-	}
+	}*/
 }

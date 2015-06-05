@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
+import vo.Playervo;
+import BLservice.BLservice;
 import compare.PalyerScreening;
 import compare.PlayerAssistsComp;
 import compare.PlayerAveragePRAComp;
@@ -57,10 +60,6 @@ import compare.PlayerTrueShootingPercentageComp;
 import compare.PlayerTurnOverComp;
 import compare.PlayerTurnOverPercentageComp;
 import compare.PlayerUsageComp;
-import logic.BLController;
-import logic.BLService;
-import logic.players.Player;
-import logic.teams.Team;
 
 public class PlayerJTable extends StatJTable {
 	private static String[] averageColumn = { "排名", "球员", "球队", "场数", "先发",
@@ -70,21 +69,25 @@ public class PlayerJTable extends StatJTable {
 	private static String[] totalColumn = { "排名", "球员", "球队", "场数", "先发", "篮板",
 			"助攻", "在场时间", "投篮命中率%", "三分命中率%", "罚球命中率%", "进攻数", "防守数", "抢断数",
 			"盖帽数", "失误数", "犯规数", " 得分" };
-	private ArrayList<Player> list;
-	private BLService bl;
+	private ArrayList<Playervo> list;
+	private BLservice bl;
 	private JPanel content;
 	private int width;
 	private int height;
+	private String season;
+	private boolean isPlayOff;
 
-	public PlayerJTable(BLService bl, int i, int j,JPanel content) {
+	public PlayerJTable(BLservice bl, int i, int j,JPanel content,String season,boolean isPlayOff) throws RemoteException {
 		super();
-		list = bl.getAllPlayers();
+		list = bl.getAllPlayers(season,isPlayOff);
 		this.bl = bl;
 		this.portraitWidth =  80 ;
 		this.portraitHeight =  70 ;
 		this.content = content;
 		this.width = i;
 		this.height = j;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.getTableHeader().addMouseListener(new MouseHandle());
 		this.addMouseListener(new MouseAdapter() {
             @Override
@@ -97,7 +100,7 @@ public class PlayerJTable extends StatJTable {
                 	int row = PlayerJTable.this.getSelectedRow();
                 	String playerName = (String)PlayerJTable.this.getValueAt(row, column);
 
-                	Player p = PlayerJTable.this.bl.getPlayerByName(playerName);
+                	Playervo p = PlayerJTable.this.bl.getPlayerByName(playerName);
             		
             		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*10/9,p,PlayerJTable.this.bl,PlayerJTable.this.content);
             		
@@ -112,7 +115,7 @@ public class PlayerJTable extends StatJTable {
                 	int row = PlayerJTable.this.getSelectedRow();
                 	String teamName = (String)PlayerJTable.this.getValueAt(row, column);
 
-                	Team t = PlayerJTable.this.bl.getTeamByName(teamName);
+                	Teamvo t = PlayerJTable.this.bl.getTeamByName(teamName);
             		
             		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,PlayerJTable.this.bl,PlayerJTable.this.content);
             		m.setBounds(0, 0, width, height*10/9);
@@ -201,7 +204,7 @@ public class PlayerJTable extends StatJTable {
 
 	}
 
-	private String[] getAverageDataRow(Player p, int i) {
+	private String[] getAverageDataRow(Playervo p, int i) {
 
 		String[] s = new String[30];
 		s[0] = (i + 1) + "";
@@ -239,7 +242,7 @@ public class PlayerJTable extends StatJTable {
 		return s;
 	}
 
-	private String[] getTotalDataRow(Player p, int i) {
+	private String[] getTotalDataRow(Playervo p, int i) {
 		String[] s = new String[18];
 		s[0] = (i + 1) + "";
 		s[1] = p.getName() + "";
@@ -431,8 +434,8 @@ public class PlayerJTable extends StatJTable {
 
 	@Override
 	public void refreshByScreening(PalyerScreening playerScreening) {
-		ArrayList<Player> temp = list;
-		Comparator<Player> c = null;
+		ArrayList<Playervo> temp = list;
+		Comparator<Playervo> c = null;
 		c = getComparator(playerScreening.getDepend(), this.selected);
 		list = playerScreening.screening(list);
 		refresh(this.selected, c, true);
@@ -440,8 +443,8 @@ public class PlayerJTable extends StatJTable {
 
 	}
 
-	private Comparator<Player> getComparator(String depend, boolean selected) {
-		Comparator<Player> c = null;
+	private Comparator<Playervo> getComparator(String depend, boolean selected) {
+		Comparator<Playervo> c = null;
 		if (selected) {
 			switch (depend) {
 			case "得分":

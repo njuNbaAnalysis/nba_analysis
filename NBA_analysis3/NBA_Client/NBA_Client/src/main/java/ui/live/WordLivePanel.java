@@ -50,9 +50,8 @@ public class WordLivePanel extends JPanel {
 		setButton();
 
 		String[] columnNames = { "时间", "比分", "参与球员", "文字直播", "球队" };
-		String[] btNames = { "第一节", "第二节", "第三节", "第四节" };// 暂时没有加时
-		WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(columnNames,
-				btNames, width, height * 9 / 10, eventList);
+		WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(columnNames,width,
+				height * 9 / 10, eventList);
 		wordLivePanel.setLocation(0, 0);
 
 		this.content = new JScrollPane();
@@ -175,23 +174,22 @@ public class WordLivePanel extends JPanel {
 				selectedNumber = type;
 			}
 			if (type == 0) {
-				if(eventList.size()>0){
-					String[] btNames = { "全部", "第一节", "第二节", "第三节", "第四节" };
+				if (eventList.size() > 0) {
 					WordLiveLineChartPanel chartPanel = new WordLiveLineChartPanel(
-							btNames, width, height * 9 / 10, eventList);
+							width, height * 9 / 10, eventList);
 					chartPanel.setLocation(0, 0);
 					content.removeAll();
 					content.add(chartPanel);
 					content.updateUI();
 				}
-				
+
 			}
 
 			if (type == 1) {
 				String[] columnNames = { "时间", "比分", "参与球员", "文字直播", "球队" };
-				String[] btNames = { "第一节", "第二节", "第三节", "第四节" };// 暂时没有加时
+
 				WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(
-						columnNames, btNames, width, height * 9 / 10, eventList);
+						columnNames, width, height * 9 / 10, eventList);
 				wordLivePanel.setLocation(0, 0);
 				content.removeAll();
 				content.add(wordLivePanel);
@@ -233,16 +231,16 @@ public class WordLivePanel extends JPanel {
 	}
 
 	public void refresh(ArrayList<EventVo> eventList) {
-		//如果选择折线图,先把比赛事件缓存下来
+		// 如果选择折线图,先把比赛事件缓存下来
 		if (selectedNumber == 0) {
 			this.eventList = eventList;
 		}
 
 		if (selectedNumber == 1) {
 			String[] columnNames = { "时间", "比分", "参与球员", "文字直播", "球队" };
-			String[] btNames = { "第一节", "第二节", "第三节", "第四节" ,"加时1","加时2","加时3"};// 暂定3加时
+
 			WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(
-					columnNames, btNames, width, height * 9 / 10, eventList);
+					columnNames, width, height * 9 / 10, eventList);
 			wordLivePanel.setLocation(0, 0);
 			content.removeAll();
 			content.add(wordLivePanel);
