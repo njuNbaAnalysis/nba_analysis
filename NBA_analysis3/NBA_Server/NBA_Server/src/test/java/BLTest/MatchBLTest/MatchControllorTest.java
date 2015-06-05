@@ -3,6 +3,7 @@ package BLTest.MatchBLTest;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import logic.matches.NBALiveBLControllor;
 import logic.matches.matchBLcontrollor;
@@ -50,10 +51,14 @@ public class MatchControllorTest {
 	}
 	
 	@Test
-	public void testgetLiveEvent() {
-		NBALiveBLControllor mb = NBALiveBLControllor.getInstance();
-		ArrayList<EventVo> m = mb.getLiveEvent();
-		Boolean result = (m!=null);
+	public void testgetTodayMatch() {
+		matchBLcontrollor m = matchBLcontrollor.getInstance();
+		Collection<? extends Matchvo> list = m.getTodayMatched("14-15_2015-05-25");
+		System.out.println(list.size());
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.iterator().next().isIsplayoff());
+		}
+		Boolean result = (list.size()!=0);
 		assertTrue(result);
 	}
 	
