@@ -128,4 +128,15 @@ public class matchBLcontrollor {
 		return result;
 	}
 
+	/**
+	 * 得到最近十场比赛的信息
+	 * @param teamNameEn 例"ATL"
+	 * @param season 例"14-15"
+	 * @param isPlayOff 
+	 * @return
+	 */
+	public ArrayList<Matchvo> getLast10Matches(String teamNameEn,String season,boolean isPlayOff){
+	    return null;
+	}
+	
 }
