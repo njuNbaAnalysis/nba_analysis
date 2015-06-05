@@ -70,14 +70,14 @@ public interface BLservice extends Remote{
 	 * @param teamNames 两个球队名称 
 	 * @return
 	 */
-	public Teamvo[] getTeamsByMatch(String[] teamNames)throws RemoteException;
+	//public Teamvo[] getTeamsByMatch(String[] teamNames)throws RemoteException;
 
 	/**
 	 * 
 	 * @param nameOfReboundsKing
 	 * @return
 	 */
-	public Playervo getPlayerByName(String nameOfReboundsKing)throws RemoteException;
+	public Playervo getPlayerById(String idOfReboundsKing)throws RemoteException;
 
 	/**
 	 * 
@@ -86,12 +86,12 @@ public interface BLservice extends Remote{
 	 * @param isPlayOff
 	 * @return
 	 */
-	public Teamvo getTeamByPlayerName(String playerName, String season, boolean isPlayOff)throws RemoteException;
+	public Teamvo getTeamByPlayerId(String playerId, String season, boolean isPlayOff)throws RemoteException;
 
 	/**
 	 * 
 	 * @param teamName
 	 * @return teamvo
 	 */
-	public Teamvo getTeamByTeamName(String teamName)throws RemoteException ;
+	public Teamvo getTeamByTeamName(String teamName, String season, boolean isPlayOff)throws RemoteException ;
 }
