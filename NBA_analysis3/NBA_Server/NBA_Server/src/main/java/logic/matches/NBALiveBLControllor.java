@@ -157,6 +157,11 @@ public class NBALiveBLControllor {
 			Date now = new Date();
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			String date = df.format(now).substring(0, 10);
+			if(Integer.parseInt(date.substring(5, 6))<=8){
+				date = (Integer.parseInt(date.substring(2, 3))-1)+"-"+date.substring(2, 3)+"_"+date;
+			}else{
+				date = date.substring(2, 3)+"-"+(Integer.parseInt(date.substring(2, 3))+1)+"_"+date;
+			}
 			int[] rebounds = { Integer.parseInt(data1[36]),
 					Integer.parseInt(data2[36]) };
 			int[] assists = { Integer.parseInt(data1[0]),

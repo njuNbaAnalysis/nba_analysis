@@ -105,7 +105,7 @@ public class matchBLcontrollor {
 								.getFieldGoalspercent()));
 			}
 		}
-		Matchvo result = new Matchvo(m.getDate() + "_" + m.getSeason(),
+		Matchvo result = new Matchvo(m.getSeason() + "_" + m.getDate(),
 				m.isIsplayoff(), teams, points, pointsList, firstRecordList,
 				secondRecordList);
 		return result;
