@@ -107,4 +107,15 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 		return NBALive.setPeriod(1);
 	}
 	
+	
+	/**
+	 * 根据中文简写和赛季得到球队英文名
+	 * @param simplifiedTeamNameZh
+	 * @param season
+	 * @return
+	 */
+	public String getTeamNameEnBySimplifiedTeamNameZh(String simplifiedTeamNameZh,String season){
+	    return null;
+	}
+	
 }
