@@ -278,6 +278,24 @@ public class BLController implements BLService {
 		return matchController.getTime();
 	}
 
+    @Override
+    public ArrayList<Match> getLatestMatchesByTeam(String teamName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public double getLineUpAbility(String teamName) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public double getTeamAbility(String teamName) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 
 
 	
