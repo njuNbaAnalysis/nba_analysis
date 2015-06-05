@@ -20,7 +20,7 @@ public class NBALiveTest {
 					ArrayList<EventVo> list = mbl.getLiveEvent();
 					for (int i = 0; i < list.size(); i++) {
 						System.out.println(list.get(i).getSection()+" : "+list.get(i).getTime() + " : "
-								+ list.get(i).getDescription());
+								+ list.get(i).getDescription()+"  "+list.get(i).getPlayerName());
 					}
 					try {
 						Thread.sleep(5000);
