@@ -33,11 +33,13 @@ public class playerBLcontrollor {
 		Playervo result = null;
 		playerItem temp = p.getCurrentPlayerItem();
 		if (temp != null) {
+			int doubledouble = 0;
+			int threedouble = 0;
 			String location = "";
 			String division = "";
 			char conference = ' ';
 			double[] upgradeRate = { 0, 0, 0 };
-			result = new Playervo(p.getName(), p.getNumber(), p.getPosition(),
+			result = new Playervo(p.getPid(),p.getName(), p.getNumber(), p.getPosition(),
 					p.getHeight(), p.getWeight(), p.getBirthday(),
 					p.getSelected(), p.getSalary(), p.getHighschool(),
 					p.getUniversity(), temp.getTeam(), location, division,
@@ -59,7 +61,7 @@ public class playerBLcontrollor {
 					temp.getThreethrowHit(), temp.getThreethrowAttempt(),
 					temp.getFreethrowHit(), temp.getFieldGoalsAttempt(),
 					temp.getWS(), temp.getOffenseWS(), temp.getDefenseWS(),
-					temp.getDunk(), temp.getDunked());
+					temp.getDunk(), temp.getDunked(),doubledouble,threedouble);
 		}
 		return result;
 	}
