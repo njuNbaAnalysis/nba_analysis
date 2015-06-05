@@ -78,6 +78,7 @@ public class LivePanel extends JPanel {
 			this.labelHeight = height;
 			this.setLayout(null);
 			this.setSize(width, height);
+			this.teams = new Teamvo[2];
 			try {
 				teams[0] = bl.getTeamByTeamName(match.getTeams()[0],match.getSeason(),match.isIsplayoff());
 				teams[1] = bl.getTeamByTeamName(match.getTeams()[1],match.getSeason(),match.isIsplayoff());

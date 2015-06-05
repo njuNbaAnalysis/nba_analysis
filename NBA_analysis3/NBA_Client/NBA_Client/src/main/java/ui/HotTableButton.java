@@ -12,6 +12,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import vo.Playervo;
+import vo.Teamvo;
+import BLservice.BLservice;
 import compare.PlayerAverageAssistsComp;
 import compare.PlayerAverageBlockShotsComp;
 import compare.PlayerAveragePointsComp;
@@ -21,20 +24,16 @@ import compare.PlayerFieldGoalsPercentageComp;
 import compare.PlayerFreeThrowsPercentageComp;
 import compare.PlayerThreePointersPercentageComp;
 import compare.PlayerUpgradeRateComp;
-import logic.BLService;
-import logic.players.Player;
-import logic.players.todayPlayer;
-import logic.teams.Team;
 
 public class HotTableButton extends JButton{
 	private String type;
 	private String field;
 	private HotLabelPanel hotPanel;
-	private BLService bl;
+	private BLservice bl;
 
 
 
-	public HotTableButton(String text, String type,HotLabelPanel hotPanel,BLService bl) {
+	public HotTableButton(String text, String type,HotLabelPanel hotPanel,BLservice bl) {
 		super(text);
 
 		
@@ -73,8 +72,8 @@ public class HotTableButton extends JButton{
 				switch(HotTableButton.this.type){
 				case "T":
 					
-					ArrayList<Team> teamList = HotTableButton.this.bl.getSeasonKingTeam(transferField(field), 5);
-					Team [] teams = new Team[5];
+					ArrayList<Teamvo> teamList = HotTableButton.this.bl.getSeasonKingTeam(transferField(field), 5);
+					Teamvo [] teams = new Teamvo[5];
 					for(int i=0;i<5;i++){
 						teams[i] = teamList.get(i);
 					}
@@ -82,8 +81,8 @@ public class HotTableButton extends JButton{
 					HotTableButton.this.hotPanel.repaint();
 					break;
 				case "P":
-					ArrayList<Player> playerList1 = HotTableButton.this.bl.getSeasonKingPlayer(transferField(field), 5);
-					Player [] players1 = new Player[5];
+					ArrayList<Playervo> playerList1 = HotTableButton.this.bl.getSeasonKingPlayer(transferField(field), 5);
+					Playervo [] players1 = new Playervo[5];
 					for(int i=0;i<5;i++){
 						players1[i] = playerList1.get(i);
 					}
@@ -91,8 +90,8 @@ public class HotTableButton extends JButton{
 					HotTableButton.this.hotPanel.repaint();
 					break;
 				case "HP":	
-					ArrayList<Player> playerList2 = HotTableButton.this.bl.getMostImprovedPlayer(transferField(field), 5);
-					Player [] players2 = new Player[5];
+					ArrayList<Playervo> playerList2 = HotTableButton.this.bl.getMostImprovedPlayer(transferField(field), 5);
+					Playervo [] players2 = new Playervo[5];
 					for(int i=0;i<5;i++){
 						players2[i] = playerList2.get(i);
 					}
@@ -100,9 +99,9 @@ public class HotTableButton extends JButton{
 					HotTableButton.this.hotPanel.repaint();
 					break;
 				case "TP":
-					Player [] players = ((KingLabelPanel)HotTableButton.this.hotPanel).getPlayers();
+					Playervo [] players = ((KingLabelPanel)HotTableButton.this.hotPanel).getPlayers();
 					
-					ArrayList<Player> playerList = new ArrayList<Player>();
+					ArrayList<Playervo> playerList = new ArrayList<Playervo>();
 					for(int i=0;i<players.length;i++){
 						playerList.add(players[i]);
 					}
@@ -119,8 +118,8 @@ public class HotTableButton extends JButton{
 		});
 		
 	}
-	public ArrayList<Player> getTeamSortedPlayer(ArrayList<Player> list,String field) {
-		Comparator<Player> comparator  = new PlayerAveragePointsComp();
+	public ArrayList<Playervo> getTeamSortedPlayer(ArrayList<Playervo> list,String field) {
+		Comparator<Playervo> comparator  = new PlayerAveragePointsComp();
 		switch (field) {
 		case "points":
 			comparator = new PlayerAveragePointsComp();

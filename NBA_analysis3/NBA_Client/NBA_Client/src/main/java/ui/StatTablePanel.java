@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import logic.BLService;
+import BLservice.BLservice;
 
 
 public class StatTablePanel extends JPanel{
@@ -27,7 +27,7 @@ public class StatTablePanel extends JPanel{
 	protected HeadPanel headPanel;
 	protected JScrollPane jspane;
 
-	protected BLService bl;
+	protected BLservice bl;
 	protected int type;
 
 	public void paintComponent(Graphics g) {
@@ -41,7 +41,7 @@ public class StatTablePanel extends JPanel{
 		g.setFont(new Font("STHUPO", Font.PLAIN, 40 * 2 / 3));
 	}
 
-	public StatTablePanel(int width, int height, BLService bl) {
+	public StatTablePanel(int width, int height, BLservice bl) {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;

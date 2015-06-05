@@ -30,12 +30,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import BLservice.BLservice;
 import util.UIUtils;
-import logic.BLController;
-import logic.BLService;
-import logic.matches.RecordOfPlayer;
-import logic.players.Player;
-import logic.teams.Team;
+import vo.Playervo;
 
 public class LineUpPanel extends JPanel {
 	private int width;
@@ -45,10 +42,10 @@ public class LineUpPanel extends JPanel {
 	private JButton data;
 	private int state = 0;
 	private JScrollPane js;
-	private BLService bl;
+	private BLservice bl;
 	private JPanel content;
 
-	LineUpPanel(int width, int height, ArrayList<String> playersName,BLService bl,JPanel content) {
+	LineUpPanel(int width, int height, ArrayList<String> playersName,BLservice bl,JPanel content) {
 		this.width = width;
 		this.height = height;
 		this.playersName = playersName;
@@ -169,11 +166,11 @@ public class LineUpPanel extends JPanel {
 		protected DecimalFormat df = new DecimalFormat("#0.0");
 		private int portraitWidth = 70;
 		private int portraitHeight = 60;
-		private BLService bl;
+		private BLservice bl;
 		private JPanel content;
 
 		// type :0表示信息，1表示数据
-		public LineUpTable(ArrayList<String> playersName, int type,BLService bl,JPanel content) {
+		public LineUpTable(ArrayList<String> playersName, int type,BLservice bl,JPanel content) {
 			this.bl = bl;
 			this.content = content;
 			this.setShowGrid(false);
@@ -194,7 +191,7 @@ public class LineUpPanel extends JPanel {
 	                	int row = LineUpTable.this.getSelectedRow();
 	                	String playerName = (String)LineUpTable.this.getValueAt(row, column);
 
-	                	Player p = LineUpTable.this.bl.getPlayerByName(playerName);
+	                	Playervo p = LineUpTable.this.bl.getPlayerByName(playerName);
 	            		
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*3/2,p,LineUpTable.this.bl,LineUpTable.this.content);
 	            		
@@ -237,7 +234,7 @@ public class LineUpPanel extends JPanel {
 			//存疑
 			for (int i = 0; i < size; i++) {
 				String[] s = null;
-				Player player = bl.getPlayerByName(playersName.get(i));
+				Playervo player = bl.getPlayerByName(playersName.get(i));
 				if(player==null){
 					s = new String[1];
 					s[0] = playersName.get(i);
@@ -264,7 +261,7 @@ public class LineUpPanel extends JPanel {
 			this.repaint();
 		}
 
-		private String[] getInfoRow(Player p) {
+		private String[] getInfoRow(Playervo p) {
 			String[] s = new String[9];
 			//球员没有的时候
 			if(p!=null){
@@ -283,7 +280,7 @@ public class LineUpPanel extends JPanel {
 			return s;
 		}
 
-		private String[] getDataRow(Player p) {
+		private String[] getDataRow(Playervo p) {
 
 			String[] s = new String[16];
 			s[0] = p.getName() + "";

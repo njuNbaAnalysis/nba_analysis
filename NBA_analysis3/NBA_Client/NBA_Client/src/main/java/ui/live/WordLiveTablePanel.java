@@ -18,25 +18,22 @@ import vo.EventVo;
 
 public class WordLiveTablePanel extends JPanel {
 	private String[] columnNames;
-	private String[] buttonNames;
 	private int width;
 	private int height;
 	private int sectionSize;// 表示有几节
 	private SectionButton[] btArray;
-	private WordLiveTable eventTable;
-	private JScrollPane jspane;
 	private int selected = 0;
 	private ArrayList<EventVo> eventList;
+	
+	private JScrollPane jspane;
 
-	public WordLiveTablePanel(String[] columnNames, String[] buttonNames,
+	public WordLiveTablePanel(String[] columnNames,
 			int width, int height, ArrayList<EventVo> eventList) {
 		this.setLayout(null);
 		this.setSize(width, height);
 		this.columnNames = columnNames;
-		this.buttonNames = buttonNames;
 		this.width = width;
 		this.height = height;
-		this.sectionSize = buttonNames.length;
 		this.eventList = eventList;
 		setButton();
 
@@ -45,7 +42,7 @@ public class WordLiveTablePanel extends JPanel {
 		
 		
 		
-		eventTable = new WordLiveTable(width, columnNames, Tools.reverse(eventList), selected);
+		WordLiveTable eventTable = new WordLiveTable(width, columnNames, Tools.reverse(eventList));
 
 		jspane.setViewportView(eventTable);
 		this.add(jspane);
@@ -58,11 +55,11 @@ public class WordLiveTablePanel extends JPanel {
 	
     
 	private void setButton() {
-		sectionSize = getSectionNum();
+		sectionSize = Tools.getSectionNum(eventList);
 		if (sectionSize > 0) {
 			btArray = new SectionButton[sectionSize];
 			for (int i = 0; i < sectionSize; i++) {
-				btArray[i] = new SectionButton(buttonNames[i], i);
+				btArray[i] = new SectionButton(Tools.getSectionInChinese(i+1), i);
 				btArray[i].setBounds(width * i / 8, 0, width / 8, height / 10);
 				SectionButtonListener l = new SectionButtonListener(i);
 				btArray[i].addActionListener(l);
@@ -73,16 +70,7 @@ public class WordLiveTablePanel extends JPanel {
 
 	}
 
-	private int getSectionNum() {
-		int section = -1;
-
-		for (EventVo event : eventList) {
-			if (event.getSection() > section) {
-				section = event.getSection();
-			}
-		}
-		return section;
-	}
+	
 
 	private ArrayList<EventVo> getSectionEvent(int sectionNum) {
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
@@ -92,7 +80,6 @@ public class WordLiveTablePanel extends JPanel {
 				list.add(event);
 			}
 		}
-		System.out.println("sectionNum:"+sectionNum+" eventSize:"+list.size());
 		return list;
 	}
 
@@ -107,14 +94,11 @@ public class WordLiveTablePanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (selected != type) {
 				selected = type;
-				jspane.remove(eventTable);
-				eventTable = new WordLiveTable(width, columnNames,
-						getSectionEvent(selected + 1), selected);
-				System.out.println("第几节:" + selected);
-				jspane.add(eventTable);
+				jspane.removeAll();				
+				WordLiveTable eventTable = new WordLiveTable(width, columnNames, Tools.reverse(getSectionEvent(type+1)));
 
-				jspane.updateUI();
-				jspane.repaint();
+				jspane.setViewportView(eventTable);
+				WordLiveTablePanel.this.updateUI();
 				WordLiveTablePanel.this.repaint();
 			}
 

@@ -28,7 +28,7 @@ public class MatchTablePanel extends JPanel {
 	private BLservice bl;
 	private int width;
 	private int height;
-	private static String[] columnName = { "姓名", "位置", "分钟", "%", "命中", "出手",
+	private static String[] columnName = { "姓名", "分钟", "%", "命中", "出手",
 			"三分%", "三分命中", "三分出手", "罚球%", "罚球命中", "罚球出手", "+/-", "进攻", "防守",
 			"篮板", "助攻", "犯规", "抢断", "失误", "盖帽", "得分" };
 
@@ -61,20 +61,20 @@ public class MatchTablePanel extends JPanel {
 		// 第一个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
-		g.drawString(match.getTeams()[0], width / 20, height / 20);
+		/*g.drawString(match.getTeams()[0], width / 20, height / 20);
 
 		Image teamImage1 = bl.getTeamByTeamName(match.getTeams()[0]).getLogo();
-		g.drawImage(teamImage1, 0, 0, this);
+		g.drawImage(teamImage1, 0, 0, this);*/
 
 		g.setColor(new Color(238, 238, 238));
 		g.fillRect(width / 20, height * 9 / 20, width * 9 / 10, height * 2 / 20);
 		// 第二个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
-		g.drawString(match.getTeams()[1], width / 20, height * 11 / 20);
+	/*	g.drawString(match.getTeams()[1], width / 20, height * 11 / 20);
 
 		Image teamImage2 = bl.getTeamByTeamName(match.getTeams()[1]).getLogo();
-		g.drawImage(teamImage2, 0, height * 10 / 20, this);
+		g.drawImage(teamImage2, 0, height * 10 / 20, this);*/
 	}
 
 	private class MatchJTable extends BaseJTable {
@@ -119,32 +119,31 @@ public class MatchTablePanel extends JPanel {
 			// TODO Auto-generated method stub
 			return null;
 		}
-
+		//球员位置不要了
 		private String[] getIndividualDataRow(RecordOfPlayervo recordOfPlayer) {
 
 			String[] data = new String[22];
 			data[0] = recordOfPlayer.getPlayerName();
-			data[1] = recordOfPlayer.getPosition();
-			data[2] = Integer.toString(recordOfPlayer.getMinutes() / 60);
-			data[3] = df.format(recordOfPlayer.getFieldGoalPercentage() * 100);
-			data[4] = Integer.toString(recordOfPlayer.getFieldGoalHits());
-			data[5] = Integer.toString(recordOfPlayer.getFieldGoalAttempts());
-			data[6] = df.format(recordOfPlayer.getThreePointPercentage() * 100);
-			data[7] = Integer.toString(recordOfPlayer.getThreePointHits());
-			data[8] = Integer.toString(recordOfPlayer.getThreePointAttemps());
-			data[9] = df.format(recordOfPlayer.getFreeThrowPercentage() * 100);
-			data[10] = Integer.toString(recordOfPlayer.getFreeThrowHits());
-			data[11] = Integer.toString(recordOfPlayer.getFreeThrowAttemps());
-			data[12] = Integer.toString(recordOfPlayer.getEfficiency());
-			data[13] = Integer.toString(recordOfPlayer.getOffensiveRebounds());
-			data[14] = Integer.toString(recordOfPlayer.getDefensiveRebounds());
-			data[15] = Integer.toString(recordOfPlayer.getRebounds());
-			data[16] = Integer.toString(recordOfPlayer.getAssists());
-			data[17] = Integer.toString(recordOfPlayer.getFauls());
-			data[18] = Integer.toString(recordOfPlayer.getSteals());
-			data[19] = Integer.toString(recordOfPlayer.getTurnOver());
-			data[20] = Integer.toString(recordOfPlayer.getBlocks());
-			data[21] = Integer.toString(recordOfPlayer.getPoints());
+			data[1] = df.format(recordOfPlayer.getMinutes() / 60);
+			data[2] = df.format(recordOfPlayer.getFieldGoalPercentage() * 100);
+			data[3] = Integer.toString(recordOfPlayer.getFieldGoalHits());
+			data[4] = Integer.toString(recordOfPlayer.getFieldGoalAttempts());
+			data[5] = df.format(recordOfPlayer.getThreePointPercentage() * 100);
+			data[6] = Integer.toString(recordOfPlayer.getThreePointHits());
+			data[7] = Integer.toString(recordOfPlayer.getThreePointAttemps());
+			data[8] = df.format(recordOfPlayer.getFreeThrowPercentage() * 100);
+			data[9] = Integer.toString(recordOfPlayer.getFreeThrowHits());
+			data[10] = Integer.toString(recordOfPlayer.getFreeThrowAttemps());
+			data[11] = df.format(recordOfPlayer.getEfficiency());
+			data[12] = Integer.toString(recordOfPlayer.getOffensiveRebounds());
+			data[13] = Integer.toString(recordOfPlayer.getDefensiveRebounds());
+			data[14] = Integer.toString(recordOfPlayer.getRebounds());
+			data[15] = Integer.toString(recordOfPlayer.getAssists());
+			data[16] = Integer.toString(recordOfPlayer.getFauls());
+			data[17] = Integer.toString(recordOfPlayer.getSteals());
+			data[18] = Integer.toString(recordOfPlayer.getTurnOver());
+			data[19] = Integer.toString(recordOfPlayer.getBlocks());
+			data[20] = Integer.toString(recordOfPlayer.getPoints());
 			return data;
 		}
 

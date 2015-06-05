@@ -10,21 +10,20 @@ import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
 
+import BLservice.BLservice;
 import util.UIUtils;
-import logic.BLService;
-import logic.players.Player;
-import logic.players.todayPlayer;
+import vo.Playervo;
 
 public class ImprovedLabelPanel extends HotLabelPanel {
 	private String type;
 	private String field;
 	private int num = 5;
 
-	private Player[] players;
+	private Playervo[] players;
 
 	public ImprovedLabelPanel(String headName, String type,
-			String[] columnName,Player[] players, int hotWidth, int hotHeight,
-			BLService bl) {
+			String[] columnName,Playervo[] players, int hotWidth, int hotHeight,
+			BLservice bl) {
 		super(headName, columnName, hotWidth, hotHeight, bl);
 		this.type = type;
 
@@ -63,7 +62,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	}
 
 
-	public void setPlayers(Player[] players,String field) {
+	public void setPlayers(Playervo[] players,String field) {
 		((HotTableContentLabel) tableContentLabel).setPlayers(players);
 		((HotTableContentLabel) tableContentLabel).setType(field);
 		this.field = field;
@@ -71,13 +70,13 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 	}
 
 	private class HotTableContentLabel extends JLabel {
-		private Player[] players;
+		private Playervo[] players;
 		private int contentWidth;
 		private int contentHeight;
 		private String field;
 		protected DecimalFormat df = new DecimalFormat("#0.00");
 
-		public HotTableContentLabel(Player[] players, int contentWidth,
+		public HotTableContentLabel(Playervo[] players, int contentWidth,
 				int contentHeight,String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
@@ -90,7 +89,7 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 			
 		}
 
-		public void setPlayers(Player[] players) {
+		public void setPlayers(Playervo[] players) {
 			this.players = players;
 			this.repaint();
 		}
@@ -238,17 +237,6 @@ public class ImprovedLabelPanel extends HotLabelPanel {
 			}
 
 		}
-		
-		/*private String getData(todayPlayer p){
-			switch(type){
-				case "point":
-					return p.get
-				case "rebound":
-					
-				case "assist":
-					
-			}
-		}*/
 	}
 
 }

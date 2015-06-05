@@ -7,12 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
-import logic.BLController;
-import logic.BLService;
-import logic.players.Player;
+import BLservice.BLservice;
+import vo.Playervo;
 
 public class PlayerInfoPanel extends JPanel {
-	private BLService bl;
+	private BLservice bl;
 	private PlayerBasicInfoLabel playerBasicInfoLabel;
 	private PlayerDetailPanel playerDetailPanel;
 	private PlayerDetailTablePanel playerDetailTablePanel;
@@ -24,7 +23,7 @@ public class PlayerInfoPanel extends JPanel {
 
 	}
 
-	public PlayerInfoPanel(int width, int height, Player player,BLService bl,JPanel content) {
+	public PlayerInfoPanel(int width, int height, Playervo player,BLservice bl,JPanel content) {
 		this.bl = bl;
 		this.setLayout(null);
 		this.content = content;

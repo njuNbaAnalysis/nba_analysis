@@ -18,12 +18,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import logic.matches.RecordOfPlayer;
-import logic.players.Player;
-import logic.players.playerData;
+import vo.Playervo;
 
 public class PlayerDetailTablePanel extends JPanel {
-	private Player player;
+	private Playervo player;
 	private int width;
 	private int height;
 	private SeasonJTable seasonTable;
@@ -32,7 +30,7 @@ public class PlayerDetailTablePanel extends JPanel {
 	private JScrollPane latestJspane;
 	private DecimalFormat df = new DecimalFormat("#0.0");
 
-	public PlayerDetailTablePanel(Player player, int width, int height) {
+	public PlayerDetailTablePanel(Playervo player, int width, int height) {
 		this.player = player;
 		this.width = width;
 		this.height = height;
@@ -114,11 +112,11 @@ public class PlayerDetailTablePanel extends JPanel {
 	}
 
 	private class SeasonJTable extends DetailJTable {
-		Player player;
+		Playervo player;
 		private String[] columnName = { "年度", "球队", "场数", "先发", "分钟", "%",
 				"三分%", "进攻", "防守", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "得分" };
 
-		public SeasonJTable(Player player) {
+		public SeasonJTable(Playervo player) {
 			super();
 			this.player = player;
 			this.setModel(new DefaultTableModel(null, columnName));
@@ -187,8 +185,8 @@ public class PlayerDetailTablePanel extends JPanel {
 
 		}
 
-		// 这个方法没有实现
-		private String[] getSeasonAverageData(Player player) {
+		//没有分赛季展现
+		private String[] getSeasonAverageData(Playervo player) {
 			String[] result = new String[16];
 			result[0] = "12-13";
 			result[1] = player.getTeam();
@@ -213,7 +211,8 @@ public class PlayerDetailTablePanel extends JPanel {
 			return result;
 		}
 		
-		private String[] getSeasonTotalData(Player player) {
+		//没有分赛季展现
+		private String[] getSeasonTotalData(Playervo player) {
 			String[] result = new String[16];
 			result[0] = "12-13";
 			result[1] = player.getTeam();

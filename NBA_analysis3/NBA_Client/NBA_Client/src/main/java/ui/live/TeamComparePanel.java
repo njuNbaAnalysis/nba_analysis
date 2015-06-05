@@ -26,6 +26,7 @@ import javax.swing.JScrollPane;
 
 import util.UIUtils;
 import vo.Matchvo;
+import vo.Teamvo;
 
 public class TeamComparePanel extends JPanel {
 	private boolean[] attribute;
@@ -41,47 +42,69 @@ public class TeamComparePanel extends JPanel {
 	ImageIcon settingIconB;
 	boolean selected = false;
 	private JScrollPane content;
-	
-	private Matchvo m;
+	private Matchvo match;
 
-	TeamComparePanel(int width, int height, String[] attributeNames, Matchvo m) {
+	TeamComparePanel(int width, int height, String[] attributeNames,
+			Matchvo match) {
 		this.width = width;
 		this.height = height;
 		this.attributeNames = attributeNames;
-		this.m = m;
+		this.match = match;
 		this.setLayout(null);
 		this.setSize(width, height);
 		init();
 		loadImage();
 		setButton();
 		content = new JScrollPane();
-		content.setBounds(0, height / 20,width, height * 19 / 20);
-		
+		content.setBounds(0, height / 20, width, height * 19 / 20);
+
 		content.setLayout(null);
 
-		CompareBarChartPanel chartPanel = new CompareBarChartPanel(width, height * 17 / 20,
-				attribute, attributeNames, getTeamValue(m), getRivalValue(m),
-				cof);
+		CompareBarChartPanel chartPanel = new CompareBarChartPanel(width,
+				height * 17 / 20, attribute, attributeNames,
+				getTeamValue(match), getRivalValue(match), cof);
 		chartPanel.setLocation(0, 0);
 		content.add(chartPanel);
 		this.add(content);
 		repaint();
 	}
+
 	
-	//以下是假数据
 	private double[] getTeamValue(Matchvo m) {
 		double[] teamData = new double[attributeNames.length];
-		for (int i = 0; i < attributeNames.length; i++) {
-			teamData[i] = i * 1024 % 100;
-		}
+
+		teamData[0] = m.getFieldGoalsPercentage()[0];
+		teamData[1] = m.getThreePointersPercentage()[0];
+		teamData[2] = m.getFreeThrowsPercentage()[0];
+		//System.out.println("Rebound0:"+m.getRebounds()[0]);
+		teamData[3] = m.getRebounds()[0];
+		teamData[4] = m.getAssists()[0];
+		teamData[5] = m.getBlocks()[0];
+		teamData[6] = m.getTurnOver()[0];
+		teamData[7] = m.getQuickPoints()[0];
+		teamData[8] = m.getRestrictedPoints()[0];
+		teamData[9] = m.getTurnOverPoints()[0];
+		teamData[10] = m.getMaxPoints()[0];
+
 		return teamData;
 	}
 
 	private double[] getRivalValue(Matchvo m) {
 		double[] teamData = new double[attributeNames.length];
-		for (int i = 0; i < attributeNames.length; i++) {
-			teamData[i] = (i + 3) * 1024 % 100;
-		}
+		teamData[0] = m.getFieldGoalsPercentage()[1];
+		teamData[1] = m.getThreePointersPercentage()[1];
+		teamData[2] = m.getFreeThrowsPercentage()[1];
+		//System.out.println("Rebound1:"+m.getRebounds()[1]);
+		teamData[3] = m.getRebounds()[1];
+		teamData[4] = m.getAssists()[1];
+		teamData[5] = m.getBlocks()[1];
+		teamData[6] = m.getTurnOver()[1];
+		teamData[7] = m.getQuickPoints()[1];
+		teamData[8] = m.getRestrictedPoints()[1];
+		teamData[9] = m.getTurnOverPoints()[1];
+		teamData[10] = m.getMaxPoints()[1];
+		
+
 		return teamData;
 
 	}
@@ -96,9 +119,10 @@ public class TeamComparePanel extends JPanel {
 			} else {
 				attribute[i] = false;
 			}
-			cof[i] = 100.0;
+			cof[i] = 100;
 		}
-
+		
+		
 	}
 
 	public void paintComponent(Graphics g) {
@@ -182,36 +206,33 @@ public class TeamComparePanel extends JPanel {
 
 			if (selected) {
 				setting.setIcon(selIcon);
-				
-				CompareBarChartPanel chartPanel = new CompareBarChartPanel(width, height * 17 / 20,
-						attribute, attributeNames, getTeamValue(m), getRivalValue(m),
-						cof);
-				chartPanel.setLocation(0, height * 3/ 20);
-				ChoosePanel choose = new ChoosePanel(width,height*3/20);
-				choose.setLocation(0,0);
+
+				CompareBarChartPanel chartPanel = new CompareBarChartPanel(
+						width, height * 17 / 20, attribute, attributeNames,
+						getTeamValue(match), getRivalValue(match), cof);
+				chartPanel.setLocation(0, height * 3 / 20);
+				ChoosePanel choose = new ChoosePanel(width, height * 3 / 20);
+				choose.setLocation(0, 0);
 				content.removeAll();
-				
+
 				content.add(chartPanel);
 				content.add(choose);
 				content.validate();
-				
-				
+
 				content.updateUI();
 				content.repaint();
 			} else {
 				setting.setIcon(oldIcon);
-				
-				CompareBarChartPanel chartPanel = new CompareBarChartPanel(width, height * 17 / 20,
-						attribute, attributeNames, getTeamValue(m), getRivalValue(m),
-						cof);
+
+				CompareBarChartPanel chartPanel = new CompareBarChartPanel(
+						width, height * 17 / 20, attribute, attributeNames,
+						getTeamValue(match), getRivalValue(match), cof);
 				chartPanel.setLocation(0, 0);
-				
-				
+
 				content.removeAll();
-				
+
 				content.add(chartPanel);
-				
-				
+
 				content.validate();
 				content.updateUI();
 				content.repaint();
@@ -242,20 +263,22 @@ public class TeamComparePanel extends JPanel {
 		int size;
 		int chooseWidth;
 		int chooseHeight;
-		ChoosePanel(int chooseWidth,int chooseHeight) {
+
+		ChoosePanel(int chooseWidth, int chooseHeight) {
 			this.setLayout(null);
 			this.chooseWidth = chooseWidth;
 			this.chooseHeight = chooseHeight;
 			size = attributeNames.length;
 			for (int i = 0; i < size; i++) {
-				MyCheckBox checkBox = new MyCheckBox(chooseWidth/5, chooseHeight/(size/5+1),
-						attributeNames[i], i);
-				checkBox.setLocation(chooseWidth/5 * (i % 5), (chooseHeight/(size/5+1)) * (i / 5));
+				MyCheckBox checkBox = new MyCheckBox(chooseWidth / 5,
+						chooseHeight / (size / 5 + 1), attributeNames[i], i);
+				checkBox.setLocation(chooseWidth / 5 * (i % 5),
+						(chooseHeight / (size / 5 + 1)) * (i / 5));
 				checkBox.setSelected(attribute[i]);
 
 				ChoosePanel.this.add(checkBox);
 			}
-			this.setSize(chooseWidth,chooseHeight);
+			this.setSize(chooseWidth, chooseHeight);
 		}
 
 		public void paintComponent(Graphics g) {
@@ -396,12 +419,12 @@ public class TeamComparePanel extends JPanel {
 					RenderingHints.VALUE_ANTIALIAS_ON);
 			g2.setColor(new Color(246, 246, 246));
 			g2.fillRect(width * 9 / 20, 0, width / 10, height);
-			
+
 			int half = 9 * width / 20;
-			int barWidth = width * 8 /20;
+			int barWidth = width * 8 / 20;
 			int barHeight = height / 16;
 			int barHeightSeparator = height / 40;
-			for (int i = 0,j=0; i < attr_name.length; i++) {
+			for (int i = 0, j = 0; i < attr_name.length; i++) {
 				if (attr[i]) {
 
 					Color a;
@@ -441,9 +464,8 @@ public class TeamComparePanel extends JPanel {
 					g2.drawString(b_value[i] + "", width - half + rightBarWidth
 							+ width / 20, (int) (barHeight * (j + 1.5)
 							+ barHeightSeparator * (j + 1) - strHeight / 2));
-					
-					
-					//中间属性名
+
+					// 中间属性名
 					g2.setColor(Color.black);
 					g2.setFont(new Font("微软雅黑", Font.PLAIN, height / 30));
 					int strWidth = g.getFontMetrics().stringWidth(attr_name[i]);
@@ -457,7 +479,6 @@ public class TeamComparePanel extends JPanel {
 				}
 			}
 
-			
 		}
 
 	}
