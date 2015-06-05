@@ -3,6 +3,7 @@ package BLservice;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import vo.EventVo;
 import vo.HotZonevo;
@@ -14,12 +15,12 @@ public interface BLservice extends Remote{
 	/**
 	 * 得到当前正在直播的比赛信息
 	 */
-	public Matchvo getLiveMatchInfo()throws RemoteException;
+	public Matchvo getLiveMatchInfo() throws RemoteException;
 
 	/**
 	 * 得到当前正在直播的直播事件
 	 */
-	public ArrayList<EventVo> getLiveEvent()throws RemoteException;   //返回本节的所有信息
+	public ArrayList<EventVo> getLiveEvent()throws RemoteException;
 
 	/**
 	 * 得到赛季的所有球员
@@ -51,4 +52,41 @@ public interface BLservice extends Remote{
 	 * @return 内线(中锋加上大前锋能力综合)、外线(其他位置能力综合)、配合（每百回合的传球次数）、进攻（得分）、防守（失分）
 	 */
 	public double[] getTeamAbility(String teamNameEn)throws RemoteException;
+
+	/**
+	 * @param string 例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期 
+	 * 
+	 * @return
+	 */
+	public Collection<? extends Matchvo> getTodayMatches(String string)throws RemoteException;
+
+	/**
+	 * 
+	 * @param teamNames 两个球队名称 
+	 * @return
+	 */
+	public Teamvo[] getTeamsByMatch(String[] teamNames)throws RemoteException;
+
+	/**
+	 * 
+	 * @param nameOfReboundsKing
+	 * @return
+	 */
+	public Playervo getPlayerByName(String nameOfReboundsKing)throws RemoteException;
+
+	/**
+	 * 
+	 * @param playerName
+	 * @param season
+	 * @param isPlayOff
+	 * @return
+	 */
+	public Teamvo getTeamByPlayerName(String playerName, String season, boolean isPlayOff)throws RemoteException;
+
+	/**
+	 * 
+	 * @param teamName
+	 * @return teamvo
+	 */
+	public Teamvo getTeamByTeamName(String teamName)throws RemoteException ;
 }
