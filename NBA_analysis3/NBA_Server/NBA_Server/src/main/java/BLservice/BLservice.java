@@ -14,6 +14,7 @@ import vo.Teamvo;
 public interface BLservice extends Remote{
 	/**
 	 * 得到当前正在直播的比赛信息
+	 * @throws RemoteException 
 	 */
 	public Matchvo getLiveMatchInfo() throws RemoteException;
 
@@ -28,7 +29,7 @@ public interface BLservice extends Remote{
 	 * @param Season 赛季名，例如"12-13"
 	 * @param isPlayOff  true为季后赛，false为常规赛
 	 */
-	public ArrayList<Playervo> getAllPlayers(String Season, boolean isPlayOff)throws RemoteException;
+	public ArrayList<Playervo> getAllPlayers(String Season, boolean isPlayOff);
 
 	/**
 	 * 得到赛季的所有球队
@@ -36,7 +37,7 @@ public interface BLservice extends Remote{
 	 * @param Season 赛季名，例如"12-13"
 	 * @param isPlayOff true为季后赛，false为常规赛
 	 */
-	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff)throws RemoteException;
+	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff);
 
 	/**
 	 * @param teamNameEn 球队的3大写字母名称
@@ -44,14 +45,14 @@ public interface BLservice extends Remote{
 	 * @param isTotal 此项为true时，返回所有球队的热区总计数据，此时teamNameEn项被忽略
 	 * @return
 	 */
-	public HotZonevo getHotZone(String teamNameEn,boolean isSeason,boolean isTotal)throws RemoteException;
+	public HotZonevo getHotZone(String teamNameEn,boolean isSeason,boolean isTotal);
 	
 	/**
 	 * in abeyance,waiting for the formulas
 	 * @param teamNameEn
 	 * @return 内线(中锋加上大前锋能力综合)、外线(其他位置能力综合)、配合（每百回合的传球次数）、进攻（得分）、防守（失分）
 	 */
-	public double[] getTeamAbility(String teamNameEn)throws RemoteException;
+	public double[] getTeamAbility(String teamNameEn);
 
 	/**
 	 * @param string 例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期 
