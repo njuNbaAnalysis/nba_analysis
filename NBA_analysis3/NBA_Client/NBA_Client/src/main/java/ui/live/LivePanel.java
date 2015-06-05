@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -77,7 +78,12 @@ public class LivePanel extends JPanel {
 			this.labelHeight = height;
 			this.setLayout(null);
 			this.setSize(width, height);
-			teams = bl.getTeamsByMatch(match);
+			try {
+				teams = bl.getTeamsByMatch(match.getTeams());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 		public void paintComponent(Graphics g2){
@@ -99,9 +105,9 @@ public class LivePanel extends JPanel {
 			g.setFont(new Font("default", Font.BOLD, 20));
 			int strWidth = g.getFontMetrics(g.getFont()).stringWidth("结束");
 			g.drawString("结束",labelWidth/2-strWidth/2 ,labelHeight * 1 / 10-8);//这个结束需要修改
-			
-			g.drawImage(teams[0].getLogo(), labelWidth*12/36, labelHeight*7/24, this);
-			g.drawImage(teams[1].getLogo(), labelWidth*83/144, labelHeight*7/24,this);
+			//暂时不画
+			/*g.drawImage(teams[0].getLogo(), labelWidth*12/36, labelHeight*7/24, this);
+			g.drawImage(teams[1].getLogo(), labelWidth*83/144, labelHeight*7/24,this);*/
 			
 			
 			g.setColor(Color.black);
@@ -112,7 +118,7 @@ public class LivePanel extends JPanel {
 			
 			g.setFont(new Font("default", Font.PLAIN, 15));
 
-			g.drawString(
+			/*g.drawString(
 					"球队战绩"+teams[0].getNumOfVictory()
 							+ "-"
 							+ (teams[0].getNumOfMatches() - teams[0]
@@ -121,7 +127,7 @@ public class LivePanel extends JPanel {
 					"球队战绩"+teams[1].getNumOfVictory()
 							+ "-"
 							+ (teams[1].getNumOfMatches() - teams[1]
-									.getNumOfVictory()), labelWidth*30/36, labelHeight*7/12);
+									.getNumOfVictory()), labelWidth*30/36, labelHeight*7/12);*/
 			
 			g.setFont(new Font("default", Font.PLAIN, 80));
 			strWidth = g.getFontMetrics(g.getFont()).stringWidth("VS");
@@ -137,8 +143,8 @@ public class LivePanel extends JPanel {
 			
 			
 			g.setFont(new Font("default", Font.PLAIN, 30));
-			g.drawString(match.getTeams()[0], labelWidth*8/24, labelHeight*19/24);
-			g.drawString(match.getTeams()[1], labelWidth*8/24, labelHeight*22/24);
+		/*	g.drawString(match.getTeams()[0], labelWidth*8/24, labelHeight*19/24);
+			g.drawString(match.getTeams()[1], labelWidth*8/24, labelHeight*22/24);*/
 			g.drawString(match.getPointsList().get(0)[0] + "", labelWidth*10/24, labelHeight*19/24);
 			g.drawString(match.getPointsList().get(1)[0] + "", labelWidth*11/24, labelHeight*19/24);
 			g.drawString(match.getPointsList().get(2)[0] + "", labelWidth*12/24, labelHeight*19/24);
@@ -274,14 +280,18 @@ public class LivePanel extends JPanel {
 	public void refresh(ArrayList<EventVo> newEventList) {
 		if(wordLivePanel!=null){
 			int latestTime = 0;
-			for(EventVo event:eventList){
-				if(latestTime>event.getTimeInSecond()){
-					latestTime = event.getTimeInSecond();
+			if(eventList.size()!=0){
+				for(EventVo event:eventList){
+					if(latestTime>event.getTimeInSecond()){
+						latestTime = event.getTimeInSecond();
+					}
 				}
 			}
 			
-			int newTime = eventList.get(0).getTimeInSecond();
-			for(EventVo event:newEventList){
+			
+			
+			for(int i=newEventList.size()-1;i>=0;i--){
+				EventVo event = newEventList.get(i);
 				if(event.getTimeInSecond()>latestTime){
 					eventList.add(event);
 				}
@@ -303,7 +313,13 @@ public class LivePanel extends JPanel {
 		DataFactory factory = DataFactoryMySql.getInstance();
 		final BLservice bl = factory.getBLservice();
 
-		Matchvo m = bl.getLiveMatchInfo();
+		Matchvo m = null;
+		try {
+			m = bl.getLiveMatchInfo();
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		final LivePanel chart = new LivePanel(1280, 1080,bl,m);
 		chart.setBounds(0, 0, 1280, 1080);
 	
@@ -319,10 +335,19 @@ public class LivePanel extends JPanel {
 			public void run() {
 				int i = 0;
 				while (true) {
-					ArrayList<EventVo> eventList = bl.getLiveEvent();
+					ArrayList<EventVo> eventList = null;
+					Matchvo m = null;
+					try {
+						eventList = bl.getLiveEvent();
+						System.out.println("eventList"+eventList.size());
+						m = bl.getLiveMatchInfo();
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
 					
-					Matchvo m = bl.getLiveMatchInfo();
+					
 					
 					chart.refresh(eventList);
 					chart.setMatch(m);

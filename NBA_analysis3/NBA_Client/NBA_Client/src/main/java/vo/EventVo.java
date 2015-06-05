@@ -93,6 +93,17 @@ public class EventVo implements Serializable{
 		}
 		return (int) (minute * 60 + second);
 	}
+	
+	// 以秒数的形式返回时间
+		public int getSectionTime() {
+			String[] array = time.split(":");
+			int minute = Integer.parseInt(array[0]);
+			double second = Double.parseDouble(array[1]);
+			
+			return (int) (minute * 60 + second);
+		}
+	
+	
 
 	// 返回本队的得分
 	public int getTeamPoint() {
