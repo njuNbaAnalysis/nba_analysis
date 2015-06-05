@@ -10,16 +10,17 @@ import javax.imageio.ImageIO;
 
 public class Teamvo implements Serializable {
 	// raw data
-	private String name; // 球队名
-	private String abbreviation; // 缩写
-	private String location; // 地区
+	private String name; // 球队名，例"阿纳海姆搞基"
+	private String abbreviation; // 缩写，例"ATL"
 	private char conference; // 东部赛区or西部赛区 E,W
 	private String division;
-	private String homeCourt; // 主场
+	
+	private String location; // 地区
+    private String homeCourt; // 主场
 	private int setUpTime; // 建立时间
 
 	// not raw data
-	private ArrayList<String> playerList = new ArrayList<String>(); // 球员列表
+	private ArrayList<String> playerList = new ArrayList<String>(); // 球员id列表
 
 	// 累加
 	private int numOfMatches; // 比赛场数
@@ -66,6 +67,12 @@ public class Teamvo implements Serializable {
 	// private double fieldGoalsPercentage; //投篮命中率
 	// private double winningPercentage; //胜率
 	// private int reboundsRival; //对手总篮板
+	
+	//deprecated
+	{
+	  
+	  
+	}
 
 	public Teamvo(String name, String abbreviation, String location,
 			char conference, String division, String homeCourt, int setUpTime,
