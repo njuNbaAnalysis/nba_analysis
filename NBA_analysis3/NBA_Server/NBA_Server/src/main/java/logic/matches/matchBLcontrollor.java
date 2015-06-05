@@ -76,6 +76,7 @@ public class matchBLcontrollor {
 	public ArrayList<EventVo> getLiveEvent() {
 		// TODO Auto-generated method stub
 		ArrayList<EventVo> list = NBALive(getPeriod());
+		if(list.size()==0) return list;
 		if (list.get(0).getTime().equals("00:00.0"))
 			increasePeriod();
 		System.out.println(getPeriod());
