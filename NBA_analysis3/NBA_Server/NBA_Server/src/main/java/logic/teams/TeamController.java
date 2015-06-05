@@ -1,11 +1,13 @@
 package logic.teams;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import po.HotZone;
 import vo.HotZonevo;
+import vo.Teamvo;
 import vo.HotZonevo.Data;
 import data.teams.HotZoneData;
 
@@ -64,5 +66,24 @@ public class TeamController implements Serializable{
         return vo;
     }
     
+    /**
+     * 得到赛季的所有球队
+     * 
+     * @param Season 赛季名，例如"12-13"
+     * @param isPlayOff true为季后赛，false为常规赛
+     */
+    public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff){
+        // TODO Auto-generated method stub
+        return null;
+    }
     
+    /**
+     * 
+     * @param teamName
+     * @return teamvo
+     */
+    public Teamvo getTeamByTeamName(String teamName, String season, boolean isPlayOff){
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

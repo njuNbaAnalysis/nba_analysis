@@ -7,8 +7,8 @@ import java.util.Collection;
 
 import logic.matches.NBALiveBLControllor;
 import logic.matches.matchBLcontrollor;
-import logic.teams.TeamController;
 import logic.players.playerBLcontrollor;
+import logic.teams.TeamController;
 import vo.EventVo;
 import vo.HotZonevo;
 import vo.Matchvo;
@@ -54,8 +54,7 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 
 	@Override
 	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff) throws RemoteException{
-		// TODO Auto-generated method stub
-		return null;
+		return TeamController.getInstance().getAllTeams(Season, isPlayOff);
 	}
 
     @Override
@@ -77,30 +76,28 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 		return matchBL.getTodayMatched(string);
 	}
 
+	//@Override
+/*	public Teamvo[] getTeamsByMatch(String[] teamNames) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
+
 	@Override
-	public Teamvo[] getTeamsByMatch(String[] teamNames) throws RemoteException {
+	public Playervo getPlayerById(String idOfReboundsKing)throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Playervo getPlayerByName(String nameOfReboundsKing)
-			throws RemoteException {
+	public Teamvo getTeamByPlayerId(String playerId, String season, boolean isPlayOff)throws RemoteException{
+
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Teamvo getTeamByPlayerName(String playerName, String season,
-			boolean isPlayOff) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Teamvo getTeamByTeamName(String teamName) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public Teamvo getTeamByTeamName(String teamName, String season, boolean isPlayOff) throws RemoteException {
+		return TeamController.getInstance().getTeamByTeamName(teamName, season, isPlayOff);
 	}
 
 	@Override

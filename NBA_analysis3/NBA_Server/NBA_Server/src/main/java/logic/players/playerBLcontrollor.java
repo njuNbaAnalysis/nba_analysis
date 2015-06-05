@@ -75,4 +75,12 @@ public class playerBLcontrollor {
 		return result;
 	}
 
+	/**
+	 *
+	 * @param season例: "12-13"，isPlayOff:是否是季后赛
+	 * @return 得到此球员这赛季所呆的球队的中文全名
+	 */
+	public String getFullZhName(String playerId,String season,boolean isPlayOff){
+	    return null;
+	}
 }
