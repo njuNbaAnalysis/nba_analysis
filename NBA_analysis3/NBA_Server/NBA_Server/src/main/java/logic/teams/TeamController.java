@@ -72,7 +72,7 @@ public class TeamController implements Serializable{
      * @param Season 赛季名，例如"12-13"
      * @param isPlayOff true为季后赛，false为常规赛
      */
-    public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff){
+    public ArrayList<Teamvo> getAllTeams(String season, boolean isPlayOff){
         // TODO Auto-generated method stub
         return null;
     }
