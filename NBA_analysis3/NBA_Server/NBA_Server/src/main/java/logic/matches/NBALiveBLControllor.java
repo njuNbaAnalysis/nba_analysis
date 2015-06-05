@@ -39,7 +39,7 @@ public class NBALiveBLControllor {
 		ArrayList<RecordOfPlayervo> secondRecordList = NBALiveMatchItem(
 				getId(), false);
 		NBALiveMatch Livematch = NBALiveCompare(getId());
-		Matchvo m = new Matchvo(Livematch.getDate(), Livematch.getTeams(),
+		Matchvo m = new Matchvo(Livematch.getDate(),true,Livematch.getTeams(),
 				Livematch.getPoints(), Livematch.getPointsList(),
 				firstRecordList, secondRecordList, Livematch.getRebounds(),
 				Livematch.getAssists(), Livematch.getBlocks(),

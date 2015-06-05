@@ -17,6 +17,7 @@ public class NBALiveTest {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				mbl.setPeriod(1);
 				while (true) {
 					ArrayList<EventVo> list = mbl.getLiveEvent();
 					if(list.size()==0) break;
