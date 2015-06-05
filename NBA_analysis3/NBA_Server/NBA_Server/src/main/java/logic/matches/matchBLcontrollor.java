@@ -78,24 +78,36 @@ public class matchBLcontrollor {
 		for (int i = 0; i < m.getMatchItemList().size(); i++) {
 			matchItem temp = m.getMatchItemList().get(i);
 			if (temp.isIshome()) {
-				firstRecordList.add(new RecordOfPlayervo(temp.getPid(),
-						temp.getPid(), temp.getTime(), temp.getFieldGoalsHit(), temp
-								.getFieldGoalsAttempt(), temp
-								.getThreepointHit(), temp
-								.getThreepointAttempt(),
-						temp.getFreethrowHit(), temp.getFreethrowAttempt(),
-						temp.getOffenseRebounds(), temp.getDefenseRebounds(),
-						temp.getRebounds(), temp.getAssists(),
-						temp.getSteals(), temp.getBlockShots(), temp
-								.getTurnOver(), temp.getFouls(), temp
-								.getPoints(), temp.isIsstart(), temp
-								.getThreepointpercent(), temp
+				firstRecordList.add(new RecordOfPlayervo(temp.getPid(), temp
+						.getPid(), temp.getTime(), temp.getFieldGoalsHit(),
+						temp.getFieldGoalsAttempt(), temp.getThreepointHit(),
+						temp.getThreepointAttempt(), temp.getFreethrowHit(),
+						temp.getFreethrowAttempt(), temp.getOffenseRebounds(),
+						temp.getDefenseRebounds(), temp.getRebounds(), temp
+								.getAssists(), temp.getSteals(), temp
+								.getBlockShots(), temp.getTurnOver(), temp
+								.getFouls(), temp.getPoints(),
+						temp.isIsstart(), temp.getThreepointpercent(), temp
+								.getFreethrowpercent(), temp
+								.getFieldGoalspercent()));
+			} else {
+				secondRecordList.add(new RecordOfPlayervo(temp.getPid(), temp
+						.getPid(), temp.getTime(), temp.getFieldGoalsHit(),
+						temp.getFieldGoalsAttempt(), temp.getThreepointHit(),
+						temp.getThreepointAttempt(), temp.getFreethrowHit(),
+						temp.getFreethrowAttempt(), temp.getOffenseRebounds(),
+						temp.getDefenseRebounds(), temp.getRebounds(), temp
+								.getAssists(), temp.getSteals(), temp
+								.getBlockShots(), temp.getTurnOver(), temp
+								.getFouls(), temp.getPoints(),
+						temp.isIsstart(), temp.getThreepointpercent(), temp
 								.getFreethrowpercent(), temp
 								.getFieldGoalspercent()));
 			}
 		}
-		Matchvo result = new Matchvo(m.getDate(),m.isIsplayoff(), teams, points, pointsList,
-				firstRecordList, secondRecordList);
+		Matchvo result = new Matchvo(m.getDate() + "_" + m.getSeason(),
+				m.isIsplayoff(), teams, points, pointsList, firstRecordList,
+				secondRecordList);
 		return result;
 	}
 
@@ -104,15 +116,16 @@ public class matchBLcontrollor {
 		// String season = string.substring(0, 5);
 		String date = string.substring(6);
 		ArrayList<match> list = matchReader.getMatchesByTime(date);
+		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
 		for (int i = 0; i < list.size(); i++) {
 			match temp = list.get(i);
 			temp.setPointsItemList(pointsItemReader.getpointsItemById(temp
 					.getMid()));
 			temp.setMatchItemList(matchItemReader.getMatchItemById(temp
 					.getMid()));
+			result.add(changematchToMatchvo(temp));
 		}
-
-		return null;
+		return result;
 	}
 
 }
