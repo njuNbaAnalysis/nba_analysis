@@ -14,7 +14,7 @@ import vo.Matchvo;
 import vo.Playervo;
 import vo.RecordOfPlayervo;
 
-public class matchBLcontrollor implements Serializable {
+public class matchBLcontrollor{
 	private int period = 1;
 
 	private static matchBLcontrollor matchController = null;

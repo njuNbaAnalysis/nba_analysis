@@ -9,7 +9,7 @@ import vo.Playervo;
 import data.players.PlayerItemReader;
 import data.players.PlayerReader;
 
-public class playerBLcontrollor implements Serializable {
+public class playerBLcontrollor {
 
 	private static playerBLcontrollor playerBLcontrollor = null;
 	private PlayerReader playerReader;

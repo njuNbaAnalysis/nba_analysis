@@ -16,12 +16,8 @@ import BLservice.BLservice;
 public class BLController implements BLservice,Serializable{
 	private static BLController blController = null;
 	
-	private matchBLcontrollor matchController = null;
-	private playerBLcontrollor playerBLcontrollor = null;
 
 	private BLController() {
-		matchController = matchBLcontrollor.getInstance();
-		playerBLcontrollor = playerBLcontrollor.getInstance();
 	}
 
 	public static BLController getInstance() {
@@ -36,22 +32,22 @@ public class BLController implements BLservice,Serializable{
 	@Override
 	public Matchvo getLiveMatchInfo() {
 		// TODO Auto-generated method stub
-		matchController = matchBLcontrollor.getInstance();
+		matchBLcontrollor matchController = matchBLcontrollor.getInstance();
 		return matchController.getLiveMatchInfo();
 	}
 
 	@Override
 	public ArrayList<EventVo> getLiveEvent() {
 		// TODO Auto-generated method stub
-		matchController = matchBLcontrollor.getInstance();
+		matchBLcontrollor matchController = matchBLcontrollor.getInstance();
 		return matchController.getLiveEvent();
 	}
 
 	@Override
 	public ArrayList<Playervo> getAllPlayers(String Season, boolean isPlayOff) {
 		// TODO Auto-generated method stub
-		playerBLcontrollor = playerBLcontrollor.getInstance();
-		return playerBLcontrollor.getAllPlayers(Season,isPlayOff);
+		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
+		return playerBLcontro.getAllPlayers(Season,isPlayOff);
 	}
 
 	@Override
