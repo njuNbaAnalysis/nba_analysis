@@ -3,6 +3,7 @@ package BLTest.TeamBLTest;
 import static org.junit.Assert.assertTrue;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import logic.BLController;
 
@@ -13,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import vo.HotZonevo;
+import vo.Teamvo;
 import BLservice.BLservice;
 
 public class TeamBLServiceTest {
@@ -36,7 +38,7 @@ public class TeamBLServiceTest {
     public void tearDown() throws Exception {
     }
 
-    @Test
+/*    @Test
     public void testGetHotZone() {
         HotZonevo vo;
 		try {
@@ -47,7 +49,21 @@ public class TeamBLServiceTest {
 		}
         
         assertTrue(true);
+    }*/
+    
+    @Test
+    public void testGetAllTeams(){
+        long start = System.currentTimeMillis();
+        
+        try {
+            ArrayList<Teamvo> list = service.getAllTeams("14-15", false);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        long end =  System.currentTimeMillis();
+        
+        System.out.println(end - start);
     }
-    
-    
 }

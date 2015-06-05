@@ -42,5 +42,4 @@ public class TeamvoGeneratorTest {
         assertTrue(true);
     }
     
-    
 }
