@@ -3,12 +3,13 @@ package logic;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+import logic.teams.TeamNameList;
 import BLservice.BLservice;
 import vo.Teamvo;
 
 public class Main {
     public static void main(String argsp[]) throws RemoteException{
-        BLservice service = BLController.getInstance();
+/*        BLservice service = BLController.getInstance();
         
         long start = System.currentTimeMillis();
         
@@ -22,6 +23,9 @@ public class Main {
         
         long end =  System.currentTimeMillis();
         
-        System.out.println(end - start);
+        System.out.println(end - start);*/
+        
+        TeamNameList teamNameList = TeamNameList.getIntance();
+        // System.out.println(teamNameList.getEnAbbrByZhAbbr(""));
     }
 }
