@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
-import reload
 
 import requests
 import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 import CsvHelper
 
