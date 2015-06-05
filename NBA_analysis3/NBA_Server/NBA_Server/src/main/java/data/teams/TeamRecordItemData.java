@@ -70,16 +70,32 @@ public class TeamRecordItemData {
         String sql = "select * from teamrecorditem where dataType like ? "
                 + "and teamNameEn like ? "
                 + "and beginYear like ? "
-                + "and playerId like ? "
-                + "and isSeason = ?";
-        try {
-            pstm = conn.prepareStatement(sql);
+                + "and isSeason = ? ";
+        
+        if(item.getDataType().equals("playerItem")){
+            sql += "and playerId like ? ";
+            try {
+                pstm = conn.prepareStatement(sql);
+                pstm.setString(5, TeamNameListData.getParameterString(item.getPlayerId()));
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             
+        }
+        else{
+            try {
+                pstm = conn.prepareStatement(sql);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        try {
             pstm.setString(1, TeamNameListData.getParameterString(item.getDataType()));
             pstm.setString(2, TeamNameListData.getParameterString(item.getTeamNameEn()));
             pstm.setString(3, TeamNameListData.getParameterString(item.getBeginYear()));
-            pstm.setString(4, TeamNameListData.getParameterString(item.getPlayerId()));
-            pstm.setBoolean(5, item.isSeason());
+            pstm.setBoolean(4, item.isSeason());
             rs = pstm.executeQuery();
             
             while(rs.next()){

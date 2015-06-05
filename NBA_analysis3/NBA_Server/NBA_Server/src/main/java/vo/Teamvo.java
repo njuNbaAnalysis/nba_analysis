@@ -405,35 +405,7 @@ public class Teamvo implements Serializable {
 		}
 	}
 
-	// 得到近十场的输赢情况,lose = 0, win =1
-	public double[] getLatestWinOrLose() {
-		return null;
-	}
 
-	// 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
-	public String[] getLatestRecord() {
-		return null;
-	}
-
-	// 得到近十场的攻防比(得分/失分)
-	public double[] getLatestOffendThanDefend() {
-		return null;
-	}
-
-	// 得到近十场的得分(每一场的每百回合得分)
-	public double[] getLatestOffend() {
-		return null;
-	}
-
-	// 得到近十场的失分(每一场的每百回合失分)
-	public double[] getLatestDefend() {
-		return null;
-	}
-
-	// 得到近十场的节奏(每一场的回合数)
-	public double[] getLatestTempo() {
-		return null;
-	}
 
     public String getSeason() {
         return season;
@@ -603,5 +575,56 @@ public class Teamvo implements Serializable {
         return this.getOffenseReboundsRival() + this.getDefenseReboundsRival();
     }
     
+    // 得到近十场的输赢情况,
+    public boolean[] getLatestWinOrLose() {
+        return null;
+    }
+
+    // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
+    public String[] getLatestRecord() {
+        return null;
+    }
+
+    // 得到近十场的攻防比(得分/失分)
+    public double[] getLatestOffendThanDefend() {
+        return null;
+    }
+
+    // 得到近十场的得分(每一场的每百回合得分)
+    public double[] getLatestOffend() {
+        return null;
+    }
+
+    // 得到近十场的失分(每一场的每百回合失分)
+    public double[] getLatestDefend() {
+        return null;
+    }
+
+    // 得到近十场的节奏(每一场的回合数)
+    public double[] getLatestTempo() {
+        return null;
+    }
+    
+    
+    //for debug only
+    @Override
+    public String toString() {
+        return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", location=" + location + ", conference="
+                + conference + ", division=" + division + ", homeCourt=" + homeCourt + ", season=" + season
+                + ", isPlayOff=" + isPlayOff + ", setUpTime=" + setUpTime + ", playerList=" + playerList
+                + ", numOfMatches=" + numOfMatches + ", numOfVictory=" + numOfVictory + ", fieldGoalAttemps="
+                + fieldGoalAttemps + ", fieldGoalHits=" + fieldGoalHits + ", threePointerAttempts="
+                + threePointerAttempts + ", threePointerHits=" + threePointerHits + ", freeThrowAttempts="
+                + freeThrowAttempts + ", freeThrowHits=" + freeThrowHits + ", offensiveRebounds=" + offensiveRebounds
+                + ", defensiveRebounds=" + defensiveRebounds + ", assists=" + assists + ", steals=" + steals
+                + ", blockShots=" + blockShots + ", turnOver=" + turnOver + ", fouls=" + fouls + ", points=" + points
+                + ", offensiveRounds=" + offensiveRounds + ", defensiveRounds=" + defensiveRounds
+                + ", offenseEfficiency=" + offenseEfficiency + ", defenseEfficiency=" + defenseEfficiency
+                + ", reboundsEfficiency=" + reboundsEfficiency + ", stealsEfficiency=" + stealsEfficiency
+                + ", assistsPercentage=" + assistsPercentage + ", pointsRival=" + pointsRival
+                + ", fieldGoalAttempsRival=" + fieldGoalAttempsRival + ", threePointerAttemptsRival="
+                + threePointerAttemptsRival + ", offenseReboundsRival=" + offenseReboundsRival
+                + ", defenseReboundsRival=" + defenseReboundsRival + ", rankingInLeague=" + rankingInLeague + "]";
+    }
     
 }

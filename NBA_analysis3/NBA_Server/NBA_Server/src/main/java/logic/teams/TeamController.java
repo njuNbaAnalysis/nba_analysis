@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import po.HotZone;
+import po.TeamListItem;
 import vo.HotZonevo;
 import vo.Teamvo;
 import vo.HotZonevo.Data;
@@ -73,8 +74,13 @@ public class TeamController implements Serializable{
      * @param isPlayOff true为季后赛，false为常规赛
      */
     public ArrayList<Teamvo> getAllTeams(String season, boolean isPlayOff){
-        // TODO Auto-generated method stub
-        return null;
+        TeamNameList teamNameList = TeamNameList.getIntance();
+        ArrayList<Teamvo> resultList = new ArrayList<Teamvo>();
+        TeamvoGenerator generator = TeamvoGenerator.getInstance();
+        for(TeamListItem item:teamNameList.getTeamList()){
+            resultList.add(generator.getTeamvo(item.getTeamNameEn(), season, isPlayOff)); 
+        }
+        return resultList; 
     }
     
     /**
@@ -82,8 +88,7 @@ public class TeamController implements Serializable{
      * @param teamName
      * @return teamvo
      */
-    public Teamvo getTeamByTeamName(String teamName, String season, boolean isPlayOff){
-        // TODO Auto-generated method stub
-        return null;
+    public Teamvo getTeamByTeamName(String teamNameEn, String season, boolean isPlayOff){
+        return TeamvoGenerator.getInstance().getTeamvo(teamNameEn, season, isPlayOff);
     }
 }
