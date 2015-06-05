@@ -10,7 +10,7 @@ import data.matches.NBALiveReader;
 public class NBALiveList {
 	private static ArrayList<NBALivePlayer> listofPlayer;
 	private static ArrayList<NBALiveTeam> listofTeam;
-	private static HashMap<String, String> NBAMatchLiveList = new HashMap<String, String>();
+	static HashMap<String, String> NBAMatchLiveList = new HashMap<String, String>();
 	static{
 		NBAMatchLiveList.put("2015-06-05", "0041400401");
 		NBAMatchLiveList.put("2015-06-08", "0041400402");

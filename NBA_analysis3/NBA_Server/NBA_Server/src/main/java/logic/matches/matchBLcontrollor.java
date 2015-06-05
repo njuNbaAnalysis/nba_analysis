@@ -14,8 +14,9 @@ import vo.Matchvo;
 import vo.Playervo;
 import vo.RecordOfPlayervo;
 
-public class matchBLcontrollor{
+public class matchBLcontrollor {
 	private int period = 1;
+	private String Id;
 
 	private static matchBLcontrollor matchController = null;
 
@@ -56,10 +57,10 @@ public class matchBLcontrollor{
 	public Matchvo getLiveMatchInfo() {
 		// TODO Auto-generated method stub
 		ArrayList<RecordOfPlayervo> firstRecordList = NBALiveMatchItem(
-				"0041400311", true);
+				getId(), true);
 		ArrayList<RecordOfPlayervo> secondRecordList = NBALiveMatchItem(
-				"0041400311", false);
-		NBALiveMatch Livematch = NBALiveCompare("0041400311");
+				getId(), false);
+		NBALiveMatch Livematch = NBALiveCompare(getId());
 		Matchvo m = new Matchvo(Livematch.getDate(), Livematch.getTeams(),
 				Livematch.getPoints(), Livematch.getPointsList(),
 				firstRecordList, secondRecordList, Livematch.getRebounds(),
@@ -84,10 +85,11 @@ public class matchBLcontrollor{
 	private ArrayList<EventVo> NBALive(int period) {
 		ArrayList<EventVo> result = new ArrayList<EventVo>();
 
-		InvokeLive NBALive = new InvokeLive(period, "0041400311");
+		InvokeLive NBALive = new InvokeLive(period, getId());
 		NBALive.run();
 		try {
 			ArrayList<String> Live = NBALive.getLive();
+			
 			String Home_TeamId = Live.get(2).split(",")[1];
 			String Away_TeamId = Live.get(2).split(",")[3];
 			for (int i = 6; i < Live.size(); i++) {
@@ -227,6 +229,14 @@ public class matchBLcontrollor{
 
 	private int getPeriod() {
 		return this.period;
+	}
+
+	private String getId() {
+		Date now = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
+		String current = df.format(now).substring(0, 10);
+		Id = NBALiveList.NBAMatchLiveList.get(current);
+		return Id;
 	}
 
 }
