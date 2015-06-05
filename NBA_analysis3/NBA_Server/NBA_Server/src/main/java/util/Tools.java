@@ -70,4 +70,46 @@ public class Tools {
 
 		return startTime;
 	}
+
+	/**
+	 * 对赛季表示形式的转化
+	 * @param xx_xx，例"00-01"
+	 * @return 例"2000"
+	 */
+	public static String xx_xxToxxxx(String xx_xx){
+	    String[] parts = xx_xx.split("-");
+	    String beginPart = parts[0];
+	    
+	    String result = "";
+	    if(Integer.parseInt(beginPart) >= 46){
+	        result += "19";
+	    }
+	    else{
+	        result += "20";
+	    }
+	    result += beginPart;
+	    
+	    return result;
+	}
+	
+	/**对赛季表示形式的转化
+	 * @param xxxx，例"2000"
+	 * @return 例"00-01"
+	 */
+	public static String xxxxToxx_xx(String xxxx){
+	    String beginPart = xxxx.substring(2, 4);
+	    String endPart = String.valueOf((Integer.parseInt(beginPart) + 1));
+	    
+	    if(endPart.length() == 1){
+	        endPart = "0" + endPart;
+	    }
+	    if(endPart.length() == 3){
+	        endPart = endPart.substring(1, 3);
+	    }
+	    return beginPart + "-" + endPart;
+	}
+	
+	public static void main(String[] args){
+	    System.out.println(xxxxToxx_xx("2000"));
+	}
 }

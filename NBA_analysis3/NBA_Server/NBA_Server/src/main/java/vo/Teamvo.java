@@ -598,4 +598,10 @@ public class Teamvo implements Serializable {
     public void setRankingInLeague(int rankingInLeague) {
         this.rankingInLeague = rankingInLeague;
     }
+
+    public int getReboundsRival() {
+        return this.getOffenseReboundsRival() + this.getDefenseReboundsRival();
+    }
+    
+    
 }

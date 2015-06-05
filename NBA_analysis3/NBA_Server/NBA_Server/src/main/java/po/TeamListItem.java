@@ -3,8 +3,8 @@ package po;
 public class TeamListItem {
     private String teamNameEn;
     private String teamNameZh;
-    private String conference;
-    private String division;
+    private String conference;//例"eastern","western"
+    private String division;//例"atlantic","southeast"
     
     public TeamListItem() {
         super();
