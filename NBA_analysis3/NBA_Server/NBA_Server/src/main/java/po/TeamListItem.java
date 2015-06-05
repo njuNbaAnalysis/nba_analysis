@@ -5,7 +5,19 @@ public class TeamListItem {
     private String teamNameZh;
     private String conference;//例"eastern","western"
     private String division;//例"atlantic","southeast"
+    private String teamNameZnAbbr;//例“子弹”
+    private String homecourt;
     
+    public TeamListItem(String teamNameEn, String teamNameZh, String conference, String division,
+            String teamNameZnAbbr, String homecourt) {
+        super();
+        this.teamNameEn = teamNameEn;
+        this.teamNameZh = teamNameZh;
+        this.conference = conference;
+        this.division = division;
+        this.teamNameZnAbbr = teamNameZnAbbr;
+        this.homecourt = homecourt;
+    }
     public TeamListItem() {
         super();
     }
@@ -39,6 +51,18 @@ public class TeamListItem {
     }
     public void setDivision(String division) {
         this.division = division;
+    }
+    public String getTeamNameZnAbbr() {
+        return teamNameZnAbbr;
+    }
+    public void setTeamNameZnAbbr(String teamNameZnAbbr) {
+        this.teamNameZnAbbr = teamNameZnAbbr;
+    }
+    public String getHomecourt() {
+        return homecourt;
+    }
+    public void setHomecourt(String homecourt) {
+        this.homecourt = homecourt;
     }
     
     

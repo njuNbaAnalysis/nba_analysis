@@ -13,6 +13,8 @@ public class Teamvo implements Serializable {
 	// raw data
 	private String name; // 球队名，例"阿纳海姆搞基"
 	private String abbreviation; // 缩写，例"ATL"
+	
+	@Deprecated
 	private String location; // 地区
 	private char conference; // 东部赛区or西部赛区 E,W
 	private String division;
