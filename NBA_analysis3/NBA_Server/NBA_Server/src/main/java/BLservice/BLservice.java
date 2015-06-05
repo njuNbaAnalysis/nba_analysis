@@ -93,5 +93,5 @@ public interface BLservice extends Remote{
 	 * @param teamName 三个大写英文字母
 	 * @return teamvo
 	 */
-	public Teamvo getTeamByTeamName(String teamName, String season, boolean isPlayOff)throws RemoteException ;
+	public Teamvo getTeamByTeamName(String teamNameEn, String season, boolean isPlayOff)throws RemoteException ;
 }
