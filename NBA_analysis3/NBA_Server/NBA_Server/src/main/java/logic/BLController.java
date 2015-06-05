@@ -2,6 +2,7 @@ package logic;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -15,14 +16,14 @@ import vo.Playervo;
 import vo.Teamvo;
 import BLservice.BLservice;
 
-public class BLController implements BLservice,Serializable{
+public class BLController extends UnicastRemoteObject implements BLservice{
 	private static BLController blController = null;
 	
 
-	private BLController() {
+	private BLController()throws RemoteException {
 	}
 
-	public static BLController getInstance() {
+	public static BLController getInstance()throws RemoteException {
 		if (blController != null) {
 			return blController;
 		} else {
