@@ -57,4 +57,17 @@ public class Tools {
             return rawParameter;
         }
     }
+    
+	// 得到本节开始距离比赛开始的时间
+	static public int getSectionTimeInSecond(int section) {
+		int startTime = 0;
+		for (int i = 1; i < section; i++) {
+			startTime += 60 * 12;
+		}
+		for (int i = 4; i < section; i++) {
+			startTime += 60 * 5;
+		}
+
+		return startTime;
+	}
 }
