@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
+import util.Tools;
+
 /* 比赛直播中的更新事件
  * 事件属性：所在节(1~4，加时用5之后的数字表示)、时间（格式：mm:ss.ms,例如：10:10.1,表示本节还剩10分10.1秒）、比分(xx-xx)、参与球员（球员头像、球员姓名）、事件描述、球队（球队名、队标）
  */
@@ -85,7 +87,7 @@ public class EventVo implements Serializable {
 		int minute = Integer.parseInt(array[0]);
 		double second = Double.parseDouble(array[1]);
 
-		minute += getSectionTimeInSecond(section);
+		minute += Tools.getSectionTimeInSecond(section);
 		return (int) (minute * 60 + second);
 	}
 
@@ -98,18 +100,6 @@ public class EventVo implements Serializable {
 		return (int) (minute * 60 + second);
 	}
 
-	// 得到本节开始距离比赛开始的时间
-	static public int getSectionTimeInSecond(int section) {
-		int startTime = 0;
-		for (int i = 1; i < section; i++) {
-			startTime += 60 * 12;
-		}
-		for (int i = 4; i < section; i++) {
-			startTime += 60 * 5;
-		}
-
-		return startTime;
-	}
 
 	// 返回本队的得分
 	public int getTeamPoint() {
