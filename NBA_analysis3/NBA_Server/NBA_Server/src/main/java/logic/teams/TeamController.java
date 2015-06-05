@@ -15,9 +15,7 @@ import data.teams.HotZoneData;
 public class TeamController implements Serializable{
     private static TeamController teamController = null;
     
-    private TeamController(){
-        
-    }
+    private TeamController(){}
     
     public static TeamController getInstance(){
         if(teamController == null){
