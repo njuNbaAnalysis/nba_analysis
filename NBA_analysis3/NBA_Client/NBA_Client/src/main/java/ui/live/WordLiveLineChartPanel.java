@@ -9,10 +9,12 @@ import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 
 import ui.LineChart;
 import util.Tools;
@@ -74,12 +76,12 @@ public class WordLiveLineChartPanel extends JPanel {
 		for (int i = min; i <= max; i += separator) {
 			seg[(i - min) / separator] = i;
 		}
-
-		chart = new LiveLineChart(seg, width, height * 9 / 10, a_events,
+		
+		
+		chart = new LiveLineChart(seg, width, height * 9 / 10,a_events,
 				b_events, minute, 0);
 		chart.setLocation(0, height / 10);
 		this.add(chart);
-		chart.go();
 
 	}
 
@@ -137,7 +139,9 @@ public class WordLiveLineChartPanel extends JPanel {
 				}
 			}
 		}
-
+	//	a_events.sort(new EventVoComp());
+	//	b_events.sort(new EventVoComp());
+		
 		int separator = 5;
 		min = (min / separator) * separator;
 		max = (max / separator) * separator + separator;
@@ -157,6 +161,7 @@ public class WordLiveLineChartPanel extends JPanel {
 		this.updateUI();
 		this.repaint();
 		chart.go();
+		
 	}
 
 	private void setButton(String[] buttonNames) {
@@ -245,10 +250,8 @@ public class WordLiveLineChartPanel extends JPanel {
 		private int b_num;
 		private int y_num;
 
-		private ArrayList<EventVo> a_value;//大事件在前
+		private ArrayList<EventVo> a_value;//事件按照时间顺序
 		private ArrayList<EventVo> b_value;
-		int a_size;
-		int b_size;
 
 		private volatile int a_finished;
 		private int[] ax_array_limit;
@@ -265,7 +268,7 @@ public class WordLiveLineChartPanel extends JPanel {
 		private Color a_color = new Color(92, 132, 158);
 		private Color b_color = new Color(216, 200, 129);
 
-		private int threadDelay = 1;
+		private int threadDelay = 20;
 
 		private int y_now = -1;// 当前纵坐标的值
 		private int startTime;
@@ -278,8 +281,6 @@ public class WordLiveLineChartPanel extends JPanel {
 			this.seg = seg;
 			this.a_value = a_value;
 			this.b_value = b_value;
-			this.a_size = a_value.size();
-			this.b_size = b_value.size();
 			this.chartheight = height * 18 / 20;
 			this.chartwidth = width * 18 / 20;
 			this.x_separator = chartwidth * 1.0 / (minute * 60);// 表示1秒钟对应的x轴上的偏移
@@ -297,6 +298,7 @@ public class WordLiveLineChartPanel extends JPanel {
 			LineChartListener l = new LineChartListener();
 			this.addMouseListener(l);
 			this.addMouseMotionListener(l);
+			this.go();
 		}
 
 		private void init() {
@@ -314,7 +316,7 @@ public class WordLiveLineChartPanel extends JPanel {
 			
 			for (int i = 0; i < a_num; i++) {
 				ax_array_limit[i] = (int) (x_separator
-						* (a_value.get(a_size-i-1).getTimeInSecond() - startTime) + width / 20);
+						* (a_value.get(i).getTimeInSecond() - startTime) + width / 20);
 				ay_array_limit[i] = (int) ((height * 1 / 20 + chartheight) - (y_separator * (a_value
 						.get(i).getTeamPoint() - seg[0])));
 				if (i == 0) {
@@ -326,7 +328,7 @@ public class WordLiveLineChartPanel extends JPanel {
 
 			for (int i = 0; i < b_num; i++) {
 				bx_array_limit[i] = (int) (x_separator
-						* (b_value.get(b_size-i-1).getTimeInSecond() - startTime) + width / 20);
+						* (b_value.get(i).getTimeInSecond() - startTime) + width / 20);
 				by_array_limit[i] = (int) ((height * 1 / 20 + chartheight) - (y_separator * (b_value
 						.get(i).getTeamPoint() - seg[0])));
 
@@ -400,13 +402,13 @@ public class WordLiveLineChartPanel extends JPanel {
 				g2.setColor(a_color);
 				if (a_finished <= a_num) {
 					g2.drawPolyline(ax_temp, ay_temp,
-							Math.min(a_finished + 1, a_num));
+							Math.min(a_finished, a_num));
 				}
 				g2.setColor(b_color);
 				if (b_finished <= b_num) {
 
 					g2.drawPolyline(bx_temp, by_temp,
-							Math.min(b_finished + 1, b_num));
+							Math.min(b_finished, b_num));
 				}
 
 			}
@@ -432,14 +434,14 @@ public class WordLiveLineChartPanel extends JPanel {
 					}
 
 					if (a_finished < a_num
-							&& ax_now < ax_array_limit[a_finished]) {
+							&& ax_now < ax_array_limit[a_finished]&&ay_now< ay_array_limit[a_finished]) {
 
 						ax_now += 2;
 						ay_now += k1 * 2;
 					}
 
 					if (b_finished < b_num
-							&& bx_now < bx_array_limit[b_finished]) {
+							&& bx_now < bx_array_limit[b_finished]&&by_now< by_array_limit[b_finished]) {
 
 						bx_now += 2;
 						by_now += k2 * 2;
@@ -447,22 +449,15 @@ public class WordLiveLineChartPanel extends JPanel {
 
 					// 修正
 					if (a_finished < a_num
-							&& ax_now > ax_array_limit[a_finished]) {
+							&& (ax_now >= ax_array_limit[a_finished]||ay_now >= ay_array_limit[a_finished])) {
 						ax_now = ax_array_limit[a_finished];
-					}
-
-					if (a_finished < a_num
-							&& ax_now == ax_array_limit[a_finished]) {
 						a_finished++;
 					}
 
-					if (b_finished < b_num
-							&& bx_now > bx_array_limit[b_finished]) {
-						bx_now = bx_array_limit[b_finished];
-					}
 
 					if (b_finished < b_num
-							&& bx_now == bx_array_limit[b_finished]) {
+							&& (bx_now >=bx_array_limit[b_finished]||by_now >= by_array_limit[b_finished])) {
+						bx_now = bx_array_limit[b_finished];
 						b_finished++;
 					}
 
@@ -529,12 +524,12 @@ public class WordLiveLineChartPanel extends JPanel {
 					int node_width = width / 5;
 					int node_height = height / 8;
 					if (record < a_num) {
-						node = new NodeLabel(a_color, a_value.get(a_size-record-1));
+						node = new NodeLabel(a_color, a_value.get(record));
 						node_x = ax_array_limit[record];
 						node_y = ay_array_limit[record];
 					} else {
 						record -= a_num;
-						node = new NodeLabel(b_color, b_value.get(b_size-record-1));
+						node = new NodeLabel(b_color, b_value.get(record));
 						node_x = bx_array_limit[record];
 						node_y = by_array_limit[record];
 					}

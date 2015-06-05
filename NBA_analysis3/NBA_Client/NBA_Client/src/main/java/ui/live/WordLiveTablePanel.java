@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import ui.PlayerJTable;
+import util.Tools;
 import vo.EventVo;
 
 public class WordLiveTablePanel extends JPanel {
@@ -41,8 +42,10 @@ public class WordLiveTablePanel extends JPanel {
 
 		jspane = new JScrollPane();
 		jspane.setBounds(0, height / 10, width, height * 9 / 10);
-
-		eventTable = new WordLiveTable(width, columnNames, eventList, selected);
+		
+		
+		
+		eventTable = new WordLiveTable(width, columnNames, Tools.reverse(eventList), selected);
 
 		jspane.setViewportView(eventTable);
 		this.add(jspane);
@@ -52,7 +55,8 @@ public class WordLiveTablePanel extends JPanel {
 		g.setColor(new Color(87, 89, 91));
 		g.fillRect(0, 0, width, height / 10);
 	}
-
+	
+    
 	private void setButton() {
 		sectionSize = getSectionNum();
 		if (sectionSize > 0) {
@@ -88,7 +92,7 @@ public class WordLiveTablePanel extends JPanel {
 				list.add(event);
 			}
 		}
-		System.out.println(list.size());
+		System.out.println("sectionNum:"+sectionNum+" eventSize:"+list.size());
 		return list;
 	}
 
