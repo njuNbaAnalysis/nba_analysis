@@ -278,7 +278,7 @@ public class LivePanel extends JPanel {
 	}
 
 	public void refresh(ArrayList<EventVo> newEventList) {
-		if(wordLivePanel!=null){
+		if(wordLivePanel!=null&&newEventList.size()>0){
 			int latestTime = 0;
 			if(eventList.size()!=0){
 				for(EventVo event:eventList){
@@ -289,8 +289,8 @@ public class LivePanel extends JPanel {
 			}
 			
 			
-			
-			for(int i=newEventList.size()-1;i>=0;i--){
+			//最新的事件在第一个
+			for(int i=0;i<newEventList.size();i++){
 				EventVo event = newEventList.get(i);
 				if(event.getTimeInSecond()>latestTime){
 					eventList.add(event);

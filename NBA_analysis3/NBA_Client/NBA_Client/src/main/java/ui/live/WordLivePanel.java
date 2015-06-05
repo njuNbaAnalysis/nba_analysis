@@ -175,13 +175,16 @@ public class WordLivePanel extends JPanel {
 				selectedNumber = type;
 			}
 			if (type == 0) {
-				String[] btNames = { "全部", "第一节", "第二节", "第三节", "第四节" };
-				WordLiveLineChartPanel chartPanel = new WordLiveLineChartPanel(
-						btNames, width, height * 9 / 10, eventList);
-				chartPanel.setLocation(0, 0);
-				content.removeAll();
-				content.add(chartPanel);
-				content.updateUI();
+				if(eventList.size()>0){
+					String[] btNames = { "全部", "第一节", "第二节", "第三节", "第四节" };
+					WordLiveLineChartPanel chartPanel = new WordLiveLineChartPanel(
+							btNames, width, height * 9 / 10, eventList);
+					chartPanel.setLocation(0, 0);
+					content.removeAll();
+					content.add(chartPanel);
+					content.updateUI();
+				}
+				
 			}
 
 			if (type == 1) {

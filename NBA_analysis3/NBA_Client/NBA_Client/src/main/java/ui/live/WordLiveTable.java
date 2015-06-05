@@ -54,7 +54,7 @@ public class WordLiveTable extends BaseJTable{
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 		int size = eventList.size();
 	
-			for (int i = size-1; i >=0; i--) {
+			for (int i = 0; i <size; i++) {
 				String[] s = getRowData(eventList.get(i));
 				
 				// 添加数据到表格

@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ui.LineChart;
+import util.Tools;
 import vo.EventVo;
 
 public class WordLiveLineChartPanel extends JPanel {
@@ -25,6 +26,7 @@ public class WordLiveLineChartPanel extends JPanel {
 	int sectionSize;
 	int selectedNumber = -1;// 默认选中“全部”
 	LiveLineChart chart;
+
 	WordLiveLineChartPanel(String[] btNames, int width, int height,
 			ArrayList<EventVo> eventList) {
 		this.setLayout(null);
@@ -35,7 +37,7 @@ public class WordLiveLineChartPanel extends JPanel {
 		this.eventList = eventList;
 		setButton(btNames);
 		setLineChart(eventList);
-		
+
 	}
 
 	private void setLineChart(ArrayList<EventVo> eventList) {
@@ -73,34 +75,23 @@ public class WordLiveLineChartPanel extends JPanel {
 			seg[(i - min) / separator] = i;
 		}
 
-		chart = new LiveLineChart(seg, width, height * 9 / 10,
-				a_events, b_events,minute,0);
+		chart = new LiveLineChart(seg, width, height * 9 / 10, a_events,
+				b_events, minute, 0);
 		chart.setLocation(0, height / 10);
 		this.add(chart);
 		chart.go();
-		
+
 	}
-	
-	
-	//刷新方法暂时没写
+
 	private void updateLineChart(int type) {
 		ArrayList<EventVo> a_events = new ArrayList<EventVo>();
 		ArrayList<EventVo> b_events = new ArrayList<EventVo>();
 		int min = 1000;
 		int max = 0;
 		int minute = 12;
-		int startTime = 0;
-		if(type!=0){
-			for(int i=1;i<type;i++){
-				startTime += 60*12;
-			}
-			for(int i=4;i<type;i++){
-				startTime += 60*5;
-			}
-			
-			
-			
-			
+		int startTime = Tools.getSectionTimeInSecond(type);
+		if (type != 0) {
+
 			for (EventVo event : eventList) {
 				if (event.getNum() == 0 && event.getSection() == type) {
 					a_events.add(event);
@@ -110,23 +101,23 @@ public class WordLiveLineChartPanel extends JPanel {
 				}
 
 			}
-			
+
 			for (EventVo event : eventList) {
 				int point = event.getTeamPoint();
-				if (point < min&& event.getSection() == type) {
+				if (point < min && event.getSection() == type) {
 					min = point;
 				}
 
-				if (point > max&& event.getSection() == type) {
+				if (point > max && event.getSection() == type) {
 					max = point;
 				}
 			}
-			System.out.println("min:"+min+" max:"+max);
-			
-		}else{
+			System.out.println("min:" + min + " max:" + max);
+
+		} else {
 			minute = 48;
 			for (EventVo event : eventList) {
-				if (event.getNum() == 0 ) {
+				if (event.getNum() == 0) {
 					a_events.add(event);
 				}
 				if (event.getNum() == 1) {
@@ -134,7 +125,7 @@ public class WordLiveLineChartPanel extends JPanel {
 				}
 
 			}
-			
+
 			for (EventVo event : eventList) {
 				int point = event.getTeamPoint();
 				if (point < min) {
@@ -146,7 +137,7 @@ public class WordLiveLineChartPanel extends JPanel {
 				}
 			}
 		}
-		
+
 		int separator = 5;
 		min = (min / separator) * separator;
 		max = (max / separator) * separator + separator;
@@ -156,17 +147,18 @@ public class WordLiveLineChartPanel extends JPanel {
 			seg[(i - min) / separator] = i;
 		}
 		this.remove(chart);
-		
-		chart = new LiveLineChart(seg, width, height * 9 / 10,
-				a_events, b_events,minute,startTime);
-		
-		chart.setLocation(0, height / 10);	
-		
+
+		chart = new LiveLineChart(seg, width, height * 9 / 10, a_events,
+				b_events, minute, startTime);
+
+		chart.setLocation(0, height / 10);
+
 		this.add(chart);
 		this.updateUI();
 		this.repaint();
 		chart.go();
 	}
+
 	private void setButton(String[] buttonNames) {
 
 		btArray = new SectionButton[sectionSize];
@@ -203,21 +195,20 @@ public class WordLiveLineChartPanel extends JPanel {
 		public void mousePressed(MouseEvent e) {
 			if ((selectedNumber != type)) {
 				((JButton) e.getSource()).setBackground(newColor);
-				if(selectedNumber!=-1){
+				if (selectedNumber != -1) {
 					btArray[selectedNumber].setBackground(oldColor);
 				}
-				
+
 				selectedNumber = type;
-				
-				for(int i=0;i<sectionSize;i++){
-					if(type==i){
+
+				for (int i = 0; i < sectionSize; i++) {
+					if (type == i) {
 						updateLineChart(type);
 					}
-					
+
 				}
-				
+
 			}
-			
 
 		}
 
@@ -254,8 +245,10 @@ public class WordLiveLineChartPanel extends JPanel {
 		private int b_num;
 		private int y_num;
 
-		private ArrayList<EventVo> a_value;
+		private ArrayList<EventVo> a_value;//大事件在前
 		private ArrayList<EventVo> b_value;
+		int a_size;
+		int b_size;
 
 		private volatile int a_finished;
 		private int[] ax_array_limit;
@@ -274,18 +267,19 @@ public class WordLiveLineChartPanel extends JPanel {
 
 		private int threadDelay = 1;
 
-		
 		private int y_now = -1;// 当前纵坐标的值
 		private int startTime;
 
 		LiveLineChart(int[] seg, int width, int height,
-				ArrayList<EventVo> a_value, ArrayList<EventVo> b_value,int minute,int startTime) {
+				ArrayList<EventVo> a_value, ArrayList<EventVo> b_value,
+				int minute, int startTime) {
 			this.width = width;
 			this.height = height;
 			this.seg = seg;
 			this.a_value = a_value;
 			this.b_value = b_value;
-
+			this.a_size = a_value.size();
+			this.b_size = b_value.size();
 			this.chartheight = height * 18 / 20;
 			this.chartwidth = width * 18 / 20;
 			this.x_separator = chartwidth * 1.0 / (minute * 60);// 表示1秒钟对应的x轴上的偏移
@@ -315,10 +309,12 @@ public class WordLiveLineChartPanel extends JPanel {
 			b_finished = 1;
 			bx_array_limit = new int[b_num];
 			by_array_limit = new int[b_num];
-
+			
+			
+			
 			for (int i = 0; i < a_num; i++) {
 				ax_array_limit[i] = (int) (x_separator
-						* (a_value.get(i).getTimeInSecond()-startTime) + width / 20);
+						* (a_value.get(a_size-i-1).getTimeInSecond() - startTime) + width / 20);
 				ay_array_limit[i] = (int) ((height * 1 / 20 + chartheight) - (y_separator * (a_value
 						.get(i).getTeamPoint() - seg[0])));
 				if (i == 0) {
@@ -330,7 +326,7 @@ public class WordLiveLineChartPanel extends JPanel {
 
 			for (int i = 0; i < b_num; i++) {
 				bx_array_limit[i] = (int) (x_separator
-						*( b_value.get(i).getTimeInSecond()-startTime) + width / 20);
+						* (b_value.get(b_size-i-1).getTimeInSecond() - startTime) + width / 20);
 				by_array_limit[i] = (int) ((height * 1 / 20 + chartheight) - (y_separator * (b_value
 						.get(i).getTeamPoint() - seg[0])));
 
@@ -362,14 +358,17 @@ public class WordLiveLineChartPanel extends JPanel {
 				g2.setStroke(dash);
 				g2.setColor(new Color(206, 206, 206, 127));
 
-				g2.drawLine(width / 20, (int) (height * 19 / 20 - (seg[i]-seg[0])
-						* y_separator), width * 19 / 20,
-						(int) (height * 19 / 20 - (seg[i]-seg[0]) * y_separator));
+				g2.drawLine(width / 20,
+						(int) (height * 19 / 20 - (seg[i] - seg[0])
+								* y_separator), width * 19 / 20,
+						(int) (height * 19 / 20 - (seg[i] - seg[0])
+								* y_separator));
 
 				g2.setStroke(stroke);
 				g2.setColor(Color.black);
 				g2.drawString(seg[i] + "", width / 40,
-						(int) (height * 19 / 20 - (seg[i]-seg[0]) * y_separator));
+						(int) (height * 19 / 20 - (seg[i] - seg[0])
+								* y_separator));
 			}
 
 			// 画直线
@@ -530,23 +529,24 @@ public class WordLiveLineChartPanel extends JPanel {
 					int node_width = width / 5;
 					int node_height = height / 8;
 					if (record < a_num) {
-						node = new NodeLabel(a_color, a_value.get(record));
+						node = new NodeLabel(a_color, a_value.get(a_size-record-1));
 						node_x = ax_array_limit[record];
 						node_y = ay_array_limit[record];
 					} else {
 						record -= a_num;
-						node = new NodeLabel(b_color, b_value.get(record
-								));
+						node = new NodeLabel(b_color, b_value.get(b_size-record-1));
 						node_x = bx_array_limit[record];
 						node_y = by_array_limit[record];
 					}
-					node.setBounds(node_x, node_y - node_height/2, node_width, node_height);
-					
+					node.setBounds(node_x, node_y - node_height / 2,
+							node_width, node_height);
+
 					if (node_x + node_width > chartwidth) {
 						node.setTowards(false);
-						node.setBounds(node_x-node_width, node_y - node_height/2, node_width, node_height);
+						node.setBounds(node_x - node_width, node_y
+								- node_height / 2, node_width, node_height);
 					}
-					
+
 					LiveLineChart.this.removeAll();
 					LiveLineChart.this.updateUI();
 					LiveLineChart.this.add(node);
@@ -629,9 +629,11 @@ public class WordLiveLineChartPanel extends JPanel {
 						+ " Q" + event.getSection();
 
 				g2.setColor(Color.black);
-				g2.drawString(content, lableWidth * 2 / 5, lableHeight * 2 / 5);
+				int strWidth  = g2.getFontMetrics(g2.getFont()).stringWidth(content);
+				g2.drawString(content, lableWidth/2 - strWidth/2, lableHeight * 2 / 5);
 				content = event.getDescription();
-				g2.drawString(content, lableWidth * 2 / 5, lableHeight * 4 / 5);
+				strWidth  = g2.getFontMetrics(g2.getFont()).stringWidth(content);
+				g2.drawString(content,lableWidth/2 - strWidth/2, lableHeight * 4 / 5);
 			}
 		}
 
