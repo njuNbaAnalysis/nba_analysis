@@ -18,9 +18,10 @@ public class NBALiveTest {
 				// TODO Auto-generated method stub
 				while (true) {
 					ArrayList<EventVo> list = mbl.getLiveEvent();
+					if(list.size()==0) break;
 					for (int i = 0; i < list.size(); i++) {
 						System.out.println(list.get(i).getSection()+" : "+list.get(i).getTime() + " : "
-								+ list.get(i).getDescription()+"  "+list.get(i).getPlayerName());
+								+ list.get(i).getDescription()+"  "+list.get(i).getPlayerName()+" : "+list.get(i).getTeamName());
 					}
 					try {
 						Thread.sleep(5000);

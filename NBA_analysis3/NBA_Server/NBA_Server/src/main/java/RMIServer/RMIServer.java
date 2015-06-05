@@ -16,11 +16,12 @@ public class RMIServer {
             LocateRegistry.createRegistry(6600);
             // 注册通讯路径
             Naming.rebind("rmi://127.0.0.1:6600/BLservice", service);
+            System.out.println("RMIServer开启成功！");
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        System.out.println("RMIServer开启成功！");
+ 
     }
     public static void main(String [] args){
         RMIServer rmiserver = new RMIServer();
