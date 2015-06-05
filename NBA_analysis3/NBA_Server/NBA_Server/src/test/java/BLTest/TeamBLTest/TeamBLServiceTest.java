@@ -1,6 +1,9 @@
 package BLTest.TeamBLTest;
 
 import static org.junit.Assert.assertTrue;
+
+import java.rmi.RemoteException;
+
 import logic.BLController;
 
 import org.junit.After;
@@ -35,9 +38,13 @@ public class TeamBLServiceTest {
 
     @Test
     public void testGetHotZone() {
-        HotZonevo vo = service.getHotZone("CHI", true, false);
-        
-        System.out.println(vo.getTotal());
+        HotZonevo vo;
+		try {
+			vo = service.getHotZone("CHI", true, false);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         assertTrue(true);
     }
