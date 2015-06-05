@@ -56,8 +56,8 @@ public class matchBLcontrollor {
 
 	public Matchvo getLiveMatchInfo() {
 		// TODO Auto-generated method stub
-		ArrayList<RecordOfPlayervo> firstRecordList = NBALiveMatchItem(
-				getId(), true);
+		ArrayList<RecordOfPlayervo> firstRecordList = NBALiveMatchItem(getId(),
+				true);
 		ArrayList<RecordOfPlayervo> secondRecordList = NBALiveMatchItem(
 				getId(), false);
 		NBALiveMatch Livematch = NBALiveCompare(getId());
@@ -89,22 +89,26 @@ public class matchBLcontrollor {
 		NBALive.run();
 		try {
 			ArrayList<String> Live = NBALive.getLive();
-			
-			String Home_TeamId = Live.get(2).split(",")[1];
-			String Away_TeamId = Live.get(2).split(",")[3];
-			for (int i = 6; i < Live.size(); i++) {
-				String[] data = Live.get(i).split(",");
-				if (data.length == 22) {
-					String playerName = NBALiveList.getPlayerNameById(data[2]);
-					String teamName = NBALiveList.getTeamNameById(data[19]);
-					int num = 0;
-					if (data[19].equals(Home_TeamId))
-						num = 0;
-					else if (data[19].equals(Away_TeamId))
-						num = 1;
-					result.add(new EventVo(period, num, data[3], data[0] + "-"
-							+ data[4], playerName, data[1], teamName));
+			if (Live.size() >= 2) {
+				String Home_TeamId = Live.get(2).split(",")[1];
+				String Away_TeamId = Live.get(2).split(",")[3];
+				for (int i = 6; i < Live.size(); i++) {
+					String[] data = Live.get(i).split(",");
+					if (data.length == 22) {
+						String playerName = NBALiveList
+								.getPlayerNameById(data[2]);
+						String teamName = NBALiveList.getTeamNameById(data[19]);
+						int num = 0;
+						if (data[19].equals(Home_TeamId))
+							num = 0;
+						else if (data[19].equals(Away_TeamId))
+							num = 1;
+						result.add(new EventVo(period, num, data[3], data[0]
+								+ "-" + data[4], playerName, data[1], teamName));
+					}
 				}
+			} else {
+				
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
