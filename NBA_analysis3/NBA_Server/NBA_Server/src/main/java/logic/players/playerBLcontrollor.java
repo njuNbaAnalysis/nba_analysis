@@ -1,6 +1,5 @@
 package logic.players;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import po.player;
@@ -33,8 +32,6 @@ public class playerBLcontrollor {
 		Playervo result = null;
 		playerItem temp = p.getCurrentPlayerItem();
 		if (temp != null) {
-			int doubledouble = 0;
-			int threedouble = 0;
 			String location = "";
 			String division = "";
 			char conference = ' ';
@@ -61,7 +58,7 @@ public class playerBLcontrollor {
 					temp.getThreethrowHit(), temp.getThreethrowAttempt(),
 					temp.getFreethrowHit(), temp.getFieldGoalsAttempt(),
 					temp.getWS(), temp.getOffenseWS(), temp.getDefenseWS(),
-					temp.getDunk(), temp.getDunked(),doubledouble,threedouble);
+					temp.getDunk(), temp.getDunked());
 		}
 		return result;
 	}
@@ -77,12 +74,4 @@ public class playerBLcontrollor {
 		return result;
 	}
 
-	/**
-	 *
-	 * @param season例: "12-13"，isPlayOff:是否是季后赛
-	 * @return 得到此球员这赛季所呆的球队的3大写字母名
-	 */
-/*	public String getNameEn(String playerId,String season,boolean isPlayOff){
-	    return null;
-	}*/
 }

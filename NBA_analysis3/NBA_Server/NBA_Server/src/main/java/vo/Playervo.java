@@ -64,8 +64,6 @@ public class Playervo implements Serializable {
 	private int threePointerAttempts; // 三分出手
 	private int freeThrowHits; // 罚球命中
 	private int freeThrowAttempts; // 罚球出手
-	private int doubledouble;// 两双
-	private int threedouble;// 三双
 	
 	private double WS;			//胜利贡献值，简称WS，指一名球员为球队胜利所做的贡献
 	private double offenseWS;
@@ -90,7 +88,7 @@ public class Playervo implements Serializable {
 			double shootingEfficiency, int fieldGoalHits,
 			int fieldGoalAttempts, int threePointerHits,
 			int threePointerAttempts, int freeThrowHits, int freeThrowAttempts,
-			double WS, double offenseWS, double defenseWS, int dunk, int blocked,int doubledouble,int threedoule) {
+			double WS, double offenseWS, double defenseWS, int dunk, int blocked) {
 		super();
 		this.Pid = Pid;
 		this.name = name;
@@ -145,8 +143,6 @@ public class Playervo implements Serializable {
 		this.defenseWS = defenseWS;
 		this.dunk = dunk;
 		this.blocked = blocked;
-		this.doubledouble = doubledouble;
-		this.threedouble = threedoule;
 	}
 
 	public String getName() {
@@ -365,15 +361,6 @@ public class Playervo implements Serializable {
 		return freeThrowAttempts;
 	}
 
-	public int getDoubledouble() {
-		return doubledouble;
-	}
-
-	public int getThreedouble() {
-		return threedouble;
-	}
-
-
 	public double getAverageRebounds() {
 		if (gamePlayed == 0) {
 			return 0;
@@ -456,13 +443,6 @@ public class Playervo implements Serializable {
 			return 0;
 		}
 		return getPoints() * 1.0 / gamePlayed;
-	}
-
-	public double getAverageDoubleTwo() {
-		if (gamePlayed == 0) {
-			return 0;
-		}
-		return getDoubledouble() * 1.0 / gamePlayed;
 	}
 
 	public double getWS() {
