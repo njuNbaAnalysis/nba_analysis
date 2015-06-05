@@ -4,19 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Matchvo implements Serializable{
-	private String date;    //例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期 
+	private String date;    //例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期
+	private boolean isplayoff;
 	private String[] teams;// 对阵队伍 2容量的teams数组,这里面存的是缩写！！！
 	private int[] points;// 比分 2容量
 	private ArrayList<int[]> pointsList;// 每一节的比分，可能会有加时赛
 	private ArrayList<RecordOfPlayervo> firstRecordList; // 主场记录
 	private ArrayList<RecordOfPlayervo> secondRecordList; // 客场记录
 	
-	public Matchvo(String date, String[] teams, int[] points,
+	public Matchvo(String date,boolean isplayoff,String[] teams, int[] points,
 			ArrayList<int[]> pointsList,
 			ArrayList<RecordOfPlayervo> firstRecordList,
 			ArrayList<RecordOfPlayervo> secondRecordList) {
 		super();
 		this.date = date;
+		this.isplayoff = isplayoff;
 		this.teams = teams;
 		this.points = points;
 		this.pointsList = pointsList;
@@ -65,7 +67,7 @@ public class Matchvo implements Serializable{
 	private double[] threePointersPercentage;
 	private double[] freeThrowsPercentage;
 
-	public Matchvo(String date, String[] teams, int[] points,
+	public Matchvo(String date,boolean isplayoff, String[] teams, int[] points,
 			ArrayList<int[]> pointsList,
 			ArrayList<RecordOfPlayervo> firstRecordList,
 			ArrayList<RecordOfPlayervo> secondRecordList, int[] rebounds,
@@ -91,6 +93,7 @@ public class Matchvo implements Serializable{
 		this.fieldGoalsPercentage = fieldGoalsPercentage;
 		this.threePointersPercentage = threePointersPercentage;
 		this.freeThrowsPercentage = freeThrowsPercentage;
+		this.isplayoff = isplayoff;
 	}
 
 	public int[] getRebounds() {
@@ -136,7 +139,9 @@ public class Matchvo implements Serializable{
 	public double[] getFreeThrowsPercentage() {
 		return freeThrowsPercentage;
 	}
-	
-	
 
+	public boolean isIsplayoff() {
+		return isplayoff;
+	}
+	
 }
