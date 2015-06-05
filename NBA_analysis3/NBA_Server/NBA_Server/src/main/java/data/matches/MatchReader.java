@@ -92,9 +92,7 @@ public class MatchReader {
 
 		try {
 			statement = conn.createStatement();
-//			SELECT * FROM playerlist p1, playeritem p2 WHERE p1.Pid = p2.Pid AND p2.season =  '"
-//					+ season + "' AND p2.isplayoff = "+isPlayoff)
-			rs = statement.executeQuery("select * from  matchlist m1, matchitem m2, pointslist p where  m1.date =  '"+time+"' AND m1.");
+			rs = statement.executeQuery("select * from  matchlist where  date =  '"+time+"'");
 			while (rs.next()) {
 				result.add(new match(rs.getString(1), rs.getString(2), rs
 						.getString(3), rs.getString(4), rs.getString(5), rs

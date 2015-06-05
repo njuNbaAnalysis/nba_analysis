@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 public class Playervo implements Serializable {
+	private String Pid;  //唯一标识符
 	private String name;
 	private String number; // 球衣号
 	private String position; // G,G-F 类似格式
@@ -65,8 +66,6 @@ public class Playervo implements Serializable {
 	private int freeThrowAttempts; // 罚球出手
 	private int doubledouble;// 两双
 	private int threedouble;// 三双
-	private int fourdouble;// 四双
-	private int fivedouble;// 五双
 	
 	private double WS;			//胜利贡献值，简称WS，指一名球员为球队胜利所做的贡献
 	private double offenseWS;
@@ -75,7 +74,7 @@ public class Playervo implements Serializable {
 	private int blocked;				//被帽数
 	
 
-	public Playervo(String name, String number, String position, double height,
+	public Playervo(String Pid,String name, String number, String position, double height,
 			double weight, String birthday, String selected, String salary,
 			String highschool, String university, String team, String location,
 			String division, char conference, int gamePlayed, int gameStarted,
@@ -91,8 +90,9 @@ public class Playervo implements Serializable {
 			double shootingEfficiency, int fieldGoalHits,
 			int fieldGoalAttempts, int threePointerHits,
 			int threePointerAttempts, int freeThrowHits, int freeThrowAttempts,
-			double WS, double offenseWS, double defenseWS, int dunk, int blocked) {
+			double WS, double offenseWS, double defenseWS, int dunk, int blocked,int doubledouble,int threedoule) {
 		super();
+		this.Pid = Pid;
 		this.name = name;
 		this.number = number;
 		this.position = position;
@@ -145,6 +145,8 @@ public class Playervo implements Serializable {
 		this.defenseWS = defenseWS;
 		this.dunk = dunk;
 		this.blocked = blocked;
+		this.doubledouble = doubledouble;
+		this.threedouble = threedoule;
 	}
 
 	public String getName() {
@@ -371,13 +373,6 @@ public class Playervo implements Serializable {
 		return threedouble;
 	}
 
-	public int getFourdouble() {
-		return fourdouble;
-	}
-
-	public int getFivedouble() {
-		return fivedouble;
-	}
 
 	public double getAverageRebounds() {
 		if (gamePlayed == 0) {
@@ -488,6 +483,10 @@ public class Playervo implements Serializable {
 
 	public int getBlocked() {
 		return blocked;
+	}
+
+	public String getPid() {
+		return Pid;
 	}
 
 }

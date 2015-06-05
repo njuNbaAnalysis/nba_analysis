@@ -14,6 +14,7 @@ import data.players.PlayerReader;
 import po.match;
 import po.player;
 import po.playerItem;
+import po.pointsItem;
 import vo.EventVo;
 import vo.Matchvo;
 import vo.Playervo;
@@ -69,6 +70,11 @@ public class matchBLcontrollor {
 //		String season = string.substring(0, 5);
 		String date = string.substring(6);
 		ArrayList<match> list = matchReader.getMatchesByTime(date);
+		for(int i=0;i<list.size();i++){
+			match temp = list.get(i);
+			temp.setPointsItemList(pointsItemReader.getpointsItemById(temp.getMid()));
+			temp.setMatchItemList(matchItemReader.getMatchItemById(temp.getMid()));
+		}
 		return null;
 	}
 
