@@ -29,7 +29,7 @@ public class TeamBLServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        service = new BLController();
+        service = BLController.getInstance();
     }
 
     @After

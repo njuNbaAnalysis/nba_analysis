@@ -3,13 +3,14 @@ package BLTest.MatchBLTest;
 import java.util.ArrayList;
 
 import vo.EventVo;
+import logic.matches.NBALiveBLControllor;
 import logic.matches.matchBLcontrollor;
 
 public class NBALiveTest {
 
 	public static void main(String[] args) {
 
-		final matchBLcontrollor mbl = matchBLcontrollor.getInstance();
+		final NBALiveBLControllor mbl = NBALiveBLControllor.getInstance();
 
 		new Thread(new Runnable() {
 
