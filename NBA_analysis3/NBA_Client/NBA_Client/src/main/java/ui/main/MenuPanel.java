@@ -392,7 +392,7 @@ public class MenuPanel extends JPanel {
 
 			if (type == 2) {
 				TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(
-						width * 10, height, bl, content);
+						width * 10, height, bl, content,season,isPlayOff);
 				teamRankTablePanel.setBounds(0, 0, width * 9, height);
 				content.removeAll();
 				content.add(teamRankTablePanel);
@@ -407,7 +407,7 @@ public class MenuPanel extends JPanel {
 				try {
 					teamRankTablePanel = new PlayerInfoPanel(
 							width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
-							content);
+							content,season,isPlayOff);
 					teamRankTablePanel.setBounds(0, 0, width * 9, height);
 					teamRankTablePanel.startAnimation();
 					content.removeAll();
@@ -459,7 +459,7 @@ public class MenuPanel extends JPanel {
 			if (type == 7) {
 
 				HotAndKingPanel hotAndKingPanel = new HotAndKingPanel(
-						width * 10, height * 6 / 5, bl, content);
+						width * 10, height * 6 / 5, bl, content,season,isPlayOff);
 				hotAndKingPanel.setPreferredSize(new Dimension(width * 10,
 						height * 6 / 5));
 				JScrollPane scrollPane = new JScrollPane(hotAndKingPanel);
@@ -568,7 +568,7 @@ public class MenuPanel extends JPanel {
 		}
 		case 2:{
 			TeamStatTablePanel teamRankTablePanel = new TeamStatTablePanel(
-					width * 10, height, bl, content);
+					width * 10, height, bl, content,season,isPlayOff);
 			teamRankTablePanel.setBounds(0, 0, width * 9, height);
 			content.removeAll();
 			content.add(teamRankTablePanel);
@@ -580,7 +580,7 @@ public class MenuPanel extends JPanel {
 			try {
 				teamRankTablePanel = new PlayerInfoPanel(
 						width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
-						content);
+						content,season,isPlayOff);
 				teamRankTablePanel.setBounds(0, 0, width * 9, height);
 				teamRankTablePanel.startAnimation();
 				content.removeAll();
@@ -623,7 +623,7 @@ public class MenuPanel extends JPanel {
 		}
 		case 7:{
 			HotAndKingPanel hotAndKingPanel = new HotAndKingPanel(
-					width * 10, height * 6 / 5, bl, content);
+					width * 10, height * 6 / 5, bl, content,season,isPlayOff);
 			hotAndKingPanel.setPreferredSize(new Dimension(width * 10,
 					height * 6 / 5));
 			JScrollPane scrollPane = new JScrollPane(hotAndKingPanel);

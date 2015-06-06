@@ -91,22 +91,15 @@ public class PlayerBasicInfoLabel extends JLabel {
             	Teamvo t = null;
 				try {
 					t = PlayerBasicInfoLabel.this.bl.getTeamByPlayerId(player.getPid(),season,isPlayOff);
-				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-        		
-				if(t!=null){
 					TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content,season,isPlayOff);
 	        		m.setBounds(0, 0, width, height*4);
 	        		PlayerBasicInfoLabel.this.content.removeAll();
 	        		PlayerBasicInfoLabel.this.content.add(m);
 	        		PlayerBasicInfoLabel.this.content.updateUI();
-				}else{
-					System.out.println("网络连接问题或球队未找到");
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-        		
-				
 			}
 		});
 		teamName.setForeground(new Color(30, 81, 140));

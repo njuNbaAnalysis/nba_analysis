@@ -95,13 +95,20 @@ public class AllTeamPanel extends JPanel {
 	public void enterTeam(String name) {
 		for (Teamvo each : teams) {
 			if (each.getAbbreviation().equals(name)) {
-				TeamInfoPanel m = new TeamInfoPanel(width, height * 10 / 9,
-						each, bl, AllTeamPanel.this.content,
-						AllTeamPanel.this.season, AllTeamPanel.this.isPlayOff);
-				m.setBounds(0, 0, width, height * 10 / 9);
-				AllTeamPanel.this.content.removeAll();
-				AllTeamPanel.this.content.add(m);
-				AllTeamPanel.this.content.updateUI();
+				TeamInfoPanel m;
+				try {
+					m = new TeamInfoPanel(width, height * 10 / 9,
+							each, bl, AllTeamPanel.this.content,
+							AllTeamPanel.this.season, AllTeamPanel.this.isPlayOff);
+					m.setBounds(0, 0, width, height * 10 / 9);
+					AllTeamPanel.this.content.removeAll();
+					AllTeamPanel.this.content.add(m);
+					AllTeamPanel.this.content.updateUI();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 
 		}

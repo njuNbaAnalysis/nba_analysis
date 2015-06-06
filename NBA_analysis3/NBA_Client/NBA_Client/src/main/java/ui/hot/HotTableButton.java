@@ -89,7 +89,7 @@ public class HotTableButton extends JButton{
 					((KingLabelPanel)HotTableButton.this.hotPanel).setPlayers(players1,transferField(field));
 					HotTableButton.this.hotPanel.repaint();
 					break;
-				case "HP":	
+				/*case "HP":	
 					ArrayList<Playervo> playerList2 = HotTableButton.this.bl.getMostImprovedPlayer(transferField(field), 5);
 					Playervo [] players2 = new Playervo[5];
 					for(int i=0;i<5;i++){
@@ -97,7 +97,7 @@ public class HotTableButton extends JButton{
 					}
 					((ImprovedLabelPanel)HotTableButton.this.hotPanel).setPlayers(players2,transferField(field));
 					HotTableButton.this.hotPanel.repaint();
-					break;
+					break;*/
 				case "TP":
 					Playervo [] players = ((KingLabelPanel)HotTableButton.this.hotPanel).getPlayers();
 					
