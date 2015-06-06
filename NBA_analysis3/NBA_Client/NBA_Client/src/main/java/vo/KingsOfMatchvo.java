@@ -1,11 +1,7 @@
 package vo;
 
-/**
- * @author Lionel
- *  某场比赛的得分王，一场比赛有两个，每对一个，用在match的getKingsOfMatch中
- */
+
 public class KingsOfMatchvo {
-	private String Pid;
     private String nameOfPointsKing;
     private int points;
     private String nameOfReboundsKing;
@@ -21,10 +17,9 @@ public class KingsOfMatchvo {
 
 
 
-    public KingsOfMatchvo(String Pid ,String nameOfPointsKing, int points, String nameOfReboundsKing, int rebounds,
+    public KingsOfMatchvo(String nameOfPointsKing, int points, String nameOfReboundsKing, int rebounds,
             String nameOfAssistsKing, int assists) {
         super();
-        this.Pid = Pid;
         this.nameOfPointsKing = nameOfPointsKing;
         this.points = points;
         this.nameOfReboundsKing = nameOfReboundsKing;
@@ -63,11 +58,5 @@ public class KingsOfMatchvo {
     public int getAssists() {
         return assists;
     }
-
-
-
-	public String getPid() {
-		return Pid;
-	}
     
 }
