@@ -153,4 +153,9 @@ public class Matchvo implements Serializable{
 		
 		return date.split("_")[0];
 	}
+
+	public KingsOfMatchvo[] getKingsOfMatch() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
 }
