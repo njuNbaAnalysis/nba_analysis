@@ -59,7 +59,7 @@ public class Test extends JFrame {
 		
 		TeamComparePanel matchPanel = null;
 		try {
-			matchPanel = new TeamComparePanel(bl.getAllTeams("13-14",false).get(0), bl.getAllTeams("13-14",false).get(1), 1728, 1080,bl);
+			matchPanel = new TeamComparePanel(bl.getAllTeams("14-15",false).get(0), bl.getAllTeams("14-15",false).get(1), 1728, 1080,bl);
 		} catch (RemoteException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
