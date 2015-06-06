@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 
 import javax.imageio.ImageIO;
 
@@ -61,6 +62,8 @@ public class EventVo implements Serializable {
 		return teamName;
 	}
 
+	
+
 	public Image getTeamImage() {
 		Image image = null;
 		try {
@@ -83,12 +86,8 @@ public class EventVo implements Serializable {
 
 	// 以秒数的形式返回时间
 	public int getTimeInSecond() {
-		String[] array = time.split(":");
-		int minute = Integer.parseInt(array[0]);
-		double second = Double.parseDouble(array[1]);
 
-		minute += Tools.getSectionTimeInSecond(section);
-		return (int) (minute * 60 + second);
+		return Tools.getSectionTimeInSecond(section) + getTimeFromSection();
 	}
 
 	// 得到距本节开始时间的秒数
@@ -96,11 +95,16 @@ public class EventVo implements Serializable {
 		String[] array = time.split(":");
 		int minute = Integer.parseInt(array[0]);
 		double second = Double.parseDouble(array[1]);
+		second += minute * 60;
+		if (section > 4) {
+			second = 5 * 60 - second;
+		}
+		if (section <= 4) {
+			second = 12 * 60 - second;
+		}
 
-		return (int) (minute * 60 + second);
+		return (int) second;
 	}
-
-
 
 	// 返回本队的得分
 	public int getTeamPoint() {
