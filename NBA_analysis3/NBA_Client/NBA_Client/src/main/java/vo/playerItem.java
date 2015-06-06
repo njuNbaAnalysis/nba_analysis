@@ -1,6 +1,6 @@
 package vo;
 
-public class PlayerItemvo {
+public class playerItem {
 	private String Pid;
 	private boolean isplayoff;
 	private String season;
@@ -713,7 +713,7 @@ public class PlayerItemvo {
 		this.shootingEfficiency = shootingEfficiency;
 	}
 
-	public PlayerItemvo(String Pid, boolean isplayoff, String season,
+	public playerItem(String Pid, boolean isplayoff, String season,
 			String team, int gameplayed, int gamestarted, double averageTime,
 			double fieldGoalsPercent, double averagefieldGoalsHit,
 			double averagefieldGoalsAttempt, double threePointPercent,
