@@ -30,6 +30,13 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 			return blController;
 		}
 	}
+	
+	@Override
+	public boolean initNBALive() throws RemoteException {
+		// TODO Auto-generated method stub
+		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
+		return NBALive.setPeriod(1);
+	}
 
 	@Override
 	public Matchvo getLiveMatchInfo() throws RemoteException{
@@ -75,18 +82,25 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 		matchBLcontrollor matchBL = matchBLcontrollor.getInstance();
 		return matchBL.getTodayMatched(string);
 	}
-
-	//@Override
-/*	public Teamvo[] getTeamsByMatch(String[] teamNames) throws RemoteException {
+	
+	@Override
+	public Matchvo getMatchById(String Mid) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
-	}*/
+	}
+	
 
 	@Override
-	public Playervo getPlayerById(String idOfReboundsKing,String season,boolean isplayoff)throws RemoteException {
+	public Playervo getPlayerById(String Id) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Playervo getPlayerById(String Id,String season,boolean isplayoff)throws RemoteException {
 		// TODO Auto-generated method stub
 		playerBLcontrollor pbl = playerBLcontrollor.getInstance();
-		return pbl.getPlayerById(idOfReboundsKing,season,isplayoff);
+		return pbl.getPlayerById(Id,season,isplayoff);
 	}
 
 	@Override
@@ -98,14 +112,6 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 	public Teamvo getTeamByTeamName(String teamNameEn, String season, boolean isPlayOff) throws RemoteException {
 		return TeamController.getInstance().getTeamByTeamName(teamNameEn, season, isPlayOff);
 	}
-
-	@Override
-	public boolean initNBALive() throws RemoteException {
-		// TODO Auto-generated method stub
-		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
-		return NBALive.setPeriod(1);
-	}
-	
 	
 	/**
 	 * 根据中文简写和赛季得到球队英文名
@@ -116,5 +122,5 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 	public String getTeamNameEnBySimplifiedTeamNameZh(String simplifiedTeamNameZh,String season){
 	    return null;
 	}
-	
+
 }
