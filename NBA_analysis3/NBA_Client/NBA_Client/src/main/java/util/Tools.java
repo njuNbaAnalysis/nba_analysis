@@ -3,8 +3,6 @@ package util;
 import java.util.ArrayList;
 import java.util.Date;
 
-import vo.EventVo;
-
 public class Tools {
     public static ArrayList<String> toArrayList(String[] args){
         ArrayList<String> list = new ArrayList<String>();
@@ -13,7 +11,6 @@ public class Tools {
         }
         return list;
     }
-    
     
     public static String[] fastSplit(final String text, char separator) {
         String[] result = new String[18];
@@ -73,50 +70,46 @@ public class Tools {
 
 		return startTime;
 	}
-	
-	//逆序直播事件
-	public static ArrayList<EventVo> reverse(ArrayList<EventVo> original){
-    	ArrayList<EventVo> result = new ArrayList<EventVo>();
-    	for(int i=original.size()-1;i>=0;i--){
-    		result.add(original.get(i));
-    	}
-    	return result;
-    }
-	
-	//得到直播时的当前节数
-	public static int getSectionNum(ArrayList<EventVo> eventList) {
-		int section = -1;
 
-		for (EventVo event : eventList) {
-			if (event.getSection() > section) {
-				section = event.getSection();
-			}
-		}
-		return section;
+	/**
+	 * 对赛季表示形式的转化
+	 * @param xx_xx，例"00-01"
+	 * @return 例"2000"
+	 */
+	public static String xx_xxToxxxx(String xx_xx){
+	    String[] parts = xx_xx.split("-");
+	    String beginPart = parts[0];
+	    
+	    String result = "";
+	    if(Integer.parseInt(beginPart) >= 46){
+	        result += "19";
+	    }
+	    else{
+	        result += "20";
+	    }
+	    result += beginPart;
+	    
+	    return result;
 	}
 	
-	//得到节数的中文
-	public static String getSectionInChinese(int section){
-		if(section<0){
-			return null;
-		}
-		else if(section==0){
-			return "全部";
-		}
-		else if(section==1){
-			return "第一节";
-		}
-		else if(section==2){
-			return "第二节";
-		}
-		else if(section==3){
-			return "第三节";
-		}
-		else if(section==4){
-			return "第四节";
-		}
-		else{
-			return "加时"+(section-4);
-		}
+	/**对赛季表示形式的转化
+	 * @param xxxx，例"2000"
+	 * @return 例"00-01"
+	 */
+	public static String xxxxToxx_xx(String xxxx){
+	    String beginPart = xxxx.substring(2, 4);
+	    String endPart = String.valueOf((Integer.parseInt(beginPart) + 1));
+	    
+	    if(endPart.length() == 1){
+	        endPart = "0" + endPart;
+	    }
+	    if(endPart.length() == 3){
+	        endPart = endPart.substring(1, 3);
+	    }
+	    return beginPart + "-" + endPart;
+	}
+	
+	public static void main(String[] args){
+	    System.out.println(xxxxToxx_xx("2000"));
 	}
 }

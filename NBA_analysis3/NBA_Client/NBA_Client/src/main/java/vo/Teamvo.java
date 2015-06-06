@@ -10,20 +10,20 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 public class Teamvo implements Serializable {
-
+    
 	// raw data
 	private String name; // 球队名，例"阿纳海姆搞基"
 	private String abbreviation; // 缩写，例"ATL"
-
+	
 	@Deprecated
-	private String location; // 地区
+	private String location; // 地区    
 	private char conference; // 东部赛区or西部赛区 E,W
 	private String division;
 	private String homeCourt; // 主场
-
-	private String season;// 例"00-01"
-	private boolean isPlayOff;// 是否是季后赛
-
+	
+	private String season;//例"00-01"
+	private boolean isPlayOff;//是否是季后赛 
+    
 	@Deprecated
 	private int setUpTime; // 建立时间
 
@@ -33,6 +33,10 @@ public class Teamvo implements Serializable {
 	// 累加
 	private int numOfMatches; // 比赛场数
 	private int numOfVictory; // 胜利场数
+	
+	private int numOfMatchesInSeason; //此球队本赛季常规赛的总比赛场数
+	private int numOfVictoryInSeason; //此球队本赛季常规赛的总胜利场数
+	
 	private int fieldGoalAttemps; // 投篮出手次数
 	private int fieldGoalHits; // 投篮命中次数
 	private int threePointerAttempts; // 三分出手次数
@@ -67,26 +71,26 @@ public class Teamvo implements Serializable {
 
 	// 仅界面需要
 	private int rankingInLeague; // 本赛季在联盟中的排名，东西部分别计算，当属性为季后赛是，此值无意义
+	
+	//近十场的先后顺序，index=0为最近，index=9为最远
+	
+    // 近十场的输赢情况,
+    private boolean[] latestWinOrLose;
 
-	// 近十场的先后顺序，index=0为最近，index=9为最远
+    // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多，本队在前
+    private String[] latestRecord;
 
-	// 近十场的输赢情况,
-	private boolean[] latestWinOrLose;
+    // 得到近十场的攻防比(得分/失分)
+    private double[] latestOffendThanDefend;
 
-	// 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多，本队在前
-	private String[] latestRecord;
+    // 得到近十场的得分(每一场的每百进攻回合得分)
+    private double[] latestOffend;
 
-	// 得到近十场的攻防比(得分/失分)
-	private double[] latestOffendThanDefend;
+    // 得到近十场的失分(每一场的每百防守回合失分)
+    private double[] latestDefend;
 
-	// 得到近十场的得分(每一场的每百进攻回合得分)
-	private double[] latestOffend;
-
-	// 得到近十场的失分(每一场的每百防守回合失分)
-	private double[] latestDefend;
-
-	// 得到近十场的节奏(每一场的进攻回合数)
-	private double[] latestTempo;
+    // 得到近十场的节奏(每一场的进攻回合数)
+    private double[] latestTempo;
 
 	// 后期
 	// private int rebounds; //篮板数
@@ -99,15 +103,15 @@ public class Teamvo implements Serializable {
 	@Deprecated
 	public Teamvo(String name, String abbreviation, String location,
 			char conference, String division, String homeCourt, int setUpTime,
-			ArrayList<String> playerList, int numOfMatches, int numOfVictory,
-			int fieldGoalAttemps, int fieldGoalHits, int threePointerAttempts,
-			int threePointerHits, int freeThrowAttempts, int freeThrowHits,
-			int offensiveRebounds, int defensiveRebounds, int assists,
-			int steals, int blockShots, int turnOver, int fouls, int points,
-			double offensiveRounds, double defensiveRounds,
-			double offenseEfficiency, double defenseEfficiency,
-			double reboundsEfficiency, double stealsEfficiency,
-			double assistsPercentage, int pointsRival,
+			ArrayList<String> playerList, int numOfMatches,
+			int numOfVictory, int fieldGoalAttemps, int fieldGoalHits,
+			int threePointerAttempts, int threePointerHits,
+			int freeThrowAttempts, int freeThrowHits, int offensiveRebounds,
+			int defensiveRebounds, int assists, int steals, int blockShots,
+			int turnOver, int fouls, int points, double offensiveRounds,
+			double defensiveRounds, double offenseEfficiency,
+			double defenseEfficiency, double reboundsEfficiency,
+			double stealsEfficiency, double assistsPercentage, int pointsRival,
 			int fieldGoalAttempsRival, int threePointerAttemptsRival,
 			int offenseReboundsRival, int defenseReboundsRival,
 			int rankingInLeague) {
@@ -152,10 +156,10 @@ public class Teamvo implements Serializable {
 	}
 
 	public Teamvo() {
-		super();
-	}
+        super();
+    }
 
-	public String getName() {
+    public String getName() {
 		return name;
 	}
 
@@ -178,7 +182,6 @@ public class Teamvo implements Serializable {
 	public String getHomeCourt() {
 		return homeCourt;
 	}
-
 	@Deprecated
 	public int getSetUpTime() {
 		return setUpTime;
@@ -186,15 +189,11 @@ public class Teamvo implements Serializable {
 
 	public Image getLogo() {
 		Image image = null;
-		try {
-			System.out.println( getName());
-			image = ImageIO.read(new File("./Data/teamImage/" + getAbbreviation()
-					+ ".gif"));
-		} catch (IOException e) {
-			e.printStackTrace();
-
-		}
-		return image;
+        try {
+            image = ImageIO.read(new File("./Data/teamImage/" + getAbbreviation() + ".gif"));
+        } catch (IOException e) {
+        }
+        return image;
 	}
 
 	public ArrayList<String> getPlayerList() {
@@ -433,257 +432,265 @@ public class Teamvo implements Serializable {
 		}
 	}
 
-	public String getSeason() {
-		return season;
-	}
 
-	public void setSeason(String season) {
-		this.season = season;
-	}
 
-	public boolean isPlayOff() {
-		return isPlayOff;
-	}
+    public String getSeason() {
+        return season;
+    }
 
-	public void setPlayOff(boolean isPlayOff) {
-		this.isPlayOff = isPlayOff;
-	}
+    public void setSeason(String season) {
+        this.season = season;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public boolean isPlayOff() {
+        return isPlayOff;
+    }
 
-	public void setAbbreviation(String abbreviation) {
-		this.abbreviation = abbreviation;
-	}
+    public void setPlayOff(boolean isPlayOff) {
+        this.isPlayOff = isPlayOff;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setConference(char conference) {
-		this.conference = conference;
-	}
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
 
-	public void setDivision(String division) {
-		this.division = division;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-	public void setHomeCourt(String homeCourt) {
-		this.homeCourt = homeCourt;
-	}
+    public void setConference(char conference) {
+        this.conference = conference;
+    }
 
-	public void setSetUpTime(int setUpTime) {
-		this.setUpTime = setUpTime;
-	}
+    public void setDivision(String division) {
+        this.division = division;
+    }
 
-	public void setPlayerList(ArrayList<String> playerList) {
-		this.playerList = playerList;
-	}
+    public void setHomeCourt(String homeCourt) {
+        this.homeCourt = homeCourt;
+    }
 
-	public void setNumOfMatches(int numOfMatches) {
-		this.numOfMatches = numOfMatches;
-	}
+    public void setSetUpTime(int setUpTime) {
+        this.setUpTime = setUpTime;
+    }
 
-	public void setNumOfVictory(int numOfVictory) {
-		this.numOfVictory = numOfVictory;
-	}
+    public void setPlayerList(ArrayList<String> playerList) {
+        this.playerList = playerList;
+    }
 
-	public void setFieldGoalAttemps(int fieldGoalAttemps) {
-		this.fieldGoalAttemps = fieldGoalAttemps;
-	}
+    public void setNumOfMatches(int numOfMatches) {
+        this.numOfMatches = numOfMatches;
+    }
 
-	public void setFieldGoalHits(int fieldGoalHits) {
-		this.fieldGoalHits = fieldGoalHits;
-	}
+    public void setNumOfVictory(int numOfVictory) {
+        this.numOfVictory = numOfVictory;
+    }
 
-	public void setThreePointerAttempts(int threePointerAttempts) {
-		this.threePointerAttempts = threePointerAttempts;
-	}
+    public void setFieldGoalAttemps(int fieldGoalAttemps) {
+        this.fieldGoalAttemps = fieldGoalAttemps;
+    }
 
-	public void setThreePointerHits(int threePointerHits) {
-		this.threePointerHits = threePointerHits;
-	}
+    public void setFieldGoalHits(int fieldGoalHits) {
+        this.fieldGoalHits = fieldGoalHits;
+    }
 
-	public void setFreeThrowAttempts(int freeThrowAttempts) {
-		this.freeThrowAttempts = freeThrowAttempts;
-	}
+    public void setThreePointerAttempts(int threePointerAttempts) {
+        this.threePointerAttempts = threePointerAttempts;
+    }
 
-	public void setFreeThrowHits(int freeThrowHits) {
-		this.freeThrowHits = freeThrowHits;
-	}
+    public void setThreePointerHits(int threePointerHits) {
+        this.threePointerHits = threePointerHits;
+    }
 
-	public void setOffensiveRebounds(int offensiveRebounds) {
-		this.offensiveRebounds = offensiveRebounds;
-	}
+    public void setFreeThrowAttempts(int freeThrowAttempts) {
+        this.freeThrowAttempts = freeThrowAttempts;
+    }
 
-	public void setDefensiveRebounds(int defensiveRebounds) {
-		this.defensiveRebounds = defensiveRebounds;
-	}
+    public void setFreeThrowHits(int freeThrowHits) {
+        this.freeThrowHits = freeThrowHits;
+    }
 
-	public void setAssists(int assists) {
-		this.assists = assists;
-	}
+    public void setOffensiveRebounds(int offensiveRebounds) {
+        this.offensiveRebounds = offensiveRebounds;
+    }
 
-	public void setSteals(int steals) {
-		this.steals = steals;
-	}
+    public void setDefensiveRebounds(int defensiveRebounds) {
+        this.defensiveRebounds = defensiveRebounds;
+    }
 
-	public void setBlockShots(int blockShots) {
-		this.blockShots = blockShots;
-	}
+    public void setAssists(int assists) {
+        this.assists = assists;
+    }
 
-	public void setTurnOver(int turnOver) {
-		this.turnOver = turnOver;
-	}
+    public void setSteals(int steals) {
+        this.steals = steals;
+    }
 
-	public void setFouls(int fouls) {
-		this.fouls = fouls;
-	}
+    public void setBlockShots(int blockShots) {
+        this.blockShots = blockShots;
+    }
 
-	public void setPoints(int points) {
-		this.points = points;
-	}
+    public void setTurnOver(int turnOver) {
+        this.turnOver = turnOver;
+    }
 
-	public void setOffensiveRounds(double offensiveRounds) {
-		this.offensiveRounds = offensiveRounds;
-	}
+    public void setFouls(int fouls) {
+        this.fouls = fouls;
+    }
 
-	public void setDefensiveRounds(double defensiveRounds) {
-		this.defensiveRounds = defensiveRounds;
-	}
+    public void setPoints(int points) {
+        this.points = points;
+    }
 
-	public void setOffenseEfficiency(double offenseEfficiency) {
-		this.offenseEfficiency = offenseEfficiency;
-	}
+    public void setOffensiveRounds(double offensiveRounds) {
+        this.offensiveRounds = offensiveRounds;
+    }
 
-	public void setDefenseEfficiency(double defenseEfficiency) {
-		this.defenseEfficiency = defenseEfficiency;
-	}
+    public void setDefensiveRounds(double defensiveRounds) {
+        this.defensiveRounds = defensiveRounds;
+    }
 
-	public void setReboundsEfficiency(double reboundsEfficiency) {
-		this.reboundsEfficiency = reboundsEfficiency;
-	}
+    public void setOffenseEfficiency(double offenseEfficiency) {
+        this.offenseEfficiency = offenseEfficiency;
+    }
 
-	public void setStealsEfficiency(double stealsEfficiency) {
-		this.stealsEfficiency = stealsEfficiency;
-	}
+    public void setDefenseEfficiency(double defenseEfficiency) {
+        this.defenseEfficiency = defenseEfficiency;
+    }
 
-	public void setAssistsPercentage(double assistsPercentage) {
-		this.assistsPercentage = assistsPercentage;
-	}
+    public void setReboundsEfficiency(double reboundsEfficiency) {
+        this.reboundsEfficiency = reboundsEfficiency;
+    }
 
-	public void setPointsRival(int pointsRival) {
-		this.pointsRival = pointsRival;
-	}
+    public void setStealsEfficiency(double stealsEfficiency) {
+        this.stealsEfficiency = stealsEfficiency;
+    }
 
-	public void setFieldGoalAttempsRival(int fieldGoalAttempsRival) {
-		this.fieldGoalAttempsRival = fieldGoalAttempsRival;
-	}
+    public void setAssistsPercentage(double assistsPercentage) {
+        this.assistsPercentage = assistsPercentage;
+    }
 
-	public void setThreePointerAttemptsRival(int threePointerAttemptsRival) {
-		this.threePointerAttemptsRival = threePointerAttemptsRival;
-	}
+    public void setPointsRival(int pointsRival) {
+        this.pointsRival = pointsRival;
+    }
 
-	public void setOffenseReboundsRival(int offenseReboundsRival) {
-		this.offenseReboundsRival = offenseReboundsRival;
-	}
+    public void setFieldGoalAttempsRival(int fieldGoalAttempsRival) {
+        this.fieldGoalAttempsRival = fieldGoalAttempsRival;
+    }
 
-	public void setDefenseReboundsRival(int defenseReboundsRival) {
-		this.defenseReboundsRival = defenseReboundsRival;
-	}
+    public void setThreePointerAttemptsRival(int threePointerAttemptsRival) {
+        this.threePointerAttemptsRival = threePointerAttemptsRival;
+    }
 
-	public void setRankingInLeague(int rankingInLeague) {
-		this.rankingInLeague = rankingInLeague;
-	}
+    public void setOffenseReboundsRival(int offenseReboundsRival) {
+        this.offenseReboundsRival = offenseReboundsRival;
+    }
 
-	public int getReboundsRival() {
-		return this.getOffenseReboundsRival() + this.getDefenseReboundsRival();
-	}
+    public void setDefenseReboundsRival(int defenseReboundsRival) {
+        this.defenseReboundsRival = defenseReboundsRival;
+    }
 
-	@Override
-	public String toString() {
-		return "Teamvo [name=" + name + ", abbreviation=" + abbreviation
-				+ ", conference=" + conference + ", division=" + division
-				+ ", homeCourt=" + homeCourt + ", season=" + season
-				+ ", isPlayOff=" + isPlayOff + ", playerList=" + playerList
-				+ ", numOfMatches=" + numOfMatches + ", numOfVictory="
-				+ numOfVictory + ", fieldGoalAttemps=" + fieldGoalAttemps
-				+ ", fieldGoalHits=" + fieldGoalHits
-				+ ", threePointerAttempts=" + threePointerAttempts
-				+ ", threePointerHits=" + threePointerHits
-				+ ", freeThrowAttempts=" + freeThrowAttempts
-				+ ", freeThrowHits=" + freeThrowHits + ", offensiveRebounds="
-				+ offensiveRebounds + ", defensiveRebounds="
-				+ defensiveRebounds + ", assists=" + assists + ", steals="
-				+ steals + ", blockShots=" + blockShots + ", turnOver="
-				+ turnOver + ", fouls=" + fouls + ", points=" + points
-				+ ", offensiveRounds=" + offensiveRounds + ", defensiveRounds="
-				+ defensiveRounds + ", offenseEfficiency=" + offenseEfficiency
-				+ ", defenseEfficiency=" + defenseEfficiency
-				+ ", reboundsEfficiency=" + reboundsEfficiency
-				+ ", stealsEfficiency=" + stealsEfficiency
-				+ ", assistsPercentage=" + assistsPercentage + ", pointsRival="
-				+ pointsRival + ", fieldGoalAttempsRival="
-				+ fieldGoalAttempsRival + ", threePointerAttemptsRival="
-				+ threePointerAttemptsRival + ", offenseReboundsRival="
-				+ offenseReboundsRival + ", defenseReboundsRival="
-				+ defenseReboundsRival + ", rankingInLeague=" + rankingInLeague
-				+ ", latestWinOrLose=" + Arrays.toString(latestWinOrLose)
-				+ ", latestRecord=" + Arrays.toString(latestRecord)
-				+ ", latestOffendThanDefend="
-				+ Arrays.toString(latestOffendThanDefend) + ", latestOffend="
-				+ Arrays.toString(latestOffend) + ", latestDefend="
-				+ Arrays.toString(latestDefend) + ", latestTempo="
-				+ Arrays.toString(latestTempo) + "]";
-	}
+    public void setRankingInLeague(int rankingInLeague) {
+        this.rankingInLeague = rankingInLeague;
+    }
 
-	public boolean[] getLatestWinOrLose() {
-		return latestWinOrLose;
-	}
+    public int getReboundsRival() {
+        return this.getOffenseReboundsRival() + this.getDefenseReboundsRival();
+    }
+    
 
-	public void setLatestWinOrLose(boolean[] latestWinOrLose) {
-		this.latestWinOrLose = latestWinOrLose;
-	}
+    
+    
+    @Override
+    public String toString() {
+        return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", conference=" + conference + ", division="
+                + division + ", homeCourt=" + homeCourt + ", season=" + season + ", isPlayOff=" + isPlayOff
+                + ", playerList=" + playerList + ", numOfMatches=" + numOfMatches + ", numOfVictory=" + numOfVictory
+                + ", numOfMatchesInSeason=" + numOfMatchesInSeason + ", numOfVictoryInSeason=" + numOfVictoryInSeason
+                + ", fieldGoalAttemps=" + fieldGoalAttemps + ", fieldGoalHits=" + fieldGoalHits
+                + ", threePointerAttempts=" + threePointerAttempts + ", threePointerHits=" + threePointerHits
+                + ", freeThrowAttempts=" + freeThrowAttempts + ", freeThrowHits=" + freeThrowHits
+                + ", offensiveRebounds=" + offensiveRebounds + ", defensiveRebounds=" + defensiveRebounds
+                + ", assists=" + assists + ", steals=" + steals + ", blockShots=" + blockShots + ", turnOver="
+                + turnOver + ", fouls=" + fouls + ", points=" + points + ", offensiveRounds=" + offensiveRounds
+                + ", defensiveRounds=" + defensiveRounds + ", offenseEfficiency=" + offenseEfficiency
+                + ", defenseEfficiency=" + defenseEfficiency + ", reboundsEfficiency=" + reboundsEfficiency
+                + ", stealsEfficiency=" + stealsEfficiency + ", assistsPercentage=" + assistsPercentage
+                + ", pointsRival=" + pointsRival + ", fieldGoalAttempsRival=" + fieldGoalAttempsRival
+                + ", threePointerAttemptsRival=" + threePointerAttemptsRival + ", offenseReboundsRival="
+                + offenseReboundsRival + ", defenseReboundsRival=" + defenseReboundsRival + ", rankingInLeague="
+                + rankingInLeague + ", latestWinOrLose=" + Arrays.toString(latestWinOrLose) + ", latestRecord="
+                + Arrays.toString(latestRecord) + ", latestOffendThanDefend=" + Arrays.toString(latestOffendThanDefend)
+                + ", latestOffend=" + Arrays.toString(latestOffend) + ", latestDefend=" + Arrays.toString(latestDefend)
+                + ", latestTempo=" + Arrays.toString(latestTempo) + "]";
+    }
 
-	public String[] getLatestRecord() {
-		return latestRecord;
-	}
+    public boolean[] getLatestWinOrLose() {
+        return latestWinOrLose;
+    }
 
-	public void setLatestRecord(String[] latestRecord) {
-		this.latestRecord = latestRecord;
-	}
+    public void setLatestWinOrLose(boolean[] latestWinOrLose) {
+        this.latestWinOrLose = latestWinOrLose;
+    }
 
-	public double[] getLatestOffendThanDefend() {
-		return latestOffendThanDefend;
-	}
+    public String[] getLatestRecord() {
+        return latestRecord;
+    }
 
-	public void setLatestOffendThanDefend(double[] latestOffendThanDefend) {
-		this.latestOffendThanDefend = latestOffendThanDefend;
-	}
+    public void setLatestRecord(String[] latestRecord) {
+        this.latestRecord = latestRecord;
+    }
 
-	public double[] getLatestOffend() {
-		return latestOffend;
-	}
+    public double[] getLatestOffendThanDefend() {
+        return latestOffendThanDefend;
+    }
 
-	public void setLatestOffend(double[] latestOffend) {
-		this.latestOffend = latestOffend;
-	}
+    public void setLatestOffendThanDefend(double[] latestOffendThanDefend) {
+        this.latestOffendThanDefend = latestOffendThanDefend;
+    }
 
-	public double[] getLatestDefend() {
-		return latestDefend;
-	}
+    public double[] getLatestOffend() {
+        return latestOffend;
+    }
 
-	public void setLatestDefend(double[] latestDefend) {
-		this.latestDefend = latestDefend;
-	}
+    public void setLatestOffend(double[] latestOffend) {
+        this.latestOffend = latestOffend;
+    }
 
-	public double[] getLatestTempo() {
-		return latestTempo;
-	}
+    public double[] getLatestDefend() {
+        return latestDefend;
+    }
 
-	public void setLatestTempo(double[] latestTempo) {
-		this.latestTempo = latestTempo;
-	}
+    public void setLatestDefend(double[] latestDefend) {
+        this.latestDefend = latestDefend;
+    }
 
+    public double[] getLatestTempo() {
+        return latestTempo;
+    }
+
+    public void setLatestTempo(double[] latestTempo) {
+        this.latestTempo = latestTempo;
+    }
+
+    public int getNumOfMatchesInSeason() {
+        return numOfMatchesInSeason;
+    }
+
+    public void setNumOfMatchesInSeason(int numOfMatchesInSeason) {
+        this.numOfMatchesInSeason = numOfMatchesInSeason;
+    }
+
+    public int getNumOfVictoryInSeason() {
+        return numOfVictoryInSeason;
+    }
+
+    public void setNumOfVictoryInSeason(int numOfVictoryInSeason) {
+        this.numOfVictoryInSeason = numOfVictoryInSeason;
+    }
+    
 }
