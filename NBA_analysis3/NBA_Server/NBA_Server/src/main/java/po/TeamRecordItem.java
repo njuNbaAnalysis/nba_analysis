@@ -239,5 +239,22 @@ public class TeamRecordItem {
     public void setNumOfFailure(int numOfFailure) {
         this.numOfFailure = numOfFailure;
     }
+    @Override
+    public String toString() {
+        return "TeamRecordItem [dataType=" + dataType + ", teamNameEn=" + teamNameEn + ", isSeason=" + isSeason
+                + ", beginYear=" + beginYear + ", playerId=" + playerId + ", showUpNumbers=" + showUpNumbers
+                + ", startingTimes=" + startingTimes + ", during=" + during + ", fieldGoalsPercentage="
+                + fieldGoalsPercentage + ", fieldGoalHitsAverage=" + fieldGoalHitsAverage
+                + ", fieldGoalAttempsAverage=" + fieldGoalAttempsAverage + ", threePointerPercentage="
+                + threePointerPercentage + ", threePointerHitsAverage=" + threePointerHitsAverage
+                + ", threePointerAttemptsAverage=" + threePointerAttemptsAverage + ", freeThrowPercentage="
+                + freeThrowPercentage + ", freeThrowHitsAverage=" + freeThrowHitsAverage
+                + ", freeThrowAttemptsAverage=" + freeThrowAttemptsAverage + ", reboundsAverage=" + reboundsAverage
+                + ", offensiveReboundsAverage=" + offensiveReboundsAverage + ", defensiveReboundsAverage="
+                + defensiveReboundsAverage + ", assistsAverage=" + assistsAverage + ", stealsAverage=" + stealsAverage
+                + ", blockShotsAverage=" + blockShotsAverage + ", turnOversAverage=" + turnOversAverage
+                + ", foulsAverage=" + foulsAverage + ", pointsAverage=" + pointsAverage + ", numOfVictory="
+                + numOfVictory + ", numOfFailure=" + numOfFailure + "]";
+    }
     
 }
