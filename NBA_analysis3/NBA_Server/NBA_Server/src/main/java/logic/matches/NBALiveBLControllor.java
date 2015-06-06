@@ -15,7 +15,7 @@ public class NBALiveBLControllor {
 	private static NBALiveBLControllor NBALiveBLControllor = null;
 
 	private NBALiveBLControllor() {
-		
+
 	}
 
 	public static NBALiveBLControllor getInstance() {
@@ -26,8 +26,8 @@ public class NBALiveBLControllor {
 			return NBALiveBLControllor;
 		}
 	}
-	
-	public boolean setPeriod(int period){
+
+	public boolean setPeriod(int period) {
 		this.period = period;
 		return true;
 	}
@@ -39,22 +39,24 @@ public class NBALiveBLControllor {
 		ArrayList<RecordOfPlayervo> secondRecordList = NBALiveMatchItem(
 				getId(), false);
 		NBALiveMatch Livematch = NBALiveCompare(getId());
-		Matchvo m = new Matchvo(Livematch.getDate(),true,Livematch.getTeams(),
-				Livematch.getPoints(), Livematch.getPointsList(),
-				firstRecordList, secondRecordList, Livematch.getRebounds(),
-				Livematch.getAssists(), Livematch.getBlocks(),
-				Livematch.getTurnOver(), Livematch.getQuickPoints(),
-				Livematch.getRestrictedPoints(), Livematch.getTurnOverPoints(),
-				Livematch.getMaxPoints(), Livematch.getFieldGoalsPercentage(),
+		Matchvo m = new Matchvo(Livematch.getDate(), true,
+				Livematch.getTeams(), Livematch.getPoints(),
+				Livematch.getPointsList(), firstRecordList, secondRecordList,
+				Livematch.getRebounds(), Livematch.getAssists(),
+				Livematch.getBlocks(), Livematch.getTurnOver(),
+				Livematch.getQuickPoints(), Livematch.getRestrictedPoints(),
+				Livematch.getTurnOverPoints(), Livematch.getMaxPoints(),
+				Livematch.getFieldGoalsPercentage(),
 				Livematch.getThreePointersPercentage(),
-				Livematch.getFieldGoalsPercentage());
+				Livematch.getFreeThrowsPercentage());
 		return m;
 	}
 
 	public ArrayList<EventVo> getLiveEvent() {
 		// TODO Auto-generated method stub
 		ArrayList<EventVo> list = NBALive(getPeriod());
-		if(list.size()==0) return list;
+		if (list.size() == 0)
+			return list;
 		if (list.get(0).getTime().equals("00:00.0"))
 			increasePeriod();
 		return list;
@@ -67,7 +69,7 @@ public class NBALiveBLControllor {
 		NBALive.run();
 		try {
 			ArrayList<String> Live = NBALive.getLive();
-			if (Live.size() >2) {
+			if (Live.size() > 2) {
 				String Home_TeamId = Live.get(2).split(",")[1];
 				String Away_TeamId = Live.get(2).split(",")[3];
 				for (int i = 6; i < Live.size(); i++) {
@@ -86,7 +88,7 @@ public class NBALiveBLControllor {
 					}
 				}
 			} else {
-				
+
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -105,7 +107,7 @@ public class NBALiveBLControllor {
 			ArrayList<String> Live = NBALiveMatchItem.getLive();
 			for (int i = 0; i < Live.size(); i += 6) {
 				String[] data1 = Live.get(i).split(",");
-//				String[] data2 = Live.get(i + 2).split(",");
+				// String[] data2 = Live.get(i + 2).split(",");
 				String[] data3 = Live.get(i + 4).split(",");
 				list.add(new RecordOfPlayervo(data1[4], data1[16],
 						Integer.parseInt(data3[10]) * 60
@@ -157,13 +159,16 @@ public class NBALiveBLControllor {
 			Date now = new Date();
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			String date = df.format(now).substring(0, 10);
-			if(Integer.parseInt(date.substring(5, 6))<=8){
-				date = (Integer.parseInt(date.substring(2, 4))-1)+"-"+date.substring(2, 4)+"_"+date;
-			}else{
-				date = date.substring(2, 4)+"-"+(Integer.parseInt(date.substring(2, 4))+1)+"_"+date;
+			if (Integer.parseInt(date.substring(5, 6)) <= 8) {
+				date = (Integer.parseInt(date.substring(2, 4)) - 1) + "-"
+						+ date.substring(2, 4) + "_" + date;
+			} else {
+				date = date.substring(2, 4) + "-"
+						+ (Integer.parseInt(date.substring(2, 4)) + 1) + "_"
+						+ date;
 			}
-			int[] rebounds = { Integer.parseInt(data1[36]),
-					Integer.parseInt(data2[36]) };
+			int[] rebounds = { Integer.parseInt(data1[35]),
+					Integer.parseInt(data2[35]) };
 			int[] assists = { Integer.parseInt(data1[0]),
 					Integer.parseInt(data2[0]) };
 			int[] turnOver = { Integer.parseInt(data1[44]),
@@ -225,5 +230,5 @@ public class NBALiveBLControllor {
 		Id = NBALiveList.NBAMatchLiveList.get(current);
 		return "0041400401";
 	}
-	
+
 }
