@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import ui.TeamComparePanel;
+import ui.team.TeamComparePanel;
 import dataFactory.DataFactoryMySql;
 import BLservice.BLservice;
 

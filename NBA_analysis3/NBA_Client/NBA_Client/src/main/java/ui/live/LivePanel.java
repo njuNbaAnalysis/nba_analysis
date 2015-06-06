@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 import dataFactory.DataFactory;
 import dataFactory.DataFactoryMySql;
 import BLservice.BLservice;
-import ui.MatchTablePanel;
+import ui.match.MatchTablePanel;
 import vo.EventVo;
 import vo.Matchvo;
 import vo.Teamvo;
@@ -317,6 +317,7 @@ public class LivePanel extends JPanel {
 		String encode = "GB2312";
 		try {
 			if (str.equals(new String(str.getBytes(encode), encode))) {
+				
 				String s = encode;
 				return s;
 			}
@@ -334,6 +335,7 @@ public class LivePanel extends JPanel {
 		try {
 			if (str.equals(new String(str.getBytes(encode), encode))) {
 				String s2 = encode;
+				System.out.println("gb2312:"+new String(str.getBytes("UTF-8"),"gb2312"));
 				return s2;
 			}
 		} catch (Exception exception2) {
@@ -342,6 +344,7 @@ public class LivePanel extends JPanel {
 		try {
 			if (str.equals(new String(str.getBytes(encode), encode))) {
 				String s3 = encode;
+				System.out.println("GBK:"+new String(str.getBytes("UTF-8"),"GBK"));
 				return s3;
 			}
 		} catch (Exception exception3) {

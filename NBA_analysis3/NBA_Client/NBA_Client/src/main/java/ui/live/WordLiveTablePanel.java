@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
-import ui.PlayerJTable;
+import ui.statistics.PlayerJTable;
 import util.Tools;
 import vo.EventVo;
 
