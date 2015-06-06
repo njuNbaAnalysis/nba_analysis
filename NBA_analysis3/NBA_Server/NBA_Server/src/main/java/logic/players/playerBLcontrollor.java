@@ -88,12 +88,12 @@ public class playerBLcontrollor {
 			return checkisexit(Season, isPlayOff);
 	}
 
-	public Playervo getPlayerById(String idOfReboundsKing, String season,
+	public Playervo getPlayerById(String Id, String season,
 			boolean isplayoff) {
 		// TODO Auto-generated method stub
 		ArrayList<Playervo> temp = getAllPlayers(season, isplayoff);
 		for(int i=0;i<temp.size();i++){
-			if(temp.get(i).getPid().equals(idOfReboundsKing))
+			if(temp.get(i).getPid().equals(Id))
 				return temp.get(i);
 		}
 		return null;
