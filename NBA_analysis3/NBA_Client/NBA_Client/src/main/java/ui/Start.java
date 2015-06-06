@@ -1,5 +1,7 @@
 package ui;
 
+
+
 import java.util.ArrayList;
 
 import dataFactory.DataFactoryMySql;
@@ -9,7 +11,8 @@ import BLservice.BLservice;
 public class Start {
 
 	public static void main(String[] args) {
-		int progress = 0;
+		
+		/*int progress = 0;
 
 		long past = System.currentTimeMillis();
 		
@@ -46,18 +49,11 @@ public class Start {
         }
 		
 		long now = System.currentTimeMillis();
-		System.out.print("初始化：" + (now - past) / 1000.0 + "s");
-		
-		// Thread.sleep(3000);
-
-		/*try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
+		System.out.print("初始化：" + (now - past) / 1000.0 + "s");*/
 		
 		
-		/*MainFrame start = new MainFrame(null);
-		start.setVisible(true);*/
+		Test frame = new Test();
+		frame.setVisible(true);
+		
 	}
 }
