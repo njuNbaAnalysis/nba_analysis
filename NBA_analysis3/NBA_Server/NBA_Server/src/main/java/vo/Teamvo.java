@@ -186,7 +186,7 @@ public class Teamvo implements Serializable {
 	public Image getLogo() {
 		Image image = null;
         try {
-            image = ImageIO.read(new File("./Data/teamImage/" + getName() + ".gif"));
+            image = ImageIO.read(new File("./Data/teamImage/" + getAbbreviation() + ".gif"));
         } catch (IOException e) {
         }
         return image;
