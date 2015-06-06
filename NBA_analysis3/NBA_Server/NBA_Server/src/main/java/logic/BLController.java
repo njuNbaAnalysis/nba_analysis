@@ -71,7 +71,8 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 	public double[] getAlliancePlayerAverageData(String season,
 			boolean isPlayOff) throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
+		return playerBLcontro.getAlliancePlayerAverageData(season,isPlayOff);
 	}
 	
 
@@ -116,6 +117,15 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		playerBLcontrollor pbl = playerBLcontrollor.getInstance();
 		return pbl.getPlayerById(Id, season, isplayoff);
 	}
+	
+	@Override
+	public Playervo getPlayerByNameAndTeam(String playerName, String teamName)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		playerBLcontrollor pbl = playerBLcontrollor.getInstance();
+		return pbl.getPlayerByNameAndTeam(playerName, teamName);
+	}
+	
 
 	@Override
 	public Teamvo getTeamByPlayerId(String playerId, String season,

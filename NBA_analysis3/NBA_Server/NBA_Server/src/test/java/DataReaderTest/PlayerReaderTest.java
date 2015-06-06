@@ -11,6 +11,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import po.player;
+import vo.playerItem;
+import data.players.PlayerItemReader;
 import data.players.PlayerReader;
 
 public class PlayerReaderTest {
@@ -73,5 +75,13 @@ public class PlayerReaderTest {
 		boolean result = (list.size() == 0);
 		System.out.println(list.size());
 		assertTrue(result);
+	}
+	
+	@Test
+	public void testgetPlayerByNameAndTeam() {
+		PlayerReader pr = new PlayerReader();
+		String p  = pr.getPlayerByNameAndTeam("Kobe Bean Bryant", "LAL").getPid();
+		System.out.println(p);
+		assertTrue(true);
 	}
 }
