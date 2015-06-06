@@ -96,4 +96,16 @@ public interface BLservice extends Remote{
 	 * @return teamvo
 	 */
 	public Teamvo getTeamByTeamName(String teamNameEn, String season, boolean isPlayOff)throws RemoteException ;
+	
+	
+	/**
+	 * @param field:points,rebounds,assists,blockShots,steals,threePointersPercentage,fieldGoalsPercentage,freeThrowsPercentage	
+	 * @return teamvo
+	 */
+	public Teamvo[] getHotTeams(String field,String season,boolean isPlayOff)throws RemoteException;
+	
+	/**
+	 * @return 场均得分，场均篮板，场均助攻，罚球%，三分%
+	 */
+	public double[] getAlliancePlayerAverageData(String season,boolean isPlayOff)throws RemoteException;
 }
