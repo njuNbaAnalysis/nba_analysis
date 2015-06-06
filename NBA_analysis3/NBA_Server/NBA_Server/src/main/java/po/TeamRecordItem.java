@@ -1,5 +1,7 @@
 package po;
 
+import logic.teams.TeamRecordItemKey;
+
 public class TeamRecordItem {
     private String dataType;    //playerItem,teamItem,rivalTeamItem，分别代表球员总计数据，球队总计数据，和对方球队总计数据
     private String teamNameEn;
@@ -255,6 +257,41 @@ public class TeamRecordItem {
                 + ", blockShotsAverage=" + blockShotsAverage + ", turnOversAverage=" + turnOversAverage
                 + ", foulsAverage=" + foulsAverage + ", pointsAverage=" + pointsAverage + ", numOfVictory="
                 + numOfVictory + ", numOfFailure=" + numOfFailure + "]";
+    }
+    
+    public TeamRecordItemKey getTeamRecordItemKey(){
+        return new TeamRecordItemKey(this.getDataType()
+                ,this.getTeamNameEn()
+                ,this.isSeason()
+                ,this.getBeginYear()
+                ,this.getPlayerId());
+    }
+    
+    /**
+     * 这个方法用作对TeamRecordItem的索引，所有中心思想是有值就一定需要相同，没有值无需进行判断
+     * @param key
+     * @return
+     */
+    public boolean equals(TeamRecordItem key) {
+        if(this.isSeason() != key.isSeason()){
+            return false;
+        }
+        
+        if(!this.getDataType().equals(key.getDataType())){
+            return false;
+        }
+        
+        if(!this.getTeamNameEn().equals(key.getTeamNameEn())){
+            return false;
+        }
+        
+        if(this.getBeginYear() != null && !this.getBeginYear().isEmpty()
+                && key.getBeginYear() != null && !key.getBeginYear().isEmpty()
+                && !this.getBeginYear().equals(key.getBeginYear())){
+            return false;
+        }
+        
+        return true;
     }
     
 }

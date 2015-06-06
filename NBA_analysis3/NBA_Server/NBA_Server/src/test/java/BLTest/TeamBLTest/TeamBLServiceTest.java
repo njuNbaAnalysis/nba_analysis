@@ -31,7 +31,7 @@ public class TeamBLServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        service = BLController.getInstance();
+        
     }
 
     @After
@@ -56,6 +56,13 @@ public class TeamBLServiceTest {
         long start = System.currentTimeMillis();
         
         try {
+            service = BLController.getInstance();
+        } catch (RemoteException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        
+        try {
             ArrayList<Teamvo> list = service.getAllTeams("14-15", false);
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
@@ -64,7 +71,7 @@ public class TeamBLServiceTest {
         
         long end =  System.currentTimeMillis();
         
-        System.out.println(end - start);
+        System.out.println("allTeams:" + (end - start));
     }
     
     @Test
@@ -72,8 +79,15 @@ public class TeamBLServiceTest {
         long start = System.currentTimeMillis();
         
         try {
+            service = BLController.getInstance();
+        } catch (RemoteException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        
+        try {
             Teamvo vo = service.getTeamByPlayerId("2317", "14-15", false);
-            System.out.println(vo);
+            //System.out.println(vo);
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

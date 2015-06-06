@@ -75,11 +75,12 @@ public class TeamController implements Serializable{
      * @param isPlayOff true为季后赛，false为常规赛
      */
     public ArrayList<Teamvo> getAllTeams(String season, boolean isPlayOff){
-        TeamNameList teamNameList = TeamNameList.getIntance();
         ArrayList<Teamvo> resultList = new ArrayList<Teamvo>();
+        
         TeamvoGenerator generator = TeamvoGenerator.getInstance();
-        for(TeamListItem item:teamNameList.getTeamList()){
-            resultList.add(generator.getTeamvo(item.getTeamNameEn(), season, isPlayOff)); 
+        ArrayList<String> nameList = TeamRecordItemList.getInstance().getAllTeamNameEns(season, isPlayOff);
+        for(String token:nameList){
+            resultList.add(generator.getTeamvo(token, season, isPlayOff)); 
         }
         return resultList; 
     }
