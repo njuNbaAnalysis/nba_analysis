@@ -43,7 +43,8 @@ public class TeamInfoPanel extends JPanel {
 	private boolean isPlayOff;
 
 	public TeamInfoPanel(int width, int height, Teamvo team, BLservice bl,
-			JPanel content, String season, boolean isPlayOff) {
+			JPanel content, String season, boolean isPlayOff)
+			throws RemoteException {
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
@@ -59,13 +60,10 @@ public class TeamInfoPanel extends JPanel {
 		playerList = new ArrayList<Playervo>();
 		for (int i = 0; i < idList.size(); i++) {
 			if (i < num) {
-				try {
-					players[i] = (bl.getPlayerById(idList.get(i)));
-					playerList.add(bl.getPlayerById(idList.get(i)));
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+				players[i] = (bl.getPlayerById(idList.get(i)));
+				playerList.add(bl.getPlayerById(idList.get(i)));
+
 			}
 
 		}
@@ -83,7 +81,8 @@ public class TeamInfoPanel extends JPanel {
 		String[] columnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%", "罚球%" };
 
 		KingLabelPanel playerKingPanel = new KingLabelPanel("TP", "常规赛 数据王",
-				columnName, width, height * 1 / 3, bl, content);
+				columnName, width, height * 1 / 3, bl, content,
+				TeamInfoPanel.this.season, TeamInfoPanel.this.isPlayOff);
 		playerKingPanel.setPlayers(players, "point");
 		playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 		js.add(playerKingPanel);
@@ -135,9 +134,11 @@ public class TeamInfoPanel extends JPanel {
 					case 0:
 						AgendaPanel agenda;
 						try {
-							agenda = new AgendaPanel(width,
-									height * 2 / 3, bl.getMatchSimpleInfo(team.getAbbreviation(),team.getSeason()), bl,
-									content,TeamInfoPanel.this.season,TeamInfoPanel.this.isPlayOff);
+							agenda = new AgendaPanel(width, height * 2 / 3, bl
+									.getMatchSimpleInfo(team.getAbbreviation(),
+											team.getSeason()), bl, content,
+									TeamInfoPanel.this.season,
+									TeamInfoPanel.this.isPlayOff);
 							agenda.setBounds(0, 0, width, height * 2 / 3);
 							js.removeAll();
 							js.add(agenda);
@@ -146,22 +147,31 @@ public class TeamInfoPanel extends JPanel {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						
+
 						break;
 					case 1:
 
-						String[] columnName = { "得分", "篮板", "助攻", "抢断", "盖帽",
-								"三分%", "%", "罚球%" };
+						try {
+							String[] columnName = { "得分", "篮板", "助攻", "抢断",
+									"盖帽", "三分%", "%", "罚球%" };
 
-						KingLabelPanel playerKingPanel = new KingLabelPanel(
-								"TP", "常规赛 数据王", columnName, width, height / 3,
-								bl, content);
-						playerKingPanel.setPlayers(players, "point");
-						playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
+							KingLabelPanel playerKingPanel;
+							playerKingPanel = new KingLabelPanel("TP",
+									"常规赛 数据王", columnName, width, height / 3,
+									bl, content, TeamInfoPanel.this.season,
+									TeamInfoPanel.this.isPlayOff);
+							playerKingPanel.setPlayers(players, "point");
+							playerKingPanel.setBounds(0, 0, width,
+									height * 1 / 3);
 
-						js.removeAll();
-						js.add(playerKingPanel);
-						js.updateUI();
+							js.removeAll();
+							js.add(playerKingPanel);
+							js.updateUI();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
 						break;
 					case 2:
 						LineUpPanel lineUp = new LineUpPanel(width,
