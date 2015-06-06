@@ -38,7 +38,7 @@ public class TeamRecordItemList {
         para.setBeginYear(Tools.xx_xxToxxxx(season));
         recordItemList.addAll(teamRecordItemData.getTeamRecords(para));
         
-        System.out.println("size:" + recordItemList.size());
+        //System.out.println("size:" + recordItemList.size());
     }
     
     private void loadIfNotHas(String season,boolean isPlayOff){

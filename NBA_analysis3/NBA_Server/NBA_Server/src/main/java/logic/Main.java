@@ -3,9 +3,8 @@ package logic;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import logic.teams.TeamRecordItemList;
+import logic.teams.TeamController;
 import logic.teams.TeamvoGenerator;
-import po.TeamRecordItem;
 import vo.Teamvo;
 
 public class Main {
@@ -16,11 +15,13 @@ public class Main {
         /*TeamvoGenerator generator = TeamvoGenerator.getInstance();
         Teamvo vo = generator.getTeamvo("CHI", "14-15", false);*/
         BLController controller = BLController.getInstance();
-        //Teamvo vo = controller.getTeamByTeamName("CHI", "14-15", false);
+        //Teamvo vo = TeamvoGenerator.getInstance().getTeamvoWithLatest10Data("CHI", "14-15", false);
         ArrayList<Teamvo> voList = controller.getAllTeams("14-15", false);
         for(Teamvo vo:voList){
             System.out.println(vo.toString());
         }
+        
+        //System.out.println(vo);
         
  
         long end =  System.currentTimeMillis();

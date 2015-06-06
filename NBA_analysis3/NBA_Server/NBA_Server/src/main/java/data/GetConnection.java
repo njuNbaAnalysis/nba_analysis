@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class GetConnection {
     private static Connection connection = null;
     
-    public static Connection getConnection(){
+    public static synchronized Connection getConnection(){
         if(connection == null){
             connection = connect();
         }

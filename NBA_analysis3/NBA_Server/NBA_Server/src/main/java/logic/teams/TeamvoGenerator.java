@@ -51,6 +51,10 @@ public class TeamvoGenerator {
                 vo.setDivision(teamListItem.getDivision());
             }
             
+            if(teamListItem.getHomecourt() != null && !teamListItem.getHomecourt().equals("")){
+                vo.setHomeCourt(teamListItem.getHomecourt());
+            }
+            
             
             vo.setSeason(season);
             vo.setPlayOff(isPlayOff);
