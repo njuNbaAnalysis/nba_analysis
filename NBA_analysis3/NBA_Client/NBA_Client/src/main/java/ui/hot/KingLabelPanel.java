@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -112,12 +113,14 @@ public class KingLabelPanel extends HotLabelPanel {
 		private JLabel[] playerNames;
 		private JLabel[] playerTeamNames;
 		private String field;
+		private HashMap <String,String> idNameMap = new HashMap <String,String>();
 		public PlayerTableContentLabel(Playervo[] players, int contentWidth,
 				int contentHeight,String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
 			this.field = field;
+			
 			setPlayerNameLabel();
 
 		}
@@ -274,7 +277,7 @@ public class KingLabelPanel extends HotLabelPanel {
 		private void setPlayerNameLabel() {
 			playerNames = new JLabel[5];
 			playerTeamNames = new JLabel[5];
-			// JLabel teamName = new JLabel(players[0].getName());
+			
 			for (int i = 0; i < 5; i++) {
 				playerNames[i] = new JLabel();
 				playerTeamNames[i] = new JLabel();
@@ -311,7 +314,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				playerNames[i].addMouseListener(new PlayerMouseAdapter());
 				playerNames[i].setOpaque(false);
 				playerNames[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
+				idNameMap.put(players[i].getName(), players[i].getPid());
 
 				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
 				playerTeamNames[i].setOpaque(false);
@@ -321,26 +324,35 @@ public class KingLabelPanel extends HotLabelPanel {
 			}
 
 		}
-	}
+		private class PlayerMouseAdapter extends MouseAdapter {
 
-	private class PlayerMouseAdapter extends MouseAdapter {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				String content = ((JLabel) e
+						.getSource()).getText();
+				Playervo p;
+				try {
+					p = KingLabelPanel.this.bl.getPlayerById(idNameMap.get(content));
+					PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(hotWidth,
+							hotHeight * 3, p, KingLabelPanel.this.bl,
+							KingLabelPanel.this.content,KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
+					playInfoPanel.setBounds(0, 0, hotWidth, hotHeight * 3);
+					KingLabelPanel.this.content.removeAll();
+					KingLabelPanel.this.content.add(playInfoPanel);
+					KingLabelPanel.this.content.updateUI();
+					playInfoPanel.startAnimation();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 
-		@Override
-		public void mousePressed(MouseEvent e) {
-			Playervo p = KingLabelPanel.this.bl.getPlayerByName(((JLabel) e
-					.getSource()).getText());
-			PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(hotWidth,
-					hotHeight * 3, p, KingLabelPanel.this.bl,
-					KingLabelPanel.this.content,KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
-			playInfoPanel.setBounds(0, 0, hotWidth, hotHeight * 3);
-			KingLabelPanel.this.content.removeAll();
-			KingLabelPanel.this.content.add(playInfoPanel);
-			KingLabelPanel.this.content.updateUI();
-			playInfoPanel.startAnimation();
+			}
 
 		}
-
 	}
+
+	
 
 	private class TeamMouseAdapter extends MouseAdapter {
 
