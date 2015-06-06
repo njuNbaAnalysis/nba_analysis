@@ -50,7 +50,7 @@ public class MatchReader {
 			statement = conn.createStatement();
 			rs = statement
 					.executeQuery("select * from  matchlist where  season =  '"
-							+ season + "赛季' and isplayoff = " + isplayoff);
+							+ season + "赛季' and isplayoff = " + isplayoff +" group by date desc");
 			while (rs.next()) {
 				TeamNameList list = TeamNameList.getIntance();
 				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs.getString(3).substring(0, 5));
@@ -79,7 +79,7 @@ public class MatchReader {
 			statement = conn.createStatement();
 			rs = statement
 					.executeQuery("select * from  matchlist where  season =  '"
-							+ season + "赛季'");
+							+ season + "赛季' group by date desc");
 			while (rs.next()) {
 				TeamNameList list = TeamNameList.getIntance();
 				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs.getString(3).substring(0, 5));

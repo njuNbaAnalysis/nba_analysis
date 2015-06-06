@@ -33,10 +33,42 @@ public class playerBLcontrollorTest {
 	}
 
 	@Test
-	public void testUpdateNewMatch() {
+	public void testgetAllPlayers() {
 		playerBLcontrollor pl  = playerBLcontrollor.getInstance();
-		ArrayList<Playervo> list = pl.getAllPlayers("12-13", true);
+		ArrayList<Playervo> list = pl.getAllPlayers("14-15", true);
 		boolean result = (list.size()!=0);
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testgetAllPlayers2() {
+		playerBLcontrollor pl  = playerBLcontrollor.getInstance();
+		ArrayList<Playervo> list = pl.getAllPlayers("14-15", true);
+		boolean result = (list.size()!=0);
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testgetAllPlayers3() {
+		playerBLcontrollor pl  = playerBLcontrollor.getInstance();
+		ArrayList<Playervo> list = pl.getAllPlayers("14-15", false);
+		boolean result = (list.size()!=0);
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testgetAllPlayers4() {
+		playerBLcontrollor pl  = playerBLcontrollor.getInstance();
+		ArrayList<Playervo> list = pl.getAllPlayers("14-15", false);
+		boolean result = (list.size()!=0);
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testgetPlayerById() {
+		playerBLcontrollor pl  = playerBLcontrollor.getInstance();
+		Playervo list = pl.getPlayerById("00195", "12-13", false);
+		boolean result = (list!=null);
 		assertTrue(result);
 	}
 	

@@ -11,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import po.player;
-import po.playerItem;
+import vo.playerItem;
 import data.players.PlayerItemReader;
 import data.players.PlayerReader;
 
