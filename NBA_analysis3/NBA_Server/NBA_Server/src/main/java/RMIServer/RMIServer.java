@@ -21,7 +21,6 @@ public class RMIServer {
             e.printStackTrace();
         }
         
- 
     }
     public static void main(String [] args){
         RMIServer rmiserver = new RMIServer();

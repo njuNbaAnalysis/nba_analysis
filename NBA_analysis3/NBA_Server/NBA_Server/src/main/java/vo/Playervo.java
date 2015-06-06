@@ -26,7 +26,7 @@ public class Playervo implements Serializable {
 	private String team; // current team
 	private String location;// 城市
 	private String division;// 分区
-	private char conference;// 分区
+	private String conference;// 分区
 	private int gamePlayed;// 出场次数
 	private int gameStarted;// 首发次数
 	// 可场均
@@ -77,7 +77,7 @@ public class Playervo implements Serializable {
 	public Playervo(String Pid,String name, String number, String position, double height,
 			double weight, String birthday, String selected, String salary,
 			String highschool, String university, String team, String location,
-			String division, char conference, int gamePlayed, int gameStarted,
+			String division, String conference, int gamePlayed, int gameStarted,
 			int rebounds, int assists, double minutes, int offenseRebounds,
 			int defenseRebounds, int steals, int blockShots, int turnOver,
 			int fouls, int points, double fieldGoalsPercentage,
@@ -219,7 +219,7 @@ public class Playervo implements Serializable {
 		return division;
 	}
 
-	public char getConference() {
+	public String getConference() {
 		return conference;
 	}
 

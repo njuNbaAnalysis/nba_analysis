@@ -2,9 +2,13 @@ package logic.players;
 
 import java.util.ArrayList;
 
+import logic.teams.TeamController;
+import logic.teams.TeamNameList;
+import po.TeamListItem;
 import po.player;
 import po.playerItem;
 import vo.Playervo;
+import vo.Teamvo;
 import data.players.PlayerItemReader;
 import data.players.PlayerReader;
 
@@ -38,13 +42,20 @@ public class playerBLcontrollor {
 		return null;
 	}
 
-	private Playervo changePlayertoVO(player p) {
+	private Playervo changePlayertoVO(player p,String season,boolean isplayoff) {
 		Playervo result = null;
 		playerItem temp = p.getCurrentPlayerItem();
 		if (temp != null) {
+			TeamNameList lsit = TeamNameList.getIntance();
+			TeamListItem team = lsit.getTeamListItem(temp.getTeam());
 			String location = "";
 			String division = "";
-			char conference = ' ';
+			String conference = "";
+			if(team!=null){
+				location = team.getHomecourt();
+				division = team.getDivision();
+				conference = team.getConference();
+			}
 			double[] upgradeRate = { 0, 0, 0 };
 			result = new Playervo(p.getPid(), p.getName(), p.getNumber(),
 					p.getPosition(), p.getHeight(), p.getWeight(),
@@ -81,7 +92,7 @@ public class playerBLcontrollor {
 					isPlayOff);
 			ArrayList<Playervo> result = new ArrayList<Playervo>();
 			for (int i = 0; i < list.size(); i++) {
-				result.add(changePlayertoVO(list.get(i)));
+				result.add(changePlayertoVO(list.get(i),Season,isPlayOff));
 			}
 			return result;
 		} else
