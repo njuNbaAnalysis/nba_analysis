@@ -106,7 +106,7 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 
 	@Override
 	public Teamvo getTeamByPlayerId(String playerId, String season, boolean isPlayOff)throws RemoteException{
-	    return BLController.getInstance().getTeamByPlayerId(playerId, season, isPlayOff);
+	    return TeamController.getInstance().getTeamByPlayerId(playerId, season, isPlayOff);
 	}
 
 	@Override

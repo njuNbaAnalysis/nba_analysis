@@ -15,7 +15,7 @@ public class Teamvo implements Serializable {
 	private String abbreviation; // 缩写，例"ATL"
 	
 	@Deprecated
-	private String location; // 地区
+	private String location; // 地区    
 	private char conference; // 东部赛区or西部赛区 E,W
 	private String division;
 	private String homeCourt; // 主场

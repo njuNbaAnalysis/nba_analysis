@@ -119,5 +119,17 @@ public class TeamNameList {
         return null;
     }
     
-    
+    /**
+     * 如果没有则返回null
+     * @param teamNameEn
+     * @return
+     */
+    public TeamListItem getTeamListItem(String teamNameEn){
+        for(TeamListItem item:teamList){
+            if(item.getTeamNameEn().equals(teamNameEn)){
+                return item;
+            }
+        }
+        return null;
+    }
 }
