@@ -138,7 +138,7 @@ public class matchBLcontrollor {
 
 	/**
 	 * 得到最近十场比赛的信息
-	 * 
+	 * 顺序:index = 0为最近一场，index=9为最远一场
 	 * @param teamNameEn
 	 *            例"ATL"
 	 * @param season
