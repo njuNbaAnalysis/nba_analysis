@@ -22,6 +22,8 @@ import dataFactory.DataFactory;
 import dataFactory.DataFactoryMySql;
 import BLservice.BLservice;
 import ui.match.MatchTablePanel;
+import util.Tools;
+import util.UIUtils;
 import vo.EventVo;
 import vo.Matchvo;
 import vo.Teamvo;
@@ -45,9 +47,13 @@ public class LivePanel extends JPanel {
 		this.bl = bl;
 		this.match = match;
 		this.setSize(width, height);
+
 		setLabel();
 		setButton();
 		setContent();
+
+		Thread live = new Thread(new LiveThread());
+		live.start();
 	}
 
 	private void setContent() {
@@ -78,17 +84,19 @@ public class LivePanel extends JPanel {
 			this.labelHeight = height;
 			this.setLayout(null);
 			this.setSize(width, height);
-			/*
-			 * this.teams = new Teamvo[2]; try {
-			 * //System.out.println(match.getSeason());
-			 * //System.out.println(match.getSeason()); //teams[0] =
-			 * bl.getTeamByTeamName
-			 * (match.getTeams()[0],match.getSeason(),match.isIsplayoff()); //
-			 * teams[1] =
-			 * bl.getTeamByTeamName(match.getTeams()[1],match.getSeason
-			 * (),match.isIsplayoff()); } catch (RemoteException e) { // TODO
-			 * Auto-generated catch block e.printStackTrace(); }
-			 */
+
+			this.teams = new Teamvo[2];
+			try {
+				// System.out.println(match.getSeason());
+				// System.out.println(match.getSeason()); //
+				teams[0] = bl.getTeamByTeamName(match.getTeams()[0],
+						match.getSeason(), match.isIsplayoff());
+				teams[1] = bl.getTeamByTeamName(match.getTeams()[1],
+						match.getSeason(), match.isIsplayoff());
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
@@ -112,12 +120,14 @@ public class LivePanel extends JPanel {
 			int strWidth = g.getFontMetrics(g.getFont()).stringWidth("结束");
 			g.drawString("结束", labelWidth / 2 - strWidth / 2,
 					labelHeight * 1 / 10 - 8);// 这个结束需要修改
-			// 暂时不画
-			/*
-			 * g.drawImage(teams[0].getLogo(), labelWidth*12/36,
-			 * labelHeight*7/24, this); g.drawImage(teams[1].getLogo(),
-			 * labelWidth*83/144, labelHeight*7/24,this);
-			 */
+
+
+			g.drawImage(UIUtils.resize(teams[0].getLogo(), labelWidth / 10,
+					labelHeight * 3 / 10), labelWidth * 12 / 36,
+					labelHeight * 7 / 24, this);
+			g.drawImage(UIUtils.resize(teams[1].getLogo(), labelWidth / 10,
+					labelHeight * 3 / 10), labelWidth * 83 / 144,
+					labelHeight * 7 / 24, this);
 
 			g.setColor(Color.black);
 			g.setFont(new Font("default", Font.PLAIN, 30));
@@ -128,14 +138,20 @@ public class LivePanel extends JPanel {
 
 			g.setFont(new Font("default", Font.PLAIN, 15));
 
-			/*
-			 * g.drawString( "球队战绩"+teams[0].getNumOfVictory() + "-" +
-			 * (teams[0].getNumOfMatches() - teams[0] .getNumOfVictory()),
-			 * labelWidth*4/36, labelHeight*7/12); g.drawString(
-			 * "球队战绩"+teams[1].getNumOfVictory() + "-" +
-			 * (teams[1].getNumOfMatches() - teams[1] .getNumOfVictory()),
-			 * labelWidth*30/36, labelHeight*7/12);
-			 */
+			g.drawString(
+					"球队战绩"
+							+ teams[0].getNumOfVictory()
+							+ "-"
+							+ (teams[0].getNumOfMatches() - teams[0]
+									.getNumOfVictory()), labelWidth * 4 / 36,
+					labelHeight * 7 / 12);
+			g.drawString(
+					"球队战绩"
+							+ teams[1].getNumOfVictory()
+							+ "-"
+							+ (teams[1].getNumOfMatches() - teams[1]
+									.getNumOfVictory()), labelWidth * 30 / 36,
+					labelHeight * 7 / 12);
 
 			g.setFont(new Font("default", Font.PLAIN, 80));
 			strWidth = g.getFontMetrics(g.getFont()).stringWidth("VS");
@@ -144,46 +160,49 @@ public class LivePanel extends JPanel {
 
 			g.setFont(new Font("default", Font.PLAIN, 15));
 
-			g.drawString("1", labelWidth * 10 / 24, labelHeight * 2 / 3);
-			g.drawString("2", labelWidth * 11 / 24, labelHeight * 2 / 3);
-			g.drawString("3", labelWidth * 12 / 24, labelHeight * 2 / 3);
-			g.drawString("4", labelWidth * 13 / 24, labelHeight * 2 / 3);
-
-			g.setFont(new Font("default", Font.PLAIN, 30));
-			/*
-			 * g.drawString(match.getTeams()[0], labelWidth*8/24,
-			 * labelHeight*19/24); g.drawString(match.getTeams()[1],
-			 * labelWidth*8/24, labelHeight*22/24);
-			 */
-			g.drawString(match.getPointsList().get(0)[0] + "",
-					labelWidth * 10 / 24, labelHeight * 19 / 24);
-			g.drawString(match.getPointsList().get(1)[0] + "",
-					labelWidth * 11 / 24, labelHeight * 19 / 24);
-			g.drawString(match.getPointsList().get(2)[0] + "",
-					labelWidth * 12 / 24, labelHeight * 19 / 24);
-			g.drawString(match.getPointsList().get(3)[0] + "",
-					labelWidth * 13 / 24, labelHeight * 19 / 24);
-			g.drawString(match.getPoints()[0] + "", labelWidth * 14 / 24,
+			g.drawString(match.getTeams()[0], labelWidth * 8 / 24,
 					labelHeight * 19 / 24);
-			g.setColor(new Color(169, 11, 51));
-
-			g.drawString(match.getPointsList().get(0)[1] + "",
-					labelWidth * 10 / 24, labelHeight * 22 / 24);
-			g.drawString(match.getPointsList().get(1)[1] + "",
-					labelWidth * 11 / 24, labelHeight * 22 / 24);
-			g.drawString(match.getPointsList().get(2)[1] + "",
-					labelWidth * 12 / 24, labelHeight * 22 / 24);
-			g.drawString(match.getPointsList().get(3)[1] + "",
-					labelWidth * 13 / 24, labelHeight * 22 / 24);
-			g.drawString(match.getPoints()[1] + "", labelWidth * 14 / 24,
+			g.drawString(match.getTeams()[1], labelWidth * 8 / 24,
 					labelHeight * 22 / 24);
+
+			// 有加时的情况
+			int section = match.getPointsList().size();
+			int extwidth = labelWidth*11/24;
+			g.setFont(new Font("default", Font.PLAIN, 15));
+
+			for (int i = 0; i < section; i++) {
+				g.setColor(Color.BLACK);
+				if(i>=4){
+					g.drawString("加时"+(i-3) + "", labelWidth * (10 + i) / 24,
+							labelHeight * 2 / 3);
+				}else{
+					g.drawString(i + "", labelWidth * (10 + i) / 24,
+							labelHeight * 2 / 3);
+				}
+				
+				g.drawString(match.getPointsList().get(i)[0] + "", labelWidth
+						* (10 + i) / 24, labelHeight * 19 / 24);
+				g.setColor(new Color(169, 11, 51));
+				g.drawString(match.getPointsList().get(i)[1] + "", labelWidth
+						* (10 + i) / 24, labelHeight * 22 / 24);
+				extwidth += labelWidth / 24;
+
+			}
+			
+			g.setColor(Color.BLACK);
+			g.drawString(match.getPoints()[0] + "", extwidth, labelHeight * 19 / 24);
+			
+			g.setColor(new Color(169, 11, 51));
+			g.drawString(match.getPoints()[1] + "",extwidth, labelHeight * 22 / 24);
+			
+			
 
 			g.setFont(new Font("default", Font.PLAIN, 70));
 			g.setColor(Color.black);
-			g.drawString(match.getPoints()[0] + "", labelWidth * 6 / 24,
+			g.drawString(match.getPoints()[0] + "", labelWidth * 5 / 24,
 					labelHeight * 13 / 24);
 			g.setColor(new Color(169, 11, 51));
-			g.drawString(match.getPoints()[1] + "", labelWidth * 16 / 24,
+			g.drawString(match.getPoints()[1] + "", labelWidth * 17 / 24,
 					labelHeight * 13 / 24);
 		}
 	}
@@ -333,49 +352,39 @@ public class LivePanel extends JPanel {
 
 	}
 
-	public static String getEncoding(String str) {
-		String encode = "GB2312";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-
-				String s = encode;
-				return s;
-			}
-		} catch (Exception exception) {
-		}
-		encode = "ISO-8859-1";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-				String s1 = encode;
-				return s1;
-			}
-		} catch (Exception exception1) {
-		}
-		encode = "UTF-8";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-				String s2 = encode;
-				System.out.println("gb2312:"
-						+ new String(str.getBytes("UTF-8"), "gb2312"));
-				return s2;
-			}
-		} catch (Exception exception2) {
-		}
-		encode = "GBK";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-				String s3 = encode;
-				System.out.println("GBK:"
-						+ new String(str.getBytes("UTF-8"), "GBK"));
-				return s3;
-			}
-		} catch (Exception exception3) {
-		}
-		return "";
-	}
-
 	public void setMatch(Matchvo match) {
 		this.match = match;
+	}
+
+	private class LiveThread implements Runnable {
+
+		@Override
+		public void run() {
+
+			while (true) {
+				ArrayList<EventVo> eventList = null;
+				Matchvo m = null;
+				try {
+					eventList = bl.getLiveEvent();
+					System.out.println("eventList" + eventList.size());
+					m = bl.getLiveMatchInfo();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				LivePanel.this.refresh(eventList);
+				LivePanel.this.setMatch(m);
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+		}
+
 	}
 
 	public static void main(String[] args) {
@@ -389,6 +398,7 @@ public class LivePanel extends JPanel {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+
 		Matchvo m = null;
 		try {
 			m = bl.getLiveMatchInfo();
@@ -396,7 +406,8 @@ public class LivePanel extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		final LivePanel chart = new LivePanel(1280, 1080, bl, m);
+
+		LivePanel chart = new LivePanel(1280, 1080, bl, m);
 		chart.setBounds(0, 0, 1280, 1080);
 
 		f.setLayout(null);
@@ -404,36 +415,6 @@ public class LivePanel extends JPanel {
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// ArrayList<EventVo> eventList = new ArrayList<EventVo>();
-		Thread thread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				while (true) {
-					ArrayList<EventVo> eventList = null;
-					Matchvo m = null;
-					try {
-						eventList = bl.getLiveEvent();
-						System.out.println("eventList" + eventList.size());
-						m = bl.getLiveMatchInfo();
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					chart.refresh(eventList);
-					chart.setMatch(m);
-					try {
-						Thread.sleep(300);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					f.repaint();
-				}
-
-			}
-		});
-		thread.start();
 	}
 
 }
