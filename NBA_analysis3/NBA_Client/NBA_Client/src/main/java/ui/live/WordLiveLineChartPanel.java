@@ -93,8 +93,11 @@ public class WordLiveLineChartPanel extends JPanel {
 		int max = 0;
 		int minute = 12;
 		int startTime = Tools.getSectionTimeInSecond(type);
-		if (type != 0) {
-
+		if(type!=0){
+			if(type>4){
+				minute = 5;
+			}
+			
 			for (EventVo event : eventList) {
 				if (event.getNum() == 0 && event.getSection() == type) {
 					a_events.add(event);
@@ -165,9 +168,9 @@ public class WordLiveLineChartPanel extends JPanel {
 
 	private void setButton() {
 		sectionSize = Tools.getSectionNum(eventList);
-		btArray = new SectionButton[sectionSize];
-		for (int i = 0; i < sectionSize; i++) {
-			btArray[i] = new SectionButton(Tools.getSectionInChinese(i+1), i);
+		btArray = new SectionButton[sectionSize+1];
+		for (int i = 0; i < sectionSize+1; i++) {
+			btArray[i] = new SectionButton(Tools.getSectionInChinese(i), i);
 			btArray[i].setBounds(width * i / 8, 0, width / 8, height / 10);
 			MouseHandle mouseHandle = new MouseHandle(new Color(69, 69, 69),
 					new Color(87, 89, 91), i);
@@ -205,7 +208,7 @@ public class WordLiveLineChartPanel extends JPanel {
 
 				selectedNumber = type;
 
-				for (int i = 0; i < sectionSize; i++) {
+				for (int i = 0; i <= sectionSize; i++) {
 					if (type == i) {
 						updateLineChart(type);
 					}
@@ -271,6 +274,7 @@ public class WordLiveLineChartPanel extends JPanel {
 
 		private int y_now = -1;// 当前纵坐标的值
 		private int startTime;
+		
 
 		LiveLineChart(int[] seg, int width, int height,
 				ArrayList<EventVo> a_value, ArrayList<EventVo> b_value,

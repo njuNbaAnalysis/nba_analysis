@@ -24,11 +24,10 @@ public class WordLiveTablePanel extends JPanel {
 	private SectionButton[] btArray;
 	private int selected = 0;
 	private ArrayList<EventVo> eventList;
-	
-	private JScrollPane jspane;
+	private JPanel content;
 
-	public WordLiveTablePanel(String[] columnNames,
-			int width, int height, ArrayList<EventVo> eventList) {
+	public WordLiveTablePanel(String[] columnNames, int width, int height,
+			ArrayList<EventVo> eventList) {
 		this.setLayout(null);
 		this.setSize(width, height);
 		this.columnNames = columnNames;
@@ -37,29 +36,33 @@ public class WordLiveTablePanel extends JPanel {
 		this.eventList = eventList;
 		setButton();
 
-		jspane = new JScrollPane();
-		jspane.setBounds(0, height / 10, width, height * 9 / 10);
-		
-		
-		
-		WordLiveTable eventTable = new WordLiveTable(width, columnNames, Tools.reverse(eventList));
+		content = new JPanel();
+		content.setBounds(0, height / 10, width, height * 9 / 10);
+		content.setLayout(null);
+
+		JScrollPane jspane = new JScrollPane();
+		jspane.setBounds(0,0, width, height * 9 / 10);
+
+		WordLiveTable eventTable = new WordLiveTable(width, columnNames,
+				Tools.reverse(getSectionEvent(Tools.getSectionNum(eventList))));
 
 		jspane.setViewportView(eventTable);
-		this.add(jspane);
+		content.add(jspane);
+		this.add(content);
 	}
 
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(87, 89, 91));
 		g.fillRect(0, 0, width, height / 10);
 	}
-	
-    
+
 	private void setButton() {
 		sectionSize = Tools.getSectionNum(eventList);
 		if (sectionSize > 0) {
 			btArray = new SectionButton[sectionSize];
 			for (int i = 0; i < sectionSize; i++) {
-				btArray[i] = new SectionButton(Tools.getSectionInChinese(i+1), i);
+				btArray[i] = new SectionButton(
+						Tools.getSectionInChinese(i + 1), i);
 				btArray[i].setBounds(width * i / 8, 0, width / 8, height / 10);
 				SectionButtonListener l = new SectionButtonListener(i);
 				btArray[i].addActionListener(l);
@@ -70,13 +73,12 @@ public class WordLiveTablePanel extends JPanel {
 
 	}
 
-	
-
 	private ArrayList<EventVo> getSectionEvent(int sectionNum) {
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
-		
+
 		for (EventVo event : eventList) {
 			if (event.getSection() == sectionNum) {
+				System.out.println(event.getTeamName() + event.getPoints());
 				list.add(event);
 			}
 		}
@@ -94,12 +96,19 @@ public class WordLiveTablePanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if (selected != type) {
 				selected = type;
-				jspane.removeAll();				
-				WordLiveTable eventTable = new WordLiveTable(width, columnNames, Tools.reverse(getSectionEvent(type+1)));
+				JScrollPane jspane = new JScrollPane();
+
+				jspane.setBounds(0, 0, width, height * 9 / 10);
+				WordLiveTable eventTable = new WordLiveTable(width,
+						columnNames, Tools.reverse(getSectionEvent(type + 1)));
 
 				jspane.setViewportView(eventTable);
-				WordLiveTablePanel.this.updateUI();
-				WordLiveTablePanel.this.repaint();
+
+				content.removeAll();
+				content.updateUI();
+
+				content.add(jspane);
+				repaint();
 			}
 
 		}

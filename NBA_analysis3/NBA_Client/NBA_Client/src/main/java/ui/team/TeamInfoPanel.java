@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -25,7 +26,6 @@ import util.UIUtils;
 import vo.Playervo;
 import vo.Teamvo;
 
-
 public class TeamInfoPanel extends JPanel {
 	private TeamButton[] btArray;
 	private int width;
@@ -39,8 +39,11 @@ public class TeamInfoPanel extends JPanel {
 	private Playervo[] players;
 	private ArrayList<Playervo> playerList;
 	private int num = 5;
+	private String season;
+	private boolean isPlayOff;
 
-	public TeamInfoPanel(int width, int height, Teamvo team, BLservice bl,JPanel content) {
+	public TeamInfoPanel(int width, int height, Teamvo team, BLservice bl,
+			JPanel content, String season, boolean isPlayOff) {
 		this.width = width;
 		this.height = height;
 		this.setSize(width, height);
@@ -48,19 +51,26 @@ public class TeamInfoPanel extends JPanel {
 		this.setLayout(null);
 		this.bl = bl;
 		this.content = content;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 
 		ArrayList<String> idList = team.getPlayerList();
 		players = new Playervo[num];
 		playerList = new ArrayList<Playervo>();
 		for (int i = 0; i < idList.size(); i++) {
 			if (i < num) {
-				players[i] = (bl.getPlayerById(idList.get(i)));
+				try {
+					players[i] = (bl.getPlayerById(idList.get(i)));
+					playerList.add(bl.getPlayerById(idList.get(i)));
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
-			playerList.add(bl.getPlayerById(idList.get(i)));
 		}
-		
-		//最上面球队基本信息
+
+		// 最上面球队基本信息
 		teamBasicInfoPanel = new TeamBasicInfoLabel(team, width, height / 4);
 		teamBasicInfoPanel.setBounds(0, 0, width, height / 4);
 		this.add(teamBasicInfoPanel);
@@ -73,9 +83,9 @@ public class TeamInfoPanel extends JPanel {
 		String[] columnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%", "罚球%" };
 
 		KingLabelPanel playerKingPanel = new KingLabelPanel("TP", "常规赛 数据王",
-				columnName, width, height*1 / 3, bl,content);
-		playerKingPanel.setPlayers(players,"point");
-		playerKingPanel.setBounds(0, 0, width, height*1 / 3);
+				columnName, width, height * 1 / 3, bl, content);
+		playerKingPanel.setPlayers(players, "point");
+		playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 		js.add(playerKingPanel);
 
 		setButton();
@@ -123,12 +133,20 @@ public class TeamInfoPanel extends JPanel {
 				public void mousePressed(MouseEvent e) {
 					switch (TeamButton.this.type) {
 					case 0:
-						AgendaPanel agenda = new AgendaPanel(width,
-								height * 2 / 3, team.getMatchSimpleInfo(),bl,content);
-						agenda.setBounds(0, 0, width, height * 2 / 3);
-						js.removeAll();
-						js.add(agenda);
-						js.updateUI();
+						AgendaPanel agenda;
+						try {
+							agenda = new AgendaPanel(width,
+									height * 2 / 3, bl.getMatchSimpleInfo(team.getAbbreviation(),team.getSeason()), bl,
+									content,TeamInfoPanel.this.season,TeamInfoPanel.this.isPlayOff);
+							agenda.setBounds(0, 0, width, height * 2 / 3);
+							js.removeAll();
+							js.add(agenda);
+							js.updateUI();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
 						break;
 					case 1:
 
@@ -137,8 +155,8 @@ public class TeamInfoPanel extends JPanel {
 
 						KingLabelPanel playerKingPanel = new KingLabelPanel(
 								"TP", "常规赛 数据王", columnName, width, height / 3,
-								bl,content);
-						playerKingPanel.setPlayers(players,"point");
+								bl, content);
+						playerKingPanel.setPlayers(players, "point");
 						playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 
 						js.removeAll();
@@ -147,7 +165,8 @@ public class TeamInfoPanel extends JPanel {
 						break;
 					case 2:
 						LineUpPanel lineUp = new LineUpPanel(width,
-								height * 2 / 3, team.getPlayerList(),bl,content);
+								height * 2 / 3, team.getPlayerList(), bl,
+								content);
 						lineUp.setBounds(0, 0, width, height * 2 / 3);
 						js.removeAll();
 						js.add(lineUp);

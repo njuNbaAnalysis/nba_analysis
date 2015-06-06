@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import ui.player.PlayerInfoPanel;
 import ui.team.TeamInfoPanel;
 import vo.Playervo;
+import vo.Teamvo;
 import BLservice.BLservice;
 import compare.PalyerScreening;
 import compare.PlayerAssistsComp;
@@ -79,7 +80,7 @@ public class PlayerJTable extends StatJTable {
 	private String season;
 	private boolean isPlayOff;
 
-	public PlayerJTable(BLservice bl, int i, int j,JPanel content,String season,boolean isPlayOff) throws RemoteException {
+	public PlayerJTable(BLservice bl, int i, int j,JPanel content,String season,boolean isPlayOff)throws RemoteException{
 		super();
 		list = bl.getAllPlayers(season,isPlayOff);
 		this.bl = bl;
@@ -101,29 +102,43 @@ public class PlayerJTable extends StatJTable {
                 if ((column=PlayerJTable.this.getSelectedColumn()) == 1) {
                 	int row = PlayerJTable.this.getSelectedRow();
                 	String playerName = (String)PlayerJTable.this.getValueAt(row, column);
-
-                	Playervo p = PlayerJTable.this.bl.getPlayerByName(playerName);
+                	String teamName = (String)PlayerJTable.this.getValueAt(row, 2);
+                	Playervo p;
+					try {
+						p = PlayerJTable.this.bl.getPlayerByNameAndTeam(playerName,teamName);
+						PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*10/9,p,PlayerJTable.this.bl,PlayerJTable.this.content,PlayerJTable.this.season,PlayerJTable.this.isPlayOff);
+	            		
+	            		playerInfoPanel.setBounds(0, 0, width, height*10/9);
+	            		playerInfoPanel.startAnimation();
+	            		PlayerJTable.this.content.removeAll();
+	            		PlayerJTable.this.content.add(playerInfoPanel);
+	            		PlayerJTable.this.content.updateUI();
+	            		playerInfoPanel.startAnimation();
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             		
-            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*10/9,p,PlayerJTable.this.bl,PlayerJTable.this.content);
             		
-            		playerInfoPanel.setBounds(0, 0, width, height*10/9);
-            		playerInfoPanel.startAnimation();
-            		PlayerJTable.this.content.removeAll();
-            		PlayerJTable.this.content.add(playerInfoPanel);
-            		PlayerJTable.this.content.updateUI();
-            		playerInfoPanel.startAnimation();
                 }
                 if((column=PlayerJTable.this.getSelectedColumn()) == 2){
                 	int row = PlayerJTable.this.getSelectedRow();
                 	String teamName = (String)PlayerJTable.this.getValueAt(row, column);
 
-                	Teamvo t = PlayerJTable.this.bl.getTeamByName(teamName);
+                	Teamvo t;
+					try {
+						t = PlayerJTable.this.bl.getTeamByTeamName(teamName,PlayerJTable.this.season,PlayerJTable.this.isPlayOff);
+						TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,PlayerJTable.this.bl,PlayerJTable.this.content);
+	            		m.setBounds(0, 0, width, height*10/9);
+	            		PlayerJTable.this.content.removeAll();
+	            		PlayerJTable.this.content.add(m);
+	            		PlayerJTable.this.content.updateUI();
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             		
-            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,PlayerJTable.this.bl,PlayerJTable.this.content);
-            		m.setBounds(0, 0, width, height*10/9);
-            		PlayerJTable.this.content.removeAll();
-            		PlayerJTable.this.content.add(m);
-            		PlayerJTable.this.content.updateUI();
+            		
             		//m.startAnimation();
                 }
             }

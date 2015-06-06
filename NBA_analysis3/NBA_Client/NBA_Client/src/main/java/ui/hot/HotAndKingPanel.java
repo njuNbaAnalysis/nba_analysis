@@ -34,7 +34,7 @@ public class HotAndKingPanel extends JPanel {
 	private static String [] typeArray = {"T","P","HP"};
 	private KingLabelPanel teamKingPanel;
 	private KingLabelPanel playerKingPanel;
-	private ImprovedLabelPanel hotPlayerPanel;
+	//private ImprovedLabelPanel hotPlayerPanel;
 	private JPanel content;
 
 	public HotAndKingPanel(int width, int height, BLservice bl,JPanel content) {

@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -33,12 +34,16 @@ public class KingLabelPanel extends HotLabelPanel {
 	private int num = 5;
 	private Playervo[] players;
 	private JPanel content;
+	private String season;
+	private boolean isPlayOff;
 
 	public KingLabelPanel(String type, String headName, String[] columnName,
-			int kingWidth, int kingHeight, BLservice bl, JPanel content) {
+			int kingWidth, int kingHeight, BLservice bl, JPanel content,String season,boolean isPlayOff) throws RemoteException {
 		super(headName, columnName, kingWidth, kingHeight, bl);
 		this.type = type;
 		this.content = content;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		setTableHeadLabel();
 		setButton(type);
 		
@@ -47,16 +52,16 @@ public class KingLabelPanel extends HotLabelPanel {
 		
 	}
 
-	public void setTableContent(String type) {
+	public void setTableContent(String type) throws RemoteException {
 		if (type.equals("P")) {
-			Object[] o = bl.getAllPlayers().subList(0, num).toArray();
+			Object[] o = bl.getAllPlayers(season,isPlayOff).subList(0, num).toArray();
 			Playervo[] p = new Playervo[num];
 			for (int i = 0; i < num; i++) {
 				p[i] = (Playervo) o[i];
 			}
 			setPlayerTableContent(p);
 		} else if (type.equals("T")) {
-			Object[] o = bl.getAllTeams().subList(0, num).toArray();
+			Object[] o = bl.getAllTeams(season,isPlayOff).subList(0, num).toArray();
 			Teamvo[] t = new Teamvo[num];
 			for (int i = 0; i < num; i++) {
 				t[i] = (Teamvo) o[i];
@@ -140,7 +145,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				// 号码
 				g.setColor(new Color(68, 68, 68));
 				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(Integer.toString(players[0].getNumber()), contentWidth / 5,
+				g.drawString(players[0].getNumber(), contentWidth / 5,
 						contentHeight * 3 / 5);
 				// 位置
 				g.setColor(new Color(68, 68, 68));
@@ -184,7 +189,7 @@ public class KingLabelPanel extends HotLabelPanel {
 					playerNames[i - 1].setText(players[i - 1].getName());
 
 					g.setColor(new Color(68, 68, 68));
-					String str = Integer.toString(players[i - 1].getNumber()) + " "
+					String str = players[i - 1].getNumber() + " "
 							+ players[i - 1].getPosition();
 
 					// 球队label
@@ -322,8 +327,8 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Player p = KingLabelPanel.this.bl.getPlayerByName(((JLabel) e
-					.getSource()).getText());
+			Playervo p = KingLabelPanel.this.bl.getPlayerByName(((JLabel) e
+					.getSource()).getText(),);
 			PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(hotWidth,
 					hotHeight * 3, p, KingLabelPanel.this.bl,
 					KingLabelPanel.this.content);
@@ -341,15 +346,22 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			Team t = KingLabelPanel.this.bl.getTeamByName(((JLabel) e
-					.getSource()).getText());
-			TeamInfoPanel teamInfoPanel = new TeamInfoPanel(hotWidth,
-					hotHeight * 3, t, KingLabelPanel.this.bl,
-					KingLabelPanel.this.content);
-			teamInfoPanel.setBounds(0, 0, hotWidth, (int) (hotHeight * 3.5));
-			KingLabelPanel.this.content.removeAll();
-			KingLabelPanel.this.content.add(teamInfoPanel);
-			KingLabelPanel.this.content.updateUI();
+			Teamvo t;
+			try {
+				t = KingLabelPanel.this.bl.getTeamByTeamName(((JLabel) e
+						.getSource()).getText(),KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
+				TeamInfoPanel teamInfoPanel = new TeamInfoPanel(hotWidth,
+						hotHeight * 3, t, KingLabelPanel.this.bl,
+						KingLabelPanel.this.content,KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
+				teamInfoPanel.setBounds(0, 0, hotWidth, (int) (hotHeight * 3.5));
+				KingLabelPanel.this.content.removeAll();
+				KingLabelPanel.this.content.add(teamInfoPanel);
+				KingLabelPanel.this.content.updateUI();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 
 		}
 
@@ -384,7 +396,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 队标
 			BufferedImage action = UIUtils.resize(
-					teams[0].getLogo(contentWidth / 12, contentHeight),
+					teams[0].getLogo(),
 					contentWidth / 12, contentHeight);
 			g.drawImage(action, 0, 0, this);
 			// 排名
@@ -413,8 +425,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				g.drawString(i + "", contentWidth * 11 / 20, contentHeight
 						* (i - 1) / 5);
 
-				BufferedImage image = UIUtils.resize(teams[i - 1].getLogo(
-						contentWidth / 30, contentHeight / 5),
+				BufferedImage image = UIUtils.resize(teams[i - 1].getLogo(),
 						contentWidth / 30, contentHeight / 5);
 
 				g.drawImage(image, contentWidth * 3 / 5, contentHeight
