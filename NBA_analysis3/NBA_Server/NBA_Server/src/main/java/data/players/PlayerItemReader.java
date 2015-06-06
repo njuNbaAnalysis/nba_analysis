@@ -8,8 +8,7 @@ import java.util.ArrayList;
 
 import logic.teams.TeamNameList;
 import data.GetConnection;
-import po.TeamListItem;
-import po.playerItem;
+import vo.playerItem;
 
 public class PlayerItemReader {
 
