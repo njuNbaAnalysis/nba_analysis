@@ -67,7 +67,7 @@ public class NBALiveBLControllor {
 		NBALive.run();
 		try {
 			ArrayList<String> Live = NBALive.getLive();
-			if (Live.size() >= 2) {
+			if (Live.size() >2) {
 				String Home_TeamId = Live.get(2).split(",")[1];
 				String Away_TeamId = Live.get(2).split(",")[3];
 				for (int i = 6; i < Live.size(); i++) {
