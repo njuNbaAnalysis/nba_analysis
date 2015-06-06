@@ -3,6 +3,7 @@ package ui.statistics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 import ui.team.TeamInfoPanel;
+import util.UIUtils;
 import vo.Teamvo;
 import BLservice.BLservice;
 import compare.PalyerScreening;
@@ -77,9 +79,6 @@ import compare.TeamThreePointersHitsComp;
 import compare.TeamThreePointersPercentageComp;
 import compare.TeamTurnOversComp;
 import compare.TeamWinPercentageComp;
-import logic.BLService;
-import logic.players.Player;
-import logic.teams.Team;
 
 public class TeamJTable extends StatJTable {
 	private static String[] averageColumn = { "排名", "球队", "场数", "%", "3分%",
@@ -93,10 +92,12 @@ public class TeamJTable extends StatJTable {
 	private int width;
 	private int height;
 	private BLservice bl;
+	private String season;
+	private boolean isPlayOff;
 
-	public TeamJTable(BLservice bl, int i, int j,JPanel content) {
+	public TeamJTable(BLservice bl, int i, int j,JPanel content,String season,boolean isPlayOff) throws RemoteException{
 		super();
-		list = bl.getAllTeams();
+		list = bl.getAllTeams(season,isPlayOff);
 		this.getTableHeader().addMouseListener(new MouseHandle());
 		this.portraitWidth = 80;
 		this.portraitHeight = 80;
@@ -104,6 +105,8 @@ public class TeamJTable extends StatJTable {
 		this.height = j;
 		this.content = content;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -116,13 +119,20 @@ public class TeamJTable extends StatJTable {
                 	int row = TeamJTable.this.getSelectedRow();
                 	String teamName = (String)TeamJTable.this.getValueAt(row, column);
 
-                	Teamvo t = TeamJTable.this.bl.getTeamByName(teamName);
+                	Teamvo t;
+					try {
+						t = TeamJTable.this.bl.getTeamByTeamName(teamName,TeamJTable.this.season,TeamJTable.this.isPlayOff);
+						TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,TeamJTable.this.bl,TeamJTable.this.content);
+	            		m.setBounds(0, 0, width, height*10/9);
+	            		TeamJTable.this.content.removeAll();
+	            		TeamJTable.this.content.add(m);
+	            		TeamJTable.this.content.updateUI();
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             		
-            		TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,TeamJTable.this.bl,TeamJTable.this.content);
-            		m.setBounds(0, 0, width, height*10/9);
-            		TeamJTable.this.content.removeAll();
-            		TeamJTable.this.content.add(m);
-            		TeamJTable.this.content.updateUI();
+            		
                 }
             }
         });
@@ -168,7 +178,7 @@ public class TeamJTable extends StatJTable {
 		s[5] = t.getThreePointerHits() + "";
 		s[6] = t.getThreePointerAttempts() + "";
 		s[7] = t.getFreeThrowHits() + "";
-		s[8] = t.getFreeThrows() + "";
+		s[8] = t.getFreeThrowAttempts() + "";
 		s[9] = t.getOffensiveRebounds() + "";
 		s[10] = t.getDefensiveRebounds() + "";
 		s[11] = t.getRebounds() + "";
@@ -215,7 +225,7 @@ public class TeamJTable extends StatJTable {
 				// 添加数据到表格
 
 				model.addRow(s);
-				imageList.add(list.get(i).getLogo(portraitWidth, portraitHeight));
+				imageList.add(UIUtils.resize(list.get(i).getLogo(),portraitWidth, portraitHeight));
 
 			}
 		}else{
@@ -229,7 +239,7 @@ public class TeamJTable extends StatJTable {
 				// 添加数据到表格
 
 				model.addRow(s);
-				imageList.add(list.get(i).getLogo(portraitWidth, portraitHeight));
+				imageList.add(UIUtils.resize(list.get(i).getLogo(),portraitWidth, portraitHeight));
 
 			}
 		}

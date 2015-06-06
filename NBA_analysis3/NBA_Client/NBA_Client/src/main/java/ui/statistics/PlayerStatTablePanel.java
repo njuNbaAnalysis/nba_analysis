@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,8 +29,6 @@ import BLservice.BLservice;
 import compare.PalyerScreening;
 import compare.PlayerAveragePointsComp;
 import compare.PlayerPointsComp;
-import logic.BLService;
-import logic.players.Player;
 
 public class PlayerStatTablePanel extends StatTablePanel {
 
@@ -54,8 +53,13 @@ public class PlayerStatTablePanel extends StatTablePanel {
 		jspane.setBounds(0, 116 * height / (1080), width * 9 / 10, height - 116
 				* height / (1080));
 
-		statTable = new PlayerJTable(bl, width * 9 / 10, height - 116
-				* height / (1080),content);
+		try {
+			statTable = new PlayerJTable(bl, width * 9 / 10, height - 116
+					* height / (1080),content,season,isPlayOff);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		statTable.setBounds(200, 200, 800, 600);
 		jspane.setViewportView(statTable);
 		refresh();

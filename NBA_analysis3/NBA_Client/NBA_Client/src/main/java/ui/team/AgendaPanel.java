@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,13 +44,17 @@ public class AgendaPanel extends JPanel{
 	private JScrollPane js;
 	private BLservice bl;
 	private JPanel content;
+	private String season;
+	private boolean isPlayOff;
 
-	AgendaPanel(int width, int height, ArrayList<MatchSimpleInfovo> matches,BLservice bl,JPanel content) {
+	AgendaPanel(int width, int height, ArrayList<MatchSimpleInfovo> matches,BLservice bl,JPanel content,String season,boolean isPlayOff) {
 		this.width = width;
 		this.height = height;
 		this.matches = matches;
 		this.bl = bl;
 		this.content = content;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 		setTabelPanel();
 
@@ -110,13 +115,20 @@ public class AgendaPanel extends JPanel{
 	                	int row = AgendaTable.this.getSelectedRow();
 	                	String teamName = (String)AgendaTable.this.getValueAt(row, column);
 	                	teamName = teamName.split(" ")[1];//空格在1位
-	                	Teamvo t = AgendaTable.this.bl.getTeamByTeamName(teamName);
+	                	Teamvo t;
+						try {
+							t = AgendaTable.this.bl.getTeamByTeamName(teamName,AgendaPanel.this.season,AgendaPanel.this.isPlayOff);
+							TeamInfoPanel m = new TeamInfoPanel(width,height*3/2,t,AgendaTable.this.bl,AgendaTable.this.content,AgendaPanel.this.season,AgendaPanel.this.isPlayOff);
+		            		m.setBounds(0, 0, width, height*3/2);
+		            		AgendaTable.this.content.removeAll();
+		            		AgendaTable.this.content.add(m);
+		            		AgendaTable.this.content.updateUI();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 	            		
-	            		TeamInfoPanel m = new TeamInfoPanel(width,height*3/2,t,AgendaTable.this.bl,AgendaTable.this.content);
-	            		m.setBounds(0, 0, width, height*3/2);
-	            		AgendaTable.this.content.removeAll();
-	            		AgendaTable.this.content.add(m);
-	            		AgendaTable.this.content.updateUI();
+	            		
 	                }
 	                //暂时这样
 	               /* if ((column=AgendaTable.this.getSelectedColumn()) == 4) {

@@ -265,17 +265,16 @@ public class LineUpPanel extends JPanel {
 
 		private String[] getInfoRow(Playervo p) {
 			String[] s = new String[9];
-			//球员没有的时候
+			//球员经验这个属性缺少
 			if(p!=null){
 				s[0] = p.getName();
 				System.out.println(p.getName());
 				s[1] = p.getPosition() + "";
-				s[2] = p.getHeight()[0] + "尺" + p.getHeight()[1] + "寸";
+				s[2] = p.getHeight()+"米";
 				s[3] = p.getWeight() + "";
 				s[4] = p.getNumber() + "";
 				s[5] = p.getBirthday() + "";
-				s[6] = p.getExperience() + "年";
-				s[7] = p.getSchool();
+				s[6] = p.getHighschool();
 			}
 			
 

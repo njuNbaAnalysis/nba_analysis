@@ -16,20 +16,20 @@ public class MatchInfoPanel extends JPanel {
 	Matchvo match;
 	
 	
-	public MatchInfoPanel(int width,int height,Matchvo match,BLservice bl){
+	public MatchInfoPanel(int width,int height,Matchvo match,BLservice b,String season,boolean isPlayOff){
 		this.width = width;
 		this.height = height;
 		this.match = match;
 		this.setLayout(null);
 		setBackground(Color.white);
 		this.setBounds(0,0,width,height);
-		MatchPanel temp = new MatchPanel(width, height, bl, new JPanel());
+		MatchPanel temp = new MatchPanel(width, height, b, new JPanel(),season,isPlayOff);
 		InfoLabel info = temp.new InfoLabel(0, 0,
 				width, 300, match);
 		
 		this.add(info);
 		
-		MatchTablePanel table =  new MatchTablePanel(width, 800, match, bl);
+		MatchTablePanel table =  new MatchTablePanel(width, 800, match, b);
 		table.setBounds(0, 300, width, 1000);
 		this.add(table);
 		

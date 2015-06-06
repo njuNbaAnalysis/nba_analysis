@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -380,7 +381,7 @@ public class MenuPanel extends JPanel {
 			if (type == 1) {
 
 				PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(
-						width * 10, height, bl, content);
+						width * 10, height, bl, content,season,isPlayOff);
 				teamRankTablePanel.setBounds(0, 0, width * 9, height);
 				content.removeAll();
 				content.add(teamRankTablePanel);
@@ -402,26 +403,40 @@ public class MenuPanel extends JPanel {
 			}
 			if (type == 3) {
 
-				PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(
-						width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
-						content);
-				teamRankTablePanel.setBounds(0, 0, width * 9, height);
-				teamRankTablePanel.startAnimation();
-				content.removeAll();
-				content.add(teamRankTablePanel);
+				PlayerInfoPanel teamRankTablePanel;
+				try {
+					teamRankTablePanel = new PlayerInfoPanel(
+							width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
+							content);
+					teamRankTablePanel.setBounds(0, 0, width * 9, height);
+					teamRankTablePanel.startAnimation();
+					content.removeAll();
+					content.add(teamRankTablePanel);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				content.updateUI();
 				currentType=3;
 			}
 			if (type == 4) {
-				AllTeamPanel team = new AllTeamPanel(width * 9, height, bl,
-						content, season, isPlayOff);
+				AllTeamPanel team;
+				try {
+					team = new AllTeamPanel(width * 9, height, bl,
+							content, season, isPlayOff);
+					content.removeAll();
+					content.setVisible(false);
+					content.add(team);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				// TeamInfoPanel teamRankTablePanel = new
 				// TeamInfoPanel(width*9,height,bl.getAllTeams().get(0),bl,content);
 				// team.setBounds(0, 0, width*9, height);
 				// teamRankTablePanel.startAnimation();
-				content.removeAll();
-				content.setVisible(false);
-				content.add(team);
+				
 				content.updateUI();
 				content.setVisible(true);
 				currentType=4;
@@ -544,7 +559,7 @@ public class MenuPanel extends JPanel {
 		switch (currentType){
 		case 1:{
 			PlayerStatTablePanel teamRankTablePanel = new PlayerStatTablePanel(
-					width * 10, height, bl, content);
+					width * 10, height, bl, content,season,isPlayOff);
 			teamRankTablePanel.setBounds(0, 0, width * 9, height);
 			content.removeAll();
 			content.add(teamRankTablePanel);
@@ -561,22 +576,36 @@ public class MenuPanel extends JPanel {
 			break;
 		}
 		case 3:{
-			PlayerInfoPanel teamRankTablePanel = new PlayerInfoPanel(
-					width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
-					content);
-			teamRankTablePanel.setBounds(0, 0, width * 9, height);
-			teamRankTablePanel.startAnimation();
-			content.removeAll();
-			content.add(teamRankTablePanel);
+			PlayerInfoPanel teamRankTablePanel;
+			try {
+				teamRankTablePanel = new PlayerInfoPanel(
+						width * 9, height, bl.getAllPlayers(season,isPlayOff).get(0), bl,
+						content);
+				teamRankTablePanel.setBounds(0, 0, width * 9, height);
+				teamRankTablePanel.startAnimation();
+				content.removeAll();
+				content.add(teamRankTablePanel);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			content.updateUI();
 			break;
 		}
 		case 4:{
-			AllTeamPanel team = new AllTeamPanel(width * 9, height, bl,
-					content, season, isPlayOff);
-			content.removeAll();
-			content.setVisible(false);
-			content.add(team);
+			AllTeamPanel team;
+			try {
+				team = new AllTeamPanel(width * 9, height, bl,
+						content, season, isPlayOff);
+				content.removeAll();
+				content.setVisible(false);
+				content.add(team);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 			content.updateUI();
 			content.setVisible(true);
 			break;

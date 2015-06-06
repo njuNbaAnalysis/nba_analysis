@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ui.player.PlayerInfoPanel;
+import util.UIUtils;
 import vo.KingsOfMatchvo;
 import vo.Matchvo;
 import vo.Playervo;
@@ -273,8 +274,8 @@ public class MatchPanel extends JPanel {
 			g.fillRect(0, height / 10 + 1, width * 2 / 5, height * 8 / 10 - 1);
 			g.setFont(new Font("default", Font.BOLD, 20));
 			g.drawString("结束", 45, 22);
-			g.drawImage(teams[0].getLogo(96, 80), 50, 60, this);
-			g.drawImage(teams[1].getLogo(96, 80), 50, 170, this);
+			g.drawImage(UIUtils.resize(teams[0].getLogo(), 96, 80), 50, 60, this);
+			g.drawImage(UIUtils.resize(teams[1].getLogo(), 96, 80), 50, 170, this);
 			g.setColor(Color.black);
 			g.setFont(new Font("default", Font.PLAIN, 30));
 			g.drawString(match.getTeams()[0], 150, 90);
