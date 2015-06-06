@@ -17,7 +17,7 @@ def find_MatchItemlive(game_id,ishome):
         print('no such game ' + str(game.status_code))
         return
 
-    if(ishome):
+    if(ishome == 1):
         events = game.json()['payload']['homeTeam']['gamePlayers']
         for x in range(0, len(events)):
             CsvHelper.dict_to_csv_stream(events[x]['profile'], False)
@@ -33,6 +33,6 @@ def find_MatchItemlive(game_id,ishome):
         
 if __name__ == '__main__':
     ID = sys.argv[1]
-    ishome = bool(sys.argv[2])
+    ishome = int(sys.argv[2])
     find_MatchItemlive(ID,ishome)
 
