@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-06-06 05:28:19
+-- Generation Time: 2015-06-06 09:10:37
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -70,7 +70,7 @@ INSERT INTO `teamnamelist` (`teamNameEn`, `teamNameZh`, `conference`, `division`
 ('DTF', '底特律猎鹰', '', '', '', '', ''),
 ('FLO', '佛罗里达人', '', '', '', '', ''),
 ('FTW', '福特韦恩活塞', '', '', '', '', ''),
-('GSW', '金州勇士', 'western', 'pacific', 'warriors', '', 'Oracle Arena'),
+('GSW', '金州勇士', 'western', 'pacific', 'warriors', '勇士', 'Oracle Arena'),
 ('HOU', '休斯顿火箭', 'western', 'northwest', 'rockets', '火箭', 'Toyota Center'),
 ('HSM', '休斯顿小牛', '', '', '', '', ''),
 ('INA', '印第安纳老者', '', '', '', '', ''),
