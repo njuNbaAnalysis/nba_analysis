@@ -142,6 +142,11 @@ public class matchBLcontrollor {
 		}
 		return result;
 	}
+	
+	public Matchvo getMatchById(String mid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * 得到最近十场比赛的信息

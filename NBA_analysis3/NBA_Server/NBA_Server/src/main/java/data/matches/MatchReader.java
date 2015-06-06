@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import logic.teams.TeamNameList;
 import po.match;
 import data.GetConnection;
 
@@ -22,8 +23,11 @@ public class MatchReader {
 			statement = conn.createStatement();
 			rs = statement.executeQuery("select * from matchlist");
 			while (rs.next()) {
+				TeamNameList list = TeamNameList.getIntance();
+				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs.getString(3).substring(0, 5));
+				String away_team = list.getEnAbbrByZhAbbr(rs.getString(5),rs.getString(3).substring(0, 5));
 				result.add(new match(rs.getString(1), rs.getString(2), rs
-						.getString(3), rs.getString(4), rs.getString(5), rs
+						.getString(3),home_team, away_team, rs
 						.getBoolean(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
@@ -35,7 +39,7 @@ public class MatchReader {
 		return result;
 	}
 
-	public ArrayList<match> getMatchesBySeason(String season,boolean isplayoff) { 
+	public ArrayList<match> getMatchesBySeason(String season, boolean isplayoff) {
 		ArrayList<match> result = new ArrayList<match>();
 
 		Connection conn = GetConnection.getConnection();
@@ -44,22 +48,27 @@ public class MatchReader {
 
 		try {
 			statement = conn.createStatement();
-			rs = statement.executeQuery("select * from  matchlist where  season =  '"+season+"赛季' and isplayoff = "+isplayoff);
+			rs = statement
+					.executeQuery("select * from  matchlist where  season =  '"
+							+ season + "赛季' and isplayoff = " + isplayoff);
 			while (rs.next()) {
+				TeamNameList list = TeamNameList.getIntance();
+				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs.getString(3).substring(0, 5));
+				String away_team = list.getEnAbbrByZhAbbr(rs.getString(5),rs.getString(3).substring(0, 5));
 				result.add(new match(rs.getString(1), rs.getString(2), rs
-						.getString(3), rs.getString(4), rs.getString(5), rs
+						.getString(3),home_team, away_team, rs
 						.getBoolean(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		GetConnection.free(rs, conn, statement);
+		// GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
 
-	public ArrayList<match> getMatchesBySeason(String season) { 
+	public ArrayList<match> getMatchesBySeason(String season) {
 		ArrayList<match> result = new ArrayList<match>();
 
 		Connection conn = GetConnection.getConnection();
@@ -68,22 +77,27 @@ public class MatchReader {
 
 		try {
 			statement = conn.createStatement();
-			rs = statement.executeQuery("select * from  matchlist where  season =  '"+season+"赛季'");
+			rs = statement
+					.executeQuery("select * from  matchlist where  season =  '"
+							+ season + "赛季'");
 			while (rs.next()) {
+				TeamNameList list = TeamNameList.getIntance();
+				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs.getString(3).substring(0, 5));
+				String away_team = list.getEnAbbrByZhAbbr(rs.getString(5),rs.getString(3).substring(0, 5));
 				result.add(new match(rs.getString(1), rs.getString(2), rs
-						.getString(3), rs.getString(4), rs.getString(5), rs
+						.getString(3),home_team, away_team, rs
 						.getBoolean(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		GetConnection.free(rs, conn, statement);
+		// GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
-	
-	public ArrayList<match> getMatchesByTime(String time){
+
+	public ArrayList<match> getMatchesByTime(String time) {
 		ArrayList<match> result = new ArrayList<match>();
 
 		Connection conn = GetConnection.getConnection();
@@ -92,22 +106,27 @@ public class MatchReader {
 
 		try {
 			statement = conn.createStatement();
-			rs = statement.executeQuery("select * from  matchlist where  date =  '"+time+"'");
+			rs = statement
+					.executeQuery("select * from  matchlist where  date =  '"
+							+ time + "'");
 			while (rs.next()) {
+				TeamNameList list = TeamNameList.getIntance();
+				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs.getString(3).substring(0, 5));
+				String away_team = list.getEnAbbrByZhAbbr(rs.getString(5),rs.getString(3).substring(0, 5));
 				result.add(new match(rs.getString(1), rs.getString(2), rs
-						.getString(3), rs.getString(4), rs.getString(5), rs
+						.getString(3),home_team, away_team, rs
 						.getBoolean(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		GetConnection.free(rs, conn, statement);
+		// GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
-	
-	public match getMatchesById(String id){
+
+	public match getMatchesById(String id) {
 		match result = null;
 
 		Connection conn = GetConnection.getConnection();
@@ -116,17 +135,21 @@ public class MatchReader {
 
 		try {
 			statement = conn.createStatement();
-			rs = statement.executeQuery("select * from  matchlist where  Mid = "+id);
+			rs = statement
+					.executeQuery("select * from  matchlist where  Mid = " + id);
 			while (rs.next()) {
+				TeamNameList list = TeamNameList.getIntance();
+				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs.getString(3).substring(0, 5));
+				String away_team = list.getEnAbbrByZhAbbr(rs.getString(5),rs.getString(3).substring(0, 5));
 				result = (new match(rs.getString(1), rs.getString(2), rs
-						.getString(3), rs.getString(4), rs.getString(5), rs
+						.getString(3),home_team, away_team, rs
 						.getBoolean(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		GetConnection.free(rs, conn, statement);
+		// GetConnection.free(rs, conn, statement);
 
 		return result;
 	}
