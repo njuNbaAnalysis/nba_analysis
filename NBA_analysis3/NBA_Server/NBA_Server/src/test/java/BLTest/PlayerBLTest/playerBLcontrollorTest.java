@@ -72,4 +72,12 @@ public class playerBLcontrollorTest {
 		assertTrue(result);
 	}
 	
+	@Test
+	public void testgetPlayerById2() {
+		playerBLcontrollor pl  = playerBLcontrollor.getInstance();
+		Playervo list = pl.getPlayerById("00195");
+		System.out.println(list.getRecordOfPlayer().size()+"HEHEHEHEHEHE");
+		boolean result = (list!=null);
+		assertTrue(result);
+	}
 }
