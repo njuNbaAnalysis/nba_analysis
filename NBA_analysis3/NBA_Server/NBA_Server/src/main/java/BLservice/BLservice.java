@@ -66,9 +66,9 @@ public interface BLservice extends Remote{
 	public Collection<? extends Matchvo> getTodayMatches(String string)throws RemoteException;
 	
 	/**
-	 * @param string 例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期 
+	 * @param Mid 比赛唯一标识符Mid 
 	 * 
-	 * @return Matchvo中只有比赛的简略信息，如需获取一场比赛中的详细信息，请根据Mid，调用getMatchById
+	 * @return Matchvo中包含每个球员表现的详细信息
 	 */
 	public Matchvo getMatchById(String Mid) throws RemoteException;
 
