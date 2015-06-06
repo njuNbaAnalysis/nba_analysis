@@ -8,9 +8,7 @@ import po.TeamRecordItem;
 import util.Tools;
 import vo.Matchvo;
 import vo.Teamvo;
-
 import compare.WinningPercentageComp;
-
 import data.teams.TeamNameListData;
 import data.teams.TeamRecordItemData;
 
@@ -176,6 +174,67 @@ public class TeamvoGenerator {
             matchBLcontrollor matchController = matchBLcontrollor.getInstance();
             ArrayList<Matchvo> voList = matchController.getLast10Matches(teamNameEn, season, isPlayOff);
             
+            //index = 0 表示最近一场,index = 9表示最远一场，容量为10
+            int[] points = new int[10];
+            int[] pointsRival = new int[10];
+            
+            for(int i = 0;i <= 9;i ++){
+                if(voList.get(i).getTeams()[0].equals(teamNameEn)){
+                    points[i] = voList.get(i).getPoints()[0];
+                    pointsRival[i] = voList.get(i).getPoints()[1];
+                }else{
+                    points[i] = voList.get(i).getPoints()[1];
+                    pointsRival[i] = voList.get(i).getPoints()[0];
+                }
+            }
+
+            // 近十场的输赢情况,
+            {
+                boolean[] latestWinOrLose = new boolean[10];
+                for(int i = 0;i < 10;i ++){
+                    if(points[i] > pointsRival[i]){
+                        latestWinOrLose[i] = true;
+                    }
+                    else{
+                        latestWinOrLose[i] = false;
+                    }
+                }
+                vo.setLatestWinOrLose(latestWinOrLose);
+            }
+            
+            // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
+            {
+                String[] latestRecord = new String[10];
+                for(int i = 0;i < 10;i ++){
+                    latestRecord[i] = String.valueOf(points[i]) + "-" + String.valueOf(pointsRival[i]);
+                }
+                vo.setLatestRecord(latestRecord);
+            }
+            
+
+            // 得到近十场的攻防比(得分/失分)
+            {
+                double[] latestOffendThanDefend = new double[10];
+                for(int i = 0;i < 10;i ++){
+                    latestOffendThanDefend[i] = points[i]/pointsRival[i];
+                }
+                vo.setLatestOffendThanDefend(latestOffendThanDefend);
+            }
+
+            // 得到近十场的得分(每一场的每百回合得分)
+            {
+                double[] latestOffend = new double[10];
+                
+            }
+            
+
+            // 得到近十场的失分(每一场的每百回合失分)
+            double[] latestDefend = new double[10];
+
+            // 得到近十场的节奏(每一场的进攻回合数)
+            double[] latestTempo = new double[10];
+            
+
             
         }
         

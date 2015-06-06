@@ -67,19 +67,21 @@ public class Teamvo implements Serializable {
 	// 仅界面需要
 	private int rankingInLeague; // 本赛季在联盟中的排名，东西部分别计算，当属性为季后赛是，此值无意义
 	
+	//近十场的先后顺序，index=0为最近，index=9为最远
+	
     // 近十场的输赢情况,
     private boolean[] latestWinOrLose;
 
-    // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
+    // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多，本队在前
     private String[] latestRecord;
 
     // 得到近十场的攻防比(得分/失分)
     private double[] latestOffendThanDefend;
 
-    // 得到近十场的得分(每一场的每百回合得分)
+    // 得到近十场的得分(每一场的每百进攻回合得分)
     private double[] latestOffend;
 
-    // 得到近十场的失分(每一场的每百回合失分)
+    // 得到近十场的失分(每一场的每百防守回合失分)
     private double[] latestDefend;
 
     // 得到近十场的节奏(每一场的进攻回合数)
