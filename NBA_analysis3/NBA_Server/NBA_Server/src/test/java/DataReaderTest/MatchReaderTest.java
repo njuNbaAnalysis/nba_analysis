@@ -110,4 +110,15 @@ public class MatchReaderTest {
 		assertTrue(result);
 	}
 	
+	@Test
+	public void testGetMatchesByTeam() {
+		MatchReader mr = new MatchReader();
+		ArrayList<match> m = mr.getMatchesByTeam("CLE", "14-15", true, 10);
+		for(int i=0;i<m.size();i++){
+			System.out.println(m.get(i).getDate());
+		}
+		boolean result = (m.size()!= 0);
+		assertTrue(result);
+	}
+	
 }
