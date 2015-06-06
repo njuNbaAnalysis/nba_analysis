@@ -16,7 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-import ui.LineChart;
+
+import ui.chart.LineChart;
 import util.Tools;
 import vo.EventVo;
 
