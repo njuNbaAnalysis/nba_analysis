@@ -393,6 +393,15 @@ public class LivePanel extends JPanel {
 		DataFactory factory = DataFactoryMySql.getInstance();
 		final BLservice bl = factory.getBLservice();
 		try {
+			ArrayList<Teamvo>list = bl.getAllTeams("14-15", false);
+			for(Teamvo t :list){
+				System.out.println(t.getAbbreviation());
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*try {
 			bl.initNBALive();
 		} catch (RemoteException e2) {
 			// TODO Auto-generated catch block
@@ -413,7 +422,7 @@ public class LivePanel extends JPanel {
 		f.setLayout(null);
 		f.add(chart);
 		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 
 	}
 
