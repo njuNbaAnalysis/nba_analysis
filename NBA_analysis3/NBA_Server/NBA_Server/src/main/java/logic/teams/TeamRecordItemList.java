@@ -34,7 +34,7 @@ public class TeamRecordItemList {
         teamRecordItemData.init();
         
         TeamRecordItem para = new TeamRecordItem();
-        para.setSeason(isPlayOff);
+        para.setSeason(!isPlayOff);
         para.setBeginYear(Tools.xx_xxToxxxx(season));
         recordItemList.addAll(teamRecordItemData.getTeamRecords(para));
         
@@ -52,6 +52,7 @@ public class TeamRecordItemList {
         }
         
         if(!has){
+            System.out.println("load: season:" + season + " isPlayOff" + isPlayOff);
             load(season,isPlayOff);
         }
     }
@@ -110,6 +111,7 @@ public class TeamRecordItemList {
         loadIfNotHas(season,isPlayOff);
         
         for(TeamRecordItem item:recordItemList){
+            //System.out.println(item);
             if(item.getDataType().equals("teamItem")
                     && item.getBeginYear().equals(Tools.xx_xxToxxxx(season))
                     && item.isSeason() != isPlayOff){
