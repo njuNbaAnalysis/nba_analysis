@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
@@ -87,13 +88,24 @@ public class PlayerBasicInfoLabel extends JLabel {
 			public void mousePressed(MouseEvent e) {
 				
 
-            	Teamvo t = PlayerBasicInfoLabel.this.bl.getTeamByPlayerName(player.getTeam(),season,isPlayOff);
+            	Teamvo t = null;
+				try {
+					t = PlayerBasicInfoLabel.this.bl.getTeamByPlayerId(player.getPid(),season,isPlayOff);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
         		
-        		TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content);
-        		m.setBounds(0, 0, width, height*4);
-        		PlayerBasicInfoLabel.this.content.removeAll();
-        		PlayerBasicInfoLabel.this.content.add(m);
-        		PlayerBasicInfoLabel.this.content.updateUI();
+				if(t!=null){
+					TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content);
+	        		m.setBounds(0, 0, width, height*4);
+	        		PlayerBasicInfoLabel.this.content.removeAll();
+	        		PlayerBasicInfoLabel.this.content.add(m);
+	        		PlayerBasicInfoLabel.this.content.updateUI();
+				}else{
+					System.out.println("网络连接问题或球队未找到");
+				}
+        		
 				
 			}
 		});

@@ -61,7 +61,7 @@ public class HotAndKingPanel extends JPanel {
 		this.add(teamKingPanel);
 
 		
-		// 设置player
+		/*// 设置player
 		
 		ArrayList<Playervo> playerList = bl.getMostImprovedPlayer("point", 5);
 		Playervo [] players = new Playervo[5];
@@ -72,7 +72,7 @@ public class HotAndKingPanel extends JPanel {
 		hotPlayerPanel = new ImprovedLabelPanel("热门球员",typeArray[2],
 				hotColumnName, players,width, height / 2,bl);
 		hotPlayerPanel.setBounds(0, height / 2, width*9/10, height / 2);
-		this.add(hotPlayerPanel);
+		this.add(hotPlayerPanel);*/
 
 	}
 }
