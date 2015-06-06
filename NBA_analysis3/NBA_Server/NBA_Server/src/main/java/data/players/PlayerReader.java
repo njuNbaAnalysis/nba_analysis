@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import logic.teams.TeamNameList;
 import data.GetConnection;
 import po.player;
 import po.playerItem;
@@ -79,8 +80,10 @@ public class PlayerReader {
 						rs.getString(6), rs.getString(7), rs.getString(8),
 						rs.getString(9), rs.getString(10), rs.getString(11),
 						rs.getString(12));
+				TeamNameList list = TeamNameList.getIntance();
+				String team = list.getEnAbbrByFullZh(rs.getString(4+12));
 				p.setCurrentPlayerItem(new playerItem(rs.getString(1+12), rs
-						.getBoolean(2+12), rs.getString(3+12), rs.getString(4+12), rs
+						.getBoolean(2+12), rs.getString(3+12), team, rs
 						.getInt(5+12), rs.getInt(6+12), rs.getDouble(7+12), rs
 						.getDouble(8+12), rs.getDouble(9+12), rs.getDouble(10+12), rs
 						.getDouble(11+12), rs.getDouble(12+12), rs.getDouble(13+12), rs

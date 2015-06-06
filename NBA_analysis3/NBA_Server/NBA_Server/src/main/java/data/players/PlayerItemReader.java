@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import logic.teams.TeamNameList;
 import data.GetConnection;
+import po.TeamListItem;
 import po.playerItem;
 
 public class PlayerItemReader {
@@ -23,8 +25,10 @@ public class PlayerItemReader {
 					+ id);
 
 			while (rs.next()) {
+				TeamNameList list = TeamNameList.getIntance();
+				String team = list.getEnAbbrByFullZh(rs.getString(4));
 				result.add(new playerItem(rs.getString(1), rs.getBoolean(2), rs
-						.getString(3), rs.getString(4), rs.getInt(5), rs
+						.getString(3), team, rs.getInt(5), rs
 						.getInt(6), rs.getDouble(7), rs.getDouble(8), rs
 						.getDouble(9), rs.getDouble(10), rs.getDouble(11), rs
 						.getDouble(12), rs.getDouble(13), rs.getDouble(14), rs
@@ -69,8 +73,10 @@ public class PlayerItemReader {
 			statement = conn.createStatement();
 			rs = statement.executeQuery("select * from  playeritem where  season =  '"+season+"'");
 			while (rs.next()) {
+				TeamNameList list = TeamNameList.getIntance();
+				String team = list.getEnAbbrByFullZh(rs.getString(4));
 				result.add(new playerItem(rs.getString(1), rs.getBoolean(2), rs
-						.getString(3), rs.getString(4), rs.getInt(5), rs
+						.getString(3), team, rs.getInt(5), rs
 						.getInt(6), rs.getDouble(7), rs.getDouble(8), rs
 						.getDouble(9), rs.getDouble(10), rs.getDouble(11), rs
 						.getDouble(12), rs.getDouble(13), rs.getDouble(14), rs
