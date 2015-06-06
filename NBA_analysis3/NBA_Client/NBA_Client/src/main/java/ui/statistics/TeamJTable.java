@@ -95,9 +95,10 @@ public class TeamJTable extends StatJTable {
 	private String season;
 	private boolean isPlayOff;
 
-	public TeamJTable(BLservice bl, int i, int j,JPanel content,String season,boolean isPlayOff) throws RemoteException{
+	public TeamJTable(BLservice bl, int i, int j, JPanel content,
+			String season, boolean isPlayOff) throws RemoteException {
 		super();
-		list = bl.getAllTeams(season,isPlayOff);
+		list = bl.getAllTeams(season, isPlayOff);
 		this.getTableHeader().addMouseListener(new MouseHandle());
 		this.portraitWidth = 80;
 		this.portraitHeight = 80;
@@ -108,34 +109,40 @@ public class TeamJTable extends StatJTable {
 		this.season = season;
 		this.isPlayOff = isPlayOff;
 		this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column;
-                if (TeamJTable.this.getSelectedRow() == -1) {
-                    return;
-                }
-               
-                if((column=TeamJTable.this.getSelectedColumn()) == 1){
-                	int row = TeamJTable.this.getSelectedRow();
-                	String teamName = (String)TeamJTable.this.getValueAt(row, column);
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int column;
+				if (TeamJTable.this.getSelectedRow() == -1) {
+					return;
+				}
 
-                	Teamvo t;
+				if ((column = TeamJTable.this.getSelectedColumn()) == 1) {
+					int row = TeamJTable.this.getSelectedRow();
+					String teamName = (String) TeamJTable.this.getValueAt(row,
+							column);
+
+					Teamvo t;
 					try {
-						t = TeamJTable.this.bl.getTeamByTeamName(teamName,TeamJTable.this.season,TeamJTable.this.isPlayOff);
-						TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,TeamJTable.this.bl,TeamJTable.this.content);
-	            		m.setBounds(0, 0, width, height*10/9);
-	            		TeamJTable.this.content.removeAll();
-	            		TeamJTable.this.content.add(m);
-	            		TeamJTable.this.content.updateUI();
+						t = TeamJTable.this.bl.getTeamByTeamName(teamName,
+								TeamJTable.this.season,
+								TeamJTable.this.isPlayOff);
+						TeamInfoPanel m = new TeamInfoPanel(width,
+								height * 10 / 9, t, TeamJTable.this.bl,
+								TeamJTable.this.content,
+								TeamJTable.this.season,
+								TeamJTable.this.isPlayOff);
+						m.setBounds(0, 0, width, height * 10 / 9);
+						TeamJTable.this.content.removeAll();
+						TeamJTable.this.content.add(m);
+						TeamJTable.this.content.updateUI();
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-            		
-            		
-                }
-            }
-        });
+
+				}
+			}
+		});
 	}
 
 	private String[] getAverageDataRow(Teamvo t, int i) {
@@ -193,7 +200,7 @@ public class TeamJTable extends StatJTable {
 	}
 
 	@Override
-	public void refresh(boolean selected, Comparator c,boolean order) {
+	public void refresh(boolean selected, Comparator c, boolean order) {
 		this.selected = selected;
 
 		String[] columnNames;
@@ -214,7 +221,7 @@ public class TeamJTable extends StatJTable {
 
 		imageList = new ArrayList<Image>();
 		int size = Math.min(showSize, list.size());
-		if(order){
+		if (order) {
 			for (int i = 0; i < size; i++) {
 				String[] s = null;
 				if (selected) {
@@ -225,11 +232,12 @@ public class TeamJTable extends StatJTable {
 				// 添加数据到表格
 
 				model.addRow(s);
-				imageList.add(UIUtils.resize(list.get(i).getLogo(),portraitWidth, portraitHeight));
+				imageList.add(UIUtils.resize(list.get(i).getLogo(),
+						portraitWidth, portraitHeight));
 
 			}
-		}else{
-			for (int i = size-1; i >=0; i--) {
+		} else {
+			for (int i = size - 1; i >= 0; i--) {
 				String[] s = null;
 				if (selected) {
 					s = getAverageDataRow(list.get(i), i);
@@ -239,11 +247,11 @@ public class TeamJTable extends StatJTable {
 				// 添加数据到表格
 
 				model.addRow(s);
-				imageList.add(UIUtils.resize(list.get(i).getLogo(),portraitWidth, portraitHeight));
+				imageList.add(UIUtils.resize(list.get(i).getLogo(),
+						portraitWidth, portraitHeight));
 
 			}
 		}
-		
 
 		// 更新表格
 		this.setModel(model);
@@ -389,13 +397,11 @@ public class TeamJTable extends StatJTable {
 				}
 			}
 			System.out.println(j);
-			
-			
+
 			// System.out.println("c:" + c.getClass());
-		
-			
-			refreshBySelectedColumn(j,c);
-			
+
+			refreshBySelectedColumn(j, c);
+
 		}
 
 	}
@@ -403,7 +409,7 @@ public class TeamJTable extends StatJTable {
 	@Override
 	void refreshByScreening(PalyerScreening palyerSelect) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

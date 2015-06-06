@@ -23,7 +23,6 @@ import vo.Teamvo;
 import BLservice.BLservice;
 import compare.PalyerScreening;
 import compare.PlayerAssistsComp;
-import compare.PlayerAveragePRAComp;
 import compare.PlayerBlockShotsComp;
 import compare.PlayerBlockShotsPercentageComp;
 import compare.PlayerAssistsPercentageComp;
@@ -38,7 +37,6 @@ import compare.PlayerAverageStealsComp;
 import compare.PlayerAverageTurnOverComp;
 import compare.PlayerDefenseReboundsComp;
 import compare.PlayerDefenseReboundsPercentageComp;
-import compare.PlayerDoubleDoubleComp;
 import compare.PlayerEfficiencyComp;
 import compare.PlayerFieldGoalsPercentageComp;
 import compare.PlayerFoulsComp;
@@ -50,7 +48,6 @@ import compare.PlayerMinutesComp;
 import compare.PlayerNameComp;
 import compare.PlayerOffenseReboundsComp;
 import compare.PlayerOffenseReboundsPercentageComp;
-import compare.PlayerPRAComp;
 import compare.PlayerPointsComp;
 import compare.PlayerReboundsComp;
 import compare.PlayerReboundsPercentageComp;
@@ -80,12 +77,13 @@ public class PlayerJTable extends StatJTable {
 	private String season;
 	private boolean isPlayOff;
 
-	public PlayerJTable(BLservice bl, int i, int j,JPanel content,String season,boolean isPlayOff)throws RemoteException{
+	public PlayerJTable(BLservice bl, int i, int j, JPanel content,
+			String season, boolean isPlayOff) throws RemoteException {
 		super();
-		list = bl.getAllPlayers(season,isPlayOff);
+		list = bl.getAllPlayers(season, isPlayOff);
 		this.bl = bl;
-		this.portraitWidth =  80 ;
-		this.portraitHeight =  70 ;
+		this.portraitWidth = 80;
+		this.portraitHeight = 70;
 		this.content = content;
 		this.width = i;
 		this.height = j;
@@ -93,56 +91,69 @@ public class PlayerJTable extends StatJTable {
 		this.isPlayOff = isPlayOff;
 		this.getTableHeader().addMouseListener(new MouseHandle());
 		this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column;
-                if (PlayerJTable.this.getSelectedRow() == -1) {
-                    return;
-                }
-                if ((column=PlayerJTable.this.getSelectedColumn()) == 1) {
-                	int row = PlayerJTable.this.getSelectedRow();
-                	String playerName = (String)PlayerJTable.this.getValueAt(row, column);
-                	String teamName = (String)PlayerJTable.this.getValueAt(row, 2);
-                	Playervo p;
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int column;
+				if (PlayerJTable.this.getSelectedRow() == -1) {
+					return;
+				}
+				if ((column = PlayerJTable.this.getSelectedColumn()) == 1) {
+					int row = PlayerJTable.this.getSelectedRow();
+					String playerName = (String) PlayerJTable.this.getValueAt(
+							row, column);
+					String teamName = (String) PlayerJTable.this.getValueAt(
+							row, 2);
+					Playervo p;
 					try {
-						p = PlayerJTable.this.bl.getPlayerByNameAndTeam(playerName,teamName);
-						PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*10/9,p,PlayerJTable.this.bl,PlayerJTable.this.content,PlayerJTable.this.season,PlayerJTable.this.isPlayOff);
-	            		
-	            		playerInfoPanel.setBounds(0, 0, width, height*10/9);
-	            		playerInfoPanel.startAnimation();
-	            		PlayerJTable.this.content.removeAll();
-	            		PlayerJTable.this.content.add(playerInfoPanel);
-	            		PlayerJTable.this.content.updateUI();
-	            		playerInfoPanel.startAnimation();
-					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-            		
-            		
-                }
-                if((column=PlayerJTable.this.getSelectedColumn()) == 2){
-                	int row = PlayerJTable.this.getSelectedRow();
-                	String teamName = (String)PlayerJTable.this.getValueAt(row, column);
+						p = PlayerJTable.this.bl.getPlayerByNameAndTeam(
+								playerName, teamName);
+						PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(
+								width, height * 10 / 9, p,
+								PlayerJTable.this.bl,
+								PlayerJTable.this.content,
+								PlayerJTable.this.season,
+								PlayerJTable.this.isPlayOff);
 
-                	Teamvo t;
-					try {
-						t = PlayerJTable.this.bl.getTeamByTeamName(teamName,PlayerJTable.this.season,PlayerJTable.this.isPlayOff);
-						TeamInfoPanel m = new TeamInfoPanel(width,height*10/9,t,PlayerJTable.this.bl,PlayerJTable.this.content);
-	            		m.setBounds(0, 0, width, height*10/9);
-	            		PlayerJTable.this.content.removeAll();
-	            		PlayerJTable.this.content.add(m);
-	            		PlayerJTable.this.content.updateUI();
+						playerInfoPanel.setBounds(0, 0, width, height * 10 / 9);
+						playerInfoPanel.startAnimation();
+						PlayerJTable.this.content.removeAll();
+						PlayerJTable.this.content.add(playerInfoPanel);
+						PlayerJTable.this.content.updateUI();
+						playerInfoPanel.startAnimation();
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-            		
-            		
-            		//m.startAnimation();
-                }
-            }
-        });
+
+				}
+				if ((column = PlayerJTable.this.getSelectedColumn()) == 2) {
+					int row = PlayerJTable.this.getSelectedRow();
+					String teamName = (String) PlayerJTable.this.getValueAt(
+							row, column);
+
+					Teamvo t;
+					try {
+						t = PlayerJTable.this.bl.getTeamByTeamName(teamName,
+								PlayerJTable.this.season,
+								PlayerJTable.this.isPlayOff);
+						TeamInfoPanel m = new TeamInfoPanel(width,
+								height * 10 / 9, t, PlayerJTable.this.bl,
+								PlayerJTable.this.content,
+								PlayerJTable.this.season,
+								PlayerJTable.this.isPlayOff);
+						m.setBounds(0, 0, width, height * 10 / 9);
+						PlayerJTable.this.content.removeAll();
+						PlayerJTable.this.content.add(m);
+						PlayerJTable.this.content.updateUI();
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					// m.startAnimation();
+				}
+			}
+		});
 
 	}
 
@@ -473,10 +484,6 @@ public class PlayerJTable extends StatJTable {
 			case "助攻":
 				c = new PlayerAverageAssistsComp();
 				break;
-			case "得分/篮板/助攻":
-
-				c = new PlayerAveragePRAComp();
-				break;
 			case "盖帽":
 				c = new PlayerAverageBlockShotsComp();
 				break;
@@ -506,10 +513,6 @@ public class PlayerJTable extends StatJTable {
 			case "罚球":
 				c = new PlayerFreeThrowsPercentageComp();
 				break;
-			case "两双":
-
-				c = new PlayerDoubleDoubleComp();
-				break;
 
 			}
 		} else {
@@ -523,10 +526,7 @@ public class PlayerJTable extends StatJTable {
 			case "助攻":
 				c = new PlayerAssistsComp();
 				break;
-			case "得分/篮板/助攻":
 
-				c = new PlayerPRAComp();
-				break;
 			case "盖帽":
 				c = new PlayerBlockShotsComp();
 				break;
@@ -555,9 +555,6 @@ public class PlayerJTable extends StatJTable {
 				break;
 			case "罚球":
 				c = new PlayerFreeThrowsPercentageComp();
-				break;
-			case "两双":
-				c = new PlayerDoubleDoubleComp();
 				break;
 
 			}
