@@ -76,7 +76,7 @@ public class playerBLcontrollor {
 					temp.getPER(), temp.getShootingEfficiency(),
 					temp.getFieldGoalsHit(), temp.getFieldGoalsAttempt(),
 					temp.getThreethrowHit(), temp.getThreethrowAttempt(),
-					temp.getFreethrowHit(), temp.getFieldGoalsAttempt(),
+					temp.getFreethrowHit(), temp.getFreethrowAttempt(),
 					temp.getWS(), temp.getOffenseWS(), temp.getDefenseWS(),
 					temp.getDunk(), temp.getDunked());
 		}
