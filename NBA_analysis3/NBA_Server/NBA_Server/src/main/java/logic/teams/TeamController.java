@@ -89,4 +89,10 @@ public class TeamController implements Serializable{
     public Teamvo getTeamByTeamName(String teamNameEn, String season, boolean isPlayOff){
         return TeamvoGenerator.getInstance().getTeamvo(teamNameEn, season, isPlayOff);
     }
+
+    public Teamvo getTeamByPlayerId(String playerId, String season, boolean isPlayOff){
+
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
