@@ -16,8 +16,12 @@ public class Main {
         /*TeamvoGenerator generator = TeamvoGenerator.getInstance();
         Teamvo vo = generator.getTeamvo("CHI", "14-15", false);*/
         BLController controller = BLController.getInstance();
-        Teamvo vo = controller.getTeamByTeamName("CHI", "14-15", false);
-        System.out.println(vo.toString());
+        //Teamvo vo = controller.getTeamByTeamName("CHI", "14-15", false);
+        ArrayList<Teamvo> voList = controller.getAllTeams("14-15", false);
+        for(Teamvo vo:voList){
+            System.out.println(vo.toString());
+        }
+        
  
         long end =  System.currentTimeMillis();
         

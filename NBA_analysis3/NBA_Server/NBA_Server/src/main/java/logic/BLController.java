@@ -9,6 +9,7 @@ import logic.matches.NBALiveBLControllor;
 import logic.matches.matchBLcontrollor;
 import logic.players.playerBLcontrollor;
 import logic.teams.TeamController;
+import logic.teams.TeamvoGenerator;
 import vo.EventVo;
 import vo.HotZonevo;
 import vo.Matchvo;
@@ -147,5 +148,11 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public Teamvo getTeamWithLatest10Data(String teamNameEn, String season, boolean isPlayOff)
+            throws RemoteException {
+        return TeamvoGenerator.getInstance().getTeamvoWithLatest10Data(teamNameEn, season, isPlayOff);
+    }
 
 }
