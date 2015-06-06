@@ -66,4 +66,23 @@ public class TeamBLServiceTest {
         
         System.out.println(end - start);
     }
+    
+    @Test
+    public void testGetTeamByPlayerId(){
+        long start = System.currentTimeMillis();
+        
+        try {
+            Teamvo vo = service.getTeamByPlayerId("2317", "14-15", false);
+            System.out.println(vo);
+        } catch (RemoteException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+        
+        long end =  System.currentTimeMillis();
+        
+        System.out.println(end - start);
+    }
 }

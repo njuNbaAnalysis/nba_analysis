@@ -7,10 +7,13 @@ import java.util.HashMap;
 
 import po.HotZone;
 import po.TeamListItem;
+import po.TeamRecordItem;
+import util.Tools;
 import vo.HotZonevo;
 import vo.Teamvo;
 import vo.HotZonevo.Data;
 import data.teams.HotZoneData;
+import data.teams.TeamRecordItemData;
 
 public class TeamController implements Serializable{
     private static TeamController teamController = null;
@@ -92,7 +95,18 @@ public class TeamController implements Serializable{
 
     public Teamvo getTeamByPlayerId(String playerId, String season, boolean isPlayOff){
 
-        // TODO Auto-generated method stub
-        return null;
+        TeamRecordItemData teamRecordItemData = new TeamRecordItemData();
+        teamRecordItemData.init();
+        TeamRecordItem playerItemPara = new TeamRecordItem();
+        playerItemPara.setDataType("playerItem");
+        playerItemPara.setPlayerId(playerId);
+        playerItemPara.setSeason(isPlayOff?false:true);
+        playerItemPara.setBeginYear(Tools.xx_xxToxxxx(season));
+        ArrayList<TeamRecordItem> resultList = teamRecordItemData.getTeamRecords(playerItemPara);
+        
+        String teamNameEn = resultList.get(0).getTeamNameEn();
+        Teamvo vo = TeamvoGenerator.getInstance().getTeamvo(teamNameEn, season, isPlayOff);
+        
+        return vo;
     }
 }
