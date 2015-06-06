@@ -7,6 +7,7 @@ import logic.teams.TeamNameList;
 import po.TeamListItem;
 import po.player;
 import po.playerItem;
+import vo.PlayerItemvo;
 import vo.Playervo;
 import vo.Teamvo;
 import data.players.PlayerItemReader;
@@ -107,6 +108,14 @@ public class playerBLcontrollor {
 			if(temp.get(i).getPid().equals(Id))
 				return temp.get(i);
 		}
+		return null;
+	}
+
+	public Playervo getPlayerById(String id) {
+		// TODO Auto-generated method stub
+		player p = playerReader.getPlayerById(id);
+		ArrayList<playerItem> list = playerItemReader.getPlayerItemById(id);
+		Playervo result = new Playervo(p.getPid(),p.getName(),p.getNumber(),p.getPosition(),p.getHeight(),p.getWeight(),p.getBirthday(),p.getSelected(),p.getSalary(),p.getHighschool(),p.getUniversity(),list);
 		return null;
 	}
 

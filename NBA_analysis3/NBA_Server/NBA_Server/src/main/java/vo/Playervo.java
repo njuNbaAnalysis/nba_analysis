@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
+
 
 public class Playervo implements Serializable {
 	private String Pid;  //唯一标识符
@@ -72,7 +72,7 @@ public class Playervo implements Serializable {
 	private int dunk;               //扣篮数
 	private int blocked;				//被帽数
 	
-	private ArrayList<PlayerItemvo> recordOfPlayer;
+	private ArrayList<playerItem> recordOfPlayer;
 	
 	public Playervo(String Pid,String name, String number, String position, double height,
 			double weight, String birthday, String selected, String salary,
@@ -146,6 +146,29 @@ public class Playervo implements Serializable {
 		this.dunk = dunk;
 		this.blocked = blocked;
 	}
+
+	
+	
+	public Playervo(String pid, String name, String number, String position,
+			double height, double weight, String birthday, String selected,
+			String salary, String highschool, String university,
+			ArrayList<playerItem> recordOfPlayer) {
+		super();
+		Pid = pid;
+		this.name = name;
+		this.number = number;
+		this.position = position;
+		this.height = height;
+		this.weight = weight;
+		this.birthday = birthday;
+		this.selected = selected;
+		this.salary = salary;
+		Highschool = highschool;
+		University = university;
+		this.recordOfPlayer = recordOfPlayer;
+	}
+
+
 
 	public String getName() {
 		return name;
@@ -471,12 +494,8 @@ public class Playervo implements Serializable {
 		return Pid;
 	}
 
-	public ArrayList<PlayerItemvo> getRecordOfPlayer() {
+	public ArrayList<playerItem> getRecordOfPlayer() {
 		return recordOfPlayer;
-	}
-
-	public void setRecordOfPlayer(ArrayList<PlayerItemvo> recordOfPlayer) {
-		this.recordOfPlayer = recordOfPlayer;
 	}
 
 }
