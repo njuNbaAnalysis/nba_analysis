@@ -50,23 +50,14 @@ public class MatchControllorTest {
 		assertTrue(true);
 	}
 	
-//	@Test
-//	public void testgetTodayMatch() {
-//		matchBLcontrollor m = matchBLcontrollor.getInstance();
-//		Collection<? extends Matchvo> list = m.getTodayMatched("14-15_2015-05-25");
-//		System.out.println(list.size());
-//		for(int i=0;i<list.size();i++){
-//			System.out.println(list.iterator().next().isIsplayoff());
-//		}
-//		Boolean result = (list.size()!=0);
-//		assertTrue(result);
-//	}
-	
 	@Test
-	public void testgetAllMatch() {
+	public void testgetTodayMatch() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
-		Collection<? extends Matchvo> list = m.getAllMatch("14-15", false);
+		Collection<? extends Matchvo> list = m.getTodayMatched("14-15_2015-05-25");
 		System.out.println(list.size());
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.iterator().next().isIsplayoff());
+		}
 		Boolean result = (list.size()!=0);
 		assertTrue(result);
 	}
