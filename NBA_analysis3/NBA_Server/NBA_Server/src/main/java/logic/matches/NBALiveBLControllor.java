@@ -1,6 +1,5 @@
 package logic.matches;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,16 +81,8 @@ public class NBALiveBLControllor {
 							num = 0;
 						else if (data[19].equals(Away_TeamId))
 							num = 1;
-						String description = "";
-						try {
-							System.out.println(getEncoding(data[1]));
-							description = new String(data[1].getBytes("utf-8"),"gbk2312");
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 						result.add(new EventVo(period, num, data[3], data[0]
-								+ "-" + data[4], playerName, description, teamName));
+								+ "-" + data[4], playerName, data[1], teamName));
 					}
 				}
 			} else {
@@ -233,43 +224,6 @@ public class NBALiveBLControllor {
 		String current = df.format(now).substring(0, 10);
 		Id = NBALiveList.NBAMatchLiveList.get(current);
 		return "0041400401";
-	}
-
-	
-	public static String getEncoding(String str) {
-		String encode = "GB2312";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-				String s = encode;
-				return s;
-			}
-		} catch (Exception exception) {
-		}
-		encode = "ISO-8859-1";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-				String s1 = encode;
-				return s1;
-			}
-		} catch (Exception exception1) {
-		}
-		encode = "UTF-8";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-				String s2 = encode;
-				return s2;
-			}
-		} catch (Exception exception2) {
-		}
-		encode = "GBK";
-		try {
-			if (str.equals(new String(str.getBytes(encode), encode))) {
-				String s3 = encode;
-				return s3;
-			}
-		} catch (Exception exception3) {
-		}
-		return "";
 	}
 	
 }
