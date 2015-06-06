@@ -67,8 +67,6 @@ public class TeamRecordItemData {
     public ArrayList<TeamRecordItem> getTeamRecords(TeamRecordItem item){
         ArrayList<TeamRecordItem> resultList = new  ArrayList<TeamRecordItem>();
         
-        System.out.println(item);
-        
         String sql = "select * from teamrecorditem where dataType like ? "
                 + "and teamNameEn like ? "
                 + "and beginYear like ? "

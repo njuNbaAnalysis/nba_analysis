@@ -68,7 +68,7 @@ public class Teamvo implements Serializable {
 	private int rankingInLeague; // 本赛季在联盟中的排名，东西部分别计算，当属性为季后赛是，此值无意义
 	
     // 近十场的输赢情况,
-    boolean[] latestWinOrLose;
+    private boolean[] latestWinOrLose;
 
     // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
     private String[] latestRecord;
@@ -77,19 +77,13 @@ public class Teamvo implements Serializable {
     private double[] latestOffendThanDefend;
 
     // 得到近十场的得分(每一场的每百回合得分)
-    public double[] getLatestOffend() {
-        return null;
-    }
+    private double[] latestOffend;
 
     // 得到近十场的失分(每一场的每百回合失分)
-    public double[] getLatestDefend() {
-        return null;
-    }
+    private double[] latestDefend;
 
     // 得到近十场的节奏(每一场的进攻回合数)
-    public double[] getLatestTempo() {
-        return null;
-    }
+    private double[] latestTempo;
 
 	// 后期
 	// private int rebounds; //篮板数
@@ -601,35 +595,7 @@ public class Teamvo implements Serializable {
         return this.getOffenseReboundsRival() + this.getDefenseReboundsRival();
     }
     
-    // 得到近十场的输赢情况,
-    public boolean[] getLatestWinOrLose() {
-        return null;
-    }
 
-    // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
-    public String[] getLatestRecord() {
-        return null;
-    }
-
-    // 得到近十场的攻防比(得分/失分)
-    public double[] getLatestOffendThanDefend() {
-        return null;
-    }
-
-    // 得到近十场的得分(每一场的每百回合得分)
-    public double[] getLatestOffend() {
-        return null;
-    }
-
-    // 得到近十场的失分(每一场的每百回合失分)
-    public double[] getLatestDefend() {
-        return null;
-    }
-
-    // 得到近十场的节奏(每一场的进攻回合数)
-    public double[] getLatestTempo() {
-        return null;
-    }
     
     
     //for debug only
@@ -651,6 +617,54 @@ public class Teamvo implements Serializable {
                 + ", fieldGoalAttempsRival=" + fieldGoalAttempsRival + ", threePointerAttemptsRival="
                 + threePointerAttemptsRival + ", offenseReboundsRival=" + offenseReboundsRival
                 + ", defenseReboundsRival=" + defenseReboundsRival + ", rankingInLeague=" + rankingInLeague + "]";
+    }
+
+    public boolean[] getLatestWinOrLose() {
+        return latestWinOrLose;
+    }
+
+    public void setLatestWinOrLose(boolean[] latestWinOrLose) {
+        this.latestWinOrLose = latestWinOrLose;
+    }
+
+    public String[] getLatestRecord() {
+        return latestRecord;
+    }
+
+    public void setLatestRecord(String[] latestRecord) {
+        this.latestRecord = latestRecord;
+    }
+
+    public double[] getLatestOffendThanDefend() {
+        return latestOffendThanDefend;
+    }
+
+    public void setLatestOffendThanDefend(double[] latestOffendThanDefend) {
+        this.latestOffendThanDefend = latestOffendThanDefend;
+    }
+
+    public double[] getLatestOffend() {
+        return latestOffend;
+    }
+
+    public void setLatestOffend(double[] latestOffend) {
+        this.latestOffend = latestOffend;
+    }
+
+    public double[] getLatestDefend() {
+        return latestDefend;
+    }
+
+    public void setLatestDefend(double[] latestDefend) {
+        this.latestDefend = latestDefend;
+    }
+
+    public double[] getLatestTempo() {
+        return latestTempo;
+    }
+
+    public void setLatestTempo(double[] latestTempo) {
+        this.latestTempo = latestTempo;
     }
     
 }

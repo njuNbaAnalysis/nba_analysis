@@ -2,9 +2,11 @@ package logic.teams;
 
 import java.util.ArrayList;
 
+import logic.matches.matchBLcontrollor;
 import po.TeamListItem;
 import po.TeamRecordItem;
 import util.Tools;
+import vo.Matchvo;
 import vo.Teamvo;
 
 import compare.WinningPercentageComp;
@@ -169,6 +171,16 @@ public class TeamvoGenerator {
             vo.setRankingInLeague(rank);
         }
         
+        //计算球队近十场的各种数据
+        {
+            matchBLcontrollor matchController = matchBLcontrollor.getInstance();
+            ArrayList<Matchvo> voList = matchController.getLast10Matches(teamNameEn, season, isPlayOff);
+            
+            
+        }
+        
+        
+        
         return vo;
     }
     
@@ -181,6 +193,7 @@ public class TeamvoGenerator {
         team.setAssistsPercentage(1.0 * team.getAssists() / team.getOffensiveRounds() * 100);
     }
 
+    
     
     /**
      * 判断是否totalItemList缓存中是否有当前赛季的team的所有Item，如果没有则
