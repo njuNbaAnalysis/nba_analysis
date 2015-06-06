@@ -79,7 +79,7 @@ public class PalyerScreening {
 			if (div != null && !(p.getDivision()==null)&&!p.getDivision().contains(div)) {
 				continue;
 			}
-			if (conference != 0 && !(p.getConference() == conference)) {
+			if (conference != 0 && !(p.getConference().equals(conference))) {
 				continue;
 			}
 			if (position != 0&&!(p.getPosition()==null)
