@@ -83,15 +83,6 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 		return matchBL.getTodayMatched(string);
 	}
 	
-	@Override
-
-	public Matchvo getMatchById(String Mid) throws RemoteException {
-		// TODO Auto-generated method stub
-		matchBLcontrollor matchBL = matchBLcontrollor.getInstance();
-		
-		return matchBL.getMatchById(Mid);
-	}
-	
 
 	@Override
 
