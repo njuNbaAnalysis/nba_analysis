@@ -108,4 +108,12 @@ public interface BLservice extends Remote{
 	 * @return 场均得分，场均篮板，场均助攻，罚球%，三分%
 	 */
 	public double[] getAlliancePlayerAverageData(String season,boolean isPlayOff)throws RemoteException;
+	
+	
+	/**
+	 * 根据球队和球员姓名返回playervo
+	 * @param playerName 球员英文姓名    
+	 * @param teamName 三个大写英文字母
+	 */
+	public Playervo getPlayerByNameAndTeam(String playerName,String teamName)throws RemoteException;
 }
