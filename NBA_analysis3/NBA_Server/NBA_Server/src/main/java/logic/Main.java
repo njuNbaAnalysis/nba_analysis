@@ -21,6 +21,6 @@ public class Main {
  
         long end =  System.currentTimeMillis();
         
-        System.out.println(end - start);
+        System.out.println("totalTime:" + (end - start));
     }
 }
