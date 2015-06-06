@@ -97,7 +97,7 @@ public class PlayerBasicInfoLabel extends JLabel {
 				}
         		
 				if(t!=null){
-					TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content);
+					TeamInfoPanel m = new TeamInfoPanel(width,height*4,t,PlayerBasicInfoLabel.this.bl,PlayerBasicInfoLabel.this.content,season,isPlayOff);
 	        		m.setBounds(0, 0, width, height*4);
 	        		PlayerBasicInfoLabel.this.content.removeAll();
 	        		PlayerBasicInfoLabel.this.content.add(m);
