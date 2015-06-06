@@ -1,6 +1,7 @@
 package logic.players;
 
 import java.util.ArrayList;
+
 import logic.teams.TeamNameList;
 import po.TeamListItem;
 import po.player;
@@ -111,6 +112,48 @@ public class playerBLcontrollor {
 		// TODO Auto-generated method stub
 		player p = playerReader.getPlayerById(id);
 		ArrayList<playerItem> list = playerItemReader.getPlayerItemById(id);
+		Playervo result = new Playervo(p.getPid(), p.getName(), p.getNumber(),
+				p.getPosition(), p.getHeight(), p.getWeight(), p.getBirthday(),
+				p.getSelected(), p.getSalary(), p.getHighschool(),
+				p.getUniversity(), list);
+		return result;
+	}
+
+	public double[] getAlliancePlayerAverageData(String season, // 场均得分，场均篮板，场均助攻，罚球%，三分%
+			boolean isplayoff) {
+		// TODO Auto-generated method stub
+		ArrayList<Playervo> temp = getAllPlayers(season, isplayoff);
+		double points = 0;
+		double rebounds = 0;
+		double assist = 0;
+		double freeThrowHit = 0;
+		double freeThrowAttempt = 0;
+		double threeGoalsHit = 0;
+		double threeGoalsAttempt = 0;
+		int gameplay = 0;
+		for (int i = 0; i < temp.size(); i++) {
+			points += temp.get(i).getPoints();
+			rebounds += temp.get(i).getRebounds();
+			assist += temp.get(i).getAssists();
+			freeThrowHit += temp.get(i).getFreeThrowHits();
+			freeThrowAttempt += temp.get(i).getFreeThrowAttempts();
+			threeGoalsHit += temp.get(i).getThreePointerHits();
+			threeGoalsAttempt += temp.get(i).getThreePointerAttempts();
+			gameplay += temp.get(i).getGamePlayed();
+		}
+		if (temp.size() != 0) {
+			return new double[] { points / gameplay, rebounds / gameplay,
+					assist / gameplay, freeThrowHit / freeThrowAttempt,
+					threeGoalsHit / threeGoalsAttempt };
+		} else {
+			return new double[] { 0, 0, 0, 0, 0 };
+		}
+	}
+
+	public Playervo getPlayerByNameAndTeam(String playerName, String teamName) {
+		// TODO Auto-generated method stub
+		player p = playerReader.getPlayerByNameAndTeam(playerName,teamName);
+		ArrayList<playerItem> list = playerItemReader.getPlayerItemById(p.getPid());
 		Playervo result = new Playervo(p.getPid(), p.getName(), p.getNumber(),
 				p.getPosition(), p.getHeight(), p.getWeight(), p.getBirthday(),
 				p.getSelected(), p.getSalary(), p.getHighschool(),
