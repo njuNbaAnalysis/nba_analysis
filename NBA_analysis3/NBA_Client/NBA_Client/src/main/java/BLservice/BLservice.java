@@ -61,23 +61,32 @@ public interface BLservice extends Remote{
 	/**
 	 * @param string 例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期 
 	 * 
-	 * @return
+	 * @return Matchvo中只有比赛的简略信息，如需获取一场比赛中的详细信息，请根据Mid，调用getMatchById
 	 */
 	public Collection<? extends Matchvo> getTodayMatches(String string)throws RemoteException;
+	
+	/**
+	 * @param Mid 比赛唯一标识符Mid 
+	 * 
+	 * @return Matchvo中包含每个球员表现的详细信息
+	 */
+	public Matchvo getMatchById(String Mid) throws RemoteException;
 
 	/**
 	 * 
-	 * @param teamNames 两个球队名称 
-	 * @return
+	 * @param Id 球员的唯一标识符Id
+	 * @param season 赛季
+	 * @param isplayoff 是否为季后赛
+	 * @return 返回的Playervo中为当前赛季该球员的所有属性,此时Playervo中的getPlayerItem为null
 	 */
-	//public Teamvo[] getTeamsByMatch(String[] teamNames)throws RemoteException;
-
+	public Playervo getPlayerById(String Id,String season,boolean isplayoff)throws RemoteException;
+	
 	/**
 	 * 
-	 * @param nameOfReboundsKing
-	 * @return
+	 * @param Id 球员的唯一标识符Id
+	 * @return 返回的Playervo中getPlayerItem()可得到该球员所有历史数据
 	 */
-	public Playervo getPlayerById(String idOfReboundsKing)throws RemoteException;
+	public Playervo getPlayerById(String Id)throws RemoteException;
 
 	/**
 	 * 
@@ -93,5 +102,5 @@ public interface BLservice extends Remote{
 	 * @param teamName 三个大写英文字母
 	 * @return teamvo
 	 */
-	public Teamvo getTeamByTeamName(String teamName, String season, boolean isPlayOff)throws RemoteException ;
+	public Teamvo getTeamByTeamName(String teamNameEn, String season, boolean isPlayOff)throws RemoteException ;
 }
