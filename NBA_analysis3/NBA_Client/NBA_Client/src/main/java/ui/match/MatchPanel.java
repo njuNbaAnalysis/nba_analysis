@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,8 +71,13 @@ public class MatchPanel extends JPanel {
 			e.printStackTrace();
 		}
 
-		this.matchList = new ArrayList<Matchvo>(
-				bl.getTodayMatches("13-14_2014-01-01"));
+		try {
+			this.matchList = new ArrayList<Matchvo>(
+					bl.getTodayMatches("13-14_2014-01-01"));
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 		addChildren();
 
 	}
@@ -357,7 +363,15 @@ public class MatchPanel extends JPanel {
 			this.width = width;
 			this.height = height;
 			this.match = match;
-			teams = bl.getTeamsByMatch(match);
+			String[] teamNames = match.getTeams();
+			
+			try {
+				teams[0] = bl.getTeamByTeamName(teamNames[0], date, isPlayOff);
+				teams[1] = bl.getTeamByTeamName(teamNames[1], date, isPlayOff);
+			} catch (RemoteException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
 			kings = match.getKingsOfMatch();
 			// System.out.println(teams[0]==null);
 			this.setBounds(x, y, width, height);
@@ -391,7 +405,7 @@ public class MatchPanel extends JPanel {
 	                
 	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfReboundsKing());
 	            		
-	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content, season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
 	            		MatchPanel.this.content.removeAll();
@@ -415,7 +429,7 @@ public class MatchPanel extends JPanel {
 	                
 	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfPointsKing());
 	            		
-	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
 	            		MatchPanel.this.content.removeAll();
@@ -439,7 +453,7 @@ public class MatchPanel extends JPanel {
 	                
 	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfAssistsKing());
 	            		
-	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
 	            		MatchPanel.this.content.removeAll();
@@ -464,7 +478,7 @@ public class MatchPanel extends JPanel {
 	                
 	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfPointsKing());
 	            		
-	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
 	            		MatchPanel.this.content.removeAll();
@@ -489,7 +503,7 @@ public class MatchPanel extends JPanel {
 	                
 	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfReboundsKing());
 	            		
-	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
 	            		MatchPanel.this.content.removeAll();
@@ -514,7 +528,7 @@ public class MatchPanel extends JPanel {
 	                
 	                	Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfAssistsKing());
 	            		
-	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content);
+	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
 	            		MatchPanel.this.content.removeAll();
@@ -561,8 +575,13 @@ public class MatchPanel extends JPanel {
 				date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
 
 				head.currentLabel.setText(df.format(date));
-				MatchPanel.this.matchList = new ArrayList<Matchvo>(
-						bl.getTodayMatches("13-14_" + df.format(date)));
+				try {
+					MatchPanel.this.matchList = new ArrayList<Matchvo>(
+							bl.getTodayMatches("13-14_" + df.format(date)));
+				} catch (RemoteException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
 				MatchPanel.this.removeAll();
 				MatchPanel.this.addChildren();
 				MatchPanel.this.updateUI();
@@ -570,8 +589,13 @@ public class MatchPanel extends JPanel {
 			if (type == 2) {
 				date = new Date(date.getTime() + 24 * 60 * 60 * 1000);
 				head.currentLabel.setText(df.format(date));
-				MatchPanel.this.matchList = new ArrayList<Matchvo>(
-						bl.getTodayMatches("13-14_" + df.format(date)));
+				try {
+					MatchPanel.this.matchList = new ArrayList<Matchvo>(
+							bl.getTodayMatches("13-14_" + df.format(date)));
+				} catch (RemoteException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
 				MatchPanel.this.removeAll();
 				MatchPanel.this.addChildren();
 				MatchPanel.this.updateUI();
