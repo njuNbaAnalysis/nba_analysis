@@ -23,6 +23,7 @@ import vo.RecordOfPlayervo;
 
 public class matchBLcontrollor {
 
+	private ArrayList<MatchBuff> BuffList;
 	private MatchItemReader matchItemReader = null;
 	private MatchReader matchReader = null;
 	private pointsItemReader pointsItemReader = null;
@@ -33,6 +34,7 @@ public class matchBLcontrollor {
 		matchReader = new MatchReader();
 		matchItemReader = new MatchItemReader();
 		pointsItemReader = new pointsItemReader();
+		BuffList = new ArrayList<MatchBuff>();
 	}
 
 	public static matchBLcontrollor getInstance() {
@@ -64,6 +66,14 @@ public class matchBLcontrollor {
 			e.printStackTrace();
 		}
 
+	}
+
+	private Matchvo checkisexit(String Mid) {
+		for (int i = 0; i < BuffList.size(); i++) {
+			if (BuffList.get(i).getMid().equals(Mid))
+				return BuffList.get(i).getMatchvo();
+		}
+		return null;
 	}
 
 	private Matchvo changematchToMatchvo(match m) {
@@ -105,7 +115,7 @@ public class matchBLcontrollor {
 								.getFieldGoalspercent()));
 			}
 		}
-		Matchvo result = new Matchvo(m.getSeason() + "_" + m.getDate(),
+		Matchvo result = new Matchvo(m.getMid(),m.getSeason() + "_" + m.getDate(),
 				m.isIsplayoff(), teams, points, pointsList, firstRecordList,
 				secondRecordList);
 		return result;
@@ -119,24 +129,33 @@ public class matchBLcontrollor {
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
 		for (int i = 0; i < list.size(); i++) {
 			match temp = list.get(i);
-			temp.setPointsItemList(pointsItemReader.getpointsItemById(temp
-					.getMid()));
-			temp.setMatchItemList(matchItemReader.getMatchItemById(temp
-					.getMid()));
-			result.add(changematchToMatchvo(temp));
+			Matchvo mvo = checkisexit(temp.getMid());
+			if (mvo == null) {
+				temp.setPointsItemList(pointsItemReader.getpointsItemById(temp
+						.getMid()));
+				temp.setMatchItemList(matchItemReader.getMatchItemById(temp
+						.getMid()));
+				result.add(changematchToMatchvo(temp));
+			} else {
+				result.add(mvo);
+			}
 		}
 		return result;
 	}
 
 	/**
 	 * 得到最近十场比赛的信息
-	 * @param teamNameEn 例"ATL"
-	 * @param season 例"14-15"
-	 * @param isPlayOff 
+	 * 
+	 * @param teamNameEn
+	 *            例"ATL"
+	 * @param season
+	 *            例"14-15"
+	 * @param isPlayOff
 	 * @return
 	 */
-	public ArrayList<Matchvo> getLast10Matches(String teamNameEn,String season,boolean isPlayOff){
-	    return null;
+	public ArrayList<Matchvo> getLast10Matches(String teamNameEn,
+			String season, boolean isPlayOff) {
+		return null;
 	}
-	
+
 }

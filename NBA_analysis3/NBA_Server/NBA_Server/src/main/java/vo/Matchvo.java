@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Matchvo implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
+	private String Mid;
 	private String date;    //例如13-14_2014-01-01 :前面表示13-14赛季，后面表示日期
 	private boolean isplayoff;
 	private String[] teams;// 对阵队伍 2容量的teams数组,这里面存的是缩写！！！
@@ -16,11 +14,12 @@ public class Matchvo implements Serializable{
 	private ArrayList<RecordOfPlayervo> firstRecordList; // 主场记录
 	private ArrayList<RecordOfPlayervo> secondRecordList; // 客场记录
 	
-	public Matchvo(String date,boolean isplayoff,String[] teams, int[] points,
+	public Matchvo(String Mid,String date,boolean isplayoff,String[] teams, int[] points,
 			ArrayList<int[]> pointsList,
 			ArrayList<RecordOfPlayervo> firstRecordList,
 			ArrayList<RecordOfPlayervo> secondRecordList) {
 		super();
+		this.Mid = Mid;
 		this.date = date;
 		this.isplayoff = isplayoff;
 		this.teams = teams;
@@ -53,12 +52,15 @@ public class Matchvo implements Serializable{
 	public ArrayList<RecordOfPlayervo> getSecondRecordList() {
 		return secondRecordList;
 	}
-
+	
+	public String getMid() {
+		return Mid;
+	}
 
 	/*
-	 * 直播专用
+	 * 直播专用   :MatchVO中的recordOfPlayer中的Pid为position
 	 * */
-	
+
 	private int[] rebounds; 
 	private int[] assists;
 	private int[] blocks;

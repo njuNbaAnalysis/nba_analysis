@@ -10,6 +10,7 @@ import data.players.PlayerReader;
 
 public class playerBLcontrollor {
 
+	private ArrayList<PlayersBuff> BUffList = new ArrayList<PlayersBuff>();
 	private static playerBLcontrollor playerBLcontrollor = null;
 	private PlayerReader playerReader;
 	private PlayerItemReader playerItemReader;
@@ -28,6 +29,15 @@ public class playerBLcontrollor {
 		}
 	}
 
+	private ArrayList<Playervo> checkisexit(String Season, boolean isplayoff) {
+		for (int i = 0; i < BUffList.size(); i++) {
+			if ((BUffList.get(i).getIsplayoff() == isplayoff)
+					&& BUffList.get(i).getSeason().equals(Season))
+				return BUffList.get(i).getPlayerlist();
+		}
+		return null;
+	}
+
 	private Playervo changePlayertoVO(player p) {
 		Playervo result = null;
 		playerItem temp = p.getCurrentPlayerItem();
@@ -36,12 +46,13 @@ public class playerBLcontrollor {
 			String division = "";
 			char conference = ' ';
 			double[] upgradeRate = { 0, 0, 0 };
-			result = new Playervo(p.getPid(),p.getName(), p.getNumber(), p.getPosition(),
-					p.getHeight(), p.getWeight(), p.getBirthday(),
-					p.getSelected(), p.getSalary(), p.getHighschool(),
-					p.getUniversity(), temp.getTeam(), location, division,
-					conference, temp.getGameplayed(), temp.getGamestarted(),
-					temp.getRebounds(), temp.getAssists(), temp.getTime(),
+			result = new Playervo(p.getPid(), p.getName(), p.getNumber(),
+					p.getPosition(), p.getHeight(), p.getWeight(),
+					p.getBirthday(), p.getSelected(), p.getSalary(),
+					p.getHighschool(), p.getUniversity(), temp.getTeam(),
+					location, division, conference, temp.getGameplayed(),
+					temp.getGamestarted(), temp.getRebounds(),
+					temp.getAssists(), temp.getTime(),
 					temp.getOffenseRebounds(), temp.getDefenseRebounds(),
 					temp.getSteals(), temp.getBlockShots(), temp.getTurnOver(),
 					temp.getFouls(), temp.getPoints(),
@@ -65,13 +76,27 @@ public class playerBLcontrollor {
 
 	public ArrayList<Playervo> getAllPlayers(String Season, boolean isPlayOff) {
 		// TODO Auto-generated method stub
-		ArrayList<player> list = playerReader.getPlayersBySeason(Season,
-				isPlayOff);
-		ArrayList<Playervo> result = new ArrayList<Playervo>();
-		for (int i = 0; i < list.size(); i++) {
-			result.add(changePlayertoVO(list.get(i)));
+		if (checkisexit(Season, isPlayOff) == null) {
+			ArrayList<player> list = playerReader.getPlayersBySeason(Season,
+					isPlayOff);
+			ArrayList<Playervo> result = new ArrayList<Playervo>();
+			for (int i = 0; i < list.size(); i++) {
+				result.add(changePlayertoVO(list.get(i)));
+			}
+			return result;
+		} else
+			return checkisexit(Season, isPlayOff);
+	}
+
+	public Playervo getPlayerById(String idOfReboundsKing, String season,
+			boolean isplayoff) {
+		// TODO Auto-generated method stub
+		ArrayList<Playervo> temp = getAllPlayers(season, isplayoff);
+		for(int i=0;i<temp.size();i++){
+			if(temp.get(i).getPid().equals(idOfReboundsKing))
+				return temp.get(i);
 		}
-		return result;
+		return null;
 	}
 
 }

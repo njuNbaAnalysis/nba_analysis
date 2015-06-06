@@ -77,7 +77,7 @@ public interface BLservice extends Remote{
 	 * @param nameOfReboundsKing
 	 * @return
 	 */
-	public Playervo getPlayerById(String idOfReboundsKing)throws RemoteException;
+	public Playervo getPlayerById(String idOfReboundsKing,String season,boolean isplayoff)throws RemoteException;
 
 	/**
 	 * 
