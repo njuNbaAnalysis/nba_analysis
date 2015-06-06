@@ -37,12 +37,23 @@ public interface BLservice extends Remote{
 
 	/**
 	 * 得到赛季的所有球队
-	 * 
+	 * 不包含近十场的数据，需要单独请求，此方法在1s左右可以返回
 	 * @param Season 赛季名，例如"12-13"
 	 * @param isPlayOff true为季后赛，false为常规赛
 	 */
 	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff)throws RemoteException;
 
+	/**
+	 * 得到一个球队的vo，此vo包含近十场比赛的相关数据，在match未读取完成之前，此方法的返回时间在15s左右
+	 * @param teamNameEn
+	 * @param season
+	 * @param isPlayOff
+	 * @return
+	 * @throws RemoteException
+	 */
+	public Teamvo getTeamWithLatest10Data(String teamNameEn,String season,boolean isPlayOff)throws RemoteException;
+	
+	
 	/**
 	 * @param teamNameEn 球队的3大写字母名称
 	 * @param isSeason true表示常规赛，false表示季后赛

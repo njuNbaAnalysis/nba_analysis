@@ -168,6 +168,15 @@ public class TeamvoGenerator {
         return vo;
     }
     
+    public Teamvo getTeamvoWithLatest10Data(String teamNameEn, String season, boolean isPlayOff){
+        Teamvo vo = this.getTeamvo(teamNameEn, season, isPlayOff);
+        
+      //计算球队近十场的各种数据
+        computeLatest10Data(vo,teamNameEn, season, isPlayOff);
+        
+        return vo;
+    }
+    
     //对每个球队计算各种效率
     private void computeEfficiency(Teamvo team){
         team.setOffenseEfficiency(team.getPoints() * 1.0 / team.getOffensiveRounds() * 100);
