@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
@@ -71,7 +72,8 @@ public class Playervo implements Serializable {
 	private int dunk;               //扣篮数
 	private int blocked;				//被帽数
 	
-
+	private ArrayList<PlayerItemvo> recordOfPlayer;
+	
 	public Playervo(String Pid,String name, String number, String position, double height,
 			double weight, String birthday, String selected, String salary,
 			String highschool, String university, String team, String location,
@@ -467,6 +469,14 @@ public class Playervo implements Serializable {
 
 	public String getPid() {
 		return Pid;
+	}
+
+	public ArrayList<PlayerItemvo> getRecordOfPlayer() {
+		return recordOfPlayer;
+	}
+
+	public void setRecordOfPlayer(ArrayList<PlayerItemvo> recordOfPlayer) {
+		this.recordOfPlayer = recordOfPlayer;
 	}
 
 }
