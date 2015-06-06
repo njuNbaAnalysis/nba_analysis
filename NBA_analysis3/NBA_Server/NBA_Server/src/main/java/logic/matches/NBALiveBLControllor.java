@@ -223,7 +223,7 @@ public class NBALiveBLControllor {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
 		String current = df.format(now).substring(0, 10);
 		Id = NBALiveList.NBAMatchLiveList.get(current);
-		return Id;
+		return "0041400401";
 	}
 
 }
