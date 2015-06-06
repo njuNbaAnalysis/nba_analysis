@@ -5,7 +5,7 @@ import vo.Matchvo;
 public class MatchBuff {
 	private String Mid;
 	private Matchvo matchvo;
-	public MatchBuff(String Mid, boolean isplayoff,
+	public MatchBuff(String Mid,
 			Matchvo matchvo) {
 		super();
 		this.Mid = Mid;

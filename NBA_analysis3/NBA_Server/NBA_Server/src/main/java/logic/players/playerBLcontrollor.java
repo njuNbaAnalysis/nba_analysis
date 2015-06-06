@@ -1,15 +1,11 @@
 package logic.players;
 
 import java.util.ArrayList;
-
-import logic.teams.TeamController;
 import logic.teams.TeamNameList;
 import po.TeamListItem;
 import po.player;
-import po.playerItem;
-import vo.PlayerItemvo;
+import vo.playerItem;
 import vo.Playervo;
-import vo.Teamvo;
 import data.players.PlayerItemReader;
 import data.players.PlayerReader;
 
@@ -43,7 +39,7 @@ public class playerBLcontrollor {
 		return null;
 	}
 
-	private Playervo changePlayertoVO(player p,String season,boolean isplayoff) {
+	private Playervo changePlayertoVO(player p, String season, boolean isplayoff) {
 		Playervo result = null;
 		playerItem temp = p.getCurrentPlayerItem();
 		if (temp != null) {
@@ -52,7 +48,7 @@ public class playerBLcontrollor {
 			String location = "";
 			String division = "";
 			String conference = "";
-			if(team!=null){
+			if (team != null) {
 				location = team.getHomecourt();
 				division = team.getDivision();
 				conference = team.getConference();
@@ -93,19 +89,19 @@ public class playerBLcontrollor {
 					isPlayOff);
 			ArrayList<Playervo> result = new ArrayList<Playervo>();
 			for (int i = 0; i < list.size(); i++) {
-				result.add(changePlayertoVO(list.get(i),Season,isPlayOff));
+				result.add(changePlayertoVO(list.get(i), Season, isPlayOff));
 			}
+			BUffList.add(new PlayersBuff(isPlayOff, result, Season));
 			return result;
 		} else
 			return checkisexit(Season, isPlayOff);
 	}
 
-	public Playervo getPlayerById(String Id, String season,
-			boolean isplayoff) {
+	public Playervo getPlayerById(String Id, String season, boolean isplayoff) {
 		// TODO Auto-generated method stub
 		ArrayList<Playervo> temp = getAllPlayers(season, isplayoff);
-		for(int i=0;i<temp.size();i++){
-			if(temp.get(i).getPid().equals(Id))
+		for (int i = 0; i < temp.size(); i++) {
+			if (temp.get(i).getPid().equals(Id))
 				return temp.get(i);
 		}
 		return null;
@@ -115,8 +111,11 @@ public class playerBLcontrollor {
 		// TODO Auto-generated method stub
 		player p = playerReader.getPlayerById(id);
 		ArrayList<playerItem> list = playerItemReader.getPlayerItemById(id);
-		Playervo result = new Playervo(p.getPid(),p.getName(),p.getNumber(),p.getPosition(),p.getHeight(),p.getWeight(),p.getBirthday(),p.getSelected(),p.getSalary(),p.getHighschool(),p.getUniversity(),list);
-		return null;
+		Playervo result = new Playervo(p.getPid(), p.getName(), p.getNumber(),
+				p.getPosition(), p.getHeight(), p.getWeight(), p.getBirthday(),
+				p.getSelected(), p.getSalary(), p.getHighschool(),
+				p.getUniversity(), list);
+		return result;
 	}
 
 }

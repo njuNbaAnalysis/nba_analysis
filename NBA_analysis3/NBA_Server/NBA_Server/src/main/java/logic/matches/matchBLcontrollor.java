@@ -1,24 +1,15 @@
 package logic.matches;
 
 import java.io.File;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import data.matches.MatchItemReader;
 import data.matches.MatchReader;
 import data.matches.pointsItemReader;
-import data.players.PlayerReader;
 import po.match;
 import po.matchItem;
-import po.player;
-import po.playerItem;
-import po.pointsItem;
-import vo.EventVo;
 import vo.Matchvo;
-import vo.Playervo;
 import vo.RecordOfPlayervo;
 
 public class matchBLcontrollor {
@@ -115,9 +106,9 @@ public class matchBLcontrollor {
 								.getFieldGoalspercent()));
 			}
 		}
-		Matchvo result = new Matchvo(m.getMid(),m.getSeason() + "_" + m.getDate(),
-				m.isIsplayoff(), teams, points, pointsList, firstRecordList,
-				secondRecordList);
+		Matchvo result = new Matchvo(m.getMid(), m.getSeason() + "_"
+				+ m.getDate(), m.isIsplayoff(), teams, points, pointsList,
+				firstRecordList, secondRecordList);
 		return result;
 	}
 
@@ -135,14 +126,16 @@ public class matchBLcontrollor {
 						.getMid()));
 				temp.setMatchItemList(matchItemReader.getMatchItemById(temp
 						.getMid()));
-				result.add(changematchToMatchvo(temp));
+				Matchvo matchvo = changematchToMatchvo(temp);
+				result.add(matchvo);
+				BuffList.add(new MatchBuff(temp.getMid(), matchvo));
 			} else {
 				result.add(mvo);
 			}
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 得到最近十场比赛的信息
 	 * 

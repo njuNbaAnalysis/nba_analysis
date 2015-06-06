@@ -1,5 +1,7 @@
 package po;
 
+import vo.playerItem;
+
 public class player {
 	private String Pid;
 	private String name;
