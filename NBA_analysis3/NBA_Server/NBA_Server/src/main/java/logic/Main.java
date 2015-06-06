@@ -3,29 +3,24 @@ package logic;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import logic.teams.TeamNameList;
-import BLservice.BLservice;
+import logic.teams.TeamRecordItemList;
+import logic.teams.TeamvoGenerator;
+import po.TeamRecordItem;
 import vo.Teamvo;
 
 public class Main {
     public static void main(String argsp[]) throws RemoteException{
-/*        BLservice service = BLController.getInstance();
         
         long start = System.currentTimeMillis();
         
-        try {
-            ArrayList<Teamvo> list = service.getAllTeams("14-15", false);
-            //Teamvo vo = service.getTeamByTeamName("ATL", "14-15", false);
-        } catch (RemoteException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
+        /*TeamvoGenerator generator = TeamvoGenerator.getInstance();
+        Teamvo vo = generator.getTeamvo("CHI", "14-15", false);*/
+        BLController controller = BLController.getInstance();
+        Teamvo vo = controller.getTeamByTeamName("CHI", "14-15", false);
+        System.out.println(vo.toString());
+ 
         long end =  System.currentTimeMillis();
         
-        System.out.println(end - start);*/
-        
-        TeamNameList teamNameList = TeamNameList.getIntance();
-        // System.out.println(teamNameList.getEnAbbrByZhAbbr(""));
+        System.out.println(end - start);
     }
 }

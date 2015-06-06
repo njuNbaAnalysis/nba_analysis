@@ -53,7 +53,7 @@ public class TeamNameList {
     public ArrayList<TeamListItem> getTeamList(){
         return teamList;
     }
-
+    
     /**
      * 根据中文全名得到英文缩写
      * @param fullZh

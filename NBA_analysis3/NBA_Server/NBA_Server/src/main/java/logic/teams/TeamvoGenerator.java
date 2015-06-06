@@ -7,9 +7,11 @@ import po.TeamListItem;
 import po.TeamRecordItem;
 import util.Tools;
 import vo.Matchvo;
+import vo.RecordOfPlayervo;
 import vo.Teamvo;
+
 import compare.WinningPercentageComp;
-import data.teams.TeamNameListData;
+
 import data.teams.TeamRecordItemData;
 
 public class TeamvoGenerator {
@@ -31,41 +33,33 @@ public class TeamvoGenerator {
     public Teamvo getTeamvo(String teamNameEn, String season, boolean isPlayOff){
         Teamvo vo = new Teamvo();
         
-        TeamNameListData data = new TeamNameListData();
-        data.init();
+        
+        TeamNameList teamNameList = TeamNameList.getIntance();
         //得到基本信息
         {
-            TeamListItem teamListItem = new TeamListItem();
-            teamListItem.setTeamNameEn(teamNameEn);
-            ArrayList<TeamListItem> teamList = data.getTeamList(teamListItem);
-            teamListItem = teamList.get(0); //得到teamNameEn所对应的teamListItem
+          //得到teamNameEn所对应的teamListItem
+            TeamListItem teamListItem = teamNameList.getTeamListItem(teamNameEn);
             
             vo.setAbbreviation(teamNameEn);
             vo.setName(teamListItem.getTeamNameZh());
-            vo.setConference(Character.toUpperCase(teamListItem.getConference().charAt(0)));
-            vo.setDivision(teamListItem.getDivision());
+            
+            if(teamListItem.getConference() != null && !teamListItem.getConference().equals("")){
+                vo.setConference(Character.toUpperCase(teamListItem.getConference().charAt(0)));
+            }
+            
+            if(teamListItem.getDivision() != null && !teamListItem.getDivision().equals("")){
+                vo.setDivision(teamListItem.getDivision());
+            }
+            
+            
             vo.setSeason(season);
             vo.setPlayOff(isPlayOff);
         }
         
-        
-        TeamRecordItemData teamRecordItemData = new TeamRecordItemData();
-        teamRecordItemData.init();
+        TeamRecordItemList teamRecordItemList = TeamRecordItemList.getInstance();
         
         //得到球员列表
-        {
-            TeamRecordItem playerItemPara = new TeamRecordItem();
-            playerItemPara.setDataType("playerItem");
-            playerItemPara.setTeamNameEn(teamNameEn);
-            playerItemPara.setSeason(isPlayOff?false:true);
-            playerItemPara.setBeginYear(Tools.xx_xxToxxxx(season));
-            ArrayList<String> playerList = new ArrayList<String>();
-            ArrayList<TeamRecordItem> resultList = teamRecordItemData.getTeamRecords(playerItemPara);
-            for(TeamRecordItem token:resultList){
-                playerList.add(token.getPlayerId());
-            }
-            vo.setPlayerList(playerList);
-        }
+        vo.setPlayerList(teamRecordItemList.getPlayerIdList(teamNameEn, season, isPlayOff));
         
         
         //得到各种数据 
@@ -76,14 +70,14 @@ public class TeamvoGenerator {
             teamTotalRecord.setTeamNameEn(teamNameEn);
             teamTotalRecord.setSeason(isPlayOff?false:true);
             teamTotalRecord.setBeginYear(Tools.xx_xxToxxxx(season));
-            teamTotalRecord = teamRecordItemData.getTeamRecords(teamTotalRecord).get(0);
+            teamTotalRecord = teamRecordItemList.getRecordItemList(teamTotalRecord).get(0);
             
             TeamRecordItem teamTotalRecordRival = new TeamRecordItem();
             teamTotalRecordRival.setDataType("rivalTeamItem");
             teamTotalRecordRival.setTeamNameEn(teamNameEn);
             teamTotalRecordRival.setSeason(isPlayOff?false:true);
             teamTotalRecordRival.setBeginYear(Tools.xx_xxToxxxx(season));
-            teamTotalRecordRival = teamRecordItemData.getTeamRecords(teamTotalRecordRival).get(0);
+            teamTotalRecordRival = teamRecordItemList.getRecordItemList(teamTotalRecordRival).get(0);
             
             //己方
             vo.setNumOfMatches(teamTotalRecord.getNumOfFailure() + teamTotalRecord.getNumOfVictory());
@@ -153,7 +147,6 @@ public class TeamvoGenerator {
         if(!isPlayOff){
             loadTotalItemListIfNotHas(season);
             
-            TeamNameList teamNameList = TeamNameList.getIntance();
             boolean isCurrentTeamEastern = teamNameList.isEastern(teamNameEn);
             int rank = 0;
             for(TeamRecordItem token:totalItemList){
@@ -170,76 +163,8 @@ public class TeamvoGenerator {
         }
         
         //计算球队近十场的各种数据
-        {
-            matchBLcontrollor matchController = matchBLcontrollor.getInstance();
-            ArrayList<Matchvo> voList = matchController.getLast10Matches(teamNameEn, season, isPlayOff);
-            
-            //index = 0 表示最近一场,index = 9表示最远一场，容量为10
-            int[] points = new int[10];
-            int[] pointsRival = new int[10];
-            
-            for(int i = 0;i <= 9;i ++){
-                if(voList.get(i).getTeams()[0].equals(teamNameEn)){
-                    points[i] = voList.get(i).getPoints()[0];
-                    pointsRival[i] = voList.get(i).getPoints()[1];
-                }else{
-                    points[i] = voList.get(i).getPoints()[1];
-                    pointsRival[i] = voList.get(i).getPoints()[0];
-                }
-            }
+        //computeLatest10Data(vo,teamNameEn, season, isPlayOff);
 
-            // 近十场的输赢情况,
-            {
-                boolean[] latestWinOrLose = new boolean[10];
-                for(int i = 0;i < 10;i ++){
-                    if(points[i] > pointsRival[i]){
-                        latestWinOrLose[i] = true;
-                    }
-                    else{
-                        latestWinOrLose[i] = false;
-                    }
-                }
-                vo.setLatestWinOrLose(latestWinOrLose);
-            }
-            
-            // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
-            {
-                String[] latestRecord = new String[10];
-                for(int i = 0;i < 10;i ++){
-                    latestRecord[i] = String.valueOf(points[i]) + "-" + String.valueOf(pointsRival[i]);
-                }
-                vo.setLatestRecord(latestRecord);
-            }
-            
-
-            // 得到近十场的攻防比(得分/失分)
-            {
-                double[] latestOffendThanDefend = new double[10];
-                for(int i = 0;i < 10;i ++){
-                    latestOffendThanDefend[i] = points[i]/pointsRival[i];
-                }
-                vo.setLatestOffendThanDefend(latestOffendThanDefend);
-            }
-
-            // 得到近十场的得分(每一场的每百回合得分)
-            {
-                double[] latestOffend = new double[10];
-                
-            }
-            
-
-            // 得到近十场的失分(每一场的每百回合失分)
-            double[] latestDefend = new double[10];
-
-            // 得到近十场的节奏(每一场的进攻回合数)
-            double[] latestTempo = new double[10];
-            
-
-            
-        }
-        
-        
-        
         return vo;
     }
     
@@ -272,17 +197,177 @@ public class TeamvoGenerator {
         
         //否则清空并进行读取
         
-        TeamRecordItemData teamRecordItemData = new TeamRecordItemData();
-        teamRecordItemData.init();
-        
         TeamRecordItem totalItemPara = new TeamRecordItem();
         totalItemPara.setDataType("teamItem");
         totalItemPara.setSeason(true);
         totalItemPara.setBeginYear(Tools.xx_xxToxxxx(season));
-        totalItemList = teamRecordItemData.getTeamRecords(totalItemPara);   //同时起到清空作用 
+        totalItemList = TeamRecordItemList.getInstance().getRecordItemList(totalItemPara);
         
         //按胜率进行降序排序
         totalItemList.sort(new WinningPercentageComp());
+    }
+
+    /**
+     * @param vo
+     * @param teamNameEn
+     * @param season
+     * @param isPlayOff
+     */
+    private void computeLatest10Data(Teamvo vo,String teamNameEn, String season, boolean isPlayOff){
+        matchBLcontrollor matchController = matchBLcontrollor.getInstance();
+        ArrayList<Matchvo> voList = matchController.getLast10Matches(teamNameEn, season, isPlayOff);
+        
+        //for debug
+        //如果voList为null或为空则不进行任何计算
+        if(voList == null || voList.isEmpty()){
+            return ;
+        }
+        
+        //index = 0 表示最近一场,index = 9表示最远一场，容量为10
+        int[] points = new int[10];
+        int[] pointsRival = new int[10];
+        double[] offensiveRounds = new double[10];
+        double[] defensiveRounds = new double[10];
+        
+        //得分赋值
+        for(int i = 0;i <= 9;i ++){
+            if(voList.get(i).getTeams()[0].equals(teamNameEn)){
+                points[i] = voList.get(i).getPoints()[0];
+                pointsRival[i] = voList.get(i).getPoints()[1];
+            }else{
+                points[i] = voList.get(i).getPoints()[1];
+                pointsRival[i] = voList.get(i).getPoints()[0];
+            }
+            
+            //进攻防守回合赋值
+            {
+                Matchvo match = voList.get(i);
+                ArrayList<RecordOfPlayervo> recordList1 = match.getFirstRecordList();
+                ArrayList<RecordOfPlayervo> recordList2 = match.getSecondRecordList();
+                
+                //判断本队是否是主场，即是否是team数组的第一个 
+                boolean isAtHome = false;
+                if(match.getTeams()[0].equals(teamNameEn)){
+                    isAtHome = true;
+                }
+                
+                //进攻防守回合累加赋值
+                    //正常比赛的各项数据
+                int fieldGoalAttempts1 = 0;
+                int freeThrowAttemps1 = 0;
+                int offensiveRebounds1 = 0;
+                int defensiveRebounds1 = 0;
+                int fieldGoalHits1 = 0;
+                int turnOver1 = 0;
+                
+                int fieldGoalAttempts2 = 0;
+                int freeThrowAttemps2 = 0;
+                int offensiveRebounds2 = 0;
+                int defensiveRebounds2 = 0;
+                int fieldGoalHits2 = 0;
+                int turnOver2 = 0;
+                
+                for(RecordOfPlayervo record:recordList1){
+                    fieldGoalAttempts1 += record.getFieldGoalAttempts();
+                    freeThrowAttemps1 += record.getFreeThrowAttemps();
+                    offensiveRebounds1 += record.getOffensiveRebounds();
+                    defensiveRebounds1 += record.getDefensiveRebounds();
+                    fieldGoalHits1 += record.getFieldGoalHits();
+                    turnOver1 += record.getTurnOver();
+                }
+                
+                for(RecordOfPlayervo record:recordList2){
+                    fieldGoalAttempts2 += record.getFieldGoalAttempts();
+                    freeThrowAttemps2 += record.getFreeThrowAttemps();
+                    offensiveRebounds2 += record.getOffensiveRebounds();
+                    defensiveRebounds2 += record.getDefensiveRebounds();
+                    fieldGoalHits2 += record.getFieldGoalHits();
+                    turnOver2 += record.getTurnOver();
+                }
+                
+                //主队的进攻回合数
+                double incrementOfOffensiveRounds1 = fieldGoalAttempts1 + 0.4 * freeThrowAttemps1 - 1.07 * 
+                        (1.0 * offensiveRebounds1 / (offensiveRebounds1 + defensiveRebounds2)
+                                * (fieldGoalAttempts1 - fieldGoalHits1))
+                                + 1.07 * turnOver1;
+                //客队的进攻回合数
+                double incrementOfOffensiveRounds2 = fieldGoalAttempts2 + 0.4 * freeThrowAttemps2 - 1.07 * 
+                        (1.0 * offensiveRebounds2 / (offensiveRebounds2 + defensiveRebounds1)
+                                * (fieldGoalAttempts2 - fieldGoalHits2))
+                                + 1.07 * turnOver2;
+
+                if(isAtHome){
+                    offensiveRounds[i] = incrementOfOffensiveRounds1;
+                    defensiveRounds[i] = incrementOfOffensiveRounds2;
+                }
+                else{
+                    offensiveRounds[i] = incrementOfOffensiveRounds2;
+                    defensiveRounds[i] = incrementOfOffensiveRounds1;
+                }
+            }
+        }
+        
+        // 近十场的输赢情况,
+        {
+            boolean[] latestWinOrLose = new boolean[10];
+            for(int i = 0;i < 10;i ++){
+                if(points[i] > pointsRival[i]){
+                    latestWinOrLose[i] = true;
+                }
+                else{
+                    latestWinOrLose[i] = false;
+                }
+            }
+            vo.setLatestWinOrLose(latestWinOrLose);
+        }
+        
+        // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多
+        {
+            String[] latestRecord = new String[10];
+            for(int i = 0;i < 10;i ++){
+                latestRecord[i] = String.valueOf(points[i]) + "-" + String.valueOf(pointsRival[i]);
+            }
+            vo.setLatestRecord(latestRecord);
+        }
+        
+        // 得到近十场的攻防比(得分/失分)
+        {
+            double[] latestOffendThanDefend = new double[10];
+            for(int i = 0;i < 10;i ++){
+                latestOffendThanDefend[i] = points[i]/pointsRival[i];
+            }
+            vo.setLatestOffendThanDefend(latestOffendThanDefend);
+        }
+
+        // 得到近十场的得分(每一场的每百进攻回合得分)
+        {
+            double[] latestOffend = new double[10];
+            for(int i = 0;i < 10;i ++){
+                latestOffend[i] = points[i]/offensiveRounds[i];
+            }
+            vo.setLatestOffend(latestOffend);
+        }
+        
+
+        // 得到近十场的失分(每一场的每百防守回合失分)
+        {
+            double[] latestDefend = new double[10];
+            for(int i = 0;i < 10;i ++){
+                latestDefend[i] = pointsRival[i]/defensiveRounds[i];
+            }
+            vo.setLatestDefend(latestDefend);
+        }
+        
+
+        // 得到近十场的节奏(每一场的进攻回合数)
+        {
+            double[] latestTempo = new double[10];
+            for(int i = 0;i < 10;i ++){
+                latestTempo[i] = offensiveRounds[i];
+            }
+            vo.setLatestTempo(latestTempo);
+        }
+        
     }
 }
 
