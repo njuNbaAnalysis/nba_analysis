@@ -80,6 +80,8 @@ public class LivePanel extends JPanel {
 			this.setSize(width, height);
 			this.teams = new Teamvo[2];
 			try {
+				//System.out.println(match.getSeason());
+				//System.out.println(match.getSeason());
 				teams[0] = bl.getTeamByTeamName(match.getTeams()[0],match.getSeason(),match.isIsplayoff());
 				teams[1] = bl.getTeamByTeamName(match.getTeams()[1],match.getSeason(),match.isIsplayoff());
 			} catch (RemoteException e) {
@@ -299,6 +301,8 @@ public class LivePanel extends JPanel {
 				if(event.getTimeInSecond()>=latestTime){
 					if(latestEvent==null||!event.getDescription().equals(latestEvent.getDescription())){
 						eventList.add(event);
+						System.out.println(event.getDescription());
+						System.out.println(getEncoding(event.getDescription()));
 					}				
 				}
 			}
@@ -307,6 +311,42 @@ public class LivePanel extends JPanel {
 			wordLivePanel.refresh(eventList);
 		}
 		
+	}
+	
+	public static String getEncoding(String str) {
+		String encode = "GB2312";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s = encode;
+				return s;
+			}
+		} catch (Exception exception) {
+		}
+		encode = "ISO-8859-1";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s1 = encode;
+				return s1;
+			}
+		} catch (Exception exception1) {
+		}
+		encode = "UTF-8";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s2 = encode;
+				return s2;
+			}
+		} catch (Exception exception2) {
+		}
+		encode = "GBK";
+		try {
+			if (str.equals(new String(str.getBytes(encode), encode))) {
+				String s3 = encode;
+				return s3;
+			}
+		} catch (Exception exception3) {
+		}
+		return "";
 	}
 	
 	public void setMatch(Matchvo match){
