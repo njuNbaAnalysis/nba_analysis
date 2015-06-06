@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import util.UIUtils;
 import vo.Teamvo;
 import BLservice.BLservice;
 
@@ -60,8 +61,8 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(new Color(148, 148, 148));
 		g.fillRect(0, 0, width, height);
-		g.drawImage(team1.getLogo(420, 320), 58, 45, this);
-		g.drawImage(team2.getLogo(420, 320), 1250, 45, this);
+		g.drawImage(UIUtils.resize(team1.getLogo(), 420, 320), 58, 45, this);
+		g.drawImage(UIUtils.resize(team1.getLogo(), 420, 320), 1250, 45, this);
 
 		g.setColor(Color.black);
 		g.fillRect(538, 0, 655, 130);

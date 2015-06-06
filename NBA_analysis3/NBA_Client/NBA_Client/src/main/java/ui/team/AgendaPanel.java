@@ -1,4 +1,4 @@
-package ui.match;
+package ui.team;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -32,7 +32,6 @@ import javax.swing.table.TableColumnModel;
 
 import BLservice.BLservice;
 import ui.statistics.BaseJTable;
-import ui.team.TeamInfoPanel;
 import util.UIUtils;
 import vo.MatchSimpleInfovo;
 import vo.Teamvo;

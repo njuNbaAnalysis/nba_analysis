@@ -29,7 +29,7 @@ public class RadarChart extends JPanel {
 
 	// private
 
-	RadarChart(int n, int m, int width, int height, double pa[], double pb[],
+	public RadarChart(int n, int m, int width, int height, double pa[], double pb[],
 			double limit, String[] attr) {
 		this.dimension = n;
 		this.seg = m;

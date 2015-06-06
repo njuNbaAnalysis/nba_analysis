@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 
+import util.UIUtils;
 import vo.Teamvo;
 
 
@@ -38,7 +39,7 @@ public class TeamBasicInfoLabel extends JLabel {
 		}
 		g.setColor(new Color(190, 157, 83));
 		g.fillRect(0, 130, 1800, 35);
-		g.drawImage(team.getLogo(200, 200), 0, 0, this);
+		g.drawImage(UIUtils.resize(team.getLogo(), 200, 200), 0, 0, this);
 
 		g.setColor(new Color(190, 157, 83));
 		g.setFont(new Font("default", Font.BOLD, 50));

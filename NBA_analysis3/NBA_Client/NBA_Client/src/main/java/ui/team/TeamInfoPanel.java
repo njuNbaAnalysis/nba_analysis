@@ -21,7 +21,6 @@ import javax.swing.plaf.basic.BasicLabelUI;
 
 import BLservice.BLservice;
 import ui.hot.KingLabelPanel;
-import ui.match.AgendaPanel;
 import util.UIUtils;
 import vo.Playervo;
 import vo.Teamvo;
@@ -50,15 +49,15 @@ public class TeamInfoPanel extends JPanel {
 		this.bl = bl;
 		this.content = content;
 
-		ArrayList<String> nameList = team.getPlayerList();
+		ArrayList<String> idList = team.getPlayerList();
 		players = new Playervo[num];
 		playerList = new ArrayList<Playervo>();
-		for (int i = 0; i < nameList.size(); i++) {
+		for (int i = 0; i < idList.size(); i++) {
 			if (i < num) {
-				players[i] = (bl.getPlayerByName(nameList.get(i)));
+				players[i] = (bl.getPlayerById(idList.get(i)));
 			}
 
-			playerList.add(bl.getPlayerByName(nameList.get(i)));
+			playerList.add(bl.getPlayerById(idList.get(i)));
 		}
 		
 		//最上面球队基本信息

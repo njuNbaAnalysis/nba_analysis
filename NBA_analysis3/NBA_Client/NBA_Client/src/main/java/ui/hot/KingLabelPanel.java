@@ -22,9 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicLabelUI;
 
 import BLservice.BLservice;
-import logic.BLService;
-import logic.players.Player;
-import logic.teams.Team;
 import ui.player.PlayerInfoPanel;
 import ui.team.TeamInfoPanel;
 import util.UIUtils;
@@ -37,7 +34,7 @@ public class KingLabelPanel extends HotLabelPanel {
 	private Playervo[] players;
 	private JPanel content;
 
-	KingLabelPanel(String type, String headName, String[] columnName,
+	public KingLabelPanel(String type, String headName, String[] columnName,
 			int kingWidth, int kingHeight, BLservice bl, JPanel content) {
 		super(headName, columnName, kingWidth, kingHeight, bl);
 		this.type = type;

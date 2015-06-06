@@ -46,7 +46,7 @@ public class LineChart extends JPanel {
 
 	private DecimalFormat df = new DecimalFormat("#0.0");
 
-	LineChart(int num, int seg, int width, int height, double limit,
+	public LineChart(int num, int seg, int width, int height, double limit,
 			String[] x_name, String [] y_name,double[] a_value, double[] b_value,String [] labelContent_a,String [] labelContent_b,Color a_color,Color b_color) {
 		this.num = num;
 		this.width = width;

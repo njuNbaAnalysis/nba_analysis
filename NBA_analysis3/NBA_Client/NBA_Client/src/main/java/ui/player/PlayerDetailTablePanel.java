@@ -26,7 +26,7 @@ public class PlayerDetailTablePanel extends JPanel {
 	private int width;
 	private int height;
 	private SeasonJTable seasonTable;
-	private LatestJTable latestTable;
+	//private LatestJTable latestTable;
 	private JScrollPane seasonJspane;
 	private JScrollPane latestJspane;
 	private DecimalFormat df = new DecimalFormat("#0.0");
@@ -47,13 +47,15 @@ public class PlayerDetailTablePanel extends JPanel {
 		seasonJspane.setViewportView(seasonTable);
 		this.add(seasonJspane);
 		//seasonTable.refreshElement();
-
-		latestJspane = new JScrollPane();
+		
+		
+		//迭代三中没有近五场数据
+		/*latestJspane = new JScrollPane();
 		latestJspane.setBounds(0, height * 1 / 2, width, height * 35 / 80);
 		latestTable = new LatestJTable(player.getListOfRecord());
 		latestJspane.setViewportView(latestTable);
 
-		this.add(latestJspane);
+		this.add(latestJspane);*/
 		//latestTable.refreshElement();
 
 	}
@@ -239,7 +241,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		}
 	}
 
-	private class LatestJTable extends DetailJTable {
+	/*private class LatestJTable extends DetailJTable {
 		protected DecimalFormat df = new DecimalFormat("#0");
 		private String[] columnName = { "日期", "对手", "得分", "篮板",
 				"助攻",  "抢断", "盖帽" };
@@ -367,6 +369,6 @@ public class PlayerDetailTablePanel extends JPanel {
 			result[6] = Double.toString(block/5.0);
 			return result;
 		}
-	}
+	}*/
 
 }
