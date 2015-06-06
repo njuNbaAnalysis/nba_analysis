@@ -59,12 +59,24 @@ public class matchBLcontrollor {
 
 	}
 
-	private Matchvo checkisexit(String Mid) {
+	private Matchvo checkisexit(match temp) { // 判断是否在缓冲区，如果在，则返回，否则加进缓冲区
 		for (int i = 0; i < BuffList.size(); i++) {
-			if (BuffList.get(i).getMid().equals(Mid))
+			if (BuffList.get(i).getMid().equals(temp.getMid()))
 				return BuffList.get(i).getMatchvo();
 		}
-		return null;
+		temp.setPointsItemList(pointsItemReader.getpointsItemById(temp.getMid()));
+		temp.setMatchItemList(matchItemReader.getMatchItemById(temp.getMid()));
+		Matchvo result = changematchToMatchvo(temp);
+		BuffList.add(new MatchBuff(temp.getMid(), result));
+		return result;
+	}
+
+	public void loadNewMatchvo(int start) { // 缓存某一段时间的所有数据
+		ArrayList<match> list = matchReader.getAllMatch();
+		for (int i = 0; i < 1000; i++) {
+			System.out.println(list.get(i).getMid());
+			checkisexit(list.get(i + start));
+		}
 	}
 
 	private Matchvo changematchToMatchvo(match m) {
@@ -120,25 +132,14 @@ public class matchBLcontrollor {
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
 		for (int i = 0; i < list.size(); i++) {
 			match temp = list.get(i);
-			Matchvo mvo = checkisexit(temp.getMid());
-			if (mvo == null) {
-				temp.setPointsItemList(pointsItemReader.getpointsItemById(temp
-						.getMid()));
-				temp.setMatchItemList(matchItemReader.getMatchItemById(temp
-						.getMid()));
-				Matchvo matchvo = changematchToMatchvo(temp);
-				result.add(matchvo);
-				BuffList.add(new MatchBuff(temp.getMid(), matchvo));
-			} else {
-				result.add(mvo);
-			}
+			result.add(checkisexit(temp));
 		}
 		return result;
 	}
 
 	/**
-	 * 得到最近十场比赛的信息
-	 * 顺序:index = 0为最近一场，index=9为最远一场
+	 * 得到最近十场比赛的信息 顺序:index = 0为最近一场，index=9为最远一场
+	 * 
 	 * @param teamNameEn
 	 *            例"ATL"
 	 * @param season
@@ -148,6 +149,8 @@ public class matchBLcontrollor {
 	 */
 	public ArrayList<Matchvo> getLast10Matches(String teamNameEn,
 			String season, boolean isPlayOff) {
+		ArrayList<match> lsit = matchReader.getMatchesByTeam(teamNameEn,
+				season, isPlayOff,10);
 		return null;
 	}
 

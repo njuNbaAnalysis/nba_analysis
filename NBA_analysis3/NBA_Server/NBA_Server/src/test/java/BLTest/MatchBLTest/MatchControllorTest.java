@@ -50,6 +50,14 @@ public class MatchControllorTest {
 		assertTrue(true);
 	}
 	
+//	@Test
+//	public void testLoadNewMatchvo() {
+//		matchBLcontrollor m = matchBLcontrollor.getInstance();
+//		m.loadNewMatchvo(0);
+//		assertTrue(true);
+//	}
+	
+	
 	@Test
 	public void testgetTodayMatch() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
