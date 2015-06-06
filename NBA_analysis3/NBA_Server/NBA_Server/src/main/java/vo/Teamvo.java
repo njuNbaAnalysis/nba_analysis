@@ -33,6 +33,10 @@ public class Teamvo implements Serializable {
 	// 累加
 	private int numOfMatches; // 比赛场数
 	private int numOfVictory; // 胜利场数
+	
+	private int numOfMatchesInSeason; //此球队本赛季常规赛的总比赛场数
+	private int numOfVictoryInSeason; //此球队本赛季常规赛的总胜利场数
+	
 	private int fieldGoalAttemps; // 投篮出手次数
 	private int fieldGoalHits; // 投篮命中次数
 	private int threePointerAttempts; // 三分出手次数
@@ -606,6 +610,7 @@ public class Teamvo implements Serializable {
         return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", conference=" + conference + ", division="
                 + division + ", homeCourt=" + homeCourt + ", season=" + season + ", isPlayOff=" + isPlayOff
                 + ", playerList=" + playerList + ", numOfMatches=" + numOfMatches + ", numOfVictory=" + numOfVictory
+                + ", numOfMatchesInSeason=" + numOfMatchesInSeason + ", numOfVictoryInSeason=" + numOfVictoryInSeason
                 + ", fieldGoalAttemps=" + fieldGoalAttemps + ", fieldGoalHits=" + fieldGoalHits
                 + ", threePointerAttempts=" + threePointerAttempts + ", threePointerHits=" + threePointerHits
                 + ", freeThrowAttempts=" + freeThrowAttempts + ", freeThrowHits=" + freeThrowHits
@@ -670,6 +675,22 @@ public class Teamvo implements Serializable {
 
     public void setLatestTempo(double[] latestTempo) {
         this.latestTempo = latestTempo;
+    }
+
+    public int getNumOfMatchesInSeason() {
+        return numOfMatchesInSeason;
+    }
+
+    public void setNumOfMatchesInSeason(int numOfMatchesInSeason) {
+        this.numOfMatchesInSeason = numOfMatchesInSeason;
+    }
+
+    public int getNumOfVictoryInSeason() {
+        return numOfVictoryInSeason;
+    }
+
+    public void setNumOfVictoryInSeason(int numOfVictoryInSeason) {
+        this.numOfVictoryInSeason = numOfVictoryInSeason;
     }
     
 }

@@ -83,7 +83,18 @@ public class TeamvoGenerator {
             teamTotalRecordRival.setBeginYear(Tools.xx_xxToxxxx(season));
             teamTotalRecordRival = teamRecordItemList.getRecordItemList(teamTotalRecordRival).get(0);
             
+            //为了对常规赛场数进行赋值，而无论isPlayOff的值如何
+            TeamRecordItem teamTotalRecordInSeason = new TeamRecordItem();
+            teamTotalRecordInSeason.setDataType("teamItem");
+            teamTotalRecordInSeason.setTeamNameEn(teamNameEn);
+            teamTotalRecordInSeason.setSeason(true);
+            teamTotalRecordInSeason.setBeginYear(Tools.xx_xxToxxxx(season));
+            teamTotalRecordInSeason = teamRecordItemList.getRecordItemList(teamTotalRecordInSeason).get(0);
+            
             //己方
+            vo.setNumOfMatchesInSeason(teamTotalRecordInSeason.getNumOfFailure() + teamTotalRecordInSeason.getNumOfVictory());
+            vo.setNumOfVictoryInSeason(teamTotalRecordInSeason.getNumOfVictory());
+            
             vo.setNumOfMatches(teamTotalRecord.getNumOfFailure() + teamTotalRecord.getNumOfVictory());
             vo.setNumOfVictory(teamTotalRecord.getNumOfVictory());
             vo.setFieldGoalAttemps((int)(teamTotalRecord.getFieldGoalAttempsAverage() * vo.getNumOfMatches()));

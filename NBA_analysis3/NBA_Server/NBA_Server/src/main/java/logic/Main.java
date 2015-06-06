@@ -8,7 +8,7 @@ import logic.teams.TeamvoGenerator;
 import vo.Teamvo;
 
 public class Main {
-    public static void main(String argsp[]) throws RemoteException{
+    public static void main(String args[]) throws RemoteException{
         
         long start = System.currentTimeMillis();
         
