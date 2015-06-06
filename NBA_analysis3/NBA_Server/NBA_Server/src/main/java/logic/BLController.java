@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import po.player;
 import logic.matches.NBALiveBLControllor;
 import logic.matches.matchBLcontrollor;
 import logic.players.playerBLcontrollor;
@@ -83,9 +84,10 @@ public class BLController extends UnicastRemoteObject implements BLservice{
 	}*/
 
 	@Override
-	public Playervo getPlayerById(String idOfReboundsKing)throws RemoteException {
+	public Playervo getPlayerById(String idOfReboundsKing,String season,boolean isplayoff)throws RemoteException {
 		// TODO Auto-generated method stub
-		return null;
+		playerBLcontrollor pbl = playerBLcontrollor.getInstance();
+		return pbl.getPlayerById(idOfReboundsKing,season,isplayoff);
 	}
 
 	@Override
