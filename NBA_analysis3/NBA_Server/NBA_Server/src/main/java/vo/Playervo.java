@@ -213,7 +213,12 @@ public class Playervo implements Serializable {
 	public Image getPortrait() {
 		Image image = null;
 		try {
-			image = ImageIO.read(new File("./Data/PlayerAction/" + getName()
+			String name = getName();
+			String[] temp = name.split(" ");
+			if(temp.length>2){
+				name = temp[0]+" "+temp[temp.length-1];
+			}
+			image = ImageIO.read(new File("./Data/PlayerAction/" + name
 					+ ".png"));
 		} catch (IOException e) {
 		}
@@ -223,7 +228,12 @@ public class Playervo implements Serializable {
 	public Image getAction() {
 		Image image = null;
 		try {
-			image = ImageIO.read(new File("./Data/PlayerImage/" + getName()
+			String name = getName();
+			String[] temp = name.split(" ");
+			if(temp.length>2){
+				name = temp[0]+" "+temp[temp.length-1];
+			}
+			image = ImageIO.read(new File("./Data/PlayerAction/" + name
 					+ ".png"));
 		} catch (IOException e) {
 		}
