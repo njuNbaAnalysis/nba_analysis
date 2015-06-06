@@ -149,9 +149,13 @@ public class matchBLcontrollor {
 	 */
 	public ArrayList<Matchvo> getLast10Matches(String teamNameEn,
 			String season, boolean isPlayOff) {
-		ArrayList<match> lsit = matchReader.getMatchesByTeam(teamNameEn,
+		ArrayList<match> list = matchReader.getMatchesByTeam(teamNameEn,
 				season, isPlayOff,10);
-		return null;
+		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
+		for (int i = 0; i < list.size(); i++) {
+			match temp = list.get(i);
+			result.add(checkisexit(temp));
+		}
+		return result;
 	}
-
 }
