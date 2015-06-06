@@ -328,10 +328,10 @@ public class KingLabelPanel extends HotLabelPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			Playervo p = KingLabelPanel.this.bl.getPlayerByName(((JLabel) e
-					.getSource()).getText(),);
+					.getSource()).getText());
 			PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(hotWidth,
 					hotHeight * 3, p, KingLabelPanel.this.bl,
-					KingLabelPanel.this.content);
+					KingLabelPanel.this.content,KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
 			playInfoPanel.setBounds(0, 0, hotWidth, hotHeight * 3);
 			KingLabelPanel.this.content.removeAll();
 			KingLabelPanel.this.content.add(playInfoPanel);
