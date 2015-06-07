@@ -28,14 +28,18 @@ public class Start {
 		
 		final ImageReader reader = ImageReader.getInstance();
 		final AnimationFrame animation = new AnimationFrame(reader);
-		try {
+		/*try {
 			System.out.println("test");
 			System.out.println("list size:"+bl.getTodayKingPlayer("14-15_2015-06-07", "point",5).size());
 			System.out.println("finish test");
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
+		
+		Thread read = new Thread(reader);
+		read.start();
+		
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
