@@ -11,6 +11,7 @@ import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.Playervo;
 import vo.Teamvo;
+import vo.TodayPlayervo;
 
 public interface BLservice extends Remote {
 	/**
@@ -83,7 +84,7 @@ public interface BLservice extends Remote {
 	 *            number为人数
 	 * @return 如果今日没有比赛，则返回过去最近一日的数据王
 	 */
-	public ArrayList<Playervo> getTodayKingPlayer(String date,String transferField,
+	public ArrayList<TodayPlayervo> getTodayKingPlayer(String date,String transferField,
 			int number)
 			throws RemoteException;
 
