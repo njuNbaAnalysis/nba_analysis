@@ -161,4 +161,10 @@ public class playerBLcontrollor {
 		return result;
 	}
 
+	public ArrayList<Playervo> getSeasonKingPlayer(String transferField,
+			int number, String season, boolean isplayoff) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
