@@ -2,7 +2,9 @@ package ui;
 
 
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+
 
 
 
@@ -26,7 +28,12 @@ public class Start {
 		
 		final ImageReader reader = ImageReader.getInstance();
 		final AnimationFrame animation = new AnimationFrame(reader);
-		
+		try {
+			System.out.println("list:"+bl.getAllPlayers("13-14", false).size());
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
