@@ -6,12 +6,12 @@ import java.util.Comparator;
 import vo.Playervo;
 
 
-public class PalyerScreening {
+public class PlayerScreening {
 	String location;
 	String union;
 	String depend;
 
-	public PalyerScreening(String location, String union, String depend) {
+	public PlayerScreening(String location, String union, String depend) {
 		this.location = location;
 		this.union = union;
 		this.depend = depend;
