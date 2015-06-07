@@ -215,8 +215,9 @@ public class playerBLcontrollor {
 			String transferField, int number) {
 		ArrayList<Matchvo> list = matchBLcontrollor.getInstance()
 				.getTodayMatched(date);
+		System.out.println(date);
 		while (list.size() == 0) {
-			DeclarationTime(date);
+			date = DeclarationTime(date);
 			list = matchBLcontrollor.getInstance().getTodayMatched(date);
 		}
 		ArrayList<TodayPlayervo> result = new ArrayList<TodayPlayervo>();
