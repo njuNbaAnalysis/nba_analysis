@@ -10,21 +10,16 @@ import javax.imageio.ImageIO;
 public class TodayPlayervo {
 	String name;
 	String team;
-	String position;
 	private int Points;
 	private int Rebounds;
 	private int Assists;
 	private int steals;
 	private int blockShots;
 
-	public TodayPlayervo(String name, String team, String position, int Points,
+	public TodayPlayervo(String name, String team, int Points,
 			int Rebounds, int Assists, int steals, int blockShots) {
 		this.name = name;
 		this.team = team;
-		if (!position.equals(""))
-			this.position = position;
-		else
-			this.position = "All";
 		this.Assists = Assists;
 		this.Points = Points;
 		this.Rebounds = Rebounds;
@@ -46,14 +41,6 @@ public class TodayPlayervo {
 
 	public void setTeam(String team) {
 		this.team = team;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
 	}
 
 	public int getPoints() {
