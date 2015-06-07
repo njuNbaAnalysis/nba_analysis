@@ -81,13 +81,12 @@ public class PlayerReader {
 			statement = conn.createStatement();
 			rs = statement
 					.executeQuery("SELECT * FROM playerlist p1, playeritem p2 WHERE p1.Pid = p2.Pid AND p2.season =  '"
-							+ season + "' AND p2.isplayoff = " + isPlayoff);
+							+ season + "' AND p2.isplayoff = " + isPlayoff+" group by p1.Pid");
 
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			TeamNameList teamlist = TeamNameList.getIntance();
 			while (rs.next()) {
 				String playername = namelist.getEnAbbrById(rs.getString(1));
-				System.out.println(rs.getString(1)+"   :::   "+playername);
 				if (playername == null)
 					playername = rs.getString(2);
 				player p = new player(rs.getString(1), playername,
