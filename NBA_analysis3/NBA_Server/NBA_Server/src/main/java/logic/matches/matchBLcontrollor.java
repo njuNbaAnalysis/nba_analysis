@@ -107,7 +107,7 @@ public class matchBLcontrollor {
 		return result;
 	}
 
-	public Collection<? extends Matchvo> getTodayMatched(String string) {
+	public ArrayList<Matchvo> getTodayMatched(String string) {
 		// TODO Auto-generated method stub
 		String season = string.substring(0, 5);
 		ArrayList<match> list = checkisexit(season);
