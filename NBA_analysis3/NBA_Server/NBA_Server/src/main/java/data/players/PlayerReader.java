@@ -26,7 +26,7 @@ public class PlayerReader {
 					+ id);
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			while (rs.next()) {
-				String playername = namelist.getEnAbbrById(rs.getString(2));
+				String playername = namelist.getEnAbbrById(rs.getString(1));
 				if (playername == null)
 					playername = rs.getString(2);
 				result = new player(rs.getString(1), playername,
@@ -54,7 +54,7 @@ public class PlayerReader {
 			rs = statement.executeQuery("select * from playerlist");
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			while (rs.next()) {
-				String playername = namelist.getEnAbbrById(rs.getString(2));
+				String playername = namelist.getEnAbbrById(rs.getString(1));
 				if (playername == null)
 					playername = rs.getString(2);
 				listOfPlayer.add(new player(rs.getString(1), playername, rs
@@ -86,7 +86,8 @@ public class PlayerReader {
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			TeamNameList teamlist = TeamNameList.getIntance();
 			while (rs.next()) {
-				String playername = namelist.getEnAbbrById(rs.getString(2));
+				String playername = namelist.getEnAbbrById(rs.getString(1));
+				System.out.println(rs.getString(1)+"   :::   "+playername);
 				if (playername == null)
 					playername = rs.getString(2);
 				player p = new player(rs.getString(1), playername,
@@ -161,7 +162,7 @@ public class PlayerReader {
 
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			if (rs.next()) {
-				String playername = namelist.getEnAbbrById(rs.getString(2));
+				String playername = namelist.getEnAbbrById(rs.getString(1));
 				if (playername == null)
 					playername = rs.getString(2);
 				result = new player(rs.getString(1), playername,
