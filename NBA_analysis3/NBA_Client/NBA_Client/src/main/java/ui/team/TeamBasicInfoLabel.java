@@ -61,7 +61,7 @@ public class TeamBasicInfoLabel extends JLabel {
 		g.drawString("在" + (team.getConference() == 'E' ? "东部" : "西部") + "排名#"
 				+ team.getRankingInLeague(), 555, 95);
 		g.setColor(dataColor);
-		g.setFont(new Font("default", Font.PLAIN, 15));
+		g.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		g.drawString("场均得分", 950, 125);
 		g.drawString("场均篮板", 1050, 125);
 		g.drawString("场均助攻", 1150, 125);
@@ -72,7 +72,7 @@ public class TeamBasicInfoLabel extends JLabel {
 				152);
 		g.drawString(df.format(team.getAverageAssists()), 1150, 152);
 		g.setColor(new Color(30, 81, 140));
-		g.setFont(new Font("default", Font.PLAIN, 15));
+		g.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 		g.drawString("常规赛数据", 850, 152);
 
 	}
