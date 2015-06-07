@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-06-07 15:23:01
+-- Generation Time: 2015-06-07 16:51:21
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -80,7 +80,7 @@ INSERT INTO `teamnamelist` (`teamNameEn`, `teamNameZh`, `conference`, `division`
 ('KCK', '堪萨斯城国王', '', '', '', '', ''),
 ('KCO', '堪萨奥马哈国王', '', '', '', '', ''),
 ('KEN', '肯塔基上校', '', '', '', '', ''),
-('LAC', '洛杉矶快船', 'western', 'pacific', 'clippers', '', 'STAPLES Center'),
+('LAC', '洛杉矶快船', 'western', 'pacific', 'clippers', '快船', 'STAPLES Center'),
 ('LAL', '洛杉矶湖人', 'western', 'pacific', 'lakers', '湖人', 'STAPLES Center'),
 ('LAS', '洛杉矶星光', '', '', '', '', ''),
 ('MEM', '孟菲斯灰熊', 'western', 'northwest', 'grizzlies', '灰熊', 'FedEx Forum'),
@@ -119,7 +119,7 @@ INSERT INTO `teamnamelist` (`teamNameEn`, `teamNameZh`, `conference`, `division`
 ('SAC', '萨克拉门托国王', 'western', 'pacific', 'kings', '国王', 'Sleep Train Arena'),
 ('SAS', '圣安东尼奥马刺', 'western', 'northwest', 'spurs', '马刺', 'AT&T Center'),
 ('SDA', '圣迭戈征服者', '', '', '', '', ''),
-('SDC', '圣地亚哥快船', '', '', '', '快船', ''),
+('SDC', '圣地亚哥快船', '', '', '', '', ''),
 ('SDR', '圣地亚哥火箭', '', '', '', '', ''),
 ('SDS', '圣地亚哥远航', '', '', '', '', ''),
 ('SEA', '西雅图超音速', '', '', '', '超音速', ''),
