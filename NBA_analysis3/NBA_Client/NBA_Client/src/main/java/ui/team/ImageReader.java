@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 import dataFactory.DataFactoryMySql;
 
-public class ImageReader {
+public class ImageReader implements Runnable{
 
 	int progress;
 	
@@ -69,9 +69,12 @@ public class ImageReader {
 	}
 
 
+	private  ImageReader(){
+		
+	}
 
-
-	private  ImageReader() {
+	
+	public  void run() {
 		try {
 			for (int i = 1; i <= 29; i++) {
 				String path = "image" + File.separator + "z" + i + ".png";
@@ -83,6 +86,13 @@ public class ImageReader {
 				map_imageList_highlight.add(ImageIO.read(new File(path)));
 				
 				progress = i/5+1;
+				
+				try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+				
 			}
 			
 			for (int i = 1; i <= 14; i++) {
@@ -97,6 +107,12 @@ public class ImageReader {
 				hot_imageList_highlight.add(ImageIO.read(new File(path)));
 				
 				progress=6+(i+1)/5;
+				
+				try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 			}
 			
 		} catch (IOException e) {
