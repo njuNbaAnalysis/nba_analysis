@@ -178,7 +178,7 @@ public interface BLservice extends Remote {
 	 * @param teamName
 	 *            三个大写英文字母
 	 */
-	public Playervo getPlayerByNameAndTeam(String playerName, String teamName)
+	public Playervo getPlayerByNameAndTeam(String playerName)
 			throws RemoteException;
 
 	/**

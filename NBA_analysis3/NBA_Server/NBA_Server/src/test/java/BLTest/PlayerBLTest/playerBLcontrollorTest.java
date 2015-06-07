@@ -85,7 +85,7 @@ public class playerBLcontrollorTest {
 	@Test
 	public void testgetPlayerByNameAndTeam() {
 		playerBLcontrollor pl = playerBLcontrollor.getInstance();
-		Playervo p = pl.getPlayerByNameAndTeam("Kobe Bean Bryant", "LAL");
+		Playervo p = pl.getPlayerByNameAndTeam("Kobe Bean Bryant");
 		System.out.println(p.getPid() + "HEHEHEHEHEHE"
 				+ p.getRecordOfPlayer().size() + "ssss");
 		assertTrue(true);

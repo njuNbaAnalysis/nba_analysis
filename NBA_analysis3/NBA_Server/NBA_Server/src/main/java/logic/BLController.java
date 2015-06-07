@@ -95,11 +95,11 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 	}
 	
 	@Override
-	public Playervo getPlayerByNameAndTeam(String playerName, String teamName)
+	public Playervo getPlayerByNameAndTeam(String playerName)
 			throws RemoteException {
 		// TODO Auto-generated method stub
 		playerBLcontrollor pbl = playerBLcontrollor.getInstance();
-		return pbl.getPlayerByNameAndTeam(playerName, teamName);
+		return pbl.getPlayerByNameAndTeam(playerName);
 	}
 	
 	@Override
