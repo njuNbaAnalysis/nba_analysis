@@ -40,7 +40,7 @@ public class MatchPanel extends JPanel {
 	private int width;
 	private int height;
 	private boolean isFolded = false;
-	String season;
+	String season = "13-14";
 	boolean isPlayOff;
 	int currentIndex = 0;
 	JPanel content;
@@ -254,9 +254,8 @@ public class MatchPanel extends JPanel {
 		int width;
 		int height;
 		JButton stat;
-		String date;
 		Matchvo match;
-		Teamvo[] teams;
+		Teamvo[] teams = new Teamvo[2];
 		KingsOfMatchvo[] kings;
 		JButton b1;
 		JButton b2;
@@ -366,8 +365,12 @@ public class MatchPanel extends JPanel {
 			String[] teamNames = match.getTeams();
 			
 			try {
-				teams[0] = bl.getTeamByTeamName(teamNames[0], date, isPlayOff);
-				teams[1] = bl.getTeamByTeamName(teamNames[1], date, isPlayOff);
+				System.out.println(teamNames[0]);
+				System.out.println(teamNames[1]);
+				System.out.println(season);
+				System.out.println(isPlayOff);
+				teams[0] = bl.getTeamByTeamName(teamNames[0], season, isPlayOff);
+				teams[1] = bl.getTeamByTeamName(teamNames[1], season, isPlayOff);
 			} catch (RemoteException e) {
 				// TODO 自动生成的 catch 块
 				e.printStackTrace();
