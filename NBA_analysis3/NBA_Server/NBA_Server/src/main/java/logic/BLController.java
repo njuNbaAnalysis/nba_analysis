@@ -12,6 +12,7 @@ import logic.teams.TeamController;
 import logic.teams.TeamvoGenerator;
 import vo.EventVo;
 import vo.HotZonevo;
+import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.Playervo;
 import vo.Teamvo;
@@ -66,6 +67,14 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		// TODO Auto-generated method stub
 		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
 		return playerBLcontro.getAllPlayers(Season, isPlayOff);
+	}
+	
+	@Override
+	public ArrayList<Playervo> getSeasonKingPlayer(String transferField,
+			int number,String season,boolean isplayoff) throws RemoteException {
+		// TODO Auto-generated method stub
+		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
+		return playerBLcontro.getSeasonKingPlayer(transferField, number, season, isplayoff);
 	}
 	
 	@Override
@@ -154,5 +163,13 @@ public class BLController extends UnicastRemoteObject implements BLservice {
             throws RemoteException {
         return TeamvoGenerator.getInstance().getTeamvoWithLatest10Data(teamNameEn, season, isPlayOff);
     }
+
+
+	@Override
+	public ArrayList<MatchSimpleInfovo> getMatchSimpleInfo(String teamName,
+			String season) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
