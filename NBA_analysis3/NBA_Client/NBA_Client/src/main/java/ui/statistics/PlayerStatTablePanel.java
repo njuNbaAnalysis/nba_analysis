@@ -31,17 +31,12 @@ import compare.PlayerAveragePointsComp;
 import compare.PlayerPointsComp;
 
 public class PlayerStatTablePanel extends StatTablePanel {
-
-	private String season;
-	private boolean isPlayOff;
 	
 	private SelectPanel selectPanel;
 	
 
 	public PlayerStatTablePanel(int width, int height, BLservice bl,JPanel content,String season,boolean isPlayOff) {
 		super(width, height, bl);
-		this.season = season;
-		this.isPlayOff = isPlayOff;
 		
 		
 		selectPanel = new SelectPanel(width, 66 * height / (1080), this);

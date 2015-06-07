@@ -132,9 +132,8 @@ public class TeamInfoPanel extends JPanel {
 				public void mousePressed(MouseEvent e) {
 					switch (TeamButton.this.type) {
 					case 0:
-						AgendaPanel agenda;
 						try {
-							agenda = new AgendaPanel(width, height * 2 / 3, bl
+							AgendaPanel agenda = new AgendaPanel(width, height * 2 / 3, bl
 									.getMatchSimpleInfo(team.getAbbreviation(),
 											team.getSeason()), bl, content,
 									TeamInfoPanel.this.season,
@@ -174,13 +173,19 @@ public class TeamInfoPanel extends JPanel {
 
 						break;
 					case 2:
-						LineUpPanel lineUp = new LineUpPanel(width,
-								height * 2 / 3, team.getPlayerList(), bl,
-								content);
-						lineUp.setBounds(0, 0, width, height * 2 / 3);
-						js.removeAll();
-						js.add(lineUp);
-						js.updateUI();
+						try {
+							LineUpPanel lineUp = new LineUpPanel(width,
+									height * 2 / 3, team.getPlayerList(), bl,
+									content,season,isPlayOff);
+							lineUp.setBounds(0, 0, width, height * 2 / 3);
+							js.removeAll();
+							js.add(lineUp);
+							js.updateUI();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
 						break;
 					}
 				}
