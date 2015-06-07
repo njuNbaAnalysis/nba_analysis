@@ -16,6 +16,7 @@ import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.Playervo;
 import vo.Teamvo;
+import vo.TodayPlayervo;
 import BLservice.BLservice;
 
 public class BLController extends UnicastRemoteObject implements BLservice {
@@ -68,6 +69,14 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		// TODO Auto-generated method stub
 		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
 		return playerBLcontro.getSeasonKingPlayer(transferField, number, season, isplayoff);
+	}
+	
+	@Override
+	public ArrayList<TodayPlayervo> getTodayKingPlayer(String date,
+			String transferField, int number) throws RemoteException {
+		// TODO Auto-generated method stub
+		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
+		return playerBLcontro.getTodayKingPlayer(date,transferField,number);
 	}
 	
 	@Override
@@ -164,5 +173,6 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
