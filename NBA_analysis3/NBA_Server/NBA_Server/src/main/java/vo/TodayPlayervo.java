@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 
 public class TodayPlayervo {
+	String pid;
 	String name;
 	String team;
 	private int Points;
@@ -16,7 +17,7 @@ public class TodayPlayervo {
 	private int steals;
 	private int blockShots;
 
-	public TodayPlayervo(String name, String team, int Points,
+	public TodayPlayervo(String pid,String name, String team, int Points,
 			int Rebounds, int Assists, int steals, int blockShots) {
 		this.name = name;
 		this.team = team;
@@ -26,7 +27,10 @@ public class TodayPlayervo {
 		this.steals = steals;
 		this.blockShots = blockShots;
 	}
-
+	public String getPid(){
+		return pid;
+	}
+	
 	public String getName() {
 		return name;
 	}
