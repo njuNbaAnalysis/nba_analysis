@@ -1,23 +1,25 @@
 package logic.matches;
 
-import vo.Matchvo;
+import java.util.ArrayList;
+
+import po.match;
 
 public class MatchBuff {
-	private String Mid;
-	private Matchvo matchvo;
-	public MatchBuff(String Mid,
-			Matchvo matchvo) {
+	private String season;
+	private ArrayList<match> matchlist;
+	public MatchBuff(String season,
+			ArrayList<match> matchlist) {
 		super();
-		this.Mid = Mid;
-		this.matchvo = matchvo;
+		this.season = season;
+		this.matchlist = matchlist;
+	}
+	public String getSeason() {
+		return season;
+	}
+	public ArrayList<match> getMatchlist() {
+		return matchlist;
 	}
 	
 	
-	public String getMid() {
-		return Mid;
-	}
-	public Matchvo getMatchvo() {
-		return matchvo;
-	}
 	
 }

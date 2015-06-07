@@ -22,13 +22,6 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 	private static BLController blController = null;
 
 	private BLController() throws RemoteException {
-		matchBLcontrollor mc = matchBLcontrollor.getInstance();
-		Thread thread1 = new Thread() {
-			public void run() {
-				mc.loadNewMatchvo(0);
-			}
-		};
-		thread1.start();
 	}
 
 	public static BLController getInstance() throws RemoteException {

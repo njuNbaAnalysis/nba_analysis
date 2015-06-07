@@ -1,5 +1,6 @@
 package logic.matches;
 
+import java.awt.List;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,6 +10,7 @@ import data.matches.MatchReader;
 import data.matches.pointsItemReader;
 import po.match;
 import po.matchItem;
+import po.pointsItem;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.RecordOfPlayervo;
@@ -16,7 +18,6 @@ import vo.RecordOfPlayervo;
 public class matchBLcontrollor {
 
 	private ArrayList<MatchBuff> BuffList;
-	private MatchItemReader matchItemReader = null;
 	private MatchReader matchReader = null;
 	private pointsItemReader pointsItemReader = null;
 
@@ -24,9 +25,9 @@ public class matchBLcontrollor {
 
 	private matchBLcontrollor() {
 		matchReader = new MatchReader();
-		matchItemReader = new MatchItemReader();
 		pointsItemReader = new pointsItemReader();
 		BuffList = new ArrayList<MatchBuff>();
+		BuffList.add(new MatchBuff("14-15", getAllMatchBySeason("14-15")));
 	}
 
 	public static matchBLcontrollor getInstance() {
@@ -38,49 +39,25 @@ public class matchBLcontrollor {
 		}
 	}
 
-	public void updateNewMatch(String time) { // 只需每天运行一次
-		// Date now = new Date();
-		// SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
-		// String current = df.format(now).substring(0, 10);
-		// System.out.println(df.format(now));
-		// System.out.println(current);
-		// System.out.println(time);
-		try {
-			ProcessBuilder pb = new ProcessBuilder("python",
-					"Spider-NBA/NBAUpdate.py", time);
-			Process p = pb.start();
-			File log = new File("log.txt");
-			pb.redirectErrorStream(true);
-			pb.redirectOutput(ProcessBuilder.Redirect.to(log));
-			System.out.println(p.waitFor());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	private Matchvo checkisexit(match temp) { // 判断是否在缓冲区，如果在，则返回，否则加进缓冲区
+	private ArrayList<match> checkisexit(String season) { // 判断是否在缓冲区，如果在，则返回，否则加进缓冲区
 		for (int i = 0; i < BuffList.size(); i++) {
-			if (BuffList.get(i).getMid().equals(temp.getMid()))
-				return BuffList.get(i).getMatchvo();
+			if ((BuffList.get(i).getSeason().equals(season)))
+				return BuffList.get(i).getMatchlist();
 		}
-		temp.setPointsItemList(pointsItemReader.getpointsItemById(temp.getMid()));
-		temp.setMatchItemList(matchItemReader.getMatchItemById(temp.getMid()));
-		Matchvo result = changematchToMatchvo(temp);
-		BuffList.add(new MatchBuff(temp.getMid(), result));
+		ArrayList<match> result = getAllMatchBySeason(season);
+		BuffList.add(new MatchBuff(season, result));
 		return result;
 	}
 
-	public void loadNewMatchvo(int start) { // 缓存某一段时间的所有数据
-		ArrayList<match> list = matchReader.getAllMatch();
-		for (int i = 0; i < 1000; i++) {
-			System.out.println(list.get(i).getMid());
-			checkisexit(list.get(i + start));
-		}
+	private void SetPointList(match m) {
+		// TODO Auto-generated method stub
+		ArrayList<pointsItem> pointlist = pointsItemReader.getpointsItemById(m
+				.getMid());
+		m.setPointsItemList(pointlist);
 	}
 
 	private Matchvo changematchToMatchvo(match m) {
+		SetPointList(m);
 		int[] points = { m.getHome_points(), m.getAway_points() };
 		String[] teams = { m.getHome_team(), m.getAway_team() };
 		ArrayList<int[]> pointsList = new ArrayList<int[]>();
@@ -125,15 +102,25 @@ public class matchBLcontrollor {
 		return result;
 	}
 
+	private ArrayList<match> getAllMatchBySeason(String season) {
+		ArrayList<match> result =  matchReader.getMatchesBySeason(season);
+		return result;
+	}
+
 	public Collection<? extends Matchvo> getTodayMatched(String string) {
 		// TODO Auto-generated method stub
-		// String season = string.substring(0, 5);
+		String season = string.substring(0, 5);
+		ArrayList<match> list = checkisexit(season);
 		String date = string.substring(6);
-		ArrayList<match> list = matchReader.getMatchesByTime(date);
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
-		for (int i = 0; i < list.size(); i++) {
-			match temp = list.get(i);
-			result.add(checkisexit(temp));
+
+		ArrayList<String> list2 = matchReader.getMatchesByTime(date);
+
+		for (int i = 0; i < list2.size(); i++) {
+			for (int j = 0; j < list.size(); j++) {
+				if (list2.get(i).equals(list.get(j).getMid()))
+					result.add(changematchToMatchvo(list.get(j)));
+			}
 		}
 		return result;
 	}
@@ -142,7 +129,7 @@ public class matchBLcontrollor {
 			String season) {
 		// TODO Auto-generated method stub
 		ArrayList<MatchSimpleInfovo> result = new ArrayList<MatchSimpleInfovo>();
-		ArrayList<match> list = matchReader.getMatchesByTeam(teamName, season);
+		ArrayList<match> list = matchReader.getMatchSimpleByTeam(teamName, season);
 		for (int i = 0; i < list.size(); i++) {
 			int[] points = new int[2];
 			boolean isWin = false;
@@ -178,13 +165,39 @@ public class matchBLcontrollor {
 	 */
 	public ArrayList<Matchvo> getLast10Matches(String teamNameEn,
 			String season, boolean isPlayOff) {
-		ArrayList<match> list = matchReader.getMatchesByTeam(teamNameEn,
+		ArrayList<match> list = checkisexit(season);
+		ArrayList<String> list2 = matchReader.getMatchesByTeam(teamNameEn,
 				season, isPlayOff, 10);
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
-		for (int i = 0; i < list.size(); i++) {
-			match temp = list.get(i);
-			result.add(checkisexit(temp));
+		
+		for (int i = 0; i < list2.size(); i++) {
+			for (int j = 0; j < list.size(); j++) {
+				if (list2.get(i).equals(list.get(j).getMid()))
+					result.add(changematchToMatchvo(list.get(j)));
+			}
 		}
 		return result;
+	}
+
+	public void updateNewMatch(String time) { // 只需每天运行一次
+		// Date now = new Date();
+		// SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
+		// String current = df.format(now).substring(0, 10);
+		// System.out.println(df.format(now));
+		// System.out.println(current);
+		// System.out.println(time);
+		try {
+			ProcessBuilder pb = new ProcessBuilder("python",
+					"Spider-NBA/NBAUpdate.py", time);
+			Process p = pb.start();
+			File log = new File("log.txt");
+			pb.redirectErrorStream(true);
+			pb.redirectOutput(ProcessBuilder.Redirect.to(log));
+			System.out.println(p.waitFor());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
