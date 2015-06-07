@@ -59,6 +59,20 @@ public interface BLservice extends Remote {
 	
 	
 	/**
+	 * 得到最快进步球员
+	 * 
+	 * @param Date
+	 *            日期，例如“13-14_2014-01-01”
+	 * @param transferField
+	 *            transferField为类型:point代表得分王，rebound代表篮板王，assist代表助攻王
+	 * @param number
+	 *            number为人数
+	 */
+	public ArrayList<Playervo> getMostImprovedPlayer(String date,String transferField,
+			int number)
+			throws RemoteException;
+	
+	/**
 	 * 得到某日的球员王
 	 * 
 	 * @param Date
