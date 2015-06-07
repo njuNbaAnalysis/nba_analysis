@@ -163,16 +163,13 @@ public class playerBLcontrollor {
 		}
 	}
 
-	public Playervo getPlayerByNameAndTeam(String playerName, String teamName) {
+	public Playervo getPlayerByNameAndTeam(String playerName) {
 		// TODO Auto-generated method stub
-		player p = playerReader.getPlayerByNameAndTeam(playerName, teamName);
-		ArrayList<playerItem> list = playerItemReader.getPlayerItemById(p
-				.getPid());
-		Playervo result = new Playervo(p.getPid(), p.getName(), p.getNumber(),
-				p.getPosition(), p.getHeight(), p.getWeight(), p.getBirthday(),
-				p.getSelected(), p.getSalary(), p.getHighschool(),
-				p.getUniversity(), list);
-		return result;
+		PlayerNameList namelist = PlayerNameList.getIntance();
+		String Pid = namelist.getIdByEnAbbr(playerName);
+		if (Pid == null)
+			return null;
+		return getPlayerById(Pid);
 	}
 
 	public ArrayList<Playervo> getSeasonKingPlayer(String transferField,

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import logic.players.PlayerNameList;
 import logic.teams.TeamNameList;
 import data.GetConnection;
 import po.player;
@@ -23,8 +24,12 @@ public class PlayerReader {
 			statement = conn.createStatement();
 			rs = statement.executeQuery("select * from playerlist where Pid = "
 					+ id);
+			PlayerNameList namelist = PlayerNameList.getIntance();
 			while (rs.next()) {
-				result = new player(rs.getString(1), rs.getString(2),
+				String playername = namelist.getEnAbbrById(rs.getString(2));
+				if (playername == null)
+					playername = rs.getString(2);
+				result = new player(rs.getString(1), playername,
 						rs.getString(3), rs.getDouble(4), rs.getDouble(5),
 						rs.getString(6), rs.getString(7), rs.getString(8),
 						rs.getString(9), rs.getString(10), rs.getString(11),
@@ -47,13 +52,16 @@ public class PlayerReader {
 		try {
 			statement = conn.createStatement();
 			rs = statement.executeQuery("select * from playerlist");
-
+			PlayerNameList namelist = PlayerNameList.getIntance();
 			while (rs.next()) {
-				listOfPlayer.add(new player(rs.getString(1), rs.getString(2),
-						rs.getString(3), rs.getDouble(4), rs.getDouble(5), rs
-								.getString(6), rs.getString(7),
-						rs.getString(8), rs.getString(9), rs.getString(10), rs
-								.getString(11), rs.getString(12)));
+				String playername = namelist.getEnAbbrById(rs.getString(2));
+				if (playername == null)
+					playername = rs.getString(2);
+				listOfPlayer.add(new player(rs.getString(1), playername, rs
+						.getString(3), rs.getDouble(4), rs.getDouble(5), rs
+						.getString(6), rs.getString(7), rs.getString(8), rs
+						.getString(9), rs.getString(10), rs.getString(11), rs
+						.getString(12)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -74,14 +82,19 @@ public class PlayerReader {
 			rs = statement
 					.executeQuery("SELECT * FROM playerlist p1, playeritem p2 WHERE p1.Pid = p2.Pid AND p2.season =  '"
 							+ season + "' AND p2.isplayoff = " + isPlayoff);
+
+			PlayerNameList namelist = PlayerNameList.getIntance();
+			TeamNameList teamlist = TeamNameList.getIntance();
 			while (rs.next()) {
-				player p = new player(rs.getString(1), rs.getString(2),
+				String playername = namelist.getEnAbbrById(rs.getString(2));
+				if (playername == null)
+					playername = rs.getString(2);
+				player p = new player(rs.getString(1), playername,
 						rs.getString(3), rs.getDouble(4), rs.getDouble(5),
 						rs.getString(6), rs.getString(7), rs.getString(8),
 						rs.getString(9), rs.getString(10), rs.getString(11),
 						rs.getString(12));
-				TeamNameList list = TeamNameList.getIntance();
-				String team = list.getEnAbbrByFullZh(rs.getString(4 + 12));
+				String team = teamlist.getEnAbbrByFullZh(rs.getString(4 + 12));
 				p.setCurrentPlayerItem(new playerItem(rs.getString(1 + 12), rs
 						.getBoolean(2 + 12), rs.getString(3 + 12), team, rs
 						.getInt(5 + 12), rs.getInt(6 + 12), rs
@@ -145,8 +158,13 @@ public class PlayerReader {
 			rs = statement
 					.executeQuery("select * from playerlist p2, playeritem p1 where p1.Pid = p2.Pid and p1.team = '"
 							+ teamName + "' and p2.name = '" + playerName + "'");
+
+			PlayerNameList namelist = PlayerNameList.getIntance();
 			if (rs.next()) {
-				result = new player(rs.getString(1), rs.getString(2),
+				String playername = namelist.getEnAbbrById(rs.getString(2));
+				if (playername == null)
+					playername = rs.getString(2);
+				result = new player(rs.getString(1), playername,
 						rs.getString(3), rs.getDouble(4), rs.getDouble(5),
 						rs.getString(6), rs.getString(7), rs.getString(8),
 						rs.getString(9), rs.getString(10), rs.getString(11),
