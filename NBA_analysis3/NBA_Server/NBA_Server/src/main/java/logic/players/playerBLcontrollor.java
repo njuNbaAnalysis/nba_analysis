@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import compare.PlayerAssistsComp;
+import compare.PlayerBlockShotsComp;
 import compare.PlayerPointsComp;
 import compare.PlayerReboundsComp;
 import logic.teams.TeamNameList;
@@ -173,12 +174,23 @@ public class playerBLcontrollor {
 		ArrayList<Playervo> list = getAllPlayers(season, isplayoff);
 		if (list.size() >= number) {
 			switch (transferField) {
-			case "points":
+			case "point":
 				Collections.sort(list, new PlayerPointsComp());
-			case "rebounds":
+				break;
+			case "rebound":
 				Collections.sort(list, new PlayerReboundsComp());
-			case "assists":
+				break;
+			case "assist":
 				Collections.sort(list, new PlayerAssistsComp());
+				break;
+			case "steal":
+				Collections.sort(list, new PlayerAssistsComp());
+				break;
+			case "blockShot":
+				Collections.sort(list, new PlayerBlockShotsComp());
+				break;
+			default:
+				System.out.println("Error in getSeasonKingPlayer!!!");
 			}
 			for (int i = 0; i < number; i++) {
 				result.add(list.get(i));
