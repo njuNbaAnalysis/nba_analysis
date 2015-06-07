@@ -247,7 +247,7 @@ public class playerBLcontrollor {
 				temp.add(result.get(i));
 			}
 		}
-		return null;
+		return temp;
 	}
 
 	private String DeclarationTime(String date) {
