@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.text.DecimalFormat;
 
 import javax.swing.JLabel;
 
@@ -64,10 +65,12 @@ public class TeamBasicInfoLabel extends JLabel {
 		g.drawString("场均得分", 950, 125);
 		g.drawString("场均篮板", 1050, 125);
 		g.drawString("场均助攻", 1150, 125);
-		g.drawString((team.getAveragePoints() + "").substring(0, 5), 950, 152);
-		g.drawString((team.getAverageRebounds() + "").substring(0, 4), 1050,
+		DecimalFormat df = new DecimalFormat("#0.0");
+
+		g.drawString(df.format(team.getAveragePoints()), 950, 152);
+		g.drawString(df.format(team.getAverageRebounds()), 1050,
 				152);
-		g.drawString((team.getAverageAssists() + "").substring(0, 4), 1150, 152);
+		g.drawString(df.format(team.getAverageAssists()), 1150, 152);
 		g.setColor(new Color(30, 81, 140));
 		g.setFont(new Font("default", Font.PLAIN, 15));
 		g.drawString("常规赛数据", 850, 152);
