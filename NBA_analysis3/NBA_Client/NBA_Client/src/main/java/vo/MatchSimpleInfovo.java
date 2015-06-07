@@ -3,12 +3,6 @@ package vo;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author Lionel
- * 界面层使用
- * 相对与一支球队来说的
- * 一场比赛的日期，结果，比分，对手，以及主客场
- */
 public class MatchSimpleInfovo implements Serializable{
     private Date date;//月份为0~11 
     private boolean isWin;
