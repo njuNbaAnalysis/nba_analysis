@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-06-07 16:51:21
+-- Generation Time: 2015-06-07 18:21:28
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -98,8 +98,8 @@ INSERT INTO `teamnamelist` (`teamNameEn`, `teamNameZh`, `conference`, `division`
 ('NJA', '新泽西美洲人', '', '', '', '', ''),
 ('NJN', '新泽西篮网', '', '', '', '篮网', ''),
 ('NOB', '新奥尔良海盗', '', '', '', '', ''),
-('NOH', '新奥尔良鹈鹕', 'western', 'northwest', '', '鹈鹕', ''),
 ('NOJ', '新奥尔良爵士', '', '', '', '', ''),
+('NOP', '新奥尔良鹈鹕', 'western', 'northwest', '', '鹈鹕', ''),
 ('NYA', '纽约老篮网', '', '', '', '', ''),
 ('NYK', '纽约尼克斯', 'eastern', 'atlantic', 'knicks', '尼克斯', 'Madison Square Garden (IV)'),
 ('NYN', '纽约篮网', '', '', '', '', ''),

@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -695,7 +696,13 @@ public class Teamvo implements Serializable {
     public JSONObject toJSONObject(){
         JSONObject result = new JSONObject();
         
-        //Field[] field = this.getClas
+        
+        Field[] fields = this.getClass().getDeclaredFields();
+        for(Field field:fields){
+            if(field.getName().equals(latestWinOrLose)){
+                
+            }
+        }
         
         return result;
     }
