@@ -93,7 +93,9 @@ public class AllTeamPanel extends JPanel {
 	}
 
 	public void enterTeam(String name) {
+	
 		for (Teamvo each : teams) {
+			System.out.println(each.getAbbreviation());
 			if (each.getAbbreviation().equals(name)) {
 				TeamInfoPanel m;
 				try {
