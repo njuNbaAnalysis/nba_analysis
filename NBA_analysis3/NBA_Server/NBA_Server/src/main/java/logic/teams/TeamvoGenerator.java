@@ -225,6 +225,7 @@ public class TeamvoGenerator {
         totalItemPara.setDataType("teamItem");
         totalItemPara.setSeason(true);
         totalItemPara.setBeginYear(Tools.xx_xxToxxxx(season));
+        //System.out.println(totalItemPara);
         totalItemList = TeamRecordItemList.getInstance().getRecordItemList(totalItemPara);
         
         //按胜率进行降序排序
