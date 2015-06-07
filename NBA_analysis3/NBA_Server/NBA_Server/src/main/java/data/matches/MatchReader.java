@@ -174,7 +174,6 @@ public class MatchReader {
 		Statement statement = null;
 		TeamNameList list = TeamNameList.getIntance();
 		String team = list.getZhAbbrByEnAbbr(teamNameEn);
-		System.out.println(team+" : "+teamNameEn);
 		try {
 			statement = conn.createStatement();
 			rs = statement
@@ -186,7 +185,42 @@ public class MatchReader {
 							+ season
 							+ "赛季' and isplayoff = "
 							+ isPlayOff
-							+ " group by date desc limit 10");
+							+ " group by date desc limit "+number);
+			while (rs.next()) {
+				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs
+						.getString(3).substring(0, 5));
+				String away_team = list.getEnAbbrByZhAbbr(rs.getString(5), rs
+						.getString(3).substring(0, 5));
+				result.add(new match(rs.getString(1), rs.getString(2), rs
+						.getString(3), home_team, away_team, rs.getBoolean(6),
+						rs.getInt(7), rs.getInt(8)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// GetConnection.free(rs, conn, statement);
+
+		return result;
+	}
+
+	public ArrayList<match> getMatchesByTeam(String teamName, String season) {
+		// TODO Auto-generated method stub
+		ArrayList<match> result = new ArrayList<match>();
+		Connection conn = GetConnection.getConnection();
+		ResultSet rs = null;
+		Statement statement = null;
+		TeamNameList list = TeamNameList.getIntance();
+		String team = list.getZhAbbrByEnAbbr(teamName);
+		try {
+			statement = conn.createStatement();
+			rs = statement
+					.executeQuery("select * from  matchlist where `home-team` =  '"
+							+ team
+							+ "' or `away-team` = '"
+							+ team
+							+ "' and season = '"
+							+ season);
 			while (rs.next()) {
 				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs
 						.getString(3).substring(0, 5));

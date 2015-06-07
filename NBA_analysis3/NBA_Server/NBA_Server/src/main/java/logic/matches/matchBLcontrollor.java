@@ -9,6 +9,7 @@ import data.matches.MatchReader;
 import data.matches.pointsItemReader;
 import po.match;
 import po.matchItem;
+import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.RecordOfPlayervo;
 
@@ -137,6 +138,34 @@ public class matchBLcontrollor {
 		return result;
 	}
 
+	public ArrayList<MatchSimpleInfovo> getMatchSimpleInfo(String teamName,
+			String season) {
+		// TODO Auto-generated method stub
+		ArrayList<MatchSimpleInfovo> result = new ArrayList<MatchSimpleInfovo>();
+		ArrayList<match> list = matchReader.getMatchesByTeam(teamName, season);
+		for (int i = 0; i < list.size(); i++) {
+			int[] points = new int[2];
+			boolean isWin = false;
+			boolean isAtHome = false;
+			if (teamName.equals(list.get(i).getHome_team())) {
+				isAtHome = true;
+				points[0] = list.get(i).getHome_points();
+				points[1] = list.get(i).getAway_points();
+				if (points[0] > points[1])
+					isWin = true;
+			} else {
+				isAtHome = false;
+				points[1] = list.get(i).getHome_points();
+				points[0] = list.get(i).getAway_points();
+				if (points[0] > points[1])
+					isWin = true;
+			}
+			result.add(new MatchSimpleInfovo(list.get(i).getDate(), isWin,
+					points, teamName, isAtHome));
+		}
+		return null;
+	}
+
 	/**
 	 * 得到最近十场比赛的信息 顺序:index = 0为最近一场，index=9为最远一场
 	 * 
@@ -150,7 +179,7 @@ public class matchBLcontrollor {
 	public ArrayList<Matchvo> getLast10Matches(String teamNameEn,
 			String season, boolean isPlayOff) {
 		ArrayList<match> list = matchReader.getMatchesByTeam(teamNameEn,
-				season, isPlayOff,10);
+				season, isPlayOff, 10);
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
 		for (int i = 0; i < list.size(); i++) {
 			match temp = list.get(i);

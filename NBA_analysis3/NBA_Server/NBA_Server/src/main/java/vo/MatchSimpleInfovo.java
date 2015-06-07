@@ -3,14 +3,8 @@ package vo;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author Lionel
- * 界面层使用
- * 相对与一支球队来说的
- * 一场比赛的日期，结果，比分，对手，以及主客场
- */
 public class MatchSimpleInfovo implements Serializable{
-    private Date date;//月份为0~11 
+    private String date;//日期，例如2015-06-05 
     private boolean isWin;
     private int[] points;//2元数组,传入的球队在前
     private String nameOfRival;//缩写
@@ -18,7 +12,7 @@ public class MatchSimpleInfovo implements Serializable{
     public MatchSimpleInfovo() {
         super();
     }
-    public MatchSimpleInfovo(Date date, boolean isWin, int[] points, String nameOfRival, boolean isAtHome) {
+    public MatchSimpleInfovo(String date, boolean isWin, int[] points, String nameOfRival, boolean isAtHome) {
         super();
         this.date = date;
         this.isWin = isWin;
@@ -26,10 +20,10 @@ public class MatchSimpleInfovo implements Serializable{
         this.nameOfRival = nameOfRival;
         this.isAtHome = isAtHome;
     }
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     public boolean isWin() {

@@ -1,7 +1,11 @@
 package logic.players;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import compare.PlayerAssistsComp;
+import compare.PlayerPointsComp;
+import compare.PlayerReboundsComp;
 import logic.teams.TeamNameList;
 import po.TeamListItem;
 import po.player;
@@ -152,8 +156,9 @@ public class playerBLcontrollor {
 
 	public Playervo getPlayerByNameAndTeam(String playerName, String teamName) {
 		// TODO Auto-generated method stub
-		player p = playerReader.getPlayerByNameAndTeam(playerName,teamName);
-		ArrayList<playerItem> list = playerItemReader.getPlayerItemById(p.getPid());
+		player p = playerReader.getPlayerByNameAndTeam(playerName, teamName);
+		ArrayList<playerItem> list = playerItemReader.getPlayerItemById(p
+				.getPid());
 		Playervo result = new Playervo(p.getPid(), p.getName(), p.getNumber(),
 				p.getPosition(), p.getHeight(), p.getWeight(), p.getBirthday(),
 				p.getSelected(), p.getSalary(), p.getHighschool(),
@@ -164,7 +169,22 @@ public class playerBLcontrollor {
 	public ArrayList<Playervo> getSeasonKingPlayer(String transferField,
 			int number, String season, boolean isplayoff) {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Playervo> result = new ArrayList<Playervo>();
+		ArrayList<Playervo> list = getAllPlayers(season, isplayoff);
+		if (list.size() >= number) {
+			switch (transferField) {
+			case "points":
+				Collections.sort(list, new PlayerPointsComp());
+			case "rebounds":
+				Collections.sort(list, new PlayerReboundsComp());
+			case "assists":
+				Collections.sort(list, new PlayerAssistsComp());
+			}
+			for (int i = 0; i < number; i++) {
+				result.add(list.get(i));
+			}
+		}
+		return result;
 	}
 
 }
