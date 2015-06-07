@@ -42,6 +42,22 @@ public interface BLservice extends Remote {
 			throws RemoteException;
 
 	/**
+	 * 得到某个赛季的球员王
+	 * 
+	 * @param Season
+	 *            赛季名，例如"12-13"
+	 * @param isPlayOff
+	 *            true为季后赛，false为常规赛
+	 * @param transferField
+	 *            transferField为类型:points代表得分王，rebounds代表篮板王，assists代表助攻王
+	 * @param number
+	 *            number为人数
+	 */
+	public ArrayList<Playervo> getSeasonKingPlayer(String transferField,
+			int number, String season, boolean isplayoff)
+			throws RemoteException;
+
+	/**
 	 * 得到赛季的所有球队
 	 * 
 	 * @param Season
@@ -147,13 +163,26 @@ public interface BLservice extends Remote {
 	 */
 	public Playervo getPlayerByNameAndTeam(String playerName, String teamName)
 			throws RemoteException;
-	
+
 	/**
 	 * 
-	 * @param season 没有isPlayOff是需要返回常规赛和季后赛比赛的简略信息
+	 * @param season
+	 *            没有isPlayOff是需要返回常规赛和季后赛比赛的简略信息
 	 * @param teamName
 	 *            三个大写英文字母
 	 */
-	public ArrayList<MatchSimpleInfovo> getMatchSimpleInfo(String teamName, String season)
-			throws RemoteException;
+	public ArrayList<MatchSimpleInfovo> getMatchSimpleInfo(String teamName,
+			String season) throws RemoteException;
+
+	/**
+	 * 
+	 * @param teamNameEn
+	 *            球队英文缩写
+	 * @param season
+	 *            赛季13-14
+	 * @param isPlayOff
+	 *            是否是季后赛
+	 */
+	Teamvo getTeamWithLatest10Data(String teamNameEn, String season,
+			boolean isPlayOff) throws RemoteException;
 }
