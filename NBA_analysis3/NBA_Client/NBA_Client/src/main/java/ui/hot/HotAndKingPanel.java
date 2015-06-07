@@ -68,6 +68,7 @@ public class HotAndKingPanel extends JPanel {
 					season, isPlayOff);
 			playerKingPanel.setBounds(0, height *2/ 4, width * 9 / 10, height / 4);
 			this.add(playerKingPanel);
+			System.out.println("赛季数据王");
 			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

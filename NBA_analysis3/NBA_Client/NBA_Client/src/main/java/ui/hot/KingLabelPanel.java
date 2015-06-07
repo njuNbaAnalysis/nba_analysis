@@ -14,6 +14,8 @@ import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -25,6 +27,22 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicLabelUI;
 
+import compare.PlayerAverageAssistsComp;
+import compare.PlayerAverageBlockShotsComp;
+import compare.PlayerAveragePointsComp;
+import compare.PlayerAverageReboundsComp;
+import compare.PlayerAverageStealsComp;
+import compare.PlayerFieldGoalsPercentageComp;
+import compare.PlayerFreeThrowsPercentageComp;
+import compare.PlayerThreePointersPercentageComp;
+import compare.TeamAverageAssistsComp;
+import compare.TeamAverageBlockShotsComp;
+import compare.TeamAveragePointsComp;
+import compare.TeamAverageReboundsComp;
+import compare.TeamAverageStealsComp;
+import compare.TeamFieldGoalsPercentageComp;
+import compare.TeamFreeThrowsPercentageComp;
+import compare.TeamThreePointersPercentageComp;
 import BLservice.BLservice;
 import ui.player.PlayerInfoPanel;
 import ui.team.TeamInfoPanel;
@@ -56,11 +74,11 @@ public class KingLabelPanel extends HotLabelPanel {
 
 	public void setTableContent(String type) throws RemoteException {
 		if (type.equals("P")) {
-			
+
 			try {
 				ArrayList<Playervo> playerList1;
-				playerList1 = bl.getSeasonKingPlayer(
-						HotTableButton.transferField("得分"), 5, season, false);
+				playerList1 = bl.getSeasonKingPlayer(transferField("得分"), 5,
+						season, false);
 				Playervo[] players1 = new Playervo[5];
 				for (int i = 0; i < 5; i++) {
 					players1[i] = playerList1.get(i);
@@ -75,24 +93,32 @@ public class KingLabelPanel extends HotLabelPanel {
 
 			try {
 
-				Teamvo[] teams = bl.getHotTeams(
-						HotTableButton.transferField("得分"), season, isPlayOff);
+				ArrayList<Teamvo> teamList = getSortedTeam(
+						bl.getAllTeams(season, isPlayOff), transferField("得分"));
+
+				Teamvo[] teams = new Teamvo[5];
+				for (int i = 0; i < 5; i++) {
+					teams[i] = teamList.get(i);
+					System.out.println(teamList.get(i).getAbbreviation());
+				}
 				setTeamTableContent(teams);
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
-		} else if(type.equals("TP")){
+		} else if (type.equals("TP")) {
 			try {
-				SimpleDateFormat df = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss");
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String day = df.format(new Date());
-				String date = season + "_" + day.split(" ");
-				ArrayList <TodayPlayervo> playerList = bl.getTodayKingPlayer(date, HotTableButton.transferField("得分"), 5);
+				String date = season + "_" + day;
+				System.out.println("date:" + date);
+				ArrayList<TodayPlayervo> playerList = bl.getTodayKingPlayer(
+						date, transferField("得分"), 5);
 				TodayPlayervo[] players = new TodayPlayervo[5];
 				for (int i = 0; i < 5; i++) {
 					players[i] = playerList.get(i);
+					System.out.println(players[i].getName());
 				}
 				setTodayTableContent(players);
 			} catch (RemoteException e1) {
@@ -111,7 +137,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				hotHeight * 2 / 3);
 		this.add(tableContentLabel);
 	}
-	
+
 	private void setTodayTableContent(TodayPlayervo[] players) {
 
 		tableContentLabel = new TodayTableContentLabel(players, hotWidth,
@@ -138,13 +164,75 @@ public class KingLabelPanel extends HotLabelPanel {
 		((PlayerTableContentLabel) tableContentLabel)
 				.setPlayers(players, field);
 	}
-	
+
 	public void setToday(TodayPlayervo[] players, String field) {
-		((TodayTableContentLabel) tableContentLabel)
-				.setPlayers(players, field);
+		((TodayTableContentLabel) tableContentLabel).setPlayers(players, field);
 	}
 
+	public static ArrayList<Teamvo> getSortedTeam(ArrayList<Teamvo> teamList,
+			String field) {
+		Comparator<Teamvo> comparator = new TeamAveragePointsComp();
+		switch (field) {
+		case "points":
+			comparator = new TeamAveragePointsComp();
+			break;
+		case "rebound":
+			comparator = new TeamAverageReboundsComp();
+			break;
+		case "assist":
+			comparator = new TeamAverageAssistsComp();
+			break;
+		case "steal":
+			comparator = new TeamAverageStealsComp();
+			break;
+		case "blockShot":
+			comparator = new TeamAverageBlockShotsComp();
+			break;
+		case "three":
+			comparator = new TeamThreePointersPercentageComp();
+			break;
+		case "shot":
+			comparator = new TeamFieldGoalsPercentageComp();
+			break;
+		case "penalty":
+			comparator = new TeamFreeThrowsPercentageComp();
+			break;
+		default:
+			break;
+		}
 
+		Collections.sort(teamList, comparator);
+		return teamList;
+	}
+
+	public static String transferField(String field) {
+		switch (field) {
+		case "得分":
+			return "point";
+		case "篮板":
+			return "rebound";
+		case "助攻":
+			return "assist";
+		case "抢断":
+			return "steal";
+		case "盖帽":
+			return "blockShot";
+		case "三分%":
+			return "three";
+		case "%":
+			return "shot";
+		case "罚球%":
+			return "penalty";
+		case "场均得分":
+			return "point";
+		case "场均篮板":
+			return "rebound";
+		case "场均助攻":
+			return "assist";
+		default:
+			return "point";
+		}
+	}
 
 	private class PlayerTableContentLabel extends JLabel {
 		private Playervo[] players;
@@ -399,8 +487,8 @@ public class KingLabelPanel extends HotLabelPanel {
 		private String field;
 		private HashMap<String, String> idNameMap = new HashMap<String, String>();
 
-		public TodayTableContentLabel(TodayPlayervo[] players, int contentWidth,
-				int contentHeight, String field) {
+		public TodayTableContentLabel(TodayPlayervo[] players,
+				int contentWidth, int contentHeight, String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
@@ -430,16 +518,15 @@ public class KingLabelPanel extends HotLabelPanel {
 
 				playerNames[0].setText(players[0].getName());
 
-				/*// 号码
-				g.setColor(new Color(68, 68, 68));
-				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(players[0].getNumber(), contentWidth / 5,
-						contentHeight * 3 / 5);
-				// 位置
-				g.setColor(new Color(68, 68, 68));
-				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(players[0].getPosition(), contentWidth / 4,
-						contentHeight * 3 / 5);*/
+				/*
+				 * // 号码 g.setColor(new Color(68, 68, 68)); g.setFont(new
+				 * Font("微软雅黑", Font.PLAIN, 20));
+				 * g.drawString(players[0].getNumber(), contentWidth / 5,
+				 * contentHeight * 3 / 5); // 位置 g.setColor(new Color(68, 68,
+				 * 68)); g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				 * g.drawString(players[0].getPosition(), contentWidth / 4,
+				 * contentHeight * 3 / 5);
+				 */
 				// 球队
 				playerTeamNames[0].setText(players[0].getTeam());
 				// 数据、球队图标暂无
@@ -471,15 +558,19 @@ public class KingLabelPanel extends HotLabelPanel {
 					playerNames[i - 1].setText(players[i - 1].getName());
 
 					g.setColor(new Color(68, 68, 68));
-					/*String str = players[i - 1].getNumber() + " "
-							+ players[i - 1].getPosition();*/
+					/*
+					 * String str = players[i - 1].getNumber() + " " + players[i
+					 * - 1].getPosition();
+					 */
 
 					// 球队label
 					playerTeamNames[i - 1].setText(players[i - 1].getTeam());
 					// JLabel team = new JLabel(players[i - 1].getTeam());
 
-					/*g.drawString(str, contentWidth * 13 / 20, contentHeight
-							* (4 * i - 3) / 20);*/
+					/*
+					 * g.drawString(str, contentWidth * 13 / 20, contentHeight
+					 * (4 * i - 3) / 20);
+					 */
 
 					// 没有球队图片，没有球员得分
 					String data = getPlayerData(players[i - 1]);
@@ -620,6 +711,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		}
 	}
+
 	private class TeamTableContentLabel extends JLabel {
 		private Teamvo[] teams;
 		private int contentWidth;

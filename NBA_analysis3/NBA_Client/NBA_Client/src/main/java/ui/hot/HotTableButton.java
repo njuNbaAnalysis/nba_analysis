@@ -97,15 +97,15 @@ public class HotTableButton extends JButton {
 				case "P":					
 					try {
 						ArrayList<Playervo> playerList1 = HotTableButton.this.bl
-								.getSeasonKingPlayer(transferField(field), 5,
-										season, false);
+								.getSeasonKingPlayer(KingLabelPanel.transferField(field), 5,
+										season, isPlayOff);
 						Playervo[] players1 = new Playervo[5];
 						for (int i = 0; i < 5; i++) {
 							players1[i] = playerList1.get(i);
 							System.out.println(playerList1.get(i).getName());
 						}
 						((KingLabelPanel) HotTableButton.this.hotPanel)
-								.setPlayers(players1, transferField(field));
+								.setPlayers(players1, KingLabelPanel.transferField(field));
 						HotTableButton.this.hotPanel.repaint();
 					} catch (RemoteException e1) {
 						e1.printStackTrace();
@@ -121,7 +121,7 @@ public class HotTableButton extends JButton {
 						String date = season + "_" + day.split(" ");
 						ArrayList<TodayPlayervo> playerList2;
 						playerList2 = HotTableButton.this.bl
-								.getTodayKingPlayer(date, transferField(field),
+								.getTodayKingPlayer(date, KingLabelPanel.transferField(field),
 										5);
 						TodayPlayervo[] players2 = new TodayPlayervo[5];
 						for (int i = 0; i < 5; i++) {
@@ -129,7 +129,7 @@ public class HotTableButton extends JButton {
 						}
 
 						((KingLabelPanel) HotTableButton.this.hotPanel)
-								.setToday(players2, transferField(field));
+								.setToday(players2, KingLabelPanel.transferField(field));
 						HotTableButton.this.hotPanel.repaint();
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block
@@ -143,68 +143,5 @@ public class HotTableButton extends JButton {
 
 	}
 
-	public ArrayList<Playervo> getTeamSortedPlayer(ArrayList<Playervo> list,
-			String field) {
-		Comparator<Playervo> comparator = new PlayerAveragePointsComp();
-		switch (field) {
-		case "points":
-			comparator = new PlayerAveragePointsComp();
-			break;
-		case "rebound":
-			comparator = new PlayerAverageReboundsComp();
-			break;
-		case "assist":
-			comparator = new PlayerAverageAssistsComp();
-			break;
-		case "steal":
-			comparator = new PlayerAverageStealsComp();
-			break;
-		case "blockShot":
-			comparator = new PlayerAverageBlockShotsComp();
-			break;
-		case "three":
-			comparator = new PlayerThreePointersPercentageComp();
-			break;
-		case "shot":
-			comparator = new PlayerFieldGoalsPercentageComp();
-			break;
-		case "penalty":
-			comparator = new PlayerFreeThrowsPercentageComp();
-			break;
-		default:
-			break;
-		}
-
-		Collections.sort(list, comparator);
-		return list;
-	}
-
-	public static String transferField(String field) {
-		switch (field) {
-		case "得分":
-			return "point";
-		case "篮板":
-			return "rebound";
-		case "助攻":
-			return "assist";
-		case "抢断":
-			return "steal";
-		case "盖帽":
-			return "blockShot";
-		case "三分%":
-			return "three";
-		case "%":
-			return "shot";
-		case "罚球%":
-			return "penalty";
-		case "场均得分":
-			return "point";
-		case "场均篮板":
-			return "rebound";
-		case "场均助攻":
-			return "assist";
-		default:
-			return "point";
-		}
-	}
+	
 }
