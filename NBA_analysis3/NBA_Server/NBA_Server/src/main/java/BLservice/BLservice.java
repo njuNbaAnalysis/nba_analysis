@@ -49,7 +49,7 @@ public interface BLservice extends Remote {
 	 * @param isPlayOff
 	 *            true为季后赛，false为常规赛
 	 * @param transferField
-	 *            transferField为类型:points代表得分王，rebounds代表篮板王，assists代表助攻王,steals代表抢断王,blocks代表盖帽王
+	 *            transferField为类型:point代表得分王，rebound代表篮板王，assist代表助攻王,steal代表抢断王,blockShot代表盖帽王
 	 * @param number
 	 *            number为人数
 	 */
@@ -64,7 +64,7 @@ public interface BLservice extends Remote {
 	 * @param Date
 	 *            日期，例如“13-14_2014-01-01”
 	 * @param transferField
-	 *            transferField为类型:points代表得分王，rebounds代表篮板王，assists代表助攻王，steals代表抢断王,blocks代表盖帽王
+	 *            transferField为类型:point代表得分王，rebound代表篮板王，assist代表助攻王，steal代表抢断王,blockShot代表盖帽王
 	 * @param number
 	 *            number为人数
 	 * @return 如果今日没有比赛，则返回过去最近一日的数据王
