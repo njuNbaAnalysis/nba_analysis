@@ -173,9 +173,8 @@ public class playerBLcontrollor {
 		PlayerNameList namelist = PlayerNameList.getIntance();
 		String Pid = namelist.getIdByEnAbbr(playerName);
 		if (Pid == null) {
-			System.out.println("aaaaaaaaaaaaaaaaaaaaa");
 			return null;
-			
+
 		}
 		return getPlayerById(Pid);
 	}
@@ -242,6 +241,12 @@ public class playerBLcontrollor {
 			}
 		}
 		Collections.sort(result, new todayPlayerComp(transferField));
+		ArrayList<TodayPlayervo> temp = new ArrayList<TodayPlayervo>();
+		if (result.size() >= number) {
+			for (int i = 0; i < number; i++) {
+				temp.add(result.get(i));
+			}
+		}
 		return null;
 	}
 
