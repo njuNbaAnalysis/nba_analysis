@@ -21,6 +21,13 @@ public class Main {
             System.out.println(vo.toString());
         }
         
+/*        for(Teamvo vo:voList){
+            double c = vo.getNumOfVictory() / vo.getNumOfMatches();
+            //System.out.println(c);
+            System.out.println(vo.getNumOfVictory());
+            
+        }*/
+        
         //System.out.println(vo);
         
  

@@ -697,6 +697,7 @@ public class Teamvo implements Serializable {
         JSONObject result = new JSONObject();
         
         Field[] field = this.getClass().getDeclaredFields();
+        //field[0].get
         
         
         return result;
