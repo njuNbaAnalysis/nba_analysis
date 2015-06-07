@@ -9,6 +9,8 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import org.json.JSONObject;
+
 public class Teamvo implements Serializable {
     
 	// raw data
@@ -601,33 +603,6 @@ public class Teamvo implements Serializable {
     public int getReboundsRival() {
         return this.getOffenseReboundsRival() + this.getDefenseReboundsRival();
     }
-    
-
-    
-    
-    @Override
-    public String toString() {
-        return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", conference=" + conference + ", division="
-                + division + ", homeCourt=" + homeCourt + ", season=" + season + ", isPlayOff=" + isPlayOff
-                + ", playerList=" + playerList + ", numOfMatches=" + numOfMatches + ", numOfVictory=" + numOfVictory
-                + ", numOfMatchesInSeason=" + numOfMatchesInSeason + ", numOfVictoryInSeason=" + numOfVictoryInSeason
-                + ", fieldGoalAttemps=" + fieldGoalAttemps + ", fieldGoalHits=" + fieldGoalHits
-                + ", threePointerAttempts=" + threePointerAttempts + ", threePointerHits=" + threePointerHits
-                + ", freeThrowAttempts=" + freeThrowAttempts + ", freeThrowHits=" + freeThrowHits
-                + ", offensiveRebounds=" + offensiveRebounds + ", defensiveRebounds=" + defensiveRebounds
-                + ", assists=" + assists + ", steals=" + steals + ", blockShots=" + blockShots + ", turnOver="
-                + turnOver + ", fouls=" + fouls + ", points=" + points + ", offensiveRounds=" + offensiveRounds
-                + ", defensiveRounds=" + defensiveRounds + ", offenseEfficiency=" + offenseEfficiency
-                + ", defenseEfficiency=" + defenseEfficiency + ", reboundsEfficiency=" + reboundsEfficiency
-                + ", stealsEfficiency=" + stealsEfficiency + ", assistsPercentage=" + assistsPercentage
-                + ", pointsRival=" + pointsRival + ", fieldGoalAttempsRival=" + fieldGoalAttempsRival
-                + ", threePointerAttemptsRival=" + threePointerAttemptsRival + ", offenseReboundsRival="
-                + offenseReboundsRival + ", defenseReboundsRival=" + defenseReboundsRival + ", rankingInLeague="
-                + rankingInLeague + ", latestWinOrLose=" + Arrays.toString(latestWinOrLose) + ", latestRecord="
-                + Arrays.toString(latestRecord) + ", latestOffendThanDefend=" + Arrays.toString(latestOffendThanDefend)
-                + ", latestOffend=" + Arrays.toString(latestOffend) + ", latestDefend=" + Arrays.toString(latestDefend)
-                + ", latestTempo=" + Arrays.toString(latestTempo) + "]";
-    }
 
     public boolean[] getLatestWinOrLose() {
         return latestWinOrLose;
@@ -692,5 +667,38 @@ public class Teamvo implements Serializable {
     public void setNumOfVictoryInSeason(int numOfVictoryInSeason) {
         this.numOfVictoryInSeason = numOfVictoryInSeason;
     }
+    
+    @Override
+    public String toString() {
+        return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", conference=" + conference + ", division="
+                + division + ", homeCourt=" + homeCourt + ", season=" + season + ", isPlayOff=" + isPlayOff
+                + ", playerList=" + playerList + ", numOfMatches=" + numOfMatches + ", numOfVictory=" + numOfVictory
+                + ", numOfMatchesInSeason=" + numOfMatchesInSeason + ", numOfVictoryInSeason=" + numOfVictoryInSeason
+                + ", fieldGoalAttemps=" + fieldGoalAttemps + ", fieldGoalHits=" + fieldGoalHits
+                + ", threePointerAttempts=" + threePointerAttempts + ", threePointerHits=" + threePointerHits
+                + ", freeThrowAttempts=" + freeThrowAttempts + ", freeThrowHits=" + freeThrowHits
+                + ", offensiveRebounds=" + offensiveRebounds + ", defensiveRebounds=" + defensiveRebounds
+                + ", assists=" + assists + ", steals=" + steals + ", blockShots=" + blockShots + ", turnOver="
+                + turnOver + ", fouls=" + fouls + ", points=" + points + ", offensiveRounds=" + offensiveRounds
+                + ", defensiveRounds=" + defensiveRounds + ", offenseEfficiency=" + offenseEfficiency
+                + ", defenseEfficiency=" + defenseEfficiency + ", reboundsEfficiency=" + reboundsEfficiency
+                + ", stealsEfficiency=" + stealsEfficiency + ", assistsPercentage=" + assistsPercentage
+                + ", pointsRival=" + pointsRival + ", fieldGoalAttempsRival=" + fieldGoalAttempsRival
+                + ", threePointerAttemptsRival=" + threePointerAttemptsRival + ", offenseReboundsRival="
+                + offenseReboundsRival + ", defenseReboundsRival=" + defenseReboundsRival + ", rankingInLeague="
+                + rankingInLeague + ", latestWinOrLose=" + Arrays.toString(latestWinOrLose) + ", latestRecord="
+                + Arrays.toString(latestRecord) + ", latestOffendThanDefend=" + Arrays.toString(latestOffendThanDefend)
+                + ", latestOffend=" + Arrays.toString(latestOffend) + ", latestDefend=" + Arrays.toString(latestDefend)
+                + ", latestTempo=" + Arrays.toString(latestTempo) + "]";
+    }
+    
+    public JSONObject toJSONObject(){
+        JSONObject result = new JSONObject();
+        
+        //Field[] field = this.getClas
+        
+        return result;
+    }
+    
     
 }
