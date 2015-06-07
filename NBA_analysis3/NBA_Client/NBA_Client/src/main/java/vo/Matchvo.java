@@ -164,29 +164,35 @@ public class Matchvo implements Serializable {
 		// TODO 自动生成的方法存根
 		Collections.sort(firstRecordList, new RecordOfPlayerPointsComp());
 		String nameOfPointsKing1 = firstRecordList.get(0).getPlayerName();
+		String IdOfPointsKing1 = firstRecordList.get(0).getPid();
 		int points1 = firstRecordList.get(0).getPoints();
 		Collections.sort(firstRecordList, new RecordOfPlayerAssistsComp());
 		String nameOfAssistsKing1 = firstRecordList.get(0).getPlayerName();
+		String IdOfAssistsKing1 = firstRecordList.get(0).getPid();
 		int assists1 = firstRecordList.get(0).getAssists();
 		Collections.sort(firstRecordList, new RecordOfPlayerReboundsComp());
 		String nameOfReboundsKing1 = firstRecordList.get(0).getPlayerName();
+		String IdOfReboundsKing1 = firstRecordList.get(0).getPid();
 		int rebounds1 = firstRecordList.get(0).getRebounds();
 		Collections.sort(firstRecordList, new RecordOfPlayerPointsComp());
 		String nameOfPointsKing2 = secondRecordList.get(0).getPlayerName();
+		String IdOfPointsKing2 = secondRecordList.get(0).getPid();
 		int points2 = secondRecordList.get(0).getPoints();
 		Collections.sort(secondRecordList, new RecordOfPlayerAssistsComp());
 		String nameOfAssistsKing2 = secondRecordList.get(0).getPlayerName();
+		String IdOfAssistsKing2 = secondRecordList.get(0).getPid();
 		int assists2 = secondRecordList.get(0).getAssists();
 		Collections.sort(secondRecordList, new RecordOfPlayerReboundsComp());
 		String nameOfReboundsKing2 = secondRecordList.get(0).getPlayerName();
+		String IdOfReboundsKing2 = firstRecordList.get(0).getPid();
 		int rebounds2 = secondRecordList.get(0).getRebounds();
 		KingsOfMatchvo[] result = {
-				new KingsOfMatchvo(nameOfPointsKing1, points1,
-						nameOfReboundsKing1, rebounds1, nameOfAssistsKing1,
-						assists1),
-				new KingsOfMatchvo(nameOfPointsKing2, points2,
-						nameOfReboundsKing2, rebounds2, nameOfAssistsKing2,
-						assists2) };
+				new KingsOfMatchvo(nameOfPointsKing1, IdOfPointsKing1, points1,
+						nameOfReboundsKing1, IdOfReboundsKing1, rebounds1,
+						nameOfAssistsKing1, IdOfAssistsKing1, assists1),
+				new KingsOfMatchvo(nameOfPointsKing2, IdOfPointsKing2, points2,
+						nameOfReboundsKing2, IdOfReboundsKing2, rebounds2,
+						nameOfAssistsKing2, IdOfAssistsKing2, assists2) };
 		return result;
 	}
 }
