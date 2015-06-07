@@ -1,6 +1,8 @@
 package vo;
 
-public class KingsOfMatchvo {
+import java.io.Serializable;
+
+public class KingsOfMatchvo implements Serializable{
 	private String nameOfPointsKing;
 	private String IdOfPointsKing;
 	private int points;
