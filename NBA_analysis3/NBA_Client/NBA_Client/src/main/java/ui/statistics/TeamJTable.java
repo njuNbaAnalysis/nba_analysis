@@ -124,9 +124,7 @@ public class TeamJTable extends StatJTable {
 
 					Teamvo t;
 					try {
-						t = TeamJTable.this.bl.getTeamByTeamName(teamName,
-								TeamJTable.this.season,
-								TeamJTable.this.isPlayOff);
+						t = getTeamByName(teamName);
 						TeamInfoPanel m = new TeamInfoPanel(width,
 								height * 10 / 9, t, TeamJTable.this.bl,
 								TeamJTable.this.content,
@@ -142,6 +140,15 @@ public class TeamJTable extends StatJTable {
 					}
 
 				}
+			}
+
+			private Teamvo getTeamByName(String teamName) {
+				for(int i=0;i<list.size();i++){
+					if(list.get(i).getName().equals(teamName)){
+						return list.get(i);
+					}
+				}
+				return null;
 			}
 		});
 	}
@@ -216,7 +223,7 @@ public class TeamJTable extends StatJTable {
 		if (c == null) {
 			c = new TeamWinPercentageComp();
 		}
-		
+
 		Collections.sort(list, c);
 
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
