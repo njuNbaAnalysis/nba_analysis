@@ -80,7 +80,7 @@ public class TeamInfoPanel extends JPanel {
 		// 默认加数据王
 		String[] columnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%", "罚球%" };
 
-		KingLabelPanel playerKingPanel = new KingLabelPanel("TP", "常规赛 数据王",
+		KingLabelPanel playerKingPanel = new KingLabelPanel("P", "常规赛 数据王",
 				columnName, width, height * 1 / 3, bl, content,
 				TeamInfoPanel.this.season, TeamInfoPanel.this.isPlayOff);
 		playerKingPanel.setPlayers(players, "point");
