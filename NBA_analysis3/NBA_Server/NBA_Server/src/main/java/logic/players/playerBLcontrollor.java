@@ -218,16 +218,18 @@ public class playerBLcontrollor {
 			ArrayList<RecordOfPlayervo> temp2 = list.get(i)
 					.getFirstRecordList();
 			for (int j = 0; j < temp1.size(); j++) {
-				result.add(new TodayPlayervo(temp1.get(j).getPlayerName(), list
-						.get(i).getTeams()[0], temp1.get(j).getPoints(), temp1
-						.get(j).getRebounds(), temp1.get(j).getAssists(), temp1
-						.get(j).getSteals(), temp1.get(j).getBlocks()));
+				result.add(new TodayPlayervo(temp1.get(i).getPid(), temp1
+						.get(j).getPlayerName(), list.get(i).getTeams()[0],
+						temp1.get(j).getPoints(), temp1.get(j).getRebounds(),
+						temp1.get(j).getAssists(), temp1.get(j).getSteals(),
+						temp1.get(j).getBlocks()));
 			}
 			for (int j = 0; j < temp2.size(); j++) {
-				result.add(new TodayPlayervo(temp2.get(j).getPlayerName(), list
-						.get(i).getTeams()[1], temp2.get(j).getPoints(), temp2
-						.get(j).getRebounds(), temp2.get(j).getAssists(), temp2
-						.get(j).getSteals(), temp2.get(j).getBlocks()));
+				result.add(new TodayPlayervo(temp2.get(i).getPid(), temp2
+						.get(j).getPlayerName(), list.get(i).getTeams()[1],
+						temp2.get(j).getPoints(), temp2.get(j).getRebounds(),
+						temp2.get(j).getAssists(), temp2.get(j).getSteals(),
+						temp2.get(j).getBlocks()));
 			}
 		}
 		Collections.sort(result, new todayPlayerComp(transferField));
