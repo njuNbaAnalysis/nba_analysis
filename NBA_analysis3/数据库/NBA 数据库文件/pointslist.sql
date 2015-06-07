@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2015-05-31 10:43:51
--- 服务器版本: 5.6.11
+-- 生成日期: 2015-06-07 19:53:06
+-- 服务器版本: 5.5.28
 -- PHP 版本: 5.5.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `pointslist` (
   `Mid` varchar(5) COLLATE utf8_bin NOT NULL,
   `period` int(2) NOT NULL,
   `home-points` int(4) NOT NULL,
-  `away-points` int(4) NOT NULL
+  `away-points` int(4) NOT NULL,
+  KEY `Mid` (`Mid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -147956,7 +147957,19 @@ INSERT INTO `pointslist` (`Mid`, `period`, `home-points`, `away-points`) VALUES
 ('36322', 2, 25, 27),
 ('36322', 3, 27, 33),
 ('36322', 4, 28, 23),
-('36322', 5, 7, 10);
+('36322', 5, 7, 10),
+('36323', 1, 22, 45),
+('36323', 2, 37, 24),
+('36323', 3, 25, 30),
+('36323', 4, 31, 29),
+('36324', 1, 20, 32),
+('36324', 2, 22, 27),
+('36324', 3, 18, 26),
+('36324', 4, 28, 33),
+('36325', 1, 22, 17),
+('36325', 2, 24, 35),
+('36325', 3, 22, 22),
+('36325', 4, 22, 30);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
