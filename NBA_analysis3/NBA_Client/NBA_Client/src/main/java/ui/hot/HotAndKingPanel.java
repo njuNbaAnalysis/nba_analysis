@@ -27,7 +27,6 @@ public class HotAndKingPanel extends JPanel {
 	private static String[] typeArray = { "T", "P", "HP" };
 	private KingLabelPanel teamKingPanel;
 	private KingLabelPanel playerKingPanel;
-	// private ImprovedLabelPanel hotPlayerPanel;
 	private JPanel content;
 	private String season;
 	private boolean isPlayOff;
@@ -45,37 +44,36 @@ public class HotAndKingPanel extends JPanel {
 		// 创建字体
 		UIUtils.createFont("font" + File.separator + "Oswald-Bold.otf");
 
-		
 		try {
 			String[] playerColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽" };
-			playerKingPanel = new KingLabelPanel("P", "赛季 联盟数据王", playerColumnName,
-					width * 9 / 10, height / 4, bl, content,season,isPlayOff);
+			playerKingPanel = new KingLabelPanel("P", "联盟数据王",
+					playerColumnName, width * 9 / 10, height / 4, bl, content,
+					season, isPlayOff);
 			playerKingPanel.setBounds(0, 0, width * 9 / 10, height / 4);
 			this.add(playerKingPanel);
 
-			String[] teamColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%",
-					"罚球%" };
-			teamKingPanel = new KingLabelPanel("T", "常规赛 联盟球队数据", teamColumnName,
-					width * 9 / 10, height / 4, bl, content,season,isPlayOff);
+			
+			String[] teamColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%",
+					"%", "罚球%" };
+			teamKingPanel = new KingLabelPanel("T", "联盟球队数据",
+					teamColumnName, width * 9 / 10, height / 4, bl, content,
+					season, isPlayOff);
 			teamKingPanel.setBounds(0, height / 4, width * 9 / 10, height / 4);
 			this.add(teamKingPanel);
+
+			
+			String[] kingColumnName = { "场均得分", "场均篮板", "场均助攻", "场均抢断", "场均盖帽" };
+			playerKingPanel = new KingLabelPanel("TP", "每日数据王",
+					kingColumnName, width * 9 / 10, height / 4, bl, content,
+					season, isPlayOff);
+			playerKingPanel.setBounds(0, height *2/ 4, width * 9 / 10, height / 4);
+			this.add(playerKingPanel);
+			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
-		/*
-		 * // 设置player
-		 * 
-		 * ArrayList<Playervo> playerList = bl.getMostImprovedPlayer("point",
-		 * 5); Playervo [] players = new Playervo[5]; for(int i=0;i<5;i++){
-		 * players[i] = playerList.get(i); } String[] hotColumnName = { "场均得分",
-		 * "场均篮板", "场均助攻" }; hotPlayerPanel = new
-		 * ImprovedLabelPanel("热门球员",typeArray[2], hotColumnName, players,width,
-		 * height / 2,bl); hotPlayerPanel.setBounds(0, height / 2, width*9/10,
-		 * height / 2); this.add(hotPlayerPanel);
-		 */
 
 	}
 }

@@ -4,6 +4,12 @@ package ui;
 
 import java.util.ArrayList;
 
+
+
+
+import ui.start.AnimationFrame;
+import ui.start.MainFrame;
+import ui.team.ImageReader;
 import dataFactory.DataFactoryMySql;
 import BLservice.BLservice;
 
@@ -12,7 +18,7 @@ public class Start {
 
 	public static void main(String[] args) {
 		
-		/*int progress = 0;
+		int progress = 0;
 
 		long past = System.currentTimeMillis();
 		
@@ -49,11 +55,11 @@ public class Start {
         }
 		
 		long now = System.currentTimeMillis();
-		System.out.print("初始化：" + (now - past) / 1000.0 + "s");*/
+		System.out.print("初始化：" + (now - past) / 1000.0 + "s");
 		
 		
-		Test frame = new Test();
-		frame.setVisible(true);
+	/*	Test frame = new Test();
+		frame.setVisible(true);*/
 		
 	}
 }

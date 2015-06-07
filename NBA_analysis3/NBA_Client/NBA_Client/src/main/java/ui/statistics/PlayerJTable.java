@@ -21,7 +21,7 @@ import ui.team.TeamInfoPanel;
 import vo.Playervo;
 import vo.Teamvo;
 import BLservice.BLservice;
-import compare.PalyerScreening;
+import compare.PlayerScreening;
 import compare.PlayerAssistsComp;
 import compare.PlayerBlockShotsComp;
 import compare.PlayerBlockShotsPercentageComp;
@@ -106,7 +106,7 @@ public class PlayerJTable extends StatJTable {
 					Playervo p;
 					try {
 						p = PlayerJTable.this.bl.getPlayerByNameAndTeam(
-								playerName, teamName);
+								playerName);
 						PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(
 								width, height * 10 / 9, p,
 								PlayerJTable.this.bl,
@@ -461,11 +461,13 @@ public class PlayerJTable extends StatJTable {
 	}
 
 	@Override
-	public void refreshByScreening(PalyerScreening playerScreening) {
+	public void refreshByScreening(PlayerScreening playerScreening) {
 		ArrayList<Playervo> temp = list;
+	//	System.out.println("删选之的前list size:"+temp.size());
 		Comparator<Playervo> c = null;
 		c = getComparator(playerScreening.getDepend(), this.selected);
 		list = playerScreening.screening(list);
+	//	System.out.println("删选之后的list size:"+list.size());
 		refresh(this.selected, c, true);
 		list = temp;
 
