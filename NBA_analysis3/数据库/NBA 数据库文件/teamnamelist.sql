@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-06-06 09:10:37
+-- Generation Time: 2015-06-07 15:23:01
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -151,7 +151,7 @@ INSERT INTO `teamnamelist` (`teamNameEn`, `teamNameZh`, `conference`, `division`
 -- Indexes for table `teamnamelist`
 --
 ALTER TABLE `teamnamelist`
-  ADD PRIMARY KEY (`teamNameEn`), ADD UNIQUE KEY `teamNameEn` (`teamNameEn`);
+  ADD PRIMARY KEY (`teamNameEn`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
