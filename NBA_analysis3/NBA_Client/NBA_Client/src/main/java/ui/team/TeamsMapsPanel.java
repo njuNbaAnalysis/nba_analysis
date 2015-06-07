@@ -45,7 +45,7 @@ public class TeamsMapsPanel extends JPanel implements MouseMotionListener,MouseL
 			"DET",
 			"IND",
 			"CLE",
-			"ALT",
+			"ATL",
 			"BOS",
 			"NYK",
 			"BKN",
@@ -122,6 +122,7 @@ public class TeamsMapsPanel extends JPanel implements MouseMotionListener,MouseL
 				imageToDraw.set(index - 1, imageList_highlight.get(index - 1));
 				
 				allTeamPanel.updateTopLabe(teamNames[index - 1]);
+				
 				repaint();
 				break;
 			}
