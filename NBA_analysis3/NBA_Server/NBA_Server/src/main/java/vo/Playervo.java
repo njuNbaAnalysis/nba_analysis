@@ -305,51 +305,51 @@ public class Playervo implements Serializable {
 	}
 
 	public double getFieldGoalsPercentage() {
-		return fieldGoalsPercentage;
+		return fieldGoalsPercentage/100;
 	}
 
 	public double getThreePointersPercentage() {
-		return threePointersPercentage;
+		return threePointersPercentage/100;
 	}
 
 	public double getFreeThrowsPercentage() {
-		return freeThrowsPercentage;
+		return freeThrowsPercentage/100;
 	}
 
 	public double getTrueShootingPercentage() {
-		return trueShootingPercentage;
+		return trueShootingPercentage/100;
 	}
 
 	public double getReboundsPercentage() {
-		return reboundsPercentage;
+		return reboundsPercentage/100;
 	}
 
 	public double getOffenseReboundsPercentage() {
-		return offenseReboundsPercentage;
+		return offenseReboundsPercentage/100;
 	}
 
 	public double getDefenseReboundsPercentage() {
-		return defenseReboundsPercentage;
+		return defenseReboundsPercentage/100;
 	}
 
 	public double getAssistsPercentage() {
-		return assistsPercentage;
+		return assistsPercentage/100;
 	}
 
 	public double getStealsPercentage() {
-		return stealsPercentage;
+		return stealsPercentage/100;
 	}
 
 	public double getBlockShotsPercentage() {
-		return blockShotsPercentage;
+		return blockShotsPercentage/100;
 	}
 
 	public double getTurnOverPercentage() {
-		return turnOverPercentage;
+		return turnOverPercentage/100;
 	}
 
 	public double getUsage() {
-		return usage;
+		return usage/100;
 	}
 
 	public double[] getUpgradeRate() {
