@@ -1,5 +1,7 @@
 package data;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,11 +23,9 @@ public class GetConnection {
 		Connection conn = null;
 		String driverName = "com.mysql.jdbc.Driver";
 
-		String dbURL = "jdbc:mysql://localhost:3306/nba?characterEncoding=utf-8";
-		
-		//String dbURL = "jdbc:mysql://192.168.1.102:3306/nba?characterEncoding=utf-8";
 
-		// "jdbc:mysql://192.168.1.102:3306/nba?characterEncoding=utf-8"
+		String dbURL = "jdbc:mysql://"+getIP()+":3306/nba?characterEncoding=utf-8";
+
 
 		String userName = "admin";
 		String userPwd = "123";
@@ -85,5 +85,16 @@ public class GetConnection {
 				e.printStackTrace();
 			}
 		}
+	}
+	private static String getIP(){
+		String IP = "localhost";
+		try {
+			IP = InetAddress.getLocalHost()
+			.getHostAddress().toString();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return IP;
 	}
 }
