@@ -61,6 +61,7 @@ public class playerBLcontrollorTest {
 	public void testgetAllPlayers4() {
 		playerBLcontrollor pl = playerBLcontrollor.getInstance();
 		ArrayList<Playervo> list = pl.getAllPlayers("14-15", false);
+		System.out.println(list.size()+"ALLPlayer!!!");
 		boolean result = (list.size() != 0);
 		assertTrue(result);
 	}
