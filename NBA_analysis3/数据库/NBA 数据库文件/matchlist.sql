@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2015-06-05 13:00:00
--- 服务器版本: 5.6.11
+-- 生成日期: 2015-06-07 19:49:35
+-- 服务器版本: 5.5.28
 -- PHP 版本: 5.5.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -34,7 +34,9 @@ CREATE TABLE IF NOT EXISTS `matchlist` (
   `away-team` varchar(10) CHARACTER SET utf8 NOT NULL,
   `isplayoff` tinyint(1) NOT NULL,
   `home-points` int(4) NOT NULL,
-  `away-points` int(4) NOT NULL
+  `away-points` int(4) NOT NULL,
+  PRIMARY KEY (`Mid`),
+  KEY `Mid` (`Mid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --

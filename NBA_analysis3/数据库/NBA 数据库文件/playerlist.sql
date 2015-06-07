@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2015-05-31 10:45:47
--- 服务器版本: 5.6.11
+-- 生成日期: 2015-06-07 19:51:37
+-- 服务器版本: 5.5.28
 -- PHP 版本: 5.5.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -38,7 +38,9 @@ CREATE TABLE IF NOT EXISTS `playerlist` (
   `university` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `number` varchar(40) COLLATE utf8_bin DEFAULT NULL,
   `selected` varchar(30) COLLATE utf8_bin NOT NULL,
-  `salary` varchar(10) COLLATE utf8_bin NOT NULL
+  `salary` varchar(10) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`Pid`),
+  KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
