@@ -140,13 +140,6 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 				season, isPlayOff);
 	}
 
-	@Override
-	public Teamvo[] getHotTeams(String field, String season, boolean isPlayOff)
-			throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
     @Override
     public Teamvo getTeamWithLatest10Data(String teamNameEn, String season, boolean isPlayOff)
             throws RemoteException {

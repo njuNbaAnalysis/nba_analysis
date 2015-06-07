@@ -129,6 +129,7 @@ public class Tools {
 	 * @return 例"2000"
 	 */
 	public static String xx_xxToxxxx(String xx_xx){
+	    
 	    String[] parts = xx_xx.split("-");
 	    String beginPart = parts[0];
 	    
