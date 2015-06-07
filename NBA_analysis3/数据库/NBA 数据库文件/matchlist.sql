@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2015-05-31 10:40:23
+-- 生成日期: 2015-06-05 13:00:00
 -- 服务器版本: 5.6.11
 -- PHP 版本: 5.5.1
 
@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS `matchlist` (
   `Mid` varchar(5) COLLATE utf8_bin NOT NULL,
   `date` varchar(10) COLLATE utf8_bin NOT NULL,
   `season` varchar(10) COLLATE utf8_bin NOT NULL,
-  `home-team` varchar(10) COLLATE utf8_bin NOT NULL,
-  `away-team` varchar(10) COLLATE utf8_bin NOT NULL,
+  `home-team` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `away-team` varchar(10) CHARACTER SET utf8 NOT NULL,
   `isplayoff` tinyint(1) NOT NULL,
   `home-points` int(4) NOT NULL,
   `away-points` int(4) NOT NULL
@@ -36414,7 +36414,10 @@ INSERT INTO `matchlist` (`Mid`, `date`, `season`, `home-team`, `away-team`, `isp
 ('36319', '2015-05-21', '14-15赛季', '火箭', '勇士', 1, 98, 99),
 ('36320', '2015-05-22', '14-15赛季', '骑士', '老鹰', 1, 94, 82),
 ('36321', '2015-05-23', '14-15赛季', '勇士', '火箭', 1, 115, 80),
-('36322', '2015-05-24', '14-15赛季', '老鹰', '骑士', 1, 111, 114);
+('36322', '2015-05-24', '14-15赛季', '老鹰', '骑士', 1, 111, 114),
+('36323', '2015-05-25', '14-15赛季', '勇士', '火箭', 1, 115, 128),
+('36324', '2015-05-26', '14-15赛季', '老鹰', '骑士', 1, 88, 118),
+('36325', '2015-05-27', '14-15赛季', '火箭', '勇士', 1, 90, 104);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
