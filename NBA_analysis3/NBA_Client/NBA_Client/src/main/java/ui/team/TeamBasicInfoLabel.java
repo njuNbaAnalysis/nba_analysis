@@ -43,17 +43,17 @@ public class TeamBasicInfoLabel extends JLabel {
 		g.drawImage(UIUtils.resize(team.getLogo(), 200, 200), 0, 0, this);
 
 		g.setColor(new Color(190, 157, 83));
-		g.setFont(new Font("default", Font.BOLD, 50));
+		g.setFont(new Font("微软雅黑", Font.BOLD, 50));
 		g.drawString(team.getAbbreviation() + "", 420, 60);
 		g.setColor(new Color(218, 218, 218));
 		g.drawLine(550, 20, 550, 80);
 
 		g.setColor(winLostColor);
-		g.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
+		g.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
 		g.drawString(team.getNumOfVictory() + "胜-"
 				+ (team.getNumOfMatches() - team.getNumOfVictory()) + "负", 555,
 				40);
-		g.setFont(new Font("default", Font.PLAIN, 20));
+		g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 
 		g.setColor(new Color(30, 81, 140));
 		g.drawString("主场:" + team.getHomeCourt(), 555, 70);
