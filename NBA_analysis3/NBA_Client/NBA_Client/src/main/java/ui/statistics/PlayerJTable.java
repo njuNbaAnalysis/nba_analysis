@@ -81,6 +81,7 @@ public class PlayerJTable extends StatJTable {
 			String season, boolean isPlayOff) throws RemoteException {
 		super();
 		list = bl.getAllPlayers(season, isPlayOff);
+		System.out.println("list:"+list.size());
 		this.bl = bl;
 		this.portraitWidth = 80;
 		this.portraitHeight = 70;

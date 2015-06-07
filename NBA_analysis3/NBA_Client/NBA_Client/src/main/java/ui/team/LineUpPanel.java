@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -46,20 +47,24 @@ public class LineUpPanel extends JPanel {
 	private JScrollPane js;
 	private BLservice bl;
 	private JPanel content;
+	private String season;
+	private boolean isPlayOff;
 
-	LineUpPanel(int width, int height, ArrayList<String> playersName,BLservice bl,JPanel content) {
+	LineUpPanel(int width, int height, ArrayList<String> playersName,BLservice bl,JPanel content,String season,boolean isPlayOff) throws RemoteException {
 		this.width = width;
 		this.height = height;
 		this.playersName = playersName;
 		this.bl = bl;
 		this.content= content;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 		setButton();
 		setTabelPanel();
 
 	}
 
-	private void setTabelPanel() {
+	private void setTabelPanel() throws RemoteException {
 		LineUpTable table = new LineUpTable(playersName, 0,bl,content);
 		js = new JScrollPane(table);
 		js.setBounds(0, height * 1 / 20, width, height * 19 / 20);
@@ -80,7 +85,12 @@ public class LineUpPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 
-				ChangeActionPerformed(e);
+				try {
+					ChangeActionPerformed(e);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				state = 0;
 
 			}
@@ -101,7 +111,12 @@ public class LineUpPanel extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 
-				ChangeActionPerformed(e);
+				try {
+					ChangeActionPerformed(e);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				state = 1;
 
 			}
@@ -125,7 +140,7 @@ public class LineUpPanel extends JPanel {
 		g.drawString("阵容", width / 20, height / 30);
 	}
 
-	private void ChangeActionPerformed(ActionEvent e) {
+	private void ChangeActionPerformed(ActionEvent e) throws RemoteException {
 
 		if ((JButton) e.getSource() == (info)) {
 			info.setBackground(new Color(42, 108, 182));
@@ -172,7 +187,7 @@ public class LineUpPanel extends JPanel {
 		private JPanel content;
 
 		// type :0表示信息，1表示数据
-		public LineUpTable(ArrayList<String> playersName, int type,BLservice bl,JPanel content) {
+		public LineUpTable(ArrayList<String> playersName, int type,BLservice bl,JPanel content) throws RemoteException {
 			this.bl = bl;
 			this.content = content;
 			this.setShowGrid(false);
@@ -193,16 +208,24 @@ public class LineUpPanel extends JPanel {
 	                	int row = LineUpTable.this.getSelectedRow();
 	                	String playerName = (String)LineUpTable.this.getValueAt(row, column);
 
-	                	Playervo p = LineUpTable.this.bl.getPlayerByName(playerName);
+	                	
+						try {
+							Playervo p;
+							p = LineUpTable.this.bl.getPlayerByNameAndTeam(playerName);
+							PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*3/2,p,LineUpTable.this.bl,LineUpTable.this.content,season,isPlayOff);
+		            		
+		            		playerInfoPanel.setBounds(0, 0, width, height*3/2);
+		            		playerInfoPanel.startAnimation();
+		            		LineUpTable.this.content.removeAll();
+		            		LineUpTable.this.content.add(playerInfoPanel);
+		            		LineUpTable.this.content.updateUI();
+		            		playerInfoPanel.startAnimation();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 	            		
-	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*3/2,p,LineUpTable.this.bl,LineUpTable.this.content);
 	            		
-	            		playerInfoPanel.setBounds(0, 0, width, height*3/2);
-	            		playerInfoPanel.startAnimation();
-	            		LineUpTable.this.content.removeAll();
-	            		LineUpTable.this.content.add(playerInfoPanel);
-	            		LineUpTable.this.content.updateUI();
-	            		playerInfoPanel.startAnimation();
 	                }
 	               
 	            }
@@ -236,7 +259,7 @@ public class LineUpPanel extends JPanel {
 			//存疑
 			for (int i = 0; i < size; i++) {
 				String[] s = null;
-				Playervo player = bl.getPlayerByName(playersName.get(i));
+				Playervo player = bl.getPlayerByNameAndTeam(playersName.get(i));
 				if(player==null){
 					s = new String[1];
 					s[0] = playersName.get(i);
