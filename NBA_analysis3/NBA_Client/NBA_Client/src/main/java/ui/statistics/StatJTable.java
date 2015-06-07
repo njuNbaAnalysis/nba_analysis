@@ -31,7 +31,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import util.UIUtils;
-import compare.PalyerScreening;
+import compare.PlayerScreening;
 
 public abstract class StatJTable extends BaseJTable {
 	protected DecimalFormat df = new DecimalFormat("#0.0");
@@ -125,7 +125,7 @@ public abstract class StatJTable extends BaseJTable {
 
 
 
-	abstract void refreshByScreening(PalyerScreening palyerSelect);
+	abstract void refreshByScreening(PlayerScreening palyerSelect);
 	
 
 }

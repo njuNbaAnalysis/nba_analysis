@@ -26,7 +26,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import BLservice.BLservice;
-import compare.PalyerScreening;
+import compare.PlayerScreening;
 import compare.PlayerAveragePointsComp;
 import compare.PlayerPointsComp;
 
@@ -72,7 +72,7 @@ public class PlayerStatTablePanel extends StatTablePanel {
 	
 	
 
-	public void refreshBySelect(PalyerScreening palyerSelect) {
+	public void refreshBySelect(PlayerScreening palyerSelect) {
 		statTable.refreshByScreening(palyerSelect);
 
 	}

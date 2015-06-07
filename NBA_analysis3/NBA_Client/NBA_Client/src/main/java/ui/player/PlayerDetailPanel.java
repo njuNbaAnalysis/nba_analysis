@@ -24,7 +24,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import vo.Playervo;
-import compare.PalyerScreening;
+import compare.PlayerScreening;
 
 
 public class PlayerDetailPanel extends JPanel {

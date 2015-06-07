@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
-import compare.PalyerScreening;
+import compare.PlayerScreening;
 
 public class SelectPanel extends JPanel {
 	JButton submit;
@@ -83,7 +83,7 @@ public class SelectPanel extends JPanel {
 			}
 			public void mousePressed(MouseEvent e) {
 				System.out.println((String)location.getSelectedItem()+(String)union.getSelectedItem()+(String)depend.getSelectedItem());
-				playerStatTablePanel.refreshBySelect(new PalyerScreening((String)location.getSelectedItem(),(String)union.getSelectedItem(),(String)depend.getSelectedItem()));
+				playerStatTablePanel.refreshBySelect(new PlayerScreening((String)location.getSelectedItem(),(String)union.getSelectedItem(),(String)depend.getSelectedItem()));
 			}
 		});
 		this.add(submit);

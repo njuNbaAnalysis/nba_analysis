@@ -12,7 +12,9 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -29,47 +31,74 @@ import ui.team.TeamInfoPanel;
 import util.UIUtils;
 import vo.Playervo;
 import vo.Teamvo;
+import vo.TodayPlayervo;
 
 public class KingLabelPanel extends HotLabelPanel {
 	private String type;// 有球员和球队数据王两种，分别用"P"和"T"表示
 	private int num = 5;
-	private Playervo[] players;
 	private JPanel content;
-	private String season;
-	private boolean isPlayOff;
 
 	public KingLabelPanel(String type, String headName, String[] columnName,
-			int kingWidth, int kingHeight, BLservice bl, JPanel content,String season,boolean isPlayOff) throws RemoteException {
-		super(headName, columnName, kingWidth, kingHeight, bl);
+			int kingWidth, int kingHeight, BLservice bl, JPanel content,
+			String season, boolean isPlayOff) throws RemoteException {
+		super(headName, columnName, kingWidth, kingHeight, bl, season,
+				isPlayOff);
 		this.type = type;
 		this.content = content;
 		this.season = season;
 		this.isPlayOff = isPlayOff;
 		setTableHeadLabel();
 		setButton(type);
-		
+
 		setTableContent(type);
-		
-		
+
 	}
 
 	public void setTableContent(String type) throws RemoteException {
 		if (type.equals("P")) {
-			Object[] o = bl.getAllPlayers(season,isPlayOff).subList(0, num).toArray();
-			Playervo[] p = new Playervo[num];
-			for (int i = 0; i < num; i++) {
-				p[i] = (Playervo) o[i];
+			
+			try {
+				ArrayList<Playervo> playerList1;
+				playerList1 = bl.getSeasonKingPlayer(
+						HotTableButton.transferField("得分"), 5, season, false);
+				Playervo[] players1 = new Playervo[5];
+				for (int i = 0; i < 5; i++) {
+					players1[i] = playerList1.get(i);
+				}
+				setPlayerTableContent(players1);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			setPlayerTableContent(p);
+
 		} else if (type.equals("T")) {
-			Object[] o = bl.getAllTeams(season,isPlayOff).subList(0, num).toArray();
-			Teamvo[] t = new Teamvo[num];
-			for (int i = 0; i < num; i++) {
-				t[i] = (Teamvo) o[i];
+
+			try {
+
+				Teamvo[] teams = bl.getHotTeams(
+						HotTableButton.transferField("得分"), season, isPlayOff);
+				setTeamTableContent(teams);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			setTeamTableContent(t);
-		} else {
-			setPlayerTableContent(null);
+
+		} else if(type.equals("TP")){
+			try {
+				SimpleDateFormat df = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss");
+				String day = df.format(new Date());
+				String date = season + "_" + day.split(" ");
+				ArrayList <TodayPlayervo> playerList = bl.getTodayKingPlayer(date, HotTableButton.transferField("得分"), 5);
+				TodayPlayervo[] players = new TodayPlayervo[5];
+				for (int i = 0; i < 5; i++) {
+					players[i] = playerList.get(i);
+				}
+				setTodayTableContent(players);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 	}
@@ -77,10 +106,18 @@ public class KingLabelPanel extends HotLabelPanel {
 	private void setPlayerTableContent(Playervo[] players) {
 
 		tableContentLabel = new PlayerTableContentLabel(players, hotWidth,
-				hotHeight * 2 / 3,"point");
+				hotHeight * 2 / 3, "point");
 		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
 				hotHeight * 2 / 3);
-		this.players = players;
+		this.add(tableContentLabel);
+	}
+	
+	private void setTodayTableContent(TodayPlayervo[] players) {
+
+		tableContentLabel = new TodayTableContentLabel(players, hotWidth,
+				hotHeight * 2 / 3, "point");
+		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
+				hotHeight * 2 / 3);
 		this.add(tableContentLabel);
 	}
 
@@ -97,14 +134,17 @@ public class KingLabelPanel extends HotLabelPanel {
 		((TeamTableContentLabel) tableContentLabel).setTeams(teams);
 	}
 
-	public void setPlayers(Playervo[] players,String field) {
-		((PlayerTableContentLabel) tableContentLabel).setPlayers(players,field);
-		this.players = players;
+	public void setPlayers(Playervo[] players, String field) {
+		((PlayerTableContentLabel) tableContentLabel)
+				.setPlayers(players, field);
+	}
+	
+	public void setToday(TodayPlayervo[] players, String field) {
+		((TodayTableContentLabel) tableContentLabel)
+				.setPlayers(players, field);
 	}
 
-	public Playervo[] getPlayers() {
-		return players;
-	}
+
 
 	private class PlayerTableContentLabel extends JLabel {
 		private Playervo[] players;
@@ -113,14 +153,15 @@ public class KingLabelPanel extends HotLabelPanel {
 		private JLabel[] playerNames;
 		private JLabel[] playerTeamNames;
 		private String field;
-		private HashMap <String,String> idNameMap = new HashMap <String,String>();
+		private HashMap<String, String> idNameMap = new HashMap<String, String>();
+
 		public PlayerTableContentLabel(Playervo[] players, int contentWidth,
-				int contentHeight,String field) {
+				int contentHeight, String field) {
 			this.players = players;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
 			this.field = field;
-			
+
 			setPlayerNameLabel();
 
 		}
@@ -133,7 +174,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.setColor(Color.white);
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 头像
-			if(players[0]!=null){
+			if (players[0] != null) {
 				BufferedImage action = UIUtils.resize(players[0].getAction(),
 						contentWidth / 10, contentHeight);
 				g.drawImage(action, 0, 0, this);
@@ -158,25 +199,19 @@ public class KingLabelPanel extends HotLabelPanel {
 				// 球队
 				playerTeamNames[0].setText(players[0].getTeam());
 				// 数据、球队图标暂无
-				
+
 				String data = getPlayerData(players[0]);
 				g.setColor(new Color(68, 68, 68));
 				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(data, contentWidth / 4,
-						contentHeight * 4 / 5);
-				
-				
-				
-				
-				
+				g.drawString(data, contentWidth / 4, contentHeight * 4 / 5);
+
 				g.setColor(new Color(246, 246, 246));
 				g.fillRect(contentWidth / 2, 0, contentWidth / 10,
 						contentHeight * 9 / 10);
 			}
-			
 
 			for (int i = 2; i <= num; i++) {
-				if(players[i-1]!=null){
+				if (players[i - 1] != null) {
 					g.setColor(new Color(146, 144, 144));
 					g.setFont(new Font("Oswald-Bold", Font.PLAIN, 20));
 					g.drawString(i + "", contentWidth * 11 / 20, contentHeight
@@ -203,16 +238,13 @@ public class KingLabelPanel extends HotLabelPanel {
 							* (4 * i - 3) / 20);
 
 					// 没有球队图片，没有球员得分
-					String data = getPlayerData(players[i-1]);
+					String data = getPlayerData(players[i - 1]);
 					g.setColor(new Color(68, 68, 68));
 					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-					g.drawString(data, contentWidth * 17 / 20,
-							contentHeight
+					g.drawString(data, contentWidth * 17 / 20, contentHeight
 							* (4 * i - 3) / 20);
 				}
-					
-				
-				
+
 			}
 
 		}
@@ -220,12 +252,12 @@ public class KingLabelPanel extends HotLabelPanel {
 		private String getPlayerData(Playervo player) {
 			DecimalFormat df = new DecimalFormat("#0.0");
 			double result = 0;
-		//	System.out.println(field);
-			switch(field){
+			// System.out.println(field);
+			switch (field) {
 			case "point":
 			case "场均得分":
 			case "得分":
-				
+
 				result = player.getAveragePoints();
 				break;
 			case "rebound":
@@ -251,24 +283,26 @@ public class KingLabelPanel extends HotLabelPanel {
 				break;
 			case "三分%":
 			case "three":
-				result = player.getThreePointersPercentage()*100;
+				result = player.getThreePointersPercentage() * 100;
 				break;
-			
-			case  "%":
+
+			case "%":
 			case "shot":
-				result = player.getFieldGoalsPercentage()*100;
+				result = player.getFieldGoalsPercentage() * 100;
 				break;
 			case "罚球%":
 			case "penalty":
-			    result = player.getFreeThrowsPercentage()*100;
+				result = player.getFreeThrowsPercentage() * 100;
 				break;
 			default:
-				System.out.println("Error in ImprovefLabelPanel.paintComponent()!!!"+field);	
+				System.out
+						.println("Error in ImprovefLabelPanel.paintComponent()!!!"
+								+ field);
 			}
 			return df.format(result);
 		}
 
-		public void setPlayers(Playervo[] players,String field) {
+		public void setPlayers(Playervo[] players, String field) {
 			this.players = players;
 			this.field = field;
 			this.repaint();
@@ -277,7 +311,7 @@ public class KingLabelPanel extends HotLabelPanel {
 		private void setPlayerNameLabel() {
 			playerNames = new JLabel[5];
 			playerTeamNames = new JLabel[5];
-			
+
 			for (int i = 0; i < 5; i++) {
 				playerNames[i] = new JLabel();
 				playerTeamNames[i] = new JLabel();
@@ -313,29 +347,34 @@ public class KingLabelPanel extends HotLabelPanel {
 				}
 				playerNames[i].addMouseListener(new PlayerMouseAdapter());
 				playerNames[i].setOpaque(false);
-				playerNames[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				playerNames[i].setCursor(Cursor
+						.getPredefinedCursor(Cursor.HAND_CURSOR));
 				idNameMap.put(players[i].getName(), players[i].getPid());
 
 				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
 				playerTeamNames[i].setOpaque(false);
-				playerTeamNames[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				playerTeamNames[i].setCursor(Cursor
+						.getPredefinedCursor(Cursor.HAND_CURSOR));
 				this.add(playerNames[i]);
 				this.add(playerTeamNames[i]);
 			}
 
 		}
+
 		private class PlayerMouseAdapter extends MouseAdapter {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				String content = ((JLabel) e
-						.getSource()).getText();
+				String content = ((JLabel) e.getSource()).getText();
 				Playervo p;
 				try {
-					p = KingLabelPanel.this.bl.getPlayerById(idNameMap.get(content));
-					PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(hotWidth,
-							hotHeight * 3, p, KingLabelPanel.this.bl,
-							KingLabelPanel.this.content,KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
+					p = KingLabelPanel.this.bl.getPlayerById(idNameMap
+							.get(content));
+					PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(
+							hotWidth, hotHeight * 3, p, KingLabelPanel.this.bl,
+							KingLabelPanel.this.content,
+							KingLabelPanel.this.season,
+							KingLabelPanel.this.isPlayOff);
 					playInfoPanel.setBounds(0, 0, hotWidth, hotHeight * 3);
 					KingLabelPanel.this.content.removeAll();
 					KingLabelPanel.this.content.add(playInfoPanel);
@@ -345,40 +384,242 @@ public class KingLabelPanel extends HotLabelPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 
 			}
 
 		}
 	}
 
-	
+	private class TodayTableContentLabel extends JLabel {
+		private TodayPlayervo[] players;
+		private int contentWidth;
+		private int contentHeight;
+		private JLabel[] playerNames;
+		private JLabel[] playerTeamNames;
+		private String field;
+		private HashMap<String, String> idNameMap = new HashMap<String, String>();
 
-	private class TeamMouseAdapter extends MouseAdapter {
+		public TodayTableContentLabel(TodayPlayervo[] players, int contentWidth,
+				int contentHeight, String field) {
+			this.players = players;
+			this.contentWidth = contentWidth;
+			this.contentHeight = contentHeight;
+			this.field = field;
 
-		@Override
-		public void mousePressed(MouseEvent e) {
-			Teamvo t;
-			try {
-				t = KingLabelPanel.this.bl.getTeamByTeamName(((JLabel) e
-						.getSource()).getText(),KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
-				TeamInfoPanel teamInfoPanel = new TeamInfoPanel(hotWidth,
-						hotHeight * 3, t, KingLabelPanel.this.bl,
-						KingLabelPanel.this.content,KingLabelPanel.this.season,KingLabelPanel.this.isPlayOff);
-				teamInfoPanel.setBounds(0, 0, hotWidth, (int) (hotHeight * 3.5));
-				KingLabelPanel.this.content.removeAll();
-				KingLabelPanel.this.content.add(teamInfoPanel);
-				KingLabelPanel.this.content.updateUI();
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
+			setPlayerNameLabel();
 
 		}
 
-	}
+		public void paintComponent(Graphics g2) {
+			// 背景
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setColor(Color.white);
+			g.fillRect(0, 0, contentWidth, contentHeight);
+			// 头像
+			if (players[0] != null) {
+				BufferedImage action = UIUtils.resize(players[0].getAction(),
+						contentWidth / 10, contentHeight);
+				g.drawImage(action, 0, 0, this);
+				// 排名
+				g.setColor(new Color(190, 157, 83));
+				g.setFont(new Font("微软雅黑", Font.BOLD, 50));
+				g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
+				// 姓名
 
+				playerNames[0].setText(players[0].getName());
+
+				/*// 号码
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(players[0].getNumber(), contentWidth / 5,
+						contentHeight * 3 / 5);
+				// 位置
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(players[0].getPosition(), contentWidth / 4,
+						contentHeight * 3 / 5);*/
+				// 球队
+				playerTeamNames[0].setText(players[0].getTeam());
+				// 数据、球队图标暂无
+
+				String data = getPlayerData(players[0]);
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(data, contentWidth / 4, contentHeight * 4 / 5);
+
+				g.setColor(new Color(246, 246, 246));
+				g.fillRect(contentWidth / 2, 0, contentWidth / 10,
+						contentHeight * 9 / 10);
+			}
+
+			for (int i = 2; i <= num; i++) {
+				if (players[i - 1] != null) {
+					g.setColor(new Color(146, 144, 144));
+					g.setFont(new Font("Oswald-Bold", Font.PLAIN, 20));
+					g.drawString(i + "", contentWidth * 11 / 20, contentHeight
+							* (i - 1) / 5);
+
+					BufferedImage image = UIUtils.resize(
+							players[i - 1].getAction(), contentWidth / 30,
+							contentHeight / 5);
+
+					g.drawImage(image, contentWidth * 3 / 5, contentHeight
+							* (8 * i - 13) / 40, this);
+					// 球员label
+					playerNames[i - 1].setText(players[i - 1].getName());
+
+					g.setColor(new Color(68, 68, 68));
+					/*String str = players[i - 1].getNumber() + " "
+							+ players[i - 1].getPosition();*/
+
+					// 球队label
+					playerTeamNames[i - 1].setText(players[i - 1].getTeam());
+					// JLabel team = new JLabel(players[i - 1].getTeam());
+
+					/*g.drawString(str, contentWidth * 13 / 20, contentHeight
+							* (4 * i - 3) / 20);*/
+
+					// 没有球队图片，没有球员得分
+					String data = getPlayerData(players[i - 1]);
+					g.setColor(new Color(68, 68, 68));
+					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+					g.drawString(data, contentWidth * 17 / 20, contentHeight
+							* (4 * i - 3) / 20);
+				}
+
+			}
+
+		}
+
+		private String getPlayerData(TodayPlayervo player) {
+			DecimalFormat df = new DecimalFormat("#0.0");
+			double result = 0;
+			// System.out.println(field);
+			switch (field) {
+			case "point":
+			case "场均得分":
+			case "得分":
+
+				result = player.getPoints();
+				break;
+			case "rebound":
+			case "场均篮板":
+			case "篮板":
+				result = player.getRebounds();
+				break;
+			case "assist":
+			case "场均助攻":
+			case "助攻":
+				result = player.getAssists();
+				break;
+			case "steal":
+			case "场均抢断":
+			case "抢断":
+				result = player.getSteals();
+				break;
+			case "block":
+			case "blockShot":
+			case "场均盖帽":
+			case "盖帽":
+				result = player.getBlockShots();
+				break;
+			default:
+				System.out
+						.println("Error in ImprovefLabelPanel.paintComponent()!!!"
+								+ field);
+			}
+			return df.format(result);
+		}
+
+		public void setPlayers(TodayPlayervo[] players, String field) {
+			this.players = players;
+			this.field = field;
+			this.repaint();
+		}
+
+		private void setPlayerNameLabel() {
+			playerNames = new JLabel[5];
+			playerTeamNames = new JLabel[5];
+
+			for (int i = 0; i < 5; i++) {
+				playerNames[i] = new JLabel();
+				playerTeamNames[i] = new JLabel();
+				if (i == 0) {
+					playerNames[i].setForeground(new Color(68, 68, 68));
+					playerNames[i].setFont(new Font("微软雅黑",
+							Font.ROMAN_BASELINE, 25));
+					playerNames[i].setBounds(contentWidth / 4,
+							contentHeight * 1 / 4, contentWidth / 8,
+							contentHeight * 3 / 20);
+
+					playerTeamNames[i].setForeground(new Color(68, 68, 68));
+					playerTeamNames[i]
+							.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+					playerTeamNames[i].setBounds(contentWidth * 3 / 10,
+							contentHeight * 19 / 40, contentWidth / 8,
+							contentHeight * 3 / 20);
+				} else {
+					playerNames[i].setForeground(Color.black);
+					playerNames[i].setFont(new Font("Oswald-Bold", Font.PLAIN,
+							15));
+					playerNames[i].setBounds(contentWidth * 13 / 20,
+							contentHeight * (16 * i - 13) / 80,
+							contentWidth * 1 / 15, contentHeight * (1) / 5);
+
+					playerTeamNames[i].setForeground(Color.black);
+					playerTeamNames[i].setFont(new Font("Oswald-Bold",
+							Font.PLAIN, 15));
+					playerTeamNames[i].setBounds(contentWidth * 55 / 80,
+							(contentHeight * (8 * i - 3) / 40),
+							contentWidth * 1 / 20, contentHeight * (1) / 5);
+
+				}
+				playerNames[i].addMouseListener(new PlayerMouseAdapter());
+				playerNames[i].setOpaque(false);
+				playerNames[i].setCursor(Cursor
+						.getPredefinedCursor(Cursor.HAND_CURSOR));
+				idNameMap.put(players[i].getName(), players[i].getPid());
+
+				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
+				playerTeamNames[i].setOpaque(false);
+				playerTeamNames[i].setCursor(Cursor
+						.getPredefinedCursor(Cursor.HAND_CURSOR));
+				this.add(playerNames[i]);
+				this.add(playerTeamNames[i]);
+			}
+
+		}
+
+		private class PlayerMouseAdapter extends MouseAdapter {
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				String content = ((JLabel) e.getSource()).getText();
+				Playervo p;
+				try {
+					p = KingLabelPanel.this.bl.getPlayerById(idNameMap
+							.get(content));
+					PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(
+							hotWidth, hotHeight * 3, p, KingLabelPanel.this.bl,
+							KingLabelPanel.this.content,
+							KingLabelPanel.this.season,
+							KingLabelPanel.this.isPlayOff);
+					playInfoPanel.setBounds(0, 0, hotWidth, hotHeight * 3);
+					KingLabelPanel.this.content.removeAll();
+					KingLabelPanel.this.content.add(playInfoPanel);
+					KingLabelPanel.this.content.updateUI();
+					playInfoPanel.startAnimation();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+
+		}
+	}
 	private class TeamTableContentLabel extends JLabel {
 		private Teamvo[] teams;
 		private int contentWidth;
@@ -407,8 +648,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.setColor(Color.white);
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 队标
-			BufferedImage action = UIUtils.resize(
-					teams[0].getLogo(),
+			BufferedImage action = UIUtils.resize(teams[0].getLogo(),
 					contentWidth / 12, contentHeight);
 			g.drawImage(action, 0, 0, this);
 			// 排名
@@ -482,10 +722,40 @@ public class KingLabelPanel extends HotLabelPanel {
 							contentWidth * 1 / 15, contentHeight * (1) / 5);
 
 				}
-				teamNames[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				teamNames[i].setCursor(Cursor
+						.getPredefinedCursor(Cursor.HAND_CURSOR));
 				teamNames[i].addMouseListener(new TeamMouseAdapter());
 				teamNames[i].setOpaque(false);
 				this.add(teamNames[i]);
+			}
+
+		}
+
+	}
+
+	private class TeamMouseAdapter extends MouseAdapter {
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			Teamvo t;
+			try {
+				t = KingLabelPanel.this.bl.getTeamByTeamName(
+						((JLabel) e.getSource()).getText(),
+						KingLabelPanel.this.season,
+						KingLabelPanel.this.isPlayOff);
+				TeamInfoPanel teamInfoPanel = new TeamInfoPanel(hotWidth,
+						hotHeight * 3, t, KingLabelPanel.this.bl,
+						KingLabelPanel.this.content,
+						KingLabelPanel.this.season,
+						KingLabelPanel.this.isPlayOff);
+				teamInfoPanel
+						.setBounds(0, 0, hotWidth, (int) (hotHeight * 3.5));
+				KingLabelPanel.this.content.removeAll();
+				KingLabelPanel.this.content.add(teamInfoPanel);
+				KingLabelPanel.this.content.updateUI();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 
 		}

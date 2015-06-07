@@ -87,8 +87,6 @@ public class LivePanel extends JPanel {
 
 			this.teams = new Teamvo[2];
 			try {
-				// System.out.println(match.getSeason());
-				// System.out.println(match.getSeason()); //
 				teams[0] = bl.getTeamByTeamName(match.getTeams()[0],
 						match.getSeason(), match.isIsplayoff());
 				teams[1] = bl.getTeamByTeamName(match.getTeams()[1],

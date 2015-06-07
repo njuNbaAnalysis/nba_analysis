@@ -24,13 +24,17 @@ public class HotLabelPanel extends JPanel{
 	protected int hotWidth;
 	protected int hotHeight;
 	protected BLservice bl;
+	protected String season;
+	protected boolean isPlayOff;
 	HotLabelPanel(String headName, String[] columnName,
-			int kingWidth, int kingHeight,BLservice bl) {
+			int kingWidth, int kingHeight,BLservice bl,String season,boolean isPlayOff) {
 		this.headName = headName;
 		this.columnName = columnName;
 		this.hotWidth = kingWidth;
 		this.hotHeight = kingHeight;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 		
 	}
@@ -45,7 +49,7 @@ public class HotLabelPanel extends JPanel{
 		int size = columnName.length;
 		btArray = new HotTableButton[size];
 		for (int i = 0; i < size; i++) {
-			btArray[i] = new HotTableButton(columnName[i],type,this,bl);
+			btArray[i] = new HotTableButton(columnName[i],type,this,bl,season,isPlayOff);
 			btArray[i].setBounds(hotWidth * i / size, hotHeight / 6,
 					hotWidth / size, hotHeight / 8);
 			btArray[i].setText(columnName[i]);

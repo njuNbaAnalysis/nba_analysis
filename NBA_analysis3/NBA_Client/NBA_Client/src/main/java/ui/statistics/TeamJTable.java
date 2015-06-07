@@ -16,7 +16,7 @@ import ui.team.TeamInfoPanel;
 import util.UIUtils;
 import vo.Teamvo;
 import BLservice.BLservice;
-import compare.PalyerScreening;
+import compare.PlayerScreening;
 import compare.PlayerAssistsPercentageComp;
 import compare.PlayerAverageAssistsComp;
 import compare.PlayerAverageBlockShotsComp;
@@ -99,6 +99,7 @@ public class TeamJTable extends StatJTable {
 			String season, boolean isPlayOff) throws RemoteException {
 		super();
 		list = bl.getAllTeams(season, isPlayOff);
+		
 		this.getTableHeader().addMouseListener(new MouseHandle());
 		this.portraitWidth = 80;
 		this.portraitHeight = 80;
@@ -215,6 +216,7 @@ public class TeamJTable extends StatJTable {
 		if (c == null) {
 			c = new TeamWinPercentageComp();
 		}
+		
 		Collections.sort(list, c);
 
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
@@ -407,7 +409,7 @@ public class TeamJTable extends StatJTable {
 	}
 
 	@Override
-	void refreshByScreening(PalyerScreening palyerSelect) {
+	void refreshByScreening(PlayerScreening palyerSelect) {
 		// TODO Auto-generated method stub
 
 	}
