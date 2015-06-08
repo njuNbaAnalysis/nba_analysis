@@ -36,6 +36,7 @@ public class LivePanel extends JPanel {
 	private LiveButton[] btArray;
 	private ArrayList<EventVo> eventList = new ArrayList<EventVo>();
 	WordLivePanel wordLivePanel;
+	JPanel infoPanel;
 
 	private Matchvo match;
 	private BLservice bl;
@@ -68,8 +69,12 @@ public class LivePanel extends JPanel {
 	}
 
 	private void setLabel() {
+		infoPanel = new JPanel();
+		infoPanel.setBounds(0, 0, width, height / 4);
+		infoPanel.setLayout(null);
 		InfoLabel infoLabel = new InfoLabel(width, height / 4, match);
 		infoLabel.setLocation(0, 0);
+		infoPanel.add(infoLabel);
 		this.add(infoLabel);
 
 	}
@@ -119,7 +124,6 @@ public class LivePanel extends JPanel {
 			g.drawString("结束", labelWidth / 2 - strWidth / 2,
 					labelHeight * 1 / 10 - 8);// 这个结束需要修改
 
-
 			g.drawImage(UIUtils.resize(teams[0].getLogo(), labelWidth / 10,
 					labelHeight * 3 / 10), labelWidth * 12 / 36,
 					labelHeight * 7 / 24, this);
@@ -129,7 +133,7 @@ public class LivePanel extends JPanel {
 
 			g.setColor(Color.black);
 			g.setFont(new Font("default", Font.PLAIN, 30));
-			g.drawString(match.getTeams()[0], labelWidth * 5 / 36,
+			g.drawString(match.getTeams()[0], labelWidth * 4 / 36,
 					labelHeight * 5 / 12);
 			g.drawString(match.getTeams()[1], labelWidth * 30 / 36,
 					labelHeight * 5 / 12);
@@ -141,7 +145,7 @@ public class LivePanel extends JPanel {
 							+ teams[0].getNumOfVictory()
 							+ "-"
 							+ (teams[0].getNumOfMatches() - teams[0]
-									.getNumOfVictory()), labelWidth * 4 / 36,
+									.getNumOfVictory()), labelWidth * 7 / 72,
 					labelHeight * 7 / 12);
 			g.drawString(
 					"球队战绩"
@@ -165,19 +169,19 @@ public class LivePanel extends JPanel {
 
 			// 有加时的情况
 			int section = match.getPointsList().size();
-			int extwidth = labelWidth*11/24;
+			int extwidth = labelWidth * 11 / 24;
 			g.setFont(new Font("default", Font.PLAIN, 15));
 
 			for (int i = 0; i < section; i++) {
 				g.setColor(Color.BLACK);
-				if(i>=4){
-					g.drawString("加时"+(i-3) + "", labelWidth * (10 + i) / 24,
-							labelHeight * 2 / 3);
-				}else{
-					g.drawString(i + "", labelWidth * (10 + i) / 24,
+				if (i >= 4) {
+					g.drawString("加时" + (i - 3) + "", labelWidth * (10 + i)
+							/ 24, labelHeight * 2 / 3);
+				} else {
+					g.drawString((i + 1) + "", labelWidth * (10 + i) / 24,
 							labelHeight * 2 / 3);
 				}
-				
+
 				g.drawString(match.getPointsList().get(i)[0] + "", labelWidth
 						* (10 + i) / 24, labelHeight * 19 / 24);
 				g.setColor(new Color(169, 11, 51));
@@ -186,18 +190,18 @@ public class LivePanel extends JPanel {
 				extwidth += labelWidth / 24;
 
 			}
-			
+
 			g.setColor(Color.BLACK);
-			g.drawString(match.getPoints()[0] + "", extwidth, labelHeight * 19 / 24);
-			
+			g.drawString(match.getPoints()[0] + "", extwidth,
+					labelHeight * 19 / 24);
+
 			g.setColor(new Color(169, 11, 51));
-			g.drawString(match.getPoints()[1] + "",extwidth, labelHeight * 22 / 24);
-			
-			
+			g.drawString(match.getPoints()[1] + "", extwidth,
+					labelHeight * 22 / 24);
 
 			g.setFont(new Font("default", Font.PLAIN, 70));
 			g.setColor(Color.black);
-			g.drawString(match.getPoints()[0] + "", labelWidth * 5 / 24,
+			g.drawString(match.getPoints()[0] + "", labelWidth * 9 / 48,
 					labelHeight * 13 / 24);
 			g.setColor(new Color(169, 11, 51));
 			g.drawString(match.getPoints()[1] + "", labelWidth * 17 / 24,
@@ -326,12 +330,13 @@ public class LivePanel extends JPanel {
 			EventVo latestEvent = null;
 			if (eventList.size() != 0) {
 				for (EventVo event : eventList) {
-					if (latestTime > event.getTimeInSecond()) {
+					if (event.getTimeInSecond() >= latestTime) {
 						latestEvent = event;
 						latestTime = event.getTimeInSecond();
 					}
 				}
 			}
+			System.out.println("latestTime:"+latestTime);
 
 			// 最新的事件在newEventList的第一个
 			for (int i = newEventList.size() - 1; i >= 0; i--) {
@@ -340,6 +345,7 @@ public class LivePanel extends JPanel {
 					if (latestEvent == null
 							|| !event.getDescription().equals(
 									latestEvent.getDescription())) {
+						System.out.println(event.getDescription());
 						eventList.add(event);
 					}
 				}
@@ -350,31 +356,51 @@ public class LivePanel extends JPanel {
 
 	}
 
-	public void setMatch(Matchvo match) {
-		this.match = match;
-	}
-
 	private class LiveThread implements Runnable {
 
 		@Override
 		public void run() {
-
-			while (true) {
+			int size = 1;
+			while (true && size <= 47) {
 				ArrayList<EventVo> eventList = null;
 				Matchvo m = null;
 				try {
-					eventList = bl.getLiveEvent();
+					/* eventList = bl.getLiveEvent(); */
+					ArrayList<EventVo> List = new ArrayList<EventVo>();
+					for (int i = 0; i <= size; i++) {
+						EventVo v;
+						if (i % 2 == 0) {
+							v = new EventVo(i/12+1, i % 2, (12 - i%12) + ":10.1",
+									(i*17%40) + "-" + (1 + i*137%40), "Aaron Brooks",
+									"test" + i, "ATL");
+						} else {
+							v = new EventVo(i/12+1, i % 2, (12 - i%12) + ":10.1",
+									(i*67%40) + "-" + (1 + i*169%40), "Aaron Brooks",
+									"test" + i, "GSW");
+						}
+
+						List.add(v);
+						
+					}
+					eventList = List;
 					System.out.println("eventList" + eventList.size());
 					m = bl.getLiveMatchInfo();
+					size++;
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
 				LivePanel.this.refresh(eventList);
-				LivePanel.this.setMatch(m);
+				LivePanel.this.infoPanel.removeAll();
+				InfoLabel infoLabel = new InfoLabel(width, height / 4, m);
+				infoLabel.setLocation(0, 0);
+				infoPanel.add(infoLabel);
+				LivePanel.this.add(infoLabel);
+				repaint();
+
 				try {
-					Thread.sleep(300);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -390,16 +416,8 @@ public class LivePanel extends JPanel {
 		f.setBounds(0, 0, 1280, 1080);
 		DataFactory factory = DataFactoryMySql.getInstance();
 		final BLservice bl = factory.getBLservice();
+
 		try {
-			ArrayList<Teamvo>list = bl.getAllTeams("14-15", false);
-			for(Teamvo t :list){
-				System.out.println(t.getAbbreviation());
-			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*try {
 			bl.initNBALive();
 		} catch (RemoteException e2) {
 			// TODO Auto-generated catch block
@@ -420,7 +438,7 @@ public class LivePanel extends JPanel {
 		f.setLayout(null);
 		f.add(chart);
 		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 
