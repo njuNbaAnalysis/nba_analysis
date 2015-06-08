@@ -37,7 +37,7 @@ public class pointsItemReaderTest {
 	@Test
 	public void testgetpointsItemById() {
 		pointsItemReader pr = new pointsItemReader();
-		ArrayList<pointsItem> list = pr.getpointsItemById("01000");
+		ArrayList<pointsItem> list = pr.getpointsItemById("1000");
 		boolean result = (list.size() != 0);
 		System.out.println(list.size());
 		assertTrue(result);

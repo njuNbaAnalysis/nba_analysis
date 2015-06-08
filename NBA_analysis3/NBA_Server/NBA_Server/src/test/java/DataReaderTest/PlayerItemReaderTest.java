@@ -36,7 +36,7 @@ public class PlayerItemReaderTest {
 	@Test
 	public void testgetPlayerItemById() {
 		PlayerItemReader pr = new PlayerItemReader();
-		ArrayList<playerItem> list = pr.getPlayerItemById("00195");
+		ArrayList<playerItem> list = pr.getPlayerItemById("195");
 		boolean result = (list.size() != 0);
 		System.out.println(list.size());
 		assertTrue(result);

@@ -104,7 +104,7 @@ public class MatchReaderTest {
 	@Test
 	public void testGetAllMatchById() {
 		MatchReader mr = new MatchReader();
-		match m = mr.getMatchesById("01000");
+		match m = mr.getMatchesById("1000");
 		boolean result = (m != null);
 		assertTrue(result);
 	}

@@ -29,7 +29,7 @@ public class PlayerReader {
 				String playername = namelist.getEnAbbrById(rs.getString(1));
 				if (playername == null)
 					playername = rs.getString(2);
-				result = new player(rs.getString(1), playername,
+				result = new player(getPid(rs.getString(1)), playername,
 						rs.getString(3), rs.getDouble(4), rs.getDouble(5),
 						rs.getString(6), rs.getString(7), rs.getString(8),
 						rs.getString(9), rs.getString(10), rs.getString(11),
@@ -54,10 +54,10 @@ public class PlayerReader {
 			rs = statement.executeQuery("select * from playerlist");
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			while (rs.next()) {
-				String playername = namelist.getEnAbbrById(rs.getString(1));
+				String playername = namelist.getEnAbbrById(getPid(rs.getString(1)));
 				if (playername == null)
 					playername = rs.getString(2);
-				listOfPlayer.add(new player(rs.getString(1), playername, rs
+				listOfPlayer.add(new player(getPid(rs.getString(1)), playername, rs
 						.getString(3), rs.getDouble(4), rs.getDouble(5), rs
 						.getString(6), rs.getString(7), rs.getString(8), rs
 						.getString(9), rs.getString(10), rs.getString(11), rs
@@ -86,10 +86,10 @@ public class PlayerReader {
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			TeamNameList teamlist = TeamNameList.getIntance();
 			while (rs.next()) {
-				String playername = namelist.getEnAbbrById(rs.getString(1));
+				String playername = namelist.getEnAbbrById(getPid(rs.getString(1)));
 				if (playername == null)
 					playername = rs.getString(2);
-				player p = new player(rs.getString(1), playername,
+				player p = new player(getPid(rs.getString(1)), playername,
 						rs.getString(3), rs.getDouble(4), rs.getDouble(5),
 						rs.getString(6), rs.getString(7), rs.getString(8),
 						rs.getString(9), rs.getString(10), rs.getString(11),
@@ -173,10 +173,10 @@ public class PlayerReader {
 
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			if (rs.next()) {
-				String playername = namelist.getEnAbbrById(rs.getString(1));
+				String playername = namelist.getEnAbbrById(getPid(rs.getString(1)));
 				if (playername == null)
 					playername = rs.getString(2);
-				result = new player(rs.getString(1), playername,
+				result = new player(getPid(rs.getString(1)), playername,
 						rs.getString(3), rs.getDouble(4), rs.getDouble(5),
 						rs.getString(6), rs.getString(7), rs.getString(8),
 						rs.getString(9), rs.getString(10), rs.getString(11),
@@ -187,6 +187,11 @@ public class PlayerReader {
 			e.printStackTrace();
 		}
 		// GetConnection.free(rs, conn, statement);
+		return result;
+	}
+	
+	private String getPid(String str){
+		String result = ""+Integer.parseInt(str);
 		return result;
 	}
 }

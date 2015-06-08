@@ -34,7 +34,7 @@ public class MatchItemReaderTest {
 	@Test
 	public void testgetMatchItemById() {
 		MatchItemReader mr = new MatchItemReader();
-		ArrayList<matchItem> list = mr.getMatchItemById("01000");
+		ArrayList<matchItem> list = mr.getMatchItemById("1000");
 		boolean result = (list.size() != 0);
 		System.out.println(list.size());
 		assertTrue(result);
@@ -52,7 +52,7 @@ public class MatchItemReaderTest {
 	@Test
 	public void testgetMatchItemByPlayerId() {
 		MatchItemReader mr = new MatchItemReader();
-		ArrayList<matchItem> list = mr.getMatchItemByPlayerId("00195");
+		ArrayList<matchItem> list = mr.getMatchItemByPlayerId("195");
 		boolean result = (list.size() != 0);
 		System.out.println(list.size());
 		assertTrue(result);
