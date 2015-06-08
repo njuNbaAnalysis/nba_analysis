@@ -39,24 +39,25 @@ public class NBALiveTest {
 				for(int i=0;i<list2.size();i++){
 					System.out.println("2: "+list2.get(i).getPlayerName());
 				}
-//				while (true) {
-//					ArrayList<EventVo> list = mbl.getLiveEvent();
-//					if (list.size() == 0)
-//						break;
-//					for (int i = 0; i < list.size(); i++) {
-//						System.out.println(list.get(i).getSection() + " : "
-//								+ list.get(i).getTime() + " : "
-//								+ list.get(i).getDescription() + "  "
-//								+ list.get(i).getPlayerName() + " : "
-//								+ list.get(i).getTeamName());
-//					}
-//					try {
-//						Thread.sleep(5000);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
+				while (true) {
+					ArrayList<EventVo> list = mbl.getLiveEvent();
+					System.out.println(list.size());
+					if (list.size() == 0)
+						break;
+					for (int i = 0; i < list.size(); i++) {
+						System.out.println(list.get(i).getSection() + " : "
+								+ list.get(i).getTime() + " : "
+								+ list.get(i).getDescription() + "  "
+								+ list.get(i).getPlayerName() + " : "
+								+ list.get(i).getTeamName());
+					}
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 
 		}).start();

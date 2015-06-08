@@ -86,6 +86,7 @@ public interface BLservice extends Remote {
 			throws RemoteException;
 
 	/**
+	 * 得到某个球队某赛季常规赛或季后赛的热区数据
 	 * @param teamNameEn
 	 *            球队的3大写字母名称
 	 * @param isSeason
@@ -136,7 +137,7 @@ public interface BLservice extends Remote {
 	public Playervo getPlayerById(String Id) throws RemoteException;
 
 	/**
-	 * 
+	 * 根据球员的id返回某赛季常规赛或季后赛的teamvo
 	 * @param playerName
 	 * @param season
 	 * @param isPlayOff
@@ -146,23 +147,13 @@ public interface BLservice extends Remote {
 			boolean isPlayOff) throws RemoteException;
 
 	/**
-	 * 
+	 * 根据球队的英文缩写返回某赛季常规赛或季后赛的teamvo
 	 * @param teamName
 	 *            三个大写英文字母
 	 * @return teamvo
 	 */
 	public Teamvo getTeamByTeamName(String teamNameEn, String season,
 			boolean isPlayOff) throws RemoteException;
-
-	/**
-	 * @param field
-	 *            :points,rebounds,assists,blockShots,steals,
-	 *            threePointersPercentage
-	 *            ,fieldGoalsPercentage,freeThrowsPercentage
-	 * @return teamvo
-	 */
-	public Teamvo[] getHotTeams(String field, String season, boolean isPlayOff)
-			throws RemoteException;
 
 	/**
 	 * @return 场均得分，场均篮板，场均助攻，罚球%，三分%
@@ -192,7 +183,7 @@ public interface BLservice extends Remote {
 			String season) throws RemoteException;
 
 	/**
-	 * 
+	 * 根据球队的英文缩写得到某赛季常规赛或季后赛带有最近10场比赛的球队数据
 	 * @param teamNameEn
 	 *            球队英文缩写
 	 * @param season

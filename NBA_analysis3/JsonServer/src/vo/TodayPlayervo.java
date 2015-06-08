@@ -3,11 +3,12 @@ package vo;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
 
-public class TodayPlayervo {
+public class TodayPlayervo implements Serializable{
 	String pid;
 	String name;
 	String team;
