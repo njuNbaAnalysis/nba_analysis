@@ -38,7 +38,6 @@ public class TeamInfoPanel extends JPanel {
 	private JScrollPane js;
 	private Playervo[] players;
 	private ArrayList<Playervo> playerList;
-	private int num = 5;
 	private String season;
 	private boolean isPlayOff;
 
@@ -56,15 +55,13 @@ public class TeamInfoPanel extends JPanel {
 		this.isPlayOff = isPlayOff;
 
 		ArrayList<String> idList = team.getPlayerList();
-		players = new Playervo[num];
+		players = new Playervo[idList.size()];
 		playerList = new ArrayList<Playervo>();
 		for (int i = 0; i < idList.size(); i++) {
-			if (i < num) {
-
-				players[i] = (bl.getPlayerById(idList.get(i)));
-				playerList.add(bl.getPlayerById(idList.get(i)));
-
-			}
+			System.out.println(bl.getPlayerById(idList.get(i)).getName());
+			players[i] = bl.getPlayerById(idList.get(i),season,isPlayOff);
+			System.out.println(players[i].getName()+" 得分:"+players[i].getPoints());
+			playerList.add(bl.getPlayerById(idList.get(i)));
 
 		}
 
@@ -80,9 +77,10 @@ public class TeamInfoPanel extends JPanel {
 		// 默认加数据王
 		String[] columnName = { "得分", "篮板", "助攻", "抢断", "盖帽", "三分%", "%", "罚球%" };
 
-		KingLabelPanel playerKingPanel = new KingLabelPanel("P", "常规赛 数据王",
+		KingLabelPanel playerKingPanel = new KingLabelPanel("TMP", "常规赛 数据王",
 				columnName, width, height * 1 / 3, bl, content,
-				TeamInfoPanel.this.season, TeamInfoPanel.this.isPlayOff);
+				TeamInfoPanel.this.season, TeamInfoPanel.this.isPlayOff,
+				players);
 		playerKingPanel.setPlayers(players, "point");
 		playerKingPanel.setBounds(0, 0, width, height * 1 / 3);
 		js.add(playerKingPanel);
@@ -133,8 +131,9 @@ public class TeamInfoPanel extends JPanel {
 					switch (TeamButton.this.type) {
 					case 0:
 						try {
-							AgendaPanel agenda = new AgendaPanel(width, height * 2 / 3, bl
-									.getMatchSimpleInfo(team.getAbbreviation(),
+							AgendaPanel agenda = new AgendaPanel(width,
+									height * 2 / 3, bl.getMatchSimpleInfo(
+											team.getAbbreviation(),
 											team.getSeason()), bl, content,
 									TeamInfoPanel.this.season,
 									TeamInfoPanel.this.isPlayOff);
@@ -155,10 +154,10 @@ public class TeamInfoPanel extends JPanel {
 									"盖帽", "三分%", "%", "罚球%" };
 
 							KingLabelPanel playerKingPanel;
-							playerKingPanel = new KingLabelPanel("TP",
+							playerKingPanel = new KingLabelPanel("TMP",
 									"常规赛 数据王", columnName, width, height / 3,
 									bl, content, TeamInfoPanel.this.season,
-									TeamInfoPanel.this.isPlayOff);
+									TeamInfoPanel.this.isPlayOff, players);
 							playerKingPanel.setPlayers(players, "point");
 							playerKingPanel.setBounds(0, 0, width,
 									height * 1 / 3);
@@ -176,7 +175,7 @@ public class TeamInfoPanel extends JPanel {
 						try {
 							LineUpPanel lineUp = new LineUpPanel(width,
 									height * 2 / 3, team.getPlayerList(), bl,
-									content,season,isPlayOff);
+									content, season, isPlayOff);
 							lineUp.setBounds(0, 0, width, height * 2 / 3);
 							js.removeAll();
 							js.add(lineUp);
@@ -185,7 +184,7 @@ public class TeamInfoPanel extends JPanel {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						
+
 						break;
 					}
 				}
