@@ -1,6 +1,7 @@
 package ui.team;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -31,7 +32,7 @@ public class TeamInfoPanel extends JPanel {
 	private int width;
 	private int height;
 	private TeamBasicInfoLabel teamBasicInfoPanel;
-	private static String[] tabName = { "赛程", "数据王", "阵容" };
+	private static String[] tabName = { "赛程", "数据王", "阵容" ,"对比"};
 	private Teamvo team;
 	private BLservice bl;
 	private JPanel content;
@@ -185,6 +186,25 @@ public class TeamInfoPanel extends JPanel {
 							e1.printStackTrace();
 						}
 
+						break;
+					
+					
+					case 3:
+					
+						TeamComparePanel matchPanel = null;
+						try {
+							matchPanel = new TeamComparePanel(bl.getAllTeams(season,false).get(0), bl.getAllTeams(season,false).get(1),width, height * 2 / 3,bl);
+						} catch (RemoteException e2) {
+							// TODO 自动生成的 catch 块
+							e2.printStackTrace();
+						}
+						js.removeAll();;
+						//scrollPane.setBounds(0, 0, 1728, 1080);
+						matchPanel.setPreferredSize(new Dimension(width,1080));
+						js.getVerticalScrollBar().setUnitIncrement(20);
+						js.add(matchPanel);
+						js.updateUI();
+						js.repaint();
 						break;
 					}
 				}
