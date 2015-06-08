@@ -297,11 +297,11 @@ public class MatchReader {
 		try {
 			statement = conn.createStatement();
 			rs = statement
-					.executeQuery("select * from  matchlist where `home-team` =  '"
+					.executeQuery("select * from  matchlist where (`home-team` =  '"
 							+ team
 							+ "' or `away-team` = '"
 							+ team
-							+ "' and season = '"
+							+ "') and season = '"
 							+ season
 							+ "赛季' and isplayoff = "
 							+ isPlayOff
