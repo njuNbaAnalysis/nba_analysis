@@ -701,7 +701,7 @@ public class Teamvo implements Serializable {
         
         Field[] fields = this.getClass().getDeclaredFields();
         for(Field field:fields){
-            System.out.println(field.getGenericType());
+            System.out.println(field.getGenericType().getTypeName());
             //遇到ArrayList，此类中为ArrayList<String>，转换为jsonArray
             if(field.getType().toString().equals("class java.util.ArrayList")){
                 JSONArray array = new JSONArray();
