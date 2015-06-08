@@ -80,7 +80,7 @@ public class GetJsonData {
 			for(EventVo vo:result){
 				array.put(JSONGenerator.getJSONObject(vo));
 			}
-			object.put("result", object);
+			object.put("result", array);
 		}
 		return object;
 	}
@@ -105,7 +105,7 @@ public class GetJsonData {
 			for(Playervo vo:result){
 				array.put(JSONGenerator.getJSONObject(vo));
 			}
-			object.put("result", object);
+			object.put("result", array);
 		}
 		return object;
 	}
@@ -131,7 +131,7 @@ public class GetJsonData {
 			for(Playervo vo:result){
 				array.put(JSONGenerator.getJSONObject(vo));
 			}
-			object.put("result", object);
+			object.put("result", array);
 		}
 		return object;
 	}
@@ -157,7 +157,7 @@ public class GetJsonData {
 			for(TodayPlayervo vo:result){
 				array.put(JSONGenerator.getJSONObject(vo));
 			}
-			object.put("result", object);
+			object.put("result", array);
 		}
 		return object;
 	}
@@ -275,7 +275,7 @@ public class GetJsonData {
 			for(MatchSimpleInfovo vo:result){
 				array.put(JSONGenerator.getJSONObject(vo));
 			}
-			object.put("result", object);
+			object.put("result", array);
 		}
 		return object;
 	}
