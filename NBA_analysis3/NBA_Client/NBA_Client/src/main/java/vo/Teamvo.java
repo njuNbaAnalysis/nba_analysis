@@ -4,95 +4,139 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-
+/**
+ * 用于记录某只球队某个赛季的所有属性
+ * */
 public class Teamvo implements Serializable {
     
 	// raw data
+	/**该球队的中文全名，例"阿纳海姆搞基"*/
 	private String name; // 球队名，例"阿纳海姆搞基"
+	/**该球队的英文缩写名，例"ATL"*/
 	private String abbreviation; // 缩写，例"ATL"
 	
 	@Deprecated
-	private String location; // 地区    
+	/**该球队所在城市名，如：洛杉矶*/
+	private String location; // 地区   
+	/**该球队所在东部赛区or西部赛区 E,W*/
 	private char conference; // 东部赛区or西部赛区 E,W
+	/**该球队所在地区名,例如：太平洋分区*/
 	private String division;
+	/**该球队所在主场名,例如：麦迪逊广场*/
 	private String homeCourt; // 主场
 	
+	/**该记录赛季数，例如："00-01"*/
 	private String season;//例"00-01"
+	/**是否是季后赛*/
 	private boolean isPlayOff;//是否是季后赛 
     
 	@Deprecated
+	/**该球队建立时间*/
 	private int setUpTime; // 建立时间
 
 	// not raw data
+	/**该球队该赛季的球员列表*/
 	private ArrayList<String> playerList = new ArrayList<String>(); // 球员id列表
 
 	// 累加
+	/**该球队该赛季的比赛场数*/
 	private int numOfMatches; // 比赛场数
+	/**该球队该赛季的胜利场数*/
 	private int numOfVictory; // 胜利场数
-	
+	/**此球队本赛季常规赛的总比赛场数*/
 	private int numOfMatchesInSeason; //此球队本赛季常规赛的总比赛场数
+	/**此球队本赛季常规赛的总胜利场数*/
 	private int numOfVictoryInSeason; //此球队本赛季常规赛的总胜利场数
 	
+	/**此球队本赛季 投篮出手次数*/
 	private int fieldGoalAttemps; // 投篮出手次数
+	/**此球队本赛季 投篮命中次数*/
 	private int fieldGoalHits; // 投篮命中次数
+	/**此球队本赛季 三分出手次数*/
 	private int threePointerAttempts; // 三分出手次数
+	/**此球队本赛季  三分命中次数*/
 	private int threePointerHits; // 三分命中次数
+	/**此球队本赛季 罚球出手次数*/
 	private int freeThrowAttempts; // 罚球出手次数
+	/**此球队本赛季 罚球命中次数*/
 	private int freeThrowHits; // 罚球命中次数
+	/**此球队本赛季 进攻篮板数*/
 	private int offensiveRebounds; // 进攻篮板数
+	/**此球队本赛季 防守篮板数*/
 	private int defensiveRebounds; // 防守篮板数
 
+	/**此球队本赛季  助攻数*/
 	private int assists; // 助攻数
+	/**此球队本赛季  抢断数*/
 	private int steals; // 抢断数
+	/**此球队本赛季  总盖帽数*/
 	private int blockShots; // 总盖帽数
+	/**此球队本赛季  总失误数*/
 	private int turnOver; // 总失误数
+	/**此球队本赛季 总犯规数*/
 	private int fouls; // 总犯规数
+	/**此球队本赛季 总比赛得分数*/
 	private int points; // 总比赛得分数
 
 	// 后期-交叉处理
+	/**此球队本赛季 进攻回合数*/
 	private double offensiveRounds; // 进攻回合
+	/**此球队本赛季 防守回合数*/
 	private double defensiveRounds; // 防守回合
+	/**此球队本赛季 进攻效率*/
 	private double offenseEfficiency; // 进攻效率
+	/**此球队本赛季防守效率*/
 	private double defenseEfficiency; // 防守效率
+	/**此球队本赛季篮板效率*/
 	private double reboundsEfficiency; // 篮板效率
+	/**此球队本赛季抢断效率*/
 	private double stealsEfficiency; // 抢断效率
+	/**此球队本赛季 助攻率*/
 	private double assistsPercentage; // 助攻率
 
 	// computeData 计算过程中用到，界面后期可能用到
+	/**此球队本赛季 对手总得分*/
 	private int pointsRival; // 对手总得分
+	/**此球队本赛季 对手投篮出手次数*/
 	private int fieldGoalAttempsRival; // 对手投篮出手次数
+	/**此球队本赛季 对手三分出手次数*/
 	private int threePointerAttemptsRival; // 对手三分出手次数
+	/**此球队本赛季 对手总进攻篮板*/
 	private int offenseReboundsRival; // 对手总进攻篮板
+	/**此球队本赛季 对手总防守篮板*/
 	private int defenseReboundsRival; // 对手总防守篮板
 
 	// 仅界面需要
+	/**本赛季在联盟中的排名，东西部分别计算，当属性为季后赛是，此值无意义*/
 	private int rankingInLeague; // 本赛季在联盟中的排名，东西部分别计算，当属性为季后赛是，此值无意义
 	
 	//近十场的先后顺序，index=0为最近，index=9为最远
 	
-    // 近十场的输赢情况,
+	/** 近十场的输赢情况*/
     private boolean[] latestWinOrLose;
 
-    // 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多，本队在前
+    /** 得到近十场的战绩,暂定返回比分(格式:"100-101")，可能需要更多，本队在前*/
     private String[] latestRecord;
 
-    // 得到近十场的攻防比(得分/失分)
+    /**  得到近十场的攻防比(得分/失分)*/
     private double[] latestOffendThanDefend;
 
-    // 得到近十场的得分(每一场的每百进攻回合得分)
+    /** 得到近十场的得分(每一场的每百进攻回合得分)*/
     private double[] latestOffend;
 
-    // 得到近十场的失分(每一场的每百防守回合失分)
+     /**  得到近十场的失分(每一场的每百防守回合失分)*/
     private double[] latestDefend;
 
-    // 得到近十场的节奏(每一场的进攻回合数)
+     /**  得到近十场的节奏(每一场的进攻回合数)*/
     private double[] latestTempo;
 
 	// 后期
@@ -104,6 +148,9 @@ public class Teamvo implements Serializable {
 	// private int reboundsRival; //对手总篮板
 
 	@Deprecated
+	/**
+	 * 对该类的所有属性进行构造
+	 * */
 	public Teamvo(String name, String abbreviation, String location,
 			char conference, String division, String homeCourt, int setUpTime,
 			ArrayList<String> playerList, int numOfMatches,
@@ -158,6 +205,9 @@ public class Teamvo implements Serializable {
 		this.rankingInLeague = rankingInLeague;
 	}
 
+	/**
+	 * 空构造器
+	 * */
 	public Teamvo() {
         super();
     }
@@ -669,6 +719,9 @@ public class Teamvo implements Serializable {
         this.numOfVictoryInSeason = numOfVictoryInSeason;
     }
     
+    /**
+     * 将该球队所有属性直接转为string输出
+     * */
     @Override
     public String toString() {
         return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", conference=" + conference + ", division="
@@ -699,8 +752,46 @@ public class Teamvo implements Serializable {
         
         Field[] fields = this.getClass().getDeclaredFields();
         for(Field field:fields){
-            if(field.getName().equals(latestWinOrLose)){
-                
+            System.out.println(field.getGenericType().getTypeName());
+            //遇到ArrayList，此类中为ArrayList<String>，转换为jsonArray
+            if(field.getType().toString().equals("class java.util.ArrayList")){
+                JSONArray array = new JSONArray();
+                try {
+                    ArrayList<String> list = (ArrayList<String>) field.get(this);
+                    for(String s:list){
+                        array.put(s);
+                    }
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                result.put(field.getName(), array);
+            }
+            
+            //如果是数组，则转换为jsonArray
+            if(field.getType().isArray()){
+                JSONArray array = new JSONArray();
+                try {
+                    Object list = (Object) field.get(this);
+                    Class<?> element = list.getClass().getComponentType();
+                    for(int i = 0;i < Array.getLength(list);i ++){
+                        array.put(Array.get(list, i));
+                    }
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                result.put(field.getName(), array);
+            }
+            
+            //其余情况，直接转换
+            try {
+                Object o = field.get(this);
+                result.put(field.getName(), o);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
         

@@ -13,6 +13,10 @@ import vo.Playervo;
 import vo.Teamvo;
 import vo.TodayPlayervo;
 
+/**
+ * 服务端提供该界面的所有接口定义
+ *
+ */
 public interface BLservice extends Remote {
 	
 	/**
