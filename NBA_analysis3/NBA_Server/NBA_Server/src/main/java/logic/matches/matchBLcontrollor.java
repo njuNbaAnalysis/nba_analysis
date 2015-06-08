@@ -172,8 +172,10 @@ public class matchBLcontrollor {
 		System.out.println("testtest:"+list2.size());
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
-				if (list2.get(i).equals(list.get(j).getMid()))
+				if (list2.get(i).equals(list.get(j).getMid())){
 					result.add(changematchToMatchvo(list.get(j)));
+					break;
+				}
 			}
 		}
 		return result;

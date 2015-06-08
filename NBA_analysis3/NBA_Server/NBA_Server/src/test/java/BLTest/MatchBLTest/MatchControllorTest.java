@@ -60,7 +60,7 @@ public class MatchControllorTest {
 	@Test
 	public void testgetLast10Matches() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
-		ArrayList<Matchvo> list = m.getLast10Matches("CLE", "14-15", false);
+		ArrayList<Matchvo> list = m.getLast10Matches("CLE", "12-13", false);
 		System.out.println(list.size());
 		for(int i=0;i<list.size();i++){
 			System.out.println(list.iterator().next().getDate());
