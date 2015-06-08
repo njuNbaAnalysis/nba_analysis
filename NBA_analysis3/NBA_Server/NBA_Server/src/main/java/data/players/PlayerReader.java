@@ -81,7 +81,7 @@ public class PlayerReader {
 			statement = conn.createStatement();
 			rs = statement
 					.executeQuery("SELECT * FROM playerlist p1, playeritem p2 WHERE p1.Pid = p2.Pid AND p2.season =  '"
-							+ season + "' AND p2.isplayoff = " + isPlayoff+" group by p1.Pid");
+							+ season + "' AND p2.isplayoff = " + isPlayoff);
 
 			PlayerNameList namelist = PlayerNameList.getIntance();
 			TeamNameList teamlist = TeamNameList.getIntance();
@@ -95,7 +95,7 @@ public class PlayerReader {
 						rs.getString(9), rs.getString(10), rs.getString(11),
 						rs.getString(12));
 				String team = teamlist.getEnAbbrByFullZh(rs.getString(4 + 12));
-				p.setCurrentPlayerItem(new playerItem(rs.getString(1 + 12), rs
+				playerItem pitem = new playerItem(rs.getString(1 + 12), rs
 						.getBoolean(2 + 12), rs.getString(3 + 12), team, rs
 						.getInt(5 + 12), rs.getInt(6 + 12), rs
 						.getDouble(7 + 12), rs.getDouble(8 + 12), rs
@@ -134,7 +134,19 @@ public class PlayerReader {
 						.getDouble(73 + 12), rs.getDouble(74 + 12), rs
 						.getDouble(75 + 12), rs.getDouble(76 + 12), rs
 						.getDouble(77 + 12), rs.getDouble(78 + 12), rs
-						.getDouble(79 + 12)));
+						.getDouble(79 + 12));
+				
+				if( rs.getString(4+12).equals("总计")){
+					String pid = rs.getString(1);
+					
+					while(pid.equals(rs.getString(1))){
+						rs.next();
+					}
+					rs.previous();
+					team = teamlist.getEnAbbrByFullZh(rs.getString(4 + 12));
+					pitem.setTeam(team);
+				}
+				p.setCurrentPlayerItem(pitem);
 				listOfPlayer.add(p);
 			}
 		} catch (SQLException e) {
