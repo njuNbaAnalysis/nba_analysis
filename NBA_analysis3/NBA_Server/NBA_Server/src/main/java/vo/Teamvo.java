@@ -4,12 +4,14 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Teamvo implements Serializable {
@@ -699,8 +701,46 @@ public class Teamvo implements Serializable {
         
         Field[] fields = this.getClass().getDeclaredFields();
         for(Field field:fields){
-            if(field.getName().equals(latestWinOrLose)){
-                
+            System.out.println(field.getGenericType());
+            //遇到ArrayList，此类中为ArrayList<String>，转换为jsonArray
+            if(field.getType().toString().equals("class java.util.ArrayList")){
+                JSONArray array = new JSONArray();
+                try {
+                    ArrayList<String> list = (ArrayList<String>) field.get(this);
+                    for(String s:list){
+                        array.put(s);
+                    }
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                result.put(field.getName(), array);
+            }
+            
+            //如果是数组，则转换为jsonArray
+            if(field.getType().isArray()){
+                JSONArray array = new JSONArray();
+                try {
+                    Object list = (Object) field.get(this);
+                    Class<?> element = list.getClass().getComponentType();
+                    for(int i = 0;i < Array.getLength(list);i ++){
+                        array.put(Array.get(list, i));
+                    }
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                result.put(field.getName(), array);
+            }
+            
+            //其余情况，直接转换
+            try {
+                Object o = field.get(this);
+                result.put(field.getName(), o);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
         
