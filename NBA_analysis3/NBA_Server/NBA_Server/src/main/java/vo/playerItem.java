@@ -667,6 +667,7 @@ public class playerItem implements Serializable{
 		this.dunked = dunked;
 	}
 
+	/**返回该球员平均出手距离*/;
 	public double getDistance() {
 		return distance;
 	}
@@ -675,6 +676,7 @@ public class playerItem implements Serializable{
 		this.distance = distance;
 	}
 
+	/**返回该球员该赛季篮下命中率*/;
 	public double getBaskethitrate() {
 		return Baskethitrate;
 	}
@@ -683,6 +685,7 @@ public class playerItem implements Serializable{
 		Baskethitrate = baskethitrate;
 	}
 
+	/**返回该球员该赛季平均篮下命中数*/;
 	public double getAverageBaskethit() {
 		return averageBaskethit;
 	}
@@ -691,6 +694,7 @@ public class playerItem implements Serializable{
 		this.averageBaskethit = averageBaskethit;
 	}
 
+	/**返回该球员该赛季平均篮下出手数*/;
 	public double getAverageBasketattempt() {
 		return averageBasketattempt;
 	}
@@ -699,6 +703,7 @@ public class playerItem implements Serializable{
 		this.averageBasketattempt = averageBasketattempt;
 	}
 
+	/**返回该球员该赛季篮下出手*/;
 	public double getBasketPercent() {
 		return BasketPercent;
 	}
@@ -707,6 +712,7 @@ public class playerItem implements Serializable{
 		BasketPercent = basketPercent;
 	}
 
+	/**返回该球员该赛季短距两分命中率*/;
 	public double getShorthitrate() {
 		return Shorthitrate;
 	}
@@ -715,6 +721,7 @@ public class playerItem implements Serializable{
 		Shorthitrate = shorthitrate;
 	}
 
+	/**返回该球员该赛季平均短距两分命中数*/;
 	public double getAverageShorthit() {
 		return averageShorthit;
 	}
@@ -723,6 +730,7 @@ public class playerItem implements Serializable{
 		this.averageShorthit = averageShorthit;
 	}
 
+	/**返回该球员该赛季平均短距两分出手数*/;
 	public double getAverageShortattempt() {
 		return averageShortattempt;
 	}
@@ -731,6 +739,7 @@ public class playerItem implements Serializable{
 		this.averageShortattempt = averageShortattempt;
 	}
 
+	/**返回该球员该赛季短距两分出手占比*/;
 	public double getShortPercent() {
 		return ShortPercent;
 	}
@@ -739,6 +748,7 @@ public class playerItem implements Serializable{
 		ShortPercent = shortPercent;
 	}
 
+	/**返回该球员该赛季中距两分命中率*/;
 	public double getMiddlehitrate() {
 		return Middlehitrate;
 	}
@@ -747,6 +757,7 @@ public class playerItem implements Serializable{
 		Middlehitrate = middlehitrate;
 	}
 
+	/**返回该球员该赛季平均中距两分命中数*/;
 	public double getAverageMiddlehit() {
 		return averageMiddlehit;
 	}
@@ -755,6 +766,7 @@ public class playerItem implements Serializable{
 		this.averageMiddlehit = averageMiddlehit;
 	}
 
+	/**返回该球员该赛季平均中距两分出手数*/;
 	public double getAverageMiddleattempt() {
 		return averageMiddleattempt;
 	}
@@ -763,6 +775,7 @@ public class playerItem implements Serializable{
 		this.averageMiddleattempt = averageMiddleattempt;
 	}
 
+	/**返回该球员该赛季中距两分出手占比*/;
 	public double getMiddlePercent() {
 		return MiddlePercent;
 	}
@@ -771,6 +784,7 @@ public class playerItem implements Serializable{
 		MiddlePercent = middlePercent;
 	}
 
+	/**返回该球员该赛季长距两分命中率*/;
 	public double getLonghitrate() {
 		return Longhitrate;
 	}
@@ -779,7 +793,7 @@ public class playerItem implements Serializable{
 		Longhitrate = longhitrate;
 	}
 
-	/**该球员该赛季平均长距两分命中数*/;
+	/**返回该球员该赛季平均长距两分命中数*/;
 	public double getAverageLonghit() {
 		return averageLonghit;
 	}
@@ -788,7 +802,7 @@ public class playerItem implements Serializable{
 		this.averageLonghit = averageLonghit;
 	}
 
-	/**该球员该赛季平均中距两分出手数*/
+	/**返回该球员该赛季平均中距两分出手数*/
 	public double getAverageLongattempt() {
 		return averageLongattempt;
 	}
@@ -797,7 +811,7 @@ public class playerItem implements Serializable{
 		this.averageLongattempt = averageLongattempt;
 	}
 
-	/**该球员该赛季长距两分占比*/
+	/**返回该球员该赛季长距两分占比*/
 	public double getLongPercent() {
 		return LongPercent;
 	}
@@ -806,7 +820,7 @@ public class playerItem implements Serializable{
 		LongPercent = longPercent;
 	}
 
-	/**该球员该赛季真实命中率*/;
+	/**返回该球员该赛季真实命中率*/;
 	public double getTrueshootingPercent() {
 		return trueshootingPercent;
 	}
@@ -815,7 +829,7 @@ public class playerItem implements Serializable{
 		this.trueshootingPercent = trueshootingPercent;
 	}
 
-	/**该球员该赛季投篮效率值*/;
+	/**返回该球员该赛季投篮效率值*/;
 	public double getShootingEfficiency() {
 		return shootingEfficiency;
 	}

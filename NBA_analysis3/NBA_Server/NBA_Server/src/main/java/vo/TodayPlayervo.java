@@ -41,11 +41,11 @@ public class TodayPlayervo implements Serializable{
 		this.steals = steals;
 		this.blockShots = blockShots;
 	}
-	/**的发哦该球员的唯一标识符Pid*/
+	/**返回该球员的唯一标识符Pid*/
 	public String getPid(){
 		return pid;
 	}
-	/**的发哦该球员的姓名*/
+	/**返回该球员的姓名*/
 	public String getName() {
 		return name;
 	}
@@ -54,7 +54,7 @@ public class TodayPlayervo implements Serializable{
 		this.name = name;
 	}
 	
-	/**的发哦该球员所在球队名*/
+	/**返回该球员所在球队名*/
 	public String getTeam() {
 		return team;
 	}
@@ -63,32 +63,32 @@ public class TodayPlayervo implements Serializable{
 		this.team = team;
 	}
 
-	/**的发哦该球员的今日得分*/
+	/**返回该球员的今日得分*/
 	public int getPoints() {
 		return Points;
 	}
 
-	/**的发哦该球员的今日篮板*/
+	/**返回该球员的今日篮板*/
 	public int getRebounds() {
 		return Rebounds;
 	}
 
-	/**的发哦该球员的今日助攻*/
+	/**返回该球员的今日助攻*/
 	public int getAssists() {
 		return Assists;
 	}
 
-	/**的发哦该球员的今日抢断*/	
+	/**返回该球员的今日抢断*/	
 	public int getSteals() {
 		return steals;
 	}
 
-	/**的发哦该球员的今日盖帽*/
+	/**返回该球员的今日盖帽*/
 	public int getBlockShots() {
 		return blockShots;
 	}
 
-	/**的发哦该球员的头像，如果头像不存在，则返回null*/
+	/**返回该球员的头像，如果头像不存在，则返回null*/
 	public Image getAction() {
 		Image image = null;
 		try {
