@@ -283,7 +283,7 @@ public class Playervo implements Serializable {
 			if(temp.length>2){
 				name = temp[0]+" "+temp[temp.length-1];
 			}
-			image = ImageIO.read(new File("./Data/PlayerAction/" + name
+			image = ImageIO.read(new File("./Data/PlayerImage/" + name
 					+ ".png"));
 		} catch (IOException e) {
 		}
