@@ -19,7 +19,7 @@ public class DataFactoryMySql implements DataFactory {
 	
 	public BLservice getBLservice() {
 		try {
-			return (BLservice) Naming.lookup("rmi://" + "192.168.1.102" + ":" + "6600"
+			return (BLservice) Naming.lookup("rmi://" + "192.168.1.110" + ":" + "6600"
 					+ "/" + "BLservice");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -7,17 +7,30 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
-
+/**
+ * 用于记录某个球员某一天的数据情况，包括：该球员唯一标识符Pid，该球员姓名，该球员所在球队，今日的分。今日篮板，今日助攻，今日抢断，今日盖帽
+ * */
 public class TodayPlayervo implements Serializable{
+	/**该球员唯一标识符Pid*/
 	String pid;
+	/**该球员姓名*/
 	String name;
+	/**该球员所在球队*/
 	String team;
+	/**该球员今日得分*/
 	private int Points;
+	/**该球员今日篮板*/
 	private int Rebounds;
+	/**该球员今日助攻*/
 	private int Assists;
+	/**该球员今日抢断*/
 	private int steals;
+	/**该球员今日盖帽*/
 	private int blockShots;
 
+	/**
+	 * 对该类的所有属性进行构造
+	 * */
 	public TodayPlayervo(String pid,String name, String team, int Points,
 			int Rebounds, int Assists, int steals, int blockShots) {
 		this.name = name;
@@ -28,10 +41,11 @@ public class TodayPlayervo implements Serializable{
 		this.steals = steals;
 		this.blockShots = blockShots;
 	}
+	/**返回该球员的唯一标识符Pid*/
 	public String getPid(){
 		return pid;
 	}
-	
+	/**返回该球员的姓名*/
 	public String getName() {
 		return name;
 	}
@@ -39,7 +53,8 @@ public class TodayPlayervo implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	/**返回该球员所在球队名*/
 	public String getTeam() {
 		return team;
 	}
@@ -48,26 +63,32 @@ public class TodayPlayervo implements Serializable{
 		this.team = team;
 	}
 
+	/**返回该球员的今日得分*/
 	public int getPoints() {
 		return Points;
 	}
 
+	/**返回该球员的今日篮板*/
 	public int getRebounds() {
 		return Rebounds;
 	}
 
+	/**返回该球员的今日助攻*/
 	public int getAssists() {
 		return Assists;
 	}
 
+	/**返回该球员的今日抢断*/	
 	public int getSteals() {
 		return steals;
 	}
 
+	/**返回该球员的今日盖帽*/
 	public int getBlockShots() {
 		return blockShots;
 	}
 
+	/**返回该球员的头像，如果头像不存在，则返回null*/
 	public Image getAction() {
 		Image image = null;
 		try {

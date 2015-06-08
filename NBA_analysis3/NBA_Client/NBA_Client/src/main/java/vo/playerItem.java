@@ -2,87 +2,172 @@ package vo;
 
 import java.io.Serializable;
 
+/**用于记录某个球员某一个赛季的历史各项数据（包括基础数据和高阶数据）*/
 public class playerItem implements Serializable{
+	/**该球员的唯一标识符Pid*/
 	private String Pid;
+	/**该记录是否为季后赛*/
 	private boolean isplayoff;
+	/**该记录的赛季数，例如13-14*/
 	private String season;
+	/**该球员该赛季所效力的球队*/
 	private String team;
+	/**该球员该赛季上场次数*/
 	private int gameplayed;
+	/**该球员该赛季首发次数*/
 	private int gamestarted;
+	/**该球员该赛季平均上场时间*/
 	private double averageTime;
+	/**该球员该赛季投篮命中率*/
 	private double fieldGoalsPercent;
+	/**该球员该赛季平均投篮命中数*/
 	private double averagefieldGoalsHit;
+	/**该球员该赛季平均投篮出手数*/
 	private double averagefieldGoalsAttempt;
+	/**该球员该赛季三分命中率*/
 	private double threePointPercent;
+	/**该球员该赛季平均三分命中数*/
 	private double averagethreePointHit;
+	/**该球员该赛季平均三分出手数*/
 	private double averagethreePointAttempt;
+	/**该球员该赛季罚球命中率*/
 	private double freethrowPercent;
+	/**该球员该赛季平均罚球命中数*/
 	private double averagefreethrowHit;
+	/**该球员该赛季平均罚球出手数*/
 	private double averagefreethrowAttempt;
+	/**该球员该赛季平均篮板数*/	
 	private double averagerebounds;
+	/**该球员该赛季平均进攻篮板数*/	
 	private double averageoffenseRebounds;
+	/**该球员该赛季平均防守篮板数*/	
 	private double averagedefenseRebounds;
+	/**该球员该赛季平均助攻数*/	
 	private double averageassisit;
+	/**该球员该赛季平均抢断数*/	
 	private double averagesteals;
+	/**该球员该赛季平均盖帽数*/	
 	private double averageblockShots;
+	/**该球员该赛季平均失误数*/	
 	private double averageturnOver;
+	/**该球员该赛季平均犯规数*/	
 	private double averagefouls;
+	/**该球员该赛季平均得分*/	
 	private double averagepoints;
+	/**该球员该赛季总胜利场数*/	
 	private int wins;
+	/**该球员该赛季总失败场数*/	
 	private int defeats;
+	/**该球员该赛季总投篮命中数*/	
 	private int fieldGoalsHit;
+	/**该球员该赛季总投篮出手数*/	
 	private int fieldGoalsAttempt;
+	/**该球员该赛季总三分命中数*/	
 	private int threethrowHit;
+	/**该球员该赛季总三分出手数*/
 	private int threethrowAttempt;
+	/**该球员该赛季总罚球命中数*/
 	private int freethrowHit;
+	/**该球员该赛季总罚球出手数*/
 	private int freethrowAttempt;
+	/**该球员该赛季总篮板数数*/
 	private int rebounds;
+	/**该球员该赛季总进攻篮板数数*/
 	private int offenseRebounds;
+	/**该球员该赛季总防守篮板数数*/
 	private int defenseRebounds;
+	/**该球员该赛季总上场时间*/
 	private double time;
+	/**该球员该赛季总助攻数”*/
 	private int assists;
+	/**该球员该赛季总抢断数”*/
 	private int steals;
+	/**该球员该赛季总盖帽数”*/
 	private int blockShots;
+	/**该球员该赛季总失误数”*/
 	private int turnOver;
+	/**该球员该赛季总犯规数”*/
 	private int fouls;
+	/**该球员该赛季总得分数”*/
 	private int points;
+	/**该球员该赛季篮板率”*/
 	private double reboundsPercentage;
+	/**该球员该赛季进攻篮板率”*/
 	private double offenseReboundsPercentage;
+	/**该球员该赛季防守篮板率”*/
 	private double defenseReboundsPercentage;
+	/**该球员该赛季助攻率”*/
 	private double assistsPercentage;
+	/**该球员该赛季抢断率”*/
 	private double stealsPercentage;
+	/**该球员该赛季盖帽率率”*/
 	private double blockShotsPercentage;
+	/**该球员该赛季失误率”*/
 	private double turnOverPercentage;
+	/**该球员该赛季使用率”*/
 	private double usage;
+	/**该球员该赛季进攻效率”*/
 	private double offenseEfficiency;
+	/**该球员该赛季防守效率”*/
 	private double defenseEfficiency;
+	/**该球员该赛季WS值：（团队胜利贡献，简单说就是该球员在球队胜利中所占的股份 ）”*/
 	private double WS;
+	/**
+	 * 进攻端的WS值 = 该名球员的边际进攻贡献 / （0.32*联盟平均每场球队得分），而球员的边际进攻贡献 = 球员赛季总得分 - 0.92*联盟平均每次进攻得分*球员总进攻次数
+	 * */
 	private double offenseWS;
+	/**
+	 * 防守端的WS值 = 该名球员的边际防守贡献 / （0.32*联盟平均每场球队得分），而球员边际防守贡献 = 球员出场时间占全队比例*球队防守的回合数*（1.08*联盟平均每次持球得分 - 球员每一次防守让对方所得的分数 
+	 * */
 	private double defenseWS;
+	/**该球员该赛季平均效率值*/
 	private double PER;
+	/**该球员该赛季总扣篮数*/
 	private int dunk;			//扣篮数
+	/**该球员该赛季提升率*/
 	private double riseRate;	//	提升率
+	/**该球员该赛季总被帽数*/
 	private int dunked;			//被帽数
+	/**该球员该赛季平均出手距离*/
 	private double distance;
+	/**该球员该赛季篮下命中率*/
 	private double Baskethitrate;
+	/**该球员该赛季平均篮下命中数*/
 	private double averageBaskethit;
+	/**该球员该赛季平均篮下出手数*/
 	private double averageBasketattempt;
+	/**该球员该赛季篮下出手占比*/
 	private double BasketPercent;
+	/**该球员该赛季短距两分命中率*/
 	private double Shorthitrate;
+	/**该球员该赛季平均短距两分命中数*/;
 	private double averageShorthit;
+	/**该球员该赛季平均短距两分出手数*/;
 	private double averageShortattempt;
+	/**该球员该赛季短距两分占比*/;
 	private double ShortPercent;
+	/**该球员该赛季中距两分命中率*/
 	private double Middlehitrate;
+	/**该球员该赛季平均中距两分命中数*/;
 	private double averageMiddlehit;
+	/**该球员该赛季平均中距两分出手数*/;
 	private double averageMiddleattempt;
+	/**该球员该赛季中距两分占比*/;
 	private double MiddlePercent;
+	/**该球员该赛季长距两分命中率*/
 	private double Longhitrate;
+	/**该球员该赛季平均长距两分命中数*/;
 	private double averageLonghit;
+	/**该球员该赛季平均中距两分出手数*/;
 	private double averageLongattempt;
+	/**该球员该赛季长距两分占比*/;
 	private double LongPercent;
+	/**该球员该赛季真实命中率*/;
 	private double trueshootingPercent;
+	/**该球员该赛季投篮效率值*/;
 	private double shootingEfficiency;
 
+	/**返回该球员的唯一标识符Pid*/
 	public String getPid() {
 		return Pid;
 	}
@@ -91,6 +176,7 @@ public class playerItem implements Serializable{
 		Pid = pid;
 	}
 
+	/**返回该赛季是否为季后赛*/
 	public boolean isIsplayoff() {
 		return isplayoff;
 	}
@@ -99,6 +185,7 @@ public class playerItem implements Serializable{
 		this.isplayoff = isplayoff;
 	}
 
+	/**返回该赛季数*/
 	public String getSeason() {
 		return season;
 	}
@@ -107,6 +194,7 @@ public class playerItem implements Serializable{
 		this.season = season;
 	}
 
+	/**返回该球员该赛季所在球队*/
 	public String getTeam() {
 		return team;
 	}
@@ -115,6 +203,7 @@ public class playerItem implements Serializable{
 		this.team = team;
 	}
 
+	/**返回该球员该赛季上场数*/
 	public int getGameplayed() {
 		return gameplayed;
 	}
@@ -123,6 +212,7 @@ public class playerItem implements Serializable{
 		this.gameplayed = gameplayed;
 	}
 
+	/**返回该球员该赛季首发数*/
 	public int getGamestarted() {
 		return gamestarted;
 	}
@@ -131,6 +221,7 @@ public class playerItem implements Serializable{
 		this.gamestarted = gamestarted;
 	}
 
+	/**返回该球员该赛季平均上场时间*/
 	public double getAverageTime() {
 		return averageTime;
 	}
@@ -139,6 +230,7 @@ public class playerItem implements Serializable{
 		this.averageTime = averageTime;
 	}
 
+	/**返回该球员该赛季投篮命中率*/
 	public double getFieldGoalsPercent() {
 		return fieldGoalsPercent;
 	}
@@ -147,6 +239,7 @@ public class playerItem implements Serializable{
 		this.fieldGoalsPercent = fieldGoalsPercent;
 	}
 
+	/**返回该球员该赛季平均投篮命中数*/
 	public double getAveragefieldGoalsHit() {
 		return averagefieldGoalsHit;
 	}
@@ -155,6 +248,7 @@ public class playerItem implements Serializable{
 		this.averagefieldGoalsHit = averagefieldGoalsHit;
 	}
 
+	/**返回该球员该赛季平均投篮出手数*/
 	public double getAveragefieldGoalsAttempt() {
 		return averagefieldGoalsAttempt;
 	}
@@ -163,6 +257,7 @@ public class playerItem implements Serializable{
 		this.averagefieldGoalsAttempt = averagefieldGoalsAttempt;
 	}
 
+	/**返回该球员该赛季三分命中率*/
 	public double getThreePointPercent() {
 		return threePointPercent;
 	}
@@ -511,10 +606,14 @@ public class playerItem implements Serializable{
 		return WS;
 	}
 
+	/**该球员该赛季WS值：（团队胜利贡献，简单说就是该球员在球队胜利中所占的股份 ）”*/
 	public void setWS(double wS) {
 		WS = wS;
 	}
 
+	/**
+	 * 进攻端的WS值 = 该名球员的边际进攻贡献 / （0.32*联盟平均每场球队得分），而球员的边际进攻贡献 = 球员赛季总得分 - 0.92*联盟平均每次进攻得分*球员总进攻次数
+	 * */
 	public double getOffenseWS() {
 		return offenseWS;
 	}
@@ -523,6 +622,9 @@ public class playerItem implements Serializable{
 		this.offenseWS = offenseWS;
 	}
 
+	/**
+	 * 防守端的WS值 = 该名球员的边际防守贡献 / （0.32*联盟平均每场球队得分），而球员边际防守贡献 = 球员出场时间占全队比例*球队防守的回合数*（1.08*联盟平均每次持球得分 - 球员每一次防守让对方所得的分数 
+	 * */
 	public double getDefenseWS() {
 		return defenseWS;
 	}
@@ -531,6 +633,7 @@ public class playerItem implements Serializable{
 		this.defenseWS = defenseWS;
 	}
 
+	/**该球员该赛季平均效率值*/
 	public double getPER() {
 		return PER;
 	}
@@ -539,6 +642,7 @@ public class playerItem implements Serializable{
 		PER = pER;
 	}
 
+	/**该球员该赛季总扣篮数*/
 	public int getDunk() {
 		return dunk;
 	}
@@ -563,6 +667,7 @@ public class playerItem implements Serializable{
 		this.dunked = dunked;
 	}
 
+	/**返回该球员平均出手距离*/;
 	public double getDistance() {
 		return distance;
 	}
@@ -571,6 +676,7 @@ public class playerItem implements Serializable{
 		this.distance = distance;
 	}
 
+	/**返回该球员该赛季篮下命中率*/;
 	public double getBaskethitrate() {
 		return Baskethitrate;
 	}
@@ -579,6 +685,7 @@ public class playerItem implements Serializable{
 		Baskethitrate = baskethitrate;
 	}
 
+	/**返回该球员该赛季平均篮下命中数*/;
 	public double getAverageBaskethit() {
 		return averageBaskethit;
 	}
@@ -587,6 +694,7 @@ public class playerItem implements Serializable{
 		this.averageBaskethit = averageBaskethit;
 	}
 
+	/**返回该球员该赛季平均篮下出手数*/;
 	public double getAverageBasketattempt() {
 		return averageBasketattempt;
 	}
@@ -595,6 +703,7 @@ public class playerItem implements Serializable{
 		this.averageBasketattempt = averageBasketattempt;
 	}
 
+	/**返回该球员该赛季篮下出手*/;
 	public double getBasketPercent() {
 		return BasketPercent;
 	}
@@ -603,6 +712,7 @@ public class playerItem implements Serializable{
 		BasketPercent = basketPercent;
 	}
 
+	/**返回该球员该赛季短距两分命中率*/;
 	public double getShorthitrate() {
 		return Shorthitrate;
 	}
@@ -611,6 +721,7 @@ public class playerItem implements Serializable{
 		Shorthitrate = shorthitrate;
 	}
 
+	/**返回该球员该赛季平均短距两分命中数*/;
 	public double getAverageShorthit() {
 		return averageShorthit;
 	}
@@ -619,6 +730,7 @@ public class playerItem implements Serializable{
 		this.averageShorthit = averageShorthit;
 	}
 
+	/**返回该球员该赛季平均短距两分出手数*/;
 	public double getAverageShortattempt() {
 		return averageShortattempt;
 	}
@@ -627,6 +739,7 @@ public class playerItem implements Serializable{
 		this.averageShortattempt = averageShortattempt;
 	}
 
+	/**返回该球员该赛季短距两分出手占比*/;
 	public double getShortPercent() {
 		return ShortPercent;
 	}
@@ -635,6 +748,7 @@ public class playerItem implements Serializable{
 		ShortPercent = shortPercent;
 	}
 
+	/**返回该球员该赛季中距两分命中率*/;
 	public double getMiddlehitrate() {
 		return Middlehitrate;
 	}
@@ -643,6 +757,7 @@ public class playerItem implements Serializable{
 		Middlehitrate = middlehitrate;
 	}
 
+	/**返回该球员该赛季平均中距两分命中数*/;
 	public double getAverageMiddlehit() {
 		return averageMiddlehit;
 	}
@@ -651,6 +766,7 @@ public class playerItem implements Serializable{
 		this.averageMiddlehit = averageMiddlehit;
 	}
 
+	/**返回该球员该赛季平均中距两分出手数*/;
 	public double getAverageMiddleattempt() {
 		return averageMiddleattempt;
 	}
@@ -659,6 +775,7 @@ public class playerItem implements Serializable{
 		this.averageMiddleattempt = averageMiddleattempt;
 	}
 
+	/**返回该球员该赛季中距两分出手占比*/;
 	public double getMiddlePercent() {
 		return MiddlePercent;
 	}
@@ -667,6 +784,7 @@ public class playerItem implements Serializable{
 		MiddlePercent = middlePercent;
 	}
 
+	/**返回该球员该赛季长距两分命中率*/;
 	public double getLonghitrate() {
 		return Longhitrate;
 	}
@@ -675,6 +793,7 @@ public class playerItem implements Serializable{
 		Longhitrate = longhitrate;
 	}
 
+	/**返回该球员该赛季平均长距两分命中数*/;
 	public double getAverageLonghit() {
 		return averageLonghit;
 	}
@@ -683,6 +802,7 @@ public class playerItem implements Serializable{
 		this.averageLonghit = averageLonghit;
 	}
 
+	/**返回该球员该赛季平均中距两分出手数*/
 	public double getAverageLongattempt() {
 		return averageLongattempt;
 	}
@@ -691,6 +811,7 @@ public class playerItem implements Serializable{
 		this.averageLongattempt = averageLongattempt;
 	}
 
+	/**返回该球员该赛季长距两分占比*/
 	public double getLongPercent() {
 		return LongPercent;
 	}
@@ -699,6 +820,7 @@ public class playerItem implements Serializable{
 		LongPercent = longPercent;
 	}
 
+	/**返回该球员该赛季真实命中率*/;
 	public double getTrueshootingPercent() {
 		return trueshootingPercent;
 	}
@@ -707,6 +829,7 @@ public class playerItem implements Serializable{
 		this.trueshootingPercent = trueshootingPercent;
 	}
 
+	/**返回该球员该赛季投篮效率值*/;
 	public double getShootingEfficiency() {
 		return shootingEfficiency;
 	}
@@ -715,6 +838,9 @@ public class playerItem implements Serializable{
 		this.shootingEfficiency = shootingEfficiency;
 	}
 
+	/**
+	 * 对该类的所有属性进行构造
+	 * */
 	public playerItem(String Pid, boolean isplayoff, String season,
 			String team, int gameplayed, int gamestarted, double averageTime,
 			double fieldGoalsPercent, double averagefieldGoalsHit,

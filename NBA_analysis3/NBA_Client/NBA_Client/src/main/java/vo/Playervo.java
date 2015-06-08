@@ -8,72 +8,137 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-
+/**
+ * 注意其中的 recordOfPlayer;表示记录某个球员的所有历史数据
+ * 当playervo记录为某一个赛季的数据时，recordOfPlayer 为 null；
+ * 当playervo不表示某一个特定赛季的数据时，recordOfPlayer则会记录该球员的所有历史记录
+ * 
+ * */
 public class Playervo implements Serializable {
+	/**该球员的唯一标识符，Pid*/
 	private String Pid;  //唯一标识符
+	/**该球员的姓名*/
 	private String name;
+	/**该球员的球衣号，可能为多个，用，隔开，例如：12，14，20*/
 	private String number; // 球衣号
-	private String position; // G,G-F 类似格式
-	private double height; // int[0]: foot,int[1]: inch
+	/**该球员所打球的位置，可能为多个，用-隔开，例如：前锋-中锋*/
+	private String position; 
+	/**该球员的升高，单位为M*/
+	private double height; //
+	/**该球员的体重，单位为KG*/
 	private double weight;
+	/**该球员的生日*/
 	private String birthday; // year,month,day
+	/**该球员的选秀情况*/
 	private String selected; // 选举情况
+	/**该球员的薪水*/
 	private String salary; // 薪水
+	/**该球员所上的高中*/
 	private String Highschool;
+	/**该球员所上的大学*/
 	private String University;
 	// not raw data
 	// 以***结尾的说明此项数据不需要存储
+	/**该球员该赛季所效力的球队*/
 	private String team; // current team
+	/**该球员该赛季所效力的球队所在的城市*/
 	private String location;// 城市
+	/**该球员该赛季所效力的球队所在的分区*/
 	private String division;// 分区
+	/**该球员该赛季所效力的球队所在的联盟：东部联盟或西部联盟*/
 	private String conference;// 分区
+	/**该球员该赛季出场次数*/
 	private int gamePlayed;// 出场次数
+	/**该球员该赛季首发次数*/
 	private int gameStarted;// 首发次数
 	// 可场均
+	/**该球员该赛季总篮板数*/
 	private int rebounds;// 总篮板数
+	/**该球员该赛季总助攻数*/
 	private int assists;// 总助攻数
+	/**该球员该赛季总上场时间*/
 	private double minutes;// 总上场时间
+	/**该球员该赛季总进攻篮板数*/
 	private int offenseRebounds;// 总进攻篮板
+	/**该球员该赛季总防守篮板数*/
 	private int defenseRebounds;// 总防守篮板
+	/**该球员该赛季总抢断数*/
 	private int steals;// 总抢断数
+	/**该球员该赛季总盖帽数*/
 	private int blockShots;// 总盖帽数
+	/**该球员该赛季总失误数*/
 	private int turnOver;// 总失误数
+	/**该球员该赛季总犯规数*/
 	private int fouls;// 总犯规数
+	/**该球员该赛季总得分数*/
 	private int points;// 总得分数
-	// 百分比率
+	/**该球员该赛季总投篮命中率*/
 	private double fieldGoalsPercentage;// 总投篮命中率
+	/**该球员该赛季总三分命中率*/
 	private double threePointersPercentage;// 三分命中率
+	/**该球员该赛季罚球命中率*/
 	private double freeThrowsPercentage;// 罚球命中率
+	/**该球员该赛季真实投篮命中率*/
 	private double trueShootingPercentage;// 真实投篮命中率
+	/**该球员该赛季 篮板率*/
 	private double reboundsPercentage;// 篮板率
+	/**该球员该赛季进攻篮板率*/
 	private double offenseReboundsPercentage;// 进攻篮板率
+	/**该球员该赛季防守篮板率*/
 	private double defenseReboundsPercentage;// 防守篮板率
+	/**该球员该赛季助攻率*/
 	private double assistsPercentage;// 助攻率
+	/**该球员该赛季抢断率*/
 	private double stealsPercentage;// 抢断率
+	/**该球员该赛季盖帽率*/
 	private double blockShotsPercentage;// 盖帽率
+	/**该球员该赛季失误率*/
 	private double turnOverPercentage;// 失误率
+	/**该球员该赛季 使用率*/
 	private double usage;// 使用率
+	/**该球员该赛季近五场比赛提升率,按次序依次为得分，篮板，助攻*/
 	private double[] upgradeRate = new double[3]; // 近五场比赛提升率,按次序依次为得分，篮板，助攻
 	// 效率值
+	/**该球员该赛效率值*/
 	private double efficiency;// 效率值
+	/**该球员该赛gmsc效率值*/
 	private double gmsc;// gmsc效率值
+	/**该球员该赛投篮效率*/
 	private double shootingEfficiency;// 投篮效率
 	// tempData 不用做界面显示，在计算中用到，可能用作以后的界面显示
+	/**该球员该赛投篮命中*/
 	private int fieldGoalHits; // 投篮命中
+	/**该球员该赛投篮出手*/
 	private int fieldGoalAttempts; // 投篮出手
+	/**该球员该赛三分命中*/
 	private int threePointerHits; // 三分命中
+	/**该球员该赛三分出手*/
 	private int threePointerAttempts; // 三分出手
+	/**该球员该赛罚球命中*/
 	private int freeThrowHits; // 罚球命中
+	/**该球员该赛罚球出手*/
 	private int freeThrowAttempts; // 罚球出手
-	
+	/**该球员该赛季WS值：（团队胜利贡献，简单说就是该球员在球队胜利中所占的股份 ）*/
 	private double WS;			//胜利贡献值，简称WS，指一名球员为球队胜利所做的贡献
+	/**
+	 * 进攻端的WS值 = 该名球员的边际进攻贡献 / （0.32*联盟平均每场球队得分），而球员的边际进攻贡献 = 球员赛季总得分 - 0.92*联盟平均每次进攻得分*球员总进攻次数
+	 * */
 	private double offenseWS;
+	/**
+	 * 防守端的WS值 = 该名球员的边际防守贡献 / （0.32*联盟平均每场球队得分），而球员边际防守贡献 = 球员出场时间占全队比例*球队防守的回合数*（1.08*联盟平均每次持球得分 - 球员每一次防守让对方所得的分数 
+	 * */
 	private double defenseWS;
+	/**该球员该赛季扣篮数*/
 	private int dunk;               //扣篮数
+	/**该球员该赛季被帽数*/
 	private int blocked;				//被帽数
 	
+	/**表示记录某个球员的所有历史数据*/
 	private ArrayList<playerItem> recordOfPlayer;
 	
+	/**
+	 * 对该类的所有属性进行构造
+	 * */
 	public Playervo(String Pid,String name, String number, String position, double height,
 			double weight, String birthday, String selected, String salary,
 			String highschool, String university, String team, String location,
@@ -218,7 +283,7 @@ public class Playervo implements Serializable {
 			if(temp.length>2){
 				name = temp[0]+" "+temp[temp.length-1];
 			}
-			image = ImageIO.read(new File("./Data/PlayerImage/" + name
+			image = ImageIO.read(new File("./Data/PlayerAction/" + name
 					+ ".png"));
 		} catch (IOException e) {
 		}
