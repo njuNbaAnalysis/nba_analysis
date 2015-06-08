@@ -1,12 +1,15 @@
 # -*- coding:utf-8 -*-
-import reload
 
 import requests
 import sys
 
 import CsvHelper
 
+
+
 def find_MatchItemlive(game_id,ishome):
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
     # http://china.nba.com/wap/static/data/game/snapshot_0041400311.json
     aim = 'http://china.nba.com/wap/static/data/game/snapshot_' \
           + str(game_id) + '.json'
