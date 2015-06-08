@@ -474,7 +474,7 @@ public class PlayerJTable extends StatJTable {
 
 	}
 
-	private Comparator<Playervo> getComparator(String depend, boolean selected) {
+	public static Comparator<Playervo> getComparator(String depend, boolean selected) {
 		Comparator<Playervo> c = null;
 		if (selected) {
 			switch (depend) {
@@ -507,13 +507,16 @@ public class PlayerJTable extends StatJTable {
 				c = new PlayerEfficiencyComp();
 				break;
 			case "投篮":
+			case "%":
 				c = new PlayerFieldGoalsPercentageComp();
 				break;
 
 			case "三分":
+			case "三分%":
 				c = new PlayerThreePointersPercentageComp();
 				break;
 			case "罚球":
+			case "罚球%":
 				c = new PlayerFreeThrowsPercentageComp();
 				break;
 

@@ -174,7 +174,7 @@ public class AgendaPanel extends JPanel{
 			for(int i=0;i<12;i++){
 				ArrayList<MatchSimpleInfovo> subList = new ArrayList<MatchSimpleInfovo>();
 				for(MatchSimpleInfovo info:matchList){
-					if(info.getDate().getMonth()==i){
+					if(Integer.parseInt(info.getDate().split("-")[1])==i){
 						subList.add(info);
 					}
 				}
@@ -206,7 +206,7 @@ public class AgendaPanel extends JPanel{
 
 		private String[] getInfoRow(MatchSimpleInfovo info) {
 			String[] s = new String[5];
-			s[0] = (info.getDate().getMonth()+1)+"月"+(info.getDate().getDay()+1)+"日";
+			s[0] = (Integer.parseInt(info.getDate().split("-")[1])+1)+"月"+(Integer.parseInt(info.getDate().split("-")[2])+1)+"日";
 			if(info.isAtHome()){
 				s[1] = "vs "+info.getNameOfRival();
 			}else{
