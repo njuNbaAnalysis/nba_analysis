@@ -45,7 +45,7 @@ public class PlayerReaderTest {
 	@Test
 	public void testGetPlayerById() {
 		PlayerReader pr = new PlayerReader();
-		player p = pr.getPlayerById("00195");
+		player p = pr.getPlayerById("195");
 		boolean result = (p != null);
 		System.out.println(p.getPid() + "  " + p.getName());
 		assertTrue(result);
@@ -54,7 +54,7 @@ public class PlayerReaderTest {
 	@Test
 	public void testGetPlayerById2() {
 		PlayerReader pr = new PlayerReader();
-		player p = pr.getPlayerById("05000");
+		player p = pr.getPlayerById("5000");
 		boolean result = (p == null);
 		assertTrue(result);
 	}

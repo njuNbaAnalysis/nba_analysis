@@ -167,6 +167,7 @@ public class playerItem implements Serializable{
 	/**该球员该赛季投篮效率值*/;
 	private double shootingEfficiency;
 
+	/**返回该球员的唯一标识符Pid*/
 	public String getPid() {
 		return Pid;
 	}
@@ -175,6 +176,7 @@ public class playerItem implements Serializable{
 		Pid = pid;
 	}
 
+	/**返回该赛季是否为季后赛*/
 	public boolean isIsplayoff() {
 		return isplayoff;
 	}
@@ -183,6 +185,7 @@ public class playerItem implements Serializable{
 		this.isplayoff = isplayoff;
 	}
 
+	/**返回该赛季数*/
 	public String getSeason() {
 		return season;
 	}
@@ -191,6 +194,7 @@ public class playerItem implements Serializable{
 		this.season = season;
 	}
 
+	/**返回该球员该赛季所在球队*/
 	public String getTeam() {
 		return team;
 	}
@@ -199,6 +203,7 @@ public class playerItem implements Serializable{
 		this.team = team;
 	}
 
+	/**返回该球员该赛季上场数*/
 	public int getGameplayed() {
 		return gameplayed;
 	}
@@ -207,6 +212,7 @@ public class playerItem implements Serializable{
 		this.gameplayed = gameplayed;
 	}
 
+	/**返回该球员该赛季首发数*/
 	public int getGamestarted() {
 		return gamestarted;
 	}
@@ -215,6 +221,7 @@ public class playerItem implements Serializable{
 		this.gamestarted = gamestarted;
 	}
 
+	/**返回该球员该赛季平均上场时间*/
 	public double getAverageTime() {
 		return averageTime;
 	}
@@ -223,6 +230,7 @@ public class playerItem implements Serializable{
 		this.averageTime = averageTime;
 	}
 
+	/**返回该球员该赛季投篮命中率*/
 	public double getFieldGoalsPercent() {
 		return fieldGoalsPercent;
 	}
@@ -231,6 +239,7 @@ public class playerItem implements Serializable{
 		this.fieldGoalsPercent = fieldGoalsPercent;
 	}
 
+	/**返回该球员该赛季平均投篮命中数*/
 	public double getAveragefieldGoalsHit() {
 		return averagefieldGoalsHit;
 	}
@@ -239,6 +248,7 @@ public class playerItem implements Serializable{
 		this.averagefieldGoalsHit = averagefieldGoalsHit;
 	}
 
+	/**返回该球员该赛季平均投篮出手数*/
 	public double getAveragefieldGoalsAttempt() {
 		return averagefieldGoalsAttempt;
 	}
@@ -247,6 +257,7 @@ public class playerItem implements Serializable{
 		this.averagefieldGoalsAttempt = averagefieldGoalsAttempt;
 	}
 
+	/**返回该球员该赛季三分命中率*/
 	public double getThreePointPercent() {
 		return threePointPercent;
 	}
@@ -595,10 +606,14 @@ public class playerItem implements Serializable{
 		return WS;
 	}
 
+	/**该球员该赛季WS值：（团队胜利贡献，简单说就是该球员在球队胜利中所占的股份 ）”*/
 	public void setWS(double wS) {
 		WS = wS;
 	}
 
+	/**
+	 * 进攻端的WS值 = 该名球员的边际进攻贡献 / （0.32*联盟平均每场球队得分），而球员的边际进攻贡献 = 球员赛季总得分 - 0.92*联盟平均每次进攻得分*球员总进攻次数
+	 * */
 	public double getOffenseWS() {
 		return offenseWS;
 	}
@@ -607,6 +622,9 @@ public class playerItem implements Serializable{
 		this.offenseWS = offenseWS;
 	}
 
+	/**
+	 * 防守端的WS值 = 该名球员的边际防守贡献 / （0.32*联盟平均每场球队得分），而球员边际防守贡献 = 球员出场时间占全队比例*球队防守的回合数*（1.08*联盟平均每次持球得分 - 球员每一次防守让对方所得的分数 
+	 * */
 	public double getDefenseWS() {
 		return defenseWS;
 	}
@@ -615,6 +633,7 @@ public class playerItem implements Serializable{
 		this.defenseWS = defenseWS;
 	}
 
+	/**该球员该赛季平均效率值*/
 	public double getPER() {
 		return PER;
 	}
@@ -623,6 +642,7 @@ public class playerItem implements Serializable{
 		PER = pER;
 	}
 
+	/**该球员该赛季总扣篮数*/
 	public int getDunk() {
 		return dunk;
 	}
@@ -759,6 +779,7 @@ public class playerItem implements Serializable{
 		Longhitrate = longhitrate;
 	}
 
+	/**该球员该赛季平均长距两分命中数*/;
 	public double getAverageLonghit() {
 		return averageLonghit;
 	}
@@ -767,6 +788,7 @@ public class playerItem implements Serializable{
 		this.averageLonghit = averageLonghit;
 	}
 
+	/**该球员该赛季平均中距两分出手数*/
 	public double getAverageLongattempt() {
 		return averageLongattempt;
 	}
@@ -775,6 +797,7 @@ public class playerItem implements Serializable{
 		this.averageLongattempt = averageLongattempt;
 	}
 
+	/**该球员该赛季长距两分占比*/
 	public double getLongPercent() {
 		return LongPercent;
 	}
@@ -783,6 +806,7 @@ public class playerItem implements Serializable{
 		LongPercent = longPercent;
 	}
 
+	/**该球员该赛季真实命中率*/;
 	public double getTrueshootingPercent() {
 		return trueshootingPercent;
 	}
@@ -791,6 +815,7 @@ public class playerItem implements Serializable{
 		this.trueshootingPercent = trueshootingPercent;
 	}
 
+	/**该球员该赛季投篮效率值*/;
 	public double getShootingEfficiency() {
 		return shootingEfficiency;
 	}

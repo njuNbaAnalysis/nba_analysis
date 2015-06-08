@@ -69,7 +69,7 @@ public class playerBLcontrollorTest {
 	@Test
 	public void testgetPlayerById() {
 		playerBLcontrollor pl = playerBLcontrollor.getInstance();
-		Playervo list = pl.getPlayerById("00195", "12-13", false);
+		Playervo list = pl.getPlayerById("195", "12-13", false);
 		boolean result = (list != null);
 		assertTrue(result);
 	}
@@ -77,7 +77,7 @@ public class playerBLcontrollorTest {
 	@Test
 	public void testgetPlayerById2() {
 		playerBLcontrollor pl = playerBLcontrollor.getInstance();
-		Playervo list = pl.getPlayerById("00195");
+		Playervo list = pl.getPlayerById("195");
 		System.out.println(list.getRecordOfPlayer().size() + "HEHEHEHEHEHE");
 		boolean result = (list != null);
 		assertTrue(result);
