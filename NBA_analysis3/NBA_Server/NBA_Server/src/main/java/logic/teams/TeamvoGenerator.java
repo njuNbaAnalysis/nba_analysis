@@ -245,6 +245,7 @@ public class TeamvoGenerator {
         //for debug
         //如果voList为null或为空则不进行任何计算
         if(voList == null || voList.isEmpty()){
+            System.out.println("error in voList: " + voList);
             return ;
         }
         

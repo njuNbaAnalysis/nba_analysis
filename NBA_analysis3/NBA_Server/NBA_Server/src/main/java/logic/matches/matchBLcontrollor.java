@@ -169,7 +169,7 @@ public class matchBLcontrollor {
 		ArrayList<String> list2 = matchReader.getMatchesByTeam(teamNameEn,
 				season, isPlayOff, 10);
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
-		
+		System.out.println("testtest:"+list2.size());
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
 				if (list2.get(i).equals(list.get(j).getMid()))
