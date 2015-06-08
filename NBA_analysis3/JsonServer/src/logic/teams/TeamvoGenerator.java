@@ -40,8 +40,6 @@ public class TeamvoGenerator {
           //得到teamNameEn所对应的teamListItem
             TeamListItem teamListItem = teamNameList.getTeamListItem(teamNameEn);
             
-            System.out.println("teamNameEn:" + teamNameEn);
-            System.out.println("teamNameZh:" + teamListItem.getTeamNameZh());
             vo.setAbbreviation(teamNameEn);
             vo.setName(teamListItem.getTeamNameZh());
             
