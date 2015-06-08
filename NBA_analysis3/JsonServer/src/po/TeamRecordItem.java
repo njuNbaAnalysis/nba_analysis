@@ -281,7 +281,9 @@ public class TeamRecordItem {
             return false;
         }
         
-        if(!this.getTeamNameEn().equals(key.getTeamNameEn())){
+        if(this.getTeamNameEn() != null && !this.getTeamNameEn().isEmpty()
+                && key.getTeamNameEn() != null && !key.getTeamNameEn().isEmpty()
+                && !this.getTeamNameEn().equals(key.getTeamNameEn())){
             return false;
         }
         

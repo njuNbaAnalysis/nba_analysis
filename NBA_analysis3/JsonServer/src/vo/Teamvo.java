@@ -4,10 +4,15 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Teamvo implements Serializable {
     
@@ -601,33 +606,6 @@ public class Teamvo implements Serializable {
     public int getReboundsRival() {
         return this.getOffenseReboundsRival() + this.getDefenseReboundsRival();
     }
-    
-
-    
-    
-    @Override
-    public String toString() {
-        return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", conference=" + conference + ", division="
-                + division + ", homeCourt=" + homeCourt + ", season=" + season + ", isPlayOff=" + isPlayOff
-                + ", playerList=" + playerList + ", numOfMatches=" + numOfMatches + ", numOfVictory=" + numOfVictory
-                + ", numOfMatchesInSeason=" + numOfMatchesInSeason + ", numOfVictoryInSeason=" + numOfVictoryInSeason
-                + ", fieldGoalAttemps=" + fieldGoalAttemps + ", fieldGoalHits=" + fieldGoalHits
-                + ", threePointerAttempts=" + threePointerAttempts + ", threePointerHits=" + threePointerHits
-                + ", freeThrowAttempts=" + freeThrowAttempts + ", freeThrowHits=" + freeThrowHits
-                + ", offensiveRebounds=" + offensiveRebounds + ", defensiveRebounds=" + defensiveRebounds
-                + ", assists=" + assists + ", steals=" + steals + ", blockShots=" + blockShots + ", turnOver="
-                + turnOver + ", fouls=" + fouls + ", points=" + points + ", offensiveRounds=" + offensiveRounds
-                + ", defensiveRounds=" + defensiveRounds + ", offenseEfficiency=" + offenseEfficiency
-                + ", defenseEfficiency=" + defenseEfficiency + ", reboundsEfficiency=" + reboundsEfficiency
-                + ", stealsEfficiency=" + stealsEfficiency + ", assistsPercentage=" + assistsPercentage
-                + ", pointsRival=" + pointsRival + ", fieldGoalAttempsRival=" + fieldGoalAttempsRival
-                + ", threePointerAttemptsRival=" + threePointerAttemptsRival + ", offenseReboundsRival="
-                + offenseReboundsRival + ", defenseReboundsRival=" + defenseReboundsRival + ", rankingInLeague="
-                + rankingInLeague + ", latestWinOrLose=" + Arrays.toString(latestWinOrLose) + ", latestRecord="
-                + Arrays.toString(latestRecord) + ", latestOffendThanDefend=" + Arrays.toString(latestOffendThanDefend)
-                + ", latestOffend=" + Arrays.toString(latestOffend) + ", latestDefend=" + Arrays.toString(latestDefend)
-                + ", latestTempo=" + Arrays.toString(latestTempo) + "]";
-    }
 
     public boolean[] getLatestWinOrLose() {
         return latestWinOrLose;
@@ -692,5 +670,82 @@ public class Teamvo implements Serializable {
     public void setNumOfVictoryInSeason(int numOfVictoryInSeason) {
         this.numOfVictoryInSeason = numOfVictoryInSeason;
     }
+    
+    @Override
+    public String toString() {
+        return "Teamvo [name=" + name + ", abbreviation=" + abbreviation + ", conference=" + conference + ", division="
+                + division + ", homeCourt=" + homeCourt + ", season=" + season + ", isPlayOff=" + isPlayOff
+                + ", playerList=" + playerList + ", numOfMatches=" + numOfMatches + ", numOfVictory=" + numOfVictory
+                + ", numOfMatchesInSeason=" + numOfMatchesInSeason + ", numOfVictoryInSeason=" + numOfVictoryInSeason
+                + ", fieldGoalAttemps=" + fieldGoalAttemps + ", fieldGoalHits=" + fieldGoalHits
+                + ", threePointerAttempts=" + threePointerAttempts + ", threePointerHits=" + threePointerHits
+                + ", freeThrowAttempts=" + freeThrowAttempts + ", freeThrowHits=" + freeThrowHits
+                + ", offensiveRebounds=" + offensiveRebounds + ", defensiveRebounds=" + defensiveRebounds
+                + ", assists=" + assists + ", steals=" + steals + ", blockShots=" + blockShots + ", turnOver="
+                + turnOver + ", fouls=" + fouls + ", points=" + points + ", offensiveRounds=" + offensiveRounds
+                + ", defensiveRounds=" + defensiveRounds + ", offenseEfficiency=" + offenseEfficiency
+                + ", defenseEfficiency=" + defenseEfficiency + ", reboundsEfficiency=" + reboundsEfficiency
+                + ", stealsEfficiency=" + stealsEfficiency + ", assistsPercentage=" + assistsPercentage
+                + ", pointsRival=" + pointsRival + ", fieldGoalAttempsRival=" + fieldGoalAttempsRival
+                + ", threePointerAttemptsRival=" + threePointerAttemptsRival + ", offenseReboundsRival="
+                + offenseReboundsRival + ", defenseReboundsRival=" + defenseReboundsRival + ", rankingInLeague="
+                + rankingInLeague + ", latestWinOrLose=" + Arrays.toString(latestWinOrLose) + ", latestRecord="
+                + Arrays.toString(latestRecord) + ", latestOffendThanDefend=" + Arrays.toString(latestOffendThanDefend)
+                + ", latestOffend=" + Arrays.toString(latestOffend) + ", latestDefend=" + Arrays.toString(latestDefend)
+                + ", latestTempo=" + Arrays.toString(latestTempo) + "]";
+    }
+    
+    public JSONObject toJSONObject(){
+        JSONObject result = new JSONObject();
+        
+        
+        Field[] fields = this.getClass().getDeclaredFields();
+        for(Field field:fields){
+            System.out.println(field.getGenericType().getTypeName());
+            //遇到ArrayList，此类中为ArrayList<String>，转换为jsonArray
+            if(field.getType().toString().equals("class java.util.ArrayList")){
+                JSONArray array = new JSONArray();
+                try {
+                    ArrayList<String> list = (ArrayList<String>) field.get(this);
+                    for(String s:list){
+                        array.put(s);
+                    }
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                result.put(field.getName(), array);
+            }
+            
+            //如果是数组，则转换为jsonArray
+            if(field.getType().isArray()){
+                JSONArray array = new JSONArray();
+                try {
+                    Object list = (Object) field.get(this);
+                    Class<?> element = list.getClass().getComponentType();
+                    for(int i = 0;i < Array.getLength(list);i ++){
+                        array.put(Array.get(list, i));
+                    }
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                result.put(field.getName(), array);
+            }
+            
+            //其余情况，直接转换
+            try {
+                Object o = field.get(this);
+                result.put(field.getName(), o);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return result;
+    }
+    
     
 }

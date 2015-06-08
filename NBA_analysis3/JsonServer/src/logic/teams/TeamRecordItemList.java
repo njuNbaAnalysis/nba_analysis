@@ -52,7 +52,7 @@ public class TeamRecordItemList {
         }
         
         if(!has){
-            System.out.println("load: season:" + season + " isPlayOff" + isPlayOff);
+            System.out.println("load: season:" + season + " isPlayOff:" + isPlayOff);
             load(season,isPlayOff);
         }
     }

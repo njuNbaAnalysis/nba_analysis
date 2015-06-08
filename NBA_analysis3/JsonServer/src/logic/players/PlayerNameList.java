@@ -24,8 +24,9 @@ public class PlayerNameList {
 	}
 
 	public String getEnAbbrById(String Pid) {
+		int temp = Integer.parseInt(Pid);
 		for (int i = 0; i < namelist.size(); i++) {
-			if (namelist.get(i).getPid().equals(Pid))
+			if (namelist.get(i).getPid().equals(""+temp))
 				return namelist.get(i).getEname();
 		}
 		return null;

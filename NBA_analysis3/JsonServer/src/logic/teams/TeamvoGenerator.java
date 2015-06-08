@@ -40,6 +40,8 @@ public class TeamvoGenerator {
           //得到teamNameEn所对应的teamListItem
             TeamListItem teamListItem = teamNameList.getTeamListItem(teamNameEn);
             
+            System.out.println("teamNameEn:" + teamNameEn);
+            System.out.println("teamNameZh:" + teamListItem.getTeamNameZh());
             vo.setAbbreviation(teamNameEn);
             vo.setName(teamListItem.getTeamNameZh());
             
@@ -225,6 +227,7 @@ public class TeamvoGenerator {
         totalItemPara.setDataType("teamItem");
         totalItemPara.setSeason(true);
         totalItemPara.setBeginYear(Tools.xx_xxToxxxx(season));
+        //System.out.println(totalItemPara);
         totalItemList = TeamRecordItemList.getInstance().getRecordItemList(totalItemPara);
         
         //按胜率进行降序排序
@@ -244,6 +247,7 @@ public class TeamvoGenerator {
         //for debug
         //如果voList为null或为空则不进行任何计算
         if(voList == null || voList.isEmpty()){
+            System.out.println("error in voList: " + voList);
             return ;
         }
         

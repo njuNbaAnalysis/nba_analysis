@@ -1,7 +1,12 @@
 package logic.players;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import compare.PlayerAssistsComp;
 import compare.PlayerBlockShotsComp;
@@ -167,8 +172,10 @@ public class playerBLcontrollor {
 		// TODO Auto-generated method stub
 		PlayerNameList namelist = PlayerNameList.getIntance();
 		String Pid = namelist.getIdByEnAbbr(playerName);
-		if (Pid == null)
+		if (Pid == null) {
 			return null;
+
+		}
 		return getPlayerById(Pid);
 	}
 
@@ -208,6 +215,11 @@ public class playerBLcontrollor {
 			String transferField, int number) {
 		ArrayList<Matchvo> list = matchBLcontrollor.getInstance()
 				.getTodayMatched(date);
+		System.out.println(date);
+		while (list.size() == 0) {
+			date = DeclarationTime(date);
+			list = matchBLcontrollor.getInstance().getTodayMatched(date);
+		}
 		ArrayList<TodayPlayervo> result = new ArrayList<TodayPlayervo>();
 		for (int i = 0; i < list.size(); i++) {
 			ArrayList<RecordOfPlayervo> temp1 = list.get(i)
@@ -230,6 +242,31 @@ public class playerBLcontrollor {
 			}
 		}
 		Collections.sort(result, new todayPlayerComp(transferField));
-		return null;
+		ArrayList<TodayPlayervo> temp = new ArrayList<TodayPlayervo>();
+		if (result.size() >= number) {
+			for (int i = 0; i < number; i++) {
+				temp.add(result.get(i));
+			}
+		}
+		return temp;
 	}
+
+	private String DeclarationTime(String date) {
+		// TODO Auto-generated method stub
+		GregorianCalendar gc = new GregorianCalendar();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = null;
+		try {
+			d = sf.parse(date.substring(6));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		gc.setTime(d);
+		gc.add(5, -1);
+		gc.set(gc.get(Calendar.YEAR), gc.get(Calendar.MONTH),
+				gc.get(Calendar.DATE));
+		return date.substring(0, 6) + sf.format(gc.getTime());
+	}
+
 }

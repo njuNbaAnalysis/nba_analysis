@@ -1,6 +1,8 @@
 package vo;
 
-public class playerItem {
+import java.io.Serializable;
+
+public class playerItem implements Serializable{
 	private String Pid;
 	private boolean isplayoff;
 	private String season;
