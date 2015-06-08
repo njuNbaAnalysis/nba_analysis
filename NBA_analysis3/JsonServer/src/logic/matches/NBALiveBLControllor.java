@@ -220,7 +220,7 @@ public class NBALiveBLControllor {
 	}
 
 	private int getPeriod() {
-		return this.period;
+		return 1;
 	}
 
 	private String getId() {
@@ -228,7 +228,7 @@ public class NBALiveBLControllor {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss");
 		String current = df.format(now).substring(0, 10);
 		Id = NBALiveList.NBAMatchLiveList.get(current);
-		return "0041400401";
+		return "0041400402";
 	}
 
 }

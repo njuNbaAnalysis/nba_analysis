@@ -20,7 +20,14 @@ public class InvokeLive implements Runnable {
     @Override
     public void run() {
         try {
-            ProcessBuilder pb = new ProcessBuilder("python", "Spider-NBA/NBALive.py", ID,""+ period);
+            ProcessBuilder pb = new ProcessBuilder("python", "C://Users/Lionel's PC/Desktop/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/Spider-NBA/NBALive.py", ID,""+ period);
+//            Process p = pb.start();
+//            System.out.println("2222222222222222222222222222222222");
+//			File log = new File("log.txt");
+//			System.out.println(log.getAbsolutePath());
+//			pb.redirectErrorStream(true);
+//			pb.redirectOutput(ProcessBuilder.Redirect.to(log));
+//			System.out.println(p.waitFor());
             Process p = pb.start();
             InputStreamReader isr=new InputStreamReader(p.getInputStream(),"GBK");
             BufferedReader in = new BufferedReader(isr);
@@ -28,12 +35,13 @@ public class InvokeLive implements Runnable {
 
             ArrayList<String> res = new ArrayList<>();
             while ((line = in.readLine()) != null) {
+            	System.out.println(line);
                 res.add(line);
             }
             queue.put(res);
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
