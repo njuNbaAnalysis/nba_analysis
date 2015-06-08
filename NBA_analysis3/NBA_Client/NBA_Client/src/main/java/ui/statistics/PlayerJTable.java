@@ -479,18 +479,23 @@ public class PlayerJTable extends StatJTable {
 		if (selected) {
 			switch (depend) {
 			case "得分":
+			case "point":
 				c = new PlayerAveragePointsComp();
 				break;
 			case "篮板":
+			case "rebound":
 				c = new PlayerAverageReboundsComp();
 				break;
 			case "助攻":
+			case "assist":
 				c = new PlayerAverageAssistsComp();
 				break;
 			case "盖帽":
+			case "blockShot":
 				c = new PlayerAverageBlockShotsComp();
 				break;
 			case "抢断":
+			case "steal":
 				c = new PlayerAverageStealsComp();
 				break;
 			case "犯规":
@@ -508,15 +513,17 @@ public class PlayerJTable extends StatJTable {
 				break;
 			case "投篮":
 			case "%":
+			case "shot":
 				c = new PlayerFieldGoalsPercentageComp();
 				break;
-
 			case "三分":
 			case "三分%":
+			case "three":
 				c = new PlayerThreePointersPercentageComp();
 				break;
 			case "罚球":
 			case "罚球%":
+			case "penalty":
 				c = new PlayerFreeThrowsPercentageComp();
 				break;
 

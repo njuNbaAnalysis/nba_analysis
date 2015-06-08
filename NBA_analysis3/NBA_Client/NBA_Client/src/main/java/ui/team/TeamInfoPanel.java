@@ -58,9 +58,9 @@ public class TeamInfoPanel extends JPanel {
 		players = new Playervo[idList.size()];
 		playerList = new ArrayList<Playervo>();
 		for (int i = 0; i < idList.size(); i++) {
-			System.out.println(bl.getPlayerById(idList.get(i)).getName());
+
 			players[i] = bl.getPlayerById(idList.get(i),season,isPlayOff);
-			System.out.println(players[i].getName()+" 得分:"+players[i].getPoints());
+
 			playerList.add(bl.getPlayerById(idList.get(i)));
 
 		}

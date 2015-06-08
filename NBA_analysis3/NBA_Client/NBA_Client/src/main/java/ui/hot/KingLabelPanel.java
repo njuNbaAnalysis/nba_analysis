@@ -52,19 +52,21 @@ import vo.Teamvo;
 import vo.TodayPlayervo;
 
 public class KingLabelPanel extends HotLabelPanel {
-	private String type;// 有球员和球队数据王两种，分别用"P"和"T"表示
+	private String type;// "T","P","TP","TMP"
 	private int num = 5;
 	private JPanel content;
+	Playervo [] players;
 
 	public KingLabelPanel(String type, String headName, String[] columnName,
 			int kingWidth, int kingHeight, BLservice bl, JPanel content,
-			String season, boolean isPlayOff) throws RemoteException {
+			String season, boolean isPlayOff,Playervo [] players) throws RemoteException {
 		super(headName, columnName, kingWidth, kingHeight, bl, season,
 				isPlayOff);
 		this.type = type;
 		this.content = content;
 		this.season = season;
 		this.isPlayOff = isPlayOff;
+		this.players = players;
 		setTableHeadLabel();
 		setButton(type);
 
@@ -125,6 +127,10 @@ public class KingLabelPanel extends HotLabelPanel {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}else if (type.equals("TMP")){
+				
+				setPlayerTableContent(KingLabelPanel.this.players);
+		
 		}
 
 	}
@@ -161,12 +167,17 @@ public class KingLabelPanel extends HotLabelPanel {
 	}
 
 	public void setPlayers(Playervo[] players, String field) {
+		this.players = players;
 		((PlayerTableContentLabel) tableContentLabel)
 				.setPlayers(players, field);
 	}
 
 	public void setToday(TodayPlayervo[] players, String field) {
 		((TodayTableContentLabel) tableContentLabel).setPlayers(players, field);
+	}
+	
+	public Playervo[] getTeamPlayer(){
+		return players;
 	}
 
 	public static ArrayList<Teamvo> getSortedTeam(ArrayList<Teamvo> teamList,
@@ -241,7 +252,6 @@ public class KingLabelPanel extends HotLabelPanel {
 		private JLabel[] playerNames;
 		private JLabel[] playerTeamNames;
 		private String field;
-		private HashMap<String, String> idNameMap = new HashMap<String, String>();
 
 		public PlayerTableContentLabel(Playervo[] players, int contentWidth,
 				int contentHeight, String field) {
@@ -437,7 +447,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				playerNames[i].setOpaque(false);
 				playerNames[i].setCursor(Cursor
 						.getPredefinedCursor(Cursor.HAND_CURSOR));
-				idNameMap.put(players[i].getName(), players[i].getPid());
+				
 
 				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
 				playerTeamNames[i].setOpaque(false);
@@ -456,8 +466,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				String content = ((JLabel) e.getSource()).getText();
 				Playervo p;
 				try {
-					p = KingLabelPanel.this.bl.getPlayerById(idNameMap
-							.get(content));
+					p = KingLabelPanel.this.bl.getPlayerByNameAndTeam(content);
 					PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(
 							hotWidth, hotHeight * 3, p, KingLabelPanel.this.bl,
 							KingLabelPanel.this.content,

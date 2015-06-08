@@ -360,14 +360,13 @@ public class LivePanel extends JPanel {
 
 		@Override
 		public void run() {
-			int size = 1;
-			while (true && size <= 47) {
+			while (true ) {
 				ArrayList<EventVo> eventList = null;
 				Matchvo m = null;
 				try {
-					/* eventList = bl.getLiveEvent(); */
-					ArrayList<EventVo> List = new ArrayList<EventVo>();
-					for (int i = 0; i <= size; i++) {
+					 eventList = bl.getLiveEvent(); 
+					/*ArrayList<EventVo> List = new ArrayList<EventVo>();*/
+					/*for (int i = 0; i <= size; i++) {
 						EventVo v;
 						if (i % 2 == 0) {
 							v = new EventVo(i/12+1, i % 2, (12 - i%12) + ":10.1",
@@ -382,10 +381,9 @@ public class LivePanel extends JPanel {
 						List.add(v);
 						
 					}
-					eventList = List;
+					eventList = List;*/
 					System.out.println("eventList" + eventList.size());
 					m = bl.getLiveMatchInfo();
-					size++;
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
