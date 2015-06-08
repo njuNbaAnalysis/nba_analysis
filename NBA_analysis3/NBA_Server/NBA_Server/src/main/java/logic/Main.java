@@ -1,12 +1,6 @@
 package logic;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-
-import logic.teams.TeamController;
-import logic.teams.TeamvoGenerator;
-import util.JSONGenerator;
-import vo.Teamvo;
 
 public class Main {
     public static void main(String args[]) throws RemoteException{
