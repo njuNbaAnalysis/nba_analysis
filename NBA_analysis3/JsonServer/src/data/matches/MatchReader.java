@@ -332,11 +332,11 @@ public class MatchReader {
 		try {
 			statement = conn.createStatement();
 			rs = statement
-					.executeQuery("select * from  matchlist where `home-team` =  '"
+					.executeQuery("select * from  matchlist where (`home-team` =  '"
 							+ team
 							+ "' or `away-team` = '"
 							+ team
-							+ "' and season = '" + season);
+							+ "') and season = '" + season);
 			while (rs.next()) {
 				result.add(rs.getString(1));
 			}
@@ -363,11 +363,11 @@ public class MatchReader {
 		try {
 			statement = conn.createStatement();
 			rs = statement
-					.executeQuery("select * from  matchlist where `home-team` =  '"
+					.executeQuery("select * from  matchlist where (`home-team` =  '"
 							+ team
 							+ "' or `away-team` = '"
 							+ team
-							+ "' and season = '" + season);
+							+ "') and season = " + season);
 			while (rs.next()) {
 				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs
 						.getString(3).substring(0, 5));

@@ -150,7 +150,8 @@ public class matchBLcontrollor {
 			result.add(new MatchSimpleInfovo(list.get(i).getDate(), isWin,
 					points, teamName, isAtHome));
 		}
-		return null;
+		
+		return result;
 	}
 
 	/**
