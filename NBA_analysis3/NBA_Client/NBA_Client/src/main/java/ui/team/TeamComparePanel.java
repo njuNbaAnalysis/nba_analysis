@@ -9,17 +9,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import util.UIUtils;
 import vo.Teamvo;
@@ -44,15 +45,17 @@ interface ModuleButtonPainter {
 public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	private Teamvo team1;
 	private Teamvo team2;
+	SeclectLabel select_l;	
+	SeclectLabel select_r;
 	private RadarChartForTeamCompare radar;
 	BLservice bl;
 	int width;
 	int height;
-
+	
 	int currentChosen = 0;
 	ArrayList<JPanel> panels = new ArrayList<JPanel>();
 	ArrayList<ModuleButton> buttons = new ArrayList<ModuleButton>();
-	String modules[] = { "近期表现", "热区对比", "当家球星", "炜神预测" };
+	String modules[] = { "近期表现", "热区对比", "当家球星", "神预测" };
 
 	public void paintComponent(Graphics g2) {
 		super.paintComponent(g2);
@@ -71,36 +74,36 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		g.drawString("VS", 800, 100);
 
 		g.setColor(new Color(36, 36, 36));
-		g.fillRect(0, 410, 537, 158);
-		g.fillRect(1194, 410, 537, 158);
+		g.fillRect(0, 410+50, 537, 158);
+		g.fillRect(1194, 410+50, 537, 158);
 		g.setColor(new Color(104, 104, 104));
-		g.fillRect(0, 568, 537, 35);
-		g.fillRect(1194, 568, 537, 35);
+		g.fillRect(0, 568+50, 537, 35);
+		g.fillRect(1194, 568+50, 537, 35);
 		g.setColor(new Color(221, 61, 66));
-		g.fillRect(0, 568, 537 * team1.getNumOfVictory() / 82, 35);
+		g.fillRect(0, 568+50, 537 * team1.getNumOfVictory() / 82, 35);
 		g.setColor(new Color(6, 74, 150));
-		g.fillRect(1728 - 537 * team2.getNumOfVictory() / 82, 568,
+		g.fillRect(1728 - 537 * team2.getNumOfVictory() / 82, 568+50,
 				537 * team2.getNumOfVictory() / 82, 35);
 
 		g.setColor(Color.white);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, 30));
-		g.drawString(team1.getName(), 230, 454);
-		g.drawString(team2.getName(), 1200, 454);
+		g.drawString(team1.getName(), 230, 454+50);
+		g.drawString(team2.getName(), 1200, 454+50);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, 25));
 		g.drawString(
 				(team1.getConference() == 'E' ? "东区" : "西区") + "#"
-						+ team1.getRankingInLeague(), 411, 519);
+						+ team1.getRankingInLeague(), 411, 519+50);
 		g.drawString(
 				(team2.getConference() == 'E' ? "东区" : "西区") + "#"
-						+ team2.getRankingInLeague(), 1200, 519);
+						+ team2.getRankingInLeague(), 1200, 519+50);
 		g.drawString(team1.getNumOfVictory() + "胜",
-				537 * team1.getNumOfVictory() / 82 - 60, 593);
+				537 * team1.getNumOfVictory() / 82 - 60, 593+50);
 		g.drawString("负" + (82 - team1.getNumOfVictory()),
-				537 * team1.getNumOfVictory() / 82, 593);
+				537 * team1.getNumOfVictory() / 82, 593+50);
 		g.drawString("胜" + team2.getNumOfVictory(),
-				1728 - 537 * team2.getNumOfVictory() / 82, 593);
+				1728 - 537 * team2.getNumOfVictory() / 82, 593+50);
 		g.drawString((82 - team2.getNumOfVictory()) + "负",
-				1668 - 537 * team2.getNumOfVictory() / 82, 593);
+				1668 - 537 * team2.getNumOfVictory() / 82, 593+50);
 	}
 
 	public TeamComparePanel(Teamvo team1, Teamvo team2, int width, int height,BLservice bl) {
@@ -164,6 +167,14 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 			buttons.add(tem);
 			this.add(tem);
 		}
+		
+		select_l = new SeclectLabel(537,60);
+		select_l.setBounds(0, 400, 537, 60);
+		select_r = new SeclectLabel(537,60);
+		select_r.setBounds(1194, 400, 537, 60);
+		this.add(select_l);
+		this.add(select_r);
+		
 	}
 
 	@Override
@@ -735,24 +746,6 @@ class HotZonePanel extends JPanel {
 			imageList = reader.getHot_imageList();
 			imageList_highlight = reader.getHot_imageList_highlight();
 			imageToDraw = reader.getHot_imageToDraw();
-			
-			/*// 读取图片
-			try {
-				for (int i = 1; i <= 14; i++) {
-					// 读取原始图片，并且存入待绘组件列表
-					String path = "image" + File.separator + "q" + i + ".png";
-					BufferedImage temp = ImageIO.read(new File(path));
-					imageList.add(temp);
-					imageToDraw.add(temp);
-
-					// 读取高亮图片
-					path = "image" + File.separator + "p" + i + ".png";
-					imageList_highlight.add(ImageIO.read(new File(path)));
-				}
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}*/
 
 		}
 
@@ -790,4 +783,97 @@ class HotZonePanel extends JPanel {
 		}
 	}
 
+}
+
+
+class SeclectLabel extends JButton implements MouseListener{
+	
+		int width;
+		int height;
+	
+		JTextField text;
+		final String initStr = "search";
+
+		public void paintComponent(Graphics g2) {
+			super.paintComponent(g2);
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setColor(new Color(206, 206, 206));
+			g.fillRect(0, 0, width, height);
+			
+		}
+
+		public SeclectLabel(int width, int height) {
+			this.width = width;
+			this.height = height;
+			this.setLayout(null);
+			this.setSize(width, height);
+			this.setBorder(null);
+			text = new JTextField();
+			text.setBorder(null);
+			text.setForeground(Color.gray);
+			text.setFont(new Font("微软雅黑", Font.PLAIN, 30));
+			text.addFocusListener(new FocusListener() {
+				
+				@Override
+				public void focusLost(FocusEvent e) {
+					JTextField src = (JTextField)e.getSource();
+				    src.setForeground(Color.gray);
+				    if(src.getText().equals(initStr)){
+				     src.setText(null);
+				    }
+					
+				}
+				
+				@Override
+				public void focusGained(FocusEvent e) {
+					 JTextField src = (JTextField)e.getSource();
+					 src.setForeground(Color.black);
+					    if(src.getText().equals(initStr)){
+					     src.setText(null);
+					    }
+					
+				}
+			});
+			text.setText(initStr);
+			text.setBounds(15,10,500, 40);
+			this.add(text);
+			
+		}
+
+		
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO 自动生成的方法存根
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			repaint();
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			repaint();
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO 自动生成的方法存根
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			
+
+		}
+
+	
+	
 }
