@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -25,8 +26,6 @@ import javax.swing.JTextField;
 import util.UIUtils;
 import vo.Teamvo;
 import BLservice.BLservice;
-
-
 
 interface ModuleButtonListener {
 	public void update(String module);
@@ -45,16 +44,21 @@ interface ModuleButtonPainter {
 public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	private Teamvo team1;
 	private Teamvo team2;
-	SeclectLabel select_l;	
+	SeclectLabel select_l;
 	SeclectLabel select_r;
+	ResultLabel result_l;
+	ResultLabel result_r;
+	LineChartPanel lineChartPanel;
 	private RadarChartForTeamCompare radar;
 	BLservice bl;
 	int width;
 	int height;
-	
+
 	int currentChosen = 0;
 	ArrayList<JPanel> panels = new ArrayList<JPanel>();
 	ArrayList<ModuleButton> buttons = new ArrayList<ModuleButton>();
+	ArrayList<Teamvo> allteams;
+
 	String modules[] = { "近期表现", "热区对比", "当家球星", "神预测" };
 
 	public void paintComponent(Graphics g2) {
@@ -65,7 +69,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		g.setColor(new Color(148, 148, 148));
 		g.fillRect(0, 0, width, height);
 		g.drawImage(UIUtils.resize(team1.getLogo(), 420, 320), 58, 45, this);
-		g.drawImage(UIUtils.resize(team1.getLogo(), 420, 320), 1250, 45, this);
+		g.drawImage(UIUtils.resize(team2.getLogo(), 420, 320), 1250, 45, this);
 
 		g.setColor(Color.black);
 		g.fillRect(538, 0, 655, 130);
@@ -74,44 +78,52 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		g.drawString("VS", 800, 100);
 
 		g.setColor(new Color(36, 36, 36));
-		g.fillRect(0, 410+50, 537, 158);
-		g.fillRect(1194, 410+50, 537, 158);
+		g.fillRect(0, 410 + 50, 537, 158);
+		g.fillRect(1194, 410 + 50, 537, 158);
 		g.setColor(new Color(104, 104, 104));
-		g.fillRect(0, 568+50, 537, 35);
-		g.fillRect(1194, 568+50, 537, 35);
+		g.fillRect(0, 568 + 50, 537, 35);
+		g.fillRect(1194, 568 + 50, 537, 35);
 		g.setColor(new Color(221, 61, 66));
-		g.fillRect(0, 568+50, 537 * team1.getNumOfVictory() / 82, 35);
+		g.fillRect(0, 568 + 50, 537 * team1.getNumOfVictory() / 82, 35);
 		g.setColor(new Color(6, 74, 150));
-		g.fillRect(1728 - 537 * team2.getNumOfVictory() / 82, 568+50,
+		g.fillRect(1728 - 537 * team2.getNumOfVictory() / 82, 568 + 50,
 				537 * team2.getNumOfVictory() / 82, 35);
 
 		g.setColor(Color.white);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, 30));
-		g.drawString(team1.getName(), 230, 454+50);
-		g.drawString(team2.getName(), 1200, 454+50);
+		g.drawString(team1.getName(), 230, 454 + 50);
+		g.drawString(team2.getName(), 1200, 454 + 50);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, 25));
 		g.drawString(
 				(team1.getConference() == 'E' ? "东区" : "西区") + "#"
-						+ team1.getRankingInLeague(), 411, 519+50);
+						+ team1.getRankingInLeague(), 411, 519 + 50);
 		g.drawString(
 				(team2.getConference() == 'E' ? "东区" : "西区") + "#"
-						+ team2.getRankingInLeague(), 1200, 519+50);
+						+ team2.getRankingInLeague(), 1200, 519 + 50);
 		g.drawString(team1.getNumOfVictory() + "胜",
-				537 * team1.getNumOfVictory() / 82 - 60, 593+50);
+				537 * team1.getNumOfVictory() / 82 - 60, 593 + 50);
 		g.drawString("负" + (82 - team1.getNumOfVictory()),
-				537 * team1.getNumOfVictory() / 82, 593+50);
+				537 * team1.getNumOfVictory() / 82, 593 + 50);
 		g.drawString("胜" + team2.getNumOfVictory(),
-				1728 - 537 * team2.getNumOfVictory() / 82, 593+50);
+				1728 - 537 * team2.getNumOfVictory() / 82, 593 + 50);
 		g.drawString((82 - team2.getNumOfVictory()) + "负",
-				1668 - 537 * team2.getNumOfVictory() / 82, 593+50);
+				1668 - 537 * team2.getNumOfVictory() / 82, 593 + 50);
 	}
 
-	public TeamComparePanel(Teamvo team1, Teamvo team2, int width, int height,BLservice bl) {
+	public TeamComparePanel(Teamvo team1, Teamvo team2, int width, int height,
+			BLservice bl) {
 		this.team1 = team1;
 		this.team2 = team2;
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
+		try {
+			allteams = bl.getAllTeams(team1.getSeason(), team1.isPlayOff());
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
 		this.setSize(width, height);
 		this.setLayout(null);
 		setBackground(new Color(148, 148, 148));
@@ -123,19 +135,18 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	}
 
 	private void initRadar() {
-		
+
 		radar = new RadarChartForTeamCompare(654, 562, team1, team2);
 		radar.setBounds(539, 130, 654, 562);
 		this.add(radar);
 		radar.setVisible(true);
 		this.repaint();
-	
 
 	}
 
 	private void initPanels() {
-		LineChartPanel lineChartPanel = new LineChartPanel(width, 730, team1,
-				team2,bl);
+	    lineChartPanel = new LineChartPanel(width, 730, team1,
+				team2, bl);
 		lineChartPanel.setLocation(0, 808);
 		panels.add(lineChartPanel);
 		this.add(lineChartPanel);
@@ -167,14 +178,18 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 			buttons.add(tem);
 			this.add(tem);
 		}
-		
-		select_l = new SeclectLabel(537,60);
+
+		select_l = new SeclectLabel(537, 60, true);
 		select_l.setBounds(0, 400, 537, 60);
-		select_r = new SeclectLabel(537,60);
+		Thread sl = new Thread(select_l);
+		select_r = new SeclectLabel(537, 60, false);
 		select_r.setBounds(1194, 400, 537, 60);
+		Thread sr = new Thread(select_r);
+		sl.start();
+		sr.start();
 		this.add(select_l);
 		this.add(select_r);
-		
+
 	}
 
 	@Override
@@ -199,6 +214,202 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		}
 		panels.get(index).setVisible(true);
 
+	}
+
+	class SeclectLabel extends JButton implements Runnable {
+
+		int width;
+		int height;
+		boolean isLeft;
+		JTextField text;
+		final String initStr = "search";
+		String old;
+
+		public void paintComponent(Graphics g2) {
+			super.paintComponent(g2);
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setColor(new Color(206, 206, 206));
+			g.fillRect(0, 0, width, height);
+
+		}
+
+		public SeclectLabel(int width, int height, boolean isLeft) {
+			this.width = width;
+			this.height = height;
+			this.isLeft = isLeft;
+			this.setLayout(null);
+			this.setSize(width, height);
+			this.setBorder(null);
+			text = new JTextField();
+			text.setBorder(null);
+			text.setForeground(Color.gray);
+			text.setFont(new Font("微软雅黑", Font.PLAIN, 25));
+			text.addFocusListener(new FocusListener() {
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					JTextField src = (JTextField) e.getSource();
+					src.setForeground(Color.gray);
+					if (src.getText().trim().isEmpty()) {
+						src.setText(initStr);
+						src.setForeground(Color.LIGHT_GRAY);
+					}
+
+				}
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					JTextField src = (JTextField) e.getSource();
+					src.setForeground(Color.black);
+					if (src.getText().equals(initStr)) {
+						src.setText(null);
+					}
+
+				}
+			});
+			text.setText(initStr);
+			text.setBounds(15, 10, 500, 40);
+			this.add(text);
+
+		}
+
+		@Override
+		public void run() {
+
+			while (true) {
+				if (text.getText() != null) {
+					if ((!text.getText().trim().equals(initStr))
+							&& (!text.getText().trim().equals(""))) {
+						if (!text.getText().trim().equals(old)) {
+							old = text.getText().trim();
+							ArrayList<Teamvo> items = new ArrayList<Teamvo>();
+							for (Teamvo each : allteams) {
+								if (each.getName().contains(old)) {
+									items.add(each);
+								}
+							}
+							if (items.size() > 0) {
+								if (isLeft) {
+									if (result_l != null) {
+										TeamComparePanel.this.remove(result_l);
+									}
+									result_l = new ResultLabel(items,true);
+									result_l.setLocation(0, 460);
+									result_l.setLayout(null);
+									TeamComparePanel.this.add(result_l);
+									TeamComparePanel.this.updateUI();
+								} else {
+									if (result_r != null) {
+										TeamComparePanel.this.remove(result_r);
+									}
+									result_r = new ResultLabel(items,false);
+									result_r.setLocation(1194, 460);
+									result_r.setLayout(null);
+									TeamComparePanel.this.add(result_r);
+									TeamComparePanel.this.updateUI();
+								}
+							} else {
+								if (isLeft) {
+									if (result_l != null) {
+										result_l.setVisible(false);
+									}
+								} else {
+									if (result_r != null) {
+										result_r.setVisible(false);
+									}
+								}
+							}
+
+						}
+
+					}
+				}
+
+			}
+
+		}
+	}
+	
+	/**
+	 * 
+	 * @author NJUYuanRui 搜索结果展示框
+	 */
+	class ResultLabel extends JLabel {
+		boolean isLeft;
+		public ResultLabel(ArrayList<Teamvo> results,boolean isLeft) {
+			int height = 50 * results.size();
+			this.setSize(537, height);
+			this.isLeft = isLeft;
+			this.setOpaque(true);
+			this.setBackground(Color.white);
+			for (int i = 0; i < results.size(); i++) {
+				ResultItemLabel itemLabel = new ResultItemLabel(results.get(i)
+						,isLeft);
+				itemLabel.setLocation(0, 50 * i + 5);
+				this.add(itemLabel);
+			}
+
+		}
+	}
+
+	/**
+	 * 
+	 * @author NJUYuanRui 搜索结果展示条目
+	 */
+	class ResultItemLabel extends JLabel implements MouseListener {
+		Teamvo team;
+		boolean isLeft;
+		public ResultItemLabel(Teamvo item,boolean isLeft) {
+			this.team = item;
+			this.isLeft = isLeft;
+			this.setOpaque(true);
+			this.setSize(537, 40);
+			this.setFont(new Font("微软雅黑", Font.PLAIN, 25));
+			this.setForeground(Color.black);
+			this.setText(item.getName());
+			this.setBackground(Color.white);
+			this.setHorizontalAlignment(LEFT);
+			this.addMouseListener(this);
+
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO 自动生成的方法存根
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			this.setBackground(Color.gray);
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			this.setBackground(Color.white);
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			//更新方法
+			if(isLeft){
+				TeamComparePanel.this.team1 = team;
+				TeamComparePanel.this.repaint();
+				radar = new RadarChartForTeamCompare(654, 562, team1, team2);
+			}else{
+				TeamComparePanel.this.team2 = team;
+				TeamComparePanel.this.repaint();
+			}
+		}
 	}
 
 }
@@ -242,7 +453,6 @@ class MainButtonPainter implements ModuleButtonPainter {
 		g.setColor(Color.white);
 		g.drawString(button.name, button.textXCoordinate,
 				button.textYCoordinate);
-
 	}
 
 }
@@ -295,7 +505,8 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 
 	}
 
-	public LineChartPanel(int width, int height, Teamvo team1, Teamvo team2,BLservice bl) {
+	public LineChartPanel(int width, int height, Teamvo team1, Teamvo team2,
+			BLservice bl) {
 		super();
 		this.width = width;
 		this.height = height;
@@ -310,12 +521,12 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 	}
 
 	private void initChart() {
-		
-		lineChart = new LineChartPanelForTeamCompare(1180, height,"进攻", team1, team2,new Color(221,61,66), new Color(6,74,150), bl); 
+
+		lineChart = new LineChartPanelForTeamCompare(1180, height, "进攻", team1,
+				team2, new Color(221, 61, 66), new Color(6, 74, 150), bl);
 		lineChart.setBounds(295, 0, 1180, height);
 		this.add(lineChart);
-		
-		 
+
 	}
 
 	private void initButtons() {
@@ -352,7 +563,8 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 
 		currentChosen = index;
 		this.remove(lineChart);
-		lineChart = new LineChartPanelForTeamCompare(1180, height, module, team1, team2, new Color(221,61,66), new Color(6,74,150), bl);
+		lineChart = new LineChartPanelForTeamCompare(1180, height, module,
+				team1, team2, new Color(221, 61, 66), new Color(6, 74, 150), bl);
 		lineChart.setBounds(295, 0, 1180, height);
 		this.add(lineChart);
 		this.repaint();
@@ -786,94 +998,3 @@ class HotZonePanel extends JPanel {
 }
 
 
-class SeclectLabel extends JButton implements MouseListener{
-	
-		int width;
-		int height;
-	
-		JTextField text;
-		final String initStr = "search";
-
-		public void paintComponent(Graphics g2) {
-			super.paintComponent(g2);
-			Graphics2D g = (Graphics2D) g2.create();
-			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
-			g.setColor(new Color(206, 206, 206));
-			g.fillRect(0, 0, width, height);
-			
-		}
-
-		public SeclectLabel(int width, int height) {
-			this.width = width;
-			this.height = height;
-			this.setLayout(null);
-			this.setSize(width, height);
-			this.setBorder(null);
-			text = new JTextField();
-			text.setBorder(null);
-			text.setForeground(Color.gray);
-			text.setFont(new Font("微软雅黑", Font.PLAIN, 30));
-			text.addFocusListener(new FocusListener() {
-				
-				@Override
-				public void focusLost(FocusEvent e) {
-					JTextField src = (JTextField)e.getSource();
-				    src.setForeground(Color.gray);
-				    if(src.getText().equals(initStr)){
-				     src.setText(null);
-				    }
-					
-				}
-				
-				@Override
-				public void focusGained(FocusEvent e) {
-					 JTextField src = (JTextField)e.getSource();
-					 src.setForeground(Color.black);
-					    if(src.getText().equals(initStr)){
-					     src.setText(null);
-					    }
-					
-				}
-			});
-			text.setText(initStr);
-			text.setBounds(15,10,500, 40);
-			this.add(text);
-			
-		}
-
-		
-
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			// TODO 自动生成的方法存根
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			repaint();
-
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			repaint();
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO 自动生成的方法存根
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			
-
-		}
-
-	
-	
-}
