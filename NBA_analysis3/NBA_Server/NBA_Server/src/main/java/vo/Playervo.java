@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
- * 注意其中的private ArrayList<playerItem> recordOfPlayer;表示记录某个球员的所有历史数据
+ * 注意其中的 recordOfPlayer;表示记录某个球员的所有历史数据
  * 当playervo记录为某一个赛季的数据时，recordOfPlayer 为 null；
  * 当playervo不表示某一个特定赛季的数据时，recordOfPlayer则会记录该球员的所有历史记录
  * 
