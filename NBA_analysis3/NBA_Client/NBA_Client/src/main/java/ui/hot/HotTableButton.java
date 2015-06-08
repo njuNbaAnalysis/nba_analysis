@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import ui.statistics.PlayerJTable;
 import vo.Playervo;
 import vo.Teamvo;
 import vo.TodayPlayervo;
@@ -76,10 +77,10 @@ public class HotTableButton extends JButton {
 				switch (HotTableButton.this.type) {
 				case "T":
 					// 暂时为假数据,球队没有排序依据
-					
+
 					try {
-						ArrayList<Teamvo> teams = HotTableButton.this.bl.getAllTeams(season,
-								isPlayOff);
+						ArrayList<Teamvo> teams = HotTableButton.this.bl
+								.getAllTeams(season, isPlayOff);
 						Teamvo[] teamlist = new Teamvo[5];
 						for (int i = 0; i < 5; i++) {
 							teamlist[i] = teams.get(i);
@@ -94,10 +95,11 @@ public class HotTableButton extends JButton {
 					}
 
 					break;
-				case "P":					
+				case "P":
 					try {
 						ArrayList<Playervo> playerList1 = HotTableButton.this.bl
-								.getSeasonKingPlayer(KingLabelPanel.transferField(field), 5,
+								.getSeasonKingPlayer(
+										KingLabelPanel.transferField(field), 5,
 										season, isPlayOff);
 						Playervo[] players1 = new Playervo[5];
 						for (int i = 0; i < 5; i++) {
@@ -105,7 +107,8 @@ public class HotTableButton extends JButton {
 							System.out.println(playerList1.get(i).getName());
 						}
 						((KingLabelPanel) HotTableButton.this.hotPanel)
-								.setPlayers(players1, KingLabelPanel.transferField(field));
+								.setPlayers(players1,
+										KingLabelPanel.transferField(field));
 						HotTableButton.this.hotPanel.repaint();
 					} catch (RemoteException e1) {
 						e1.printStackTrace();
@@ -121,27 +124,46 @@ public class HotTableButton extends JButton {
 						String date = season + "_" + day.split(" ");
 						ArrayList<TodayPlayervo> playerList2;
 						playerList2 = HotTableButton.this.bl
-								.getTodayKingPlayer(date, KingLabelPanel.transferField(field),
-										5);
+								.getTodayKingPlayer(date,
+										KingLabelPanel.transferField(field), 5);
 						TodayPlayervo[] players2 = new TodayPlayervo[5];
 						for (int i = 0; i < 5; i++) {
 							players2[i] = playerList2.get(i);
 						}
 
 						((KingLabelPanel) HotTableButton.this.hotPanel)
-								.setToday(players2, KingLabelPanel.transferField(field));
+								.setToday(players2,
+										KingLabelPanel.transferField(field));
 						HotTableButton.this.hotPanel.repaint();
 					} catch (RemoteException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-
 					break;
+
+				case "TMP":
+
+					Playervo[] players = ((KingLabelPanel) HotTableButton.this.hotPanel)
+							.getTeamPlayer();
+					ArrayList<Playervo> playerList = new ArrayList<Playervo>();
+					for(int i=0;i<players.length;i++){
+						playerList.add(players[i]);
+					}
+					System.out.println("点击了"+field);
+					System.out.println("转码:"+KingLabelPanel.transferField(field));
+					Collections.sort(playerList,PlayerJTable.getComparator(KingLabelPanel.transferField(field), true));
+					
+					
+					for(int i=0;i<playerList.size();i++){
+						players[i] = playerList.get(i);
+					}
+					((KingLabelPanel) HotTableButton.this.hotPanel).setPlayers(
+							players, KingLabelPanel.transferField(field));
+					HotTableButton.this.hotPanel.repaint();
+
 				}
 			}
 		});
 
 	}
 
-	
 }
