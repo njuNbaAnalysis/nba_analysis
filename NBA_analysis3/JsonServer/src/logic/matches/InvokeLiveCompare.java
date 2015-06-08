@@ -17,7 +17,7 @@ public class InvokeLiveCompare {
 
 	    public void run() {
 	        try {
-	            ProcessBuilder pb = new ProcessBuilder("python", "Spider-NBA/NBALiveCompare.py", ID);
+	            ProcessBuilder pb = new ProcessBuilder("python", "C://Users/Lionel's PC/Desktop/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/Spider-NBA/NBALiveCompare.py", ID);
 	            Process p = pb.start();
 	            InputStreamReader isr=new InputStreamReader(p.getInputStream(),"GBK");
 	            BufferedReader in = new BufferedReader(isr);
@@ -30,7 +30,7 @@ public class InvokeLiveCompare {
 	            queue.put(res);
 
 	        } catch (Exception e) {
-	            System.out.println(e);
+	            e.printStackTrace();
 	        }
 	    }
 

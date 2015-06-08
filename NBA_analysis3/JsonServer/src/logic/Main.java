@@ -1,48 +1,59 @@
 package logic;
 
-import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+import logic.matches.NBALiveBLControllor;
+import vo.EventVo;
+import vo.Matchvo;
+import vo.RecordOfPlayervo;
 
 public class Main {
-    public static void main(String args[]) throws RemoteException{
-        
-        long start = System.currentTimeMillis();
-        
-        /*TeamvoGenerator generator = TeamvoGenerator.getInstance();
-        Teamvo vo = generator.getTeamvo("CHI", "14-15", false);*/
-        //TeamController controller = TeamController.getInstance();
-        //Teamvo vo = TeamvoGenerator.getInstance().getTeamvoWithLatest10Data("ATL", "14-15", false);
-        //ArrayList<Teamvo> voList = controller.getAllTeams("14-15", false);
-/*        for(Teamvo vo:voList){
-            System.out.println(vo.toString());
-        }*/
-        
-/*        for(Teamvo vo:voList){
-            double c = vo.getNumOfVictory() / vo.getNumOfMatches();
-            //System.out.println(c);
-            System.out.println(vo.getNumOfVictory());
-            
-        }*/
-        /*System.out.println(vo);
-        System.out.println(vo.toJSONObject());*/
-        
-        String s = "http://localhost:8080/JsonServer/getAllPlayers?Season=13-14&isPlayOff=true";
-        String a[] = s.split("http://localhost:8080/JsonServer/");
-        String para = a[1];
-        System.out.println(para);
-        String[] paras = para.split("\\?");
-        for(String token:paras){
-            System.out.println(token);
-        }
-        
-        String methodName = paras[0];
-        String part2 = paras[1];
-        
-        System.out.println(methodName);
-        System.out.println(part2);
-        
- 
-        long end =  System.currentTimeMillis();
-        
-        System.out.println("totalTime:" + (end - start));
-    }
+    public static void main(String[] args) {
+
+		final NBALiveBLControllor mbl = NBALiveBLControllor.getInstance();
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				mbl.setPeriod(1);
+				Matchvo m = mbl.getLiveMatchInfo();
+				System.out.println(m.getTeams()[0]+" "+m.getRebounds()[0] + " "
+						+ m.getFreeThrowsPercentage()[0] + " "
+						+ m.getFieldGoalsPercentage()[0]);
+				System.out.println(m.getTeams()[1]+" "+m.getRebounds()[1] + " "
+						+ m.getFreeThrowsPercentage()[1] + " "
+						+ m.getFieldGoalsPercentage()[1]);
+				ArrayList<RecordOfPlayervo> list1 = m.getFirstRecordList();
+				ArrayList<RecordOfPlayervo> list2 = m.getSecondRecordList();
+				for(int i=0;i<list1.size();i++){
+					System.out.println("1: "+list1.get(i).getPlayerName());
+				}
+				for(int i=0;i<list2.size();i++){
+					System.out.println("2: "+list2.get(i).getPlayerName());
+				}
+				while (true) {
+					ArrayList<EventVo> list = mbl.getLiveEvent();
+					System.out.println(list.size());
+					if (list.size() == 0)
+						break;
+					for (int i = 0; i < list.size(); i++) {
+						System.out.println(list.get(i).getSection() + " : "
+								+ list.get(i).getTime() + " : "
+								+ list.get(i).getDescription() + "  "
+								+ list.get(i).getPlayerName() + " : "
+								+ list.get(i).getTeamName());
+					}
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+		}).start();
+	}
 }
