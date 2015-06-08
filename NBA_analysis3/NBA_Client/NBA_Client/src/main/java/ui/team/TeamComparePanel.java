@@ -49,6 +49,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	ResultLabel result_l;
 	ResultLabel result_r;
 	LineChartPanel lineChartPanel;
+	HotZonePanel hotZonePanel;
 	private RadarChartForTeamCompare radar;
 	BLservice bl;
 	int width;
@@ -152,7 +153,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		this.add(lineChartPanel);
 		lineChartPanel.setVisible(true);
 
-		HotZonePanel hotZonePanel = new HotZonePanel(width, 700);
+	    hotZonePanel = new HotZonePanel(width, 700);
 		hotZonePanel.setLocation(0, 808);
 		panels.add(hotZonePanel);
 		this.add(hotZonePanel);
