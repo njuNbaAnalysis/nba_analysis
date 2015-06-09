@@ -223,7 +223,7 @@ public interface BLservice extends Remote {
 	 * @param season  赛季数 例如：13-14赛季
 	 * @param isplayoff  是否为季后赛
 	 * @return 内线(中锋加上大前锋能力综合(综合能力即为playervo中的getREP()))、外线(其他位置能力综合(综合能力即为playervo中的getREP()))、
-	 * 配合（场均助攻得分比）、进攻（平均得分）、防守（平均失分）
+	 * 配合（场均助攻命中（除去罚球命中数）比）、进攻（平均得分）、防守（平均失分）
 	 *
 	 * @throws RemoteException	rmi服务器连接异常
 	 */
