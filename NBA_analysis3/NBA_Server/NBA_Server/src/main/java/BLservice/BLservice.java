@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import vo.EventVo;
+import vo.FutureMatchvo;
 import vo.HotZonevo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
@@ -24,6 +25,14 @@ public interface BLservice extends Remote {
 	 * */
 	
 	/**
+	 * 获得未来比赛预告
+	 * @param date 今日日期，格式为：2015-06-09
+	 * @return 返回值为一个FutureMatchvo的ArrayList，用于储存未来所有比赛预告
+	 * @throws RemoteException rmi服务器连接异常
+	 * */
+	public ArrayList<FutureMatchvo> getFutureMatches(String date) throws RemoteException;
+	
+	/**
 	 * 直播前调用的通信（初始化）
 	 * @return 返回值为true，代表初始化完毕，接受直播调用请求，false则表示请求失败
 	 * @throws RemoteException rmi服务器连接异常
@@ -33,18 +42,20 @@ public interface BLservice extends Remote {
 	
 	/**
 	 * 得到当前正在直播的比赛即时信息，调用前先调用initNBALive（），并确认返回值为true
+	 * @param Mid 比赛唯一标号
 	 * @return 返回值为一个Matchvo对象，里面存储了一场比赛的各种数据
 	 * @throws RemoteException	rmi服务器连接异常
 	 */
-	public Matchvo getLiveMatchInfo() throws RemoteException;
+	public Matchvo getLiveMatchInfo(String Mid) throws RemoteException;
 
 	
 	/**
 	 * 得到当前正在直播的即时直播事件（即为文字直播时所见到的描述），调用前先调用initNBALive（），并确认返回值为true
+	 * @param Mid 比赛唯一标号
 	 * @return 返回值为一个EventVo对象，里面存储了一条描述所对应的各种属性
 	 * @throws RemoteException	rmi服务器连接异常
 	 */
-	public ArrayList<EventVo> getLiveEvent() throws RemoteException;
+	public ArrayList<EventVo> getLiveEvent(String Mid) throws RemoteException;
 	
 	
 	
