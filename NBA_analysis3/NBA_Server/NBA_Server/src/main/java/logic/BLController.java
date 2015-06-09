@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import logic.matches.NBALiveBLControllor;
+import logic.matches.NBALiveList;
 import logic.matches.matchBLcontrollor;
 import logic.players.playerBLcontrollor;
 import logic.teams.TeamController;
 import logic.teams.TeamvoGenerator;
 import vo.EventVo;
+import vo.FutureMatchvo;
 import vo.HotZonevo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
@@ -35,6 +37,13 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 	}
 
 	@Override
+	public ArrayList<FutureMatchvo> getFutureMatches(String date)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		return NBALiveList.getFutureMatches(date);
+	}
+
+	@Override
 	public boolean initNBALive() throws RemoteException {
 		// TODO Auto-generated method stub
 		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
@@ -42,17 +51,17 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 	}
 
 	@Override
-	public Matchvo getLiveMatchInfo() throws RemoteException {
+	public Matchvo getLiveMatchInfo(String Mid) throws RemoteException {
 		// TODO Auto-generated method stub
 		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
-		return NBALive.getLiveMatchInfo();
+		return NBALive.getLiveMatchInfo(Mid);
 	}
 
 	@Override
-	public ArrayList<EventVo> getLiveEvent() throws RemoteException {
+	public ArrayList<EventVo> getLiveEvent(String Mid) throws RemoteException {
 		// TODO Auto-generated method stub
 		NBALiveBLControllor NBALive = NBALiveBLControllor.getInstance();
-		return NBALive.getLiveEvent();
+		return NBALive.getLiveEvent(Mid);
 	}
 
 	@Override
@@ -62,23 +71,25 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
 		return playerBLcontro.getAllPlayers(Season, isPlayOff);
 	}
-	
+
 	@Override
 	public ArrayList<Playervo> getSeasonKingPlayer(String transferField,
-			int number,String season,boolean isplayoff) throws RemoteException {
+			int number, String season, boolean isplayoff)
+			throws RemoteException {
 		// TODO Auto-generated method stub
 		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
-		return playerBLcontro.getSeasonKingPlayer(transferField, number, season, isplayoff);
+		return playerBLcontro.getSeasonKingPlayer(transferField, number,
+				season, isplayoff);
 	}
-	
+
 	@Override
 	public ArrayList<TodayPlayervo> getTodayKingPlayer(String date,
 			String transferField, int number) throws RemoteException {
 		// TODO Auto-generated method stub
 		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
-		return playerBLcontro.getTodayKingPlayer(date,transferField,number);
+		return playerBLcontro.getTodayKingPlayer(date, transferField, number);
 	}
-	
+
 	@Override
 	public Playervo getPlayerById(String Id) throws RemoteException {
 		// TODO Auto-generated method stub
@@ -93,7 +104,7 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		playerBLcontrollor pbl = playerBLcontrollor.getInstance();
 		return pbl.getPlayerById(Id, season, isplayoff);
 	}
-	
+
 	@Override
 	public Playervo getPlayerByNameAndTeam(String playerName)
 			throws RemoteException {
@@ -101,13 +112,13 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		playerBLcontrollor pbl = playerBLcontrollor.getInstance();
 		return pbl.getPlayerByNameAndTeam(playerName);
 	}
-	
+
 	@Override
 	public double[] getAlliancePlayerAverageData(String season,
 			boolean isPlayOff) throws RemoteException {
 		// TODO Auto-generated method stub
 		playerBLcontrollor playerBLcontro = playerBLcontrollor.getInstance();
-		return playerBLcontro.getAlliancePlayerAverageData(season,isPlayOff);
+		return playerBLcontro.getAlliancePlayerAverageData(season, isPlayOff);
 	}
 
 	@Override
@@ -117,13 +128,13 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		matchBLcontrollor matchBL = matchBLcontrollor.getInstance();
 		return matchBL.getTodayMatched(string);
 	}
-	
+
 	@Override
 	public ArrayList<MatchSimpleInfovo> getMatchSimpleInfo(String teamName,
 			String season) throws RemoteException {
 		// TODO Auto-generated method stub
 		matchBLcontrollor matchBL = matchBLcontrollor.getInstance();
-		return matchBL.getMatchSimpleInfo(teamName,season);
+		return matchBL.getMatchSimpleInfo(teamName, season);
 	}
 
 	@Override
@@ -140,13 +151,12 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 				season, isPlayOff);
 	}
 
-    @Override
-    public Teamvo getTeamWithLatest10Data(String teamNameEn, String season, boolean isPlayOff)
-            throws RemoteException {
-        return TeamvoGenerator.getInstance().getTeamvoWithLatest10Data(teamNameEn, season, isPlayOff);
-    }
-    
-	
+	@Override
+	public Teamvo getTeamWithLatest10Data(String teamNameEn, String season,
+			boolean isPlayOff) throws RemoteException {
+		return TeamvoGenerator.getInstance().getTeamvoWithLatest10Data(
+				teamNameEn, season, isPlayOff);
+	}
 
 	@Override
 	public ArrayList<Teamvo> getAllTeams(String Season, boolean isPlayOff)
@@ -166,6 +176,5 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }
