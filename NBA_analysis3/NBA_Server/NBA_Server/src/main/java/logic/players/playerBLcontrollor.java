@@ -12,6 +12,7 @@ import compare.PlayerAssistsComp;
 import compare.PlayerBlockShotsComp;
 import compare.PlayerPointsComp;
 import compare.PlayerReboundsComp;
+import compare.PlayerStealsComp;
 import compare.todayPlayerComp;
 import logic.matches.matchBLcontrollor;
 import logic.teams.TeamNameList;
@@ -193,7 +194,7 @@ public class playerBLcontrollor {
 				Collections.sort(list, new PlayerAssistsComp());
 				break;
 			case "steal":
-				Collections.sort(list, new PlayerAssistsComp());
+				Collections.sort(list, new PlayerStealsComp());
 				break;
 			case "blockShot":
 				Collections.sort(list, new PlayerBlockShotsComp());
