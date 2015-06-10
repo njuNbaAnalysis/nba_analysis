@@ -40,7 +40,8 @@ public class PlayerBasicInfoLabel extends JLabel {
 		g.drawImage(player.getPortrait(), 0, 0, this);
 		g.setColor(new Color(190, 157, 83));
 		g.setFont(new Font("default", Font.BOLD, 50));
-		g.drawString(player.getNumber() + "", 490, 60);
+		String num[] = player.getNumber().split(",");
+		g.drawString(num[num.length-1] + "", 490, 60);
 		g.setColor(new Color(218, 218, 218));
 		g.drawLine(550, 20, 550, 80);
 		g.setColor(new Color(68, 68, 68));
