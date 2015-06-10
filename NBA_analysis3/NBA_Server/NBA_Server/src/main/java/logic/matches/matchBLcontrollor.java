@@ -73,6 +73,9 @@ public class matchBLcontrollor {
 			matchItem temp = m.getMatchItemList().get(i);
 			PlayerNameList list = PlayerNameList.getIntance();
 			String PlayerName = list.getEnAbbrById(temp.getPid());
+			if(PlayerName == null){
+				PlayerName = list.getEnfullById(temp.getPid());
+			}
 			if (temp.isIshome()) {
 				firstRecordList.add(new RecordOfPlayervo(PlayerName, temp
 						.getPid(), temp.getTime(), temp.getFieldGoalsHit(),
