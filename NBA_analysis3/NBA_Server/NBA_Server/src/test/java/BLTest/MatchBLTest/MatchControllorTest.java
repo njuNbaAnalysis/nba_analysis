@@ -88,7 +88,7 @@ public class MatchControllorTest {
 		ArrayList<MatchSimpleInfovo> list = m.getMatchSimpleInfo("LAC", "14-15");
 		System.out.println(list.size());
 		for(int i=0;i<list.size();i++){
-			System.out.println(list.iterator().next().isAtHome()+" simple");
+			System.out.println(list.iterator().next().getNameOfRival()+" simple"+"  ");
 		}
 		Boolean result = (list.size()!=0);
 		assertTrue(result);

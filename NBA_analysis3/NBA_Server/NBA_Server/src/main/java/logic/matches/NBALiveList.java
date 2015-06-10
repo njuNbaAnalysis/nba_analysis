@@ -20,14 +20,18 @@ public class NBALiveList {
 	private static ArrayList<FutureMatchvo> NBAMatchLiveList = new ArrayList<FutureMatchvo>();
 
 	static {
+		NBALiveReader nr = new NBALiveReader();
+		listofPlayer = nr.getAllNBALivePlayer();
+		listofTeam = nr.getAllNBALiveTeam();
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader(new File("Spider-NBA/FutureMatches/FutureMatches.txt")));
+			br = new BufferedReader(new FileReader(new File("Spider-NBA"+File.separator+"FutrueMatches"+File.separator+"FutureMatches.txt")));
 			String data = br.readLine();
 			while(data!=null){
 				String[] temp = data.split(",");
 				String[] teams = temp[2].split("-");
 				NBAMatchLiveList.add(new FutureMatchvo(temp[1],temp[0] , teams[0], teams[1]));
+				data = br.readLine();
 			}
 			
 		} catch (IOException e) {
