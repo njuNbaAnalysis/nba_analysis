@@ -33,6 +33,7 @@ public class TodayPlayervo implements Serializable{
 	 * */
 	public TodayPlayervo(String pid,String name, String team, int Points,
 			int Rebounds, int Assists, int steals, int blockShots) {
+		this.pid = pid;
 		this.name = name;
 		this.team = team;
 		this.Assists = Assists;
