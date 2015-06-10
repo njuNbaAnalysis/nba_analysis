@@ -31,21 +31,8 @@ public class Main {
         /*System.out.println(vo);
         System.out.println(vo.toJSONObject());*/
         
-        String s = "http://localhost:8080/JsonServer/getAllPlayers?Season=13-14&isPlayOff=true";
-        String a[] = s.split("http://localhost:8080/JsonServer/");
-        String para = a[1];
-        System.out.println(para);
-        String[] paras = para.split("\\?");
-        for(String token:paras){
-            System.out.println(token);
-        }
-        
-        String methodName = paras[0];
-        String part2 = paras[1];
-        
-        System.out.println(methodName);
-        System.out.println(part2);
-        
+        //BLController.getInstance().getTeamAbility("ATL", "14-15", false);
+        BLController.getInstance().getAllPlayers("14-15", false);
  
         long end =  System.currentTimeMillis();
         

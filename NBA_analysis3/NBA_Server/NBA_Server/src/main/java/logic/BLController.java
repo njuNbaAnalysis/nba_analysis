@@ -173,8 +173,7 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 
 	@Override
 	public double[] getTeamAbility(String teamNameEn,String season,boolean isplayoff) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return TeamController.getInstance().getTeamAbility(teamNameEn, season, isplayoff);
 	}
 
 }
