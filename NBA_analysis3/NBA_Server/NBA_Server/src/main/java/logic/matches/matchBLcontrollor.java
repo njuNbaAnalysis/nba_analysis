@@ -74,8 +74,8 @@ public class matchBLcontrollor {
 			PlayerNameList list = PlayerNameList.getIntance();
 			String PlayerName = list.getEnAbbrById(temp.getPid());
 			if (temp.isIshome()) {
-				firstRecordList.add(new RecordOfPlayervo(temp.getPid(),
-						PlayerName, temp.getTime(), temp.getFieldGoalsHit(),
+				firstRecordList.add(new RecordOfPlayervo(PlayerName, temp
+						.getPid(), temp.getTime(), temp.getFieldGoalsHit(),
 						temp.getFieldGoalsAttempt(), temp.getThreepointHit(),
 						temp.getThreepointAttempt(), temp.getFreethrowHit(),
 						temp.getFreethrowAttempt(), temp.getOffenseRebounds(),
@@ -87,8 +87,8 @@ public class matchBLcontrollor {
 								.getFreethrowpercent(), temp
 								.getFieldGoalspercent()));
 			} else {
-				secondRecordList.add(new RecordOfPlayervo(temp.getPid(),
-						PlayerName, temp.getTime(), temp.getFieldGoalsHit(),
+				secondRecordList.add(new RecordOfPlayervo(PlayerName, temp
+						.getPid(), temp.getTime(), temp.getFieldGoalsHit(),
 						temp.getFieldGoalsAttempt(), temp.getThreepointHit(),
 						temp.getThreepointAttempt(), temp.getFreethrowHit(),
 						temp.getFreethrowAttempt(), temp.getOffenseRebounds(),
