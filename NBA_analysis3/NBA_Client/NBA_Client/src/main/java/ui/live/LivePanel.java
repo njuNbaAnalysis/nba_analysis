@@ -36,19 +36,35 @@ public class LivePanel extends JPanel {
 	private LiveButton[] btArray;
 	private ArrayList<EventVo> eventList = new ArrayList<EventVo>();
 	WordLivePanel wordLivePanel;
-	JPanel infoPanel;
-
+	//JPanel infoPanel;
+	
+	private String mid;
 	private Matchvo match;
 	private BLservice bl;
+	private InfoLabel infoLabel;
 
-	LivePanel(int width, int height, BLservice bl, Matchvo match) {
+	LivePanel(int width, int height, BLservice bl, String mid) {
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
-		this.match = match;
 		this.setSize(width, height);
+		
+		
+		try {
+			bl.initNBALive();
+		} catch (RemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
+		try {
+			match = bl.getLiveMatchInfo(mid);
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		setLabel();
 		setButton();
 		setContent();
@@ -69,12 +85,9 @@ public class LivePanel extends JPanel {
 	}
 
 	private void setLabel() {
-		infoPanel = new JPanel();
-		infoPanel.setBounds(0, 0, width, height / 4);
-		infoPanel.setLayout(null);
-		InfoLabel infoLabel = new InfoLabel(width, height / 4, match);
+
+		infoLabel = new InfoLabel(width, height / 4);
 		infoLabel.setLocation(0, 0);
-		infoPanel.add(infoLabel);
 		this.add(infoLabel);
 
 	}
@@ -84,7 +97,8 @@ public class LivePanel extends JPanel {
 		private int labelHeight;
 		private Teamvo[] teams;
 
-		InfoLabel(int width, int height, Matchvo match) {
+
+		InfoLabel(int width, int height) {
 			this.labelWidth = width;
 			this.labelHeight = height;
 			this.setLayout(null);
@@ -93,9 +107,9 @@ public class LivePanel extends JPanel {
 			this.teams = new Teamvo[2];
 			try {
 				teams[0] = bl.getTeamByTeamName(match.getTeams()[0],
-						match.getSeason(), match.isIsplayoff());
+						match.getSeason(), false);
 				teams[1] = bl.getTeamByTeamName(match.getTeams()[1],
-						match.getSeason(), match.isIsplayoff());
+						match.getSeason(), false);
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -323,7 +337,10 @@ public class LivePanel extends JPanel {
 
 		}
 	}
-
+	
+	public void setMatch(Matchvo match){
+		this.match = match;
+	}
 	public void refresh(ArrayList<EventVo> newEventList) {
 		if (wordLivePanel != null && newEventList.size() > 0) {
 			int latestTime = 0;
@@ -336,7 +353,7 @@ public class LivePanel extends JPanel {
 					}
 				}
 			}
-			System.out.println("latestTime:"+latestTime);
+		//	System.out.println("latestTime:" + latestTime);
 
 			// 最新的事件在newEventList的第一个
 			for (int i = newEventList.size() - 1; i >= 0; i--) {
@@ -345,7 +362,7 @@ public class LivePanel extends JPanel {
 					if (latestEvent == null
 							|| !event.getDescription().equals(
 									latestEvent.getDescription())) {
-						System.out.println(event.getDescription());
+						//System.out.println(event.getDescription());
 						eventList.add(event);
 					}
 				}
@@ -360,41 +377,27 @@ public class LivePanel extends JPanel {
 
 		@Override
 		public void run() {
-			while (true ) {
+			while (true) {
 				ArrayList<EventVo> eventList = null;
 				Matchvo m = null;
 				try {
-					 eventList = bl.getLiveEvent(); 
-					/*ArrayList<EventVo> List = new ArrayList<EventVo>();*/
-					/*for (int i = 0; i <= size; i++) {
-						EventVo v;
-						if (i % 2 == 0) {
-							v = new EventVo(i/12+1, i % 2, (12 - i%12) + ":10.1",
-									(i*17%40) + "-" + (1 + i*137%40), "Aaron Brooks",
-									"test" + i, "ATL");
-						} else {
-							v = new EventVo(i/12+1, i % 2, (12 - i%12) + ":10.1",
-									(i*67%40) + "-" + (1 + i*169%40), "Aaron Brooks",
-									"test" + i, "GSW");
-						}
-
-						List.add(v);
-						
-					}
-					eventList = List;*/
+					eventList = bl.getLiveEvent(mid);
 					System.out.println("eventList" + eventList.size());
-					m = bl.getLiveMatchInfo();
+					m = bl.getLiveMatchInfo(mid);
+					System.out.println(m.getPoints()[0]+":"+m.getPoints()[1]);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
 				LivePanel.this.refresh(eventList);
-				LivePanel.this.infoPanel.removeAll();
-				InfoLabel infoLabel = new InfoLabel(width, height / 4, m);
-				infoLabel.setLocation(0, 0);
-				infoPanel.add(infoLabel);
-				LivePanel.this.add(infoLabel);
+				//infoPanel.removeAll();
+				//InfoLabel infoLabel = new InfoLabel(width, height / 4, m);
+				//infoLabel.setLocation(0, 0);
+				/*infoPanel.add(infoLabel);
+				infoPanel.updateUI();
+				infoPanel.repaint();*/
+				setMatch(m);
 				repaint();
 
 				try {
@@ -408,27 +411,14 @@ public class LivePanel extends JPanel {
 		}
 
 	}
-
+	
 	public static void main(String[] args) {
-		final JFrame f = new JFrame();
+		/*final JFrame f = new JFrame();
 		f.setBounds(0, 0, 1280, 1080);
 		DataFactory factory = DataFactoryMySql.getInstance();
 		final BLservice bl = factory.getBLservice();
 
-		try {
-			bl.initNBALive();
-		} catch (RemoteException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
-		Matchvo m = null;
-		try {
-			m = bl.getLiveMatchInfo();
-		} catch (RemoteException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 
 		LivePanel chart = new LivePanel(1280, 1080, bl, m);
 		chart.setBounds(0, 0, 1280, 1080);
@@ -436,7 +426,7 @@ public class LivePanel extends JPanel {
 		f.setLayout(null);
 		f.add(chart);
 		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 
 	}
 
