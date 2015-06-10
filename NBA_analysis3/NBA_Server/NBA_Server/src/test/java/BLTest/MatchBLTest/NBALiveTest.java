@@ -24,7 +24,7 @@ public class NBALiveTest {
 			public void run() {
 				// TODO Auto-generated method stub
 				mbl.setPeriod(1);
-				Matchvo m = mbl.getLiveMatchInfo("0041400401");
+				Matchvo m = mbl.getLiveMatchInfo("0041400403");
 				System.out.println(m.getTeams()[0]+" "+m.getRebounds()[0] + " "
 						+ m.getFreeThrowsPercentage()[0] + " "
 						+ m.getFieldGoalsPercentage()[0]);
@@ -40,7 +40,7 @@ public class NBALiveTest {
 					System.out.println("2: "+list2.get(i).getPlayerName());
 				}
 				while (true) {
-					ArrayList<EventVo> list = mbl.getLiveEvent("0041400401");
+					ArrayList<EventVo> list = mbl.getLiveEvent("0041400403");
 					if (list.size() == 0)
 						break;
 					for (int i = 0; i < list.size(); i++) {
