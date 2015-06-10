@@ -70,6 +70,7 @@ public class LivePanel extends JPanel {
 		setContent();
 
 		Thread live = new Thread(new LiveThread());
+		System.out.println("线程刚开启");
 		live.start();
 	}
 
@@ -381,6 +382,8 @@ public class LivePanel extends JPanel {
 				ArrayList<EventVo> eventList = null;
 				Matchvo m = null;
 				try {
+					System.out.println("得到事件"
+							+ "之前");
 					eventList = bl.getLiveEvent(mid);
 					System.out.println("eventList" + eventList.size());
 					m = bl.getLiveMatchInfo(mid);
