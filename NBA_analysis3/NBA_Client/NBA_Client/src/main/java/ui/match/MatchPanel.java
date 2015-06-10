@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -24,8 +25,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import ui.live.LivePanel;
 import ui.player.PlayerInfoPanel;
 import util.UIUtils;
+import vo.FutureMatchvo;
 import vo.KingsOfMatchvo;
 import vo.Matchvo;
 import vo.Playervo;
@@ -48,7 +51,10 @@ public class MatchPanel extends JPanel {
 	BLservice bl;
 	Thread thread;
 	Date date;
+	String dateForMatch;
+	String dateForFutureMatch;
 	ArrayList<Matchvo> matchList;
+	ArrayList<FutureMatchvo> futureMatchList;
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 	public MatchPanel(int width1, int height1, BLservice bl,JPanel content,String season,boolean isPlayOff) {
@@ -65,15 +71,24 @@ public class MatchPanel extends JPanel {
 		this.season = season;
 		this.isPlayOff = isPlayOff;
 		setBackground(Color.white);
-		try {
-			date = df.parse("2014-01-01");
-		} catch (ParseException e) {
-			e.printStackTrace();
+		
+		date = new Date();
+		
+		dateForFutureMatch = df.format(date);
+		int year = date.getYear()+1900;
+		int month = date.getMonth();
+		System.out.println("year:"+year+" month"+month);
+		if(month<=7){
+			dateForMatch = ((year-1)%100)+"-"+(year%100)+"_"+dateForFutureMatch;
+		}else{
+			dateForMatch = (year%100)+"-"+((year+1)%100)+"_"+dateForFutureMatch;
 		}
-
+		System.out.println(dateForMatch);
+		System.out.println(dateForFutureMatch);		
 		try {
 			this.matchList = new ArrayList<Matchvo>(
-					bl.getTodayMatches("13-14_2014-01-01"));
+					bl.getTodayMatches(dateForMatch));
+			this.futureMatchList = bl.getFutureMatches(dateForFutureMatch);
 		} catch (RemoteException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -97,15 +112,18 @@ public class MatchPanel extends JPanel {
 			InfoLabel info = new InfoLabel(0, 150 + 320 * i, width, 300,
 					matchList.get(i));
 			this.add(info);
-			/*
-			 * InfoLabel info1 = new InfoLabel(0, 470 , width, 300,
-			 * matchList.get(1)); this.add(info1); InfoLabel info2 = new
-			 * InfoLabel(0, 790 , width, 300, matchList.get(0));
-			 * this.add(info2); InfoLabel info3 = new InfoLabel(0, 1110 , width,
-			 * 300, matchList.get(0)); this.add(info3);
-			 */
+			
 		}
-		this.setPreferredSize(new Dimension(width, 200 + size * 320));
+		
+		int sizeF = futureMatchList.size();
+		for (int i = 0; i < sizeF; i++) {
+			LiveInfoLabel info = new LiveInfoLabel(0, 150 + 320 * (i+size), width, 300,
+					futureMatchList.get(i));
+			this.add(info);
+			
+		}
+		
+		this.setPreferredSize(new Dimension(width, 200 + (size+sizeF) * 320));
 
 	}
 
@@ -583,6 +601,150 @@ public class MatchPanel extends JPanel {
 		}
 	}
 
+	public class LiveInfoLabel extends JLabel {
+
+		int width;
+		int height;
+		JButton stat;
+		JButton live;
+		FutureMatchvo match;
+		Image imgH;
+		Image imgA;
+		
+
+		public void paintComponent(Graphics g2) {
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			g.setColor(new Color(246, 246, 246));
+			g.fillRect(0, 0, width, height);
+			g.setColor(new Color(169, 11, 51));
+			g.fillRect(0, 0, width / 10, height / 10);
+			g.setColor(new Color(190, 157, 83));
+			g.drawLine(0, height / 10, width, height / 10);
+			g.drawLine(0, height * 9 / 10, width, height * 9 / 10);
+			g.setColor(Color.WHITE);
+			g.fillRect(0, height / 10 + 1, width * 2 / 5, height * 8 / 10 - 1);
+			g.setFont(new Font("default", Font.BOLD, 20));
+			g.drawString("直播", 45, 22);
+			
+			g.drawImage(UIUtils.resize(imgH, 96, 80), 50, 60, this);
+			g.drawImage(UIUtils.resize(imgA, 96, 80), 50, 170, this);
+			g.setColor(Color.black);
+			g.setFont(new Font("default", Font.PLAIN, 30));
+			g.drawString(match.getHome_team(), 150, 90);
+			g.drawString(match.getAway_team(), 150, 200);
+			g.setFont(new Font("default", Font.PLAIN, 15));
+
+			
+			g.drawString("1", 270, 60);
+			g.drawString("2", 350, 60);
+			g.drawString("3", 430, 60);
+			g.drawString("4", 510, 60);
+			g.setFont(new Font("default", Font.PLAIN, 30));
+			g.drawString(0 + "", 255, 110);
+			g.drawString(0 + "", 335, 110);
+			g.drawString(0 + "", 415, 110);
+			g.drawString(0 + "", 495, 110);
+
+			g.setColor(new Color(169, 11, 51));
+			g.drawString(0 + "", 415, 210);
+			g.drawString(0 + "", 255, 210);
+			g.drawString(0 + "", 335, 210);
+			g.drawString(0 + "", 495, 210);
+			g.setFont(new Font("default", Font.PLAIN, 40));
+			g.setColor(new Color(169, 11, 51));
+			g.drawString(0 + "", 580, 215);
+			g.setColor(Color.black);
+			g.drawString(0 + "", 580, 115);
+
+			
+
+		}
+
+		public LiveInfoLabel(int x, int y, int width, int height, FutureMatchvo match) {
+			this.width = width;
+			this.height = height;
+			this.match = match;
+			
+			String pathH = "Data" + File.separator +"teamImage"+File.separator+ match.getHome_team() + ".png";
+			String pathA = "Data" + File.separator +"teamImage"+File.separator+ match.getAway_team() + ".png";
+			try {
+				imgH  = ImageIO.read(new File(pathH));
+				imgA  = ImageIO.read(new File(pathA));
+			} catch (IOException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+			
+			
+			this.setBounds(x, y, width, height);
+			initButton();
+
+		}
+
+		public void initButton() {
+			stat = new JButton("技术统计");
+			stat.setSize(100, 30);
+			stat.setLocation(0, height * 9 / 10);
+			stat.setContentAreaFilled(false);
+			stat.setBorderPainted(false);
+			stat.setIcon(null);
+			MouseHandle statListener = new MouseHandle(null, null, null, 3,
+					currentIndex);
+			currentIndex = (currentIndex+1)%matchList.size();
+			stat.addMouseListener(statListener);
+			this.add(stat);
+			
+			live = new JButton("比赛直播");
+			live.setSize(100, 30);
+			live.setLocation(60, height * 9 / 10);
+			live.setContentAreaFilled(false);
+			live.setBorderPainted(false);
+			live.setIcon(null);
+			
+			live.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent arg0) {
+					LivePanel panel = new LivePanel(MatchPanel.this.width, MatchPanel.this.height, MatchPanel.this.bl, match.getMid());
+					MatchPanel.this.removeAll();
+					MatchPanel.this.add(panel);
+					panel.setLocation(0, 0);
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// TODO 自动生成的方法存根
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					// TODO 自动生成的方法存根
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					// TODO 自动生成的方法存根
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					// TODO 自动生成的方法存根
+					
+				}
+			});
+			this.add(live);
+			
+		}
+	}
+	
+	
+	
 	class MouseHandle extends MouseAdapter {
 
 		ImageIcon newIcon;
