@@ -28,12 +28,14 @@ public class ruantongTest2 {
 		double KD = 1.08;
 
 		MatchReader mr = new MatchReader();
-		ArrayList<match> list = mr.getMatchesBySeason("08-09", false);
+		ArrayList<match> list = mr.getMatchesBySeason("14-15", false);
 
 		int[] points = new int[list.size()];
 //		 String result = "";
 		int win = 0;
 		int lose = 0;
+		int sumofwin = 0;
+		int sumofDefeats = 0;
 		for (int i = 0; i < list.size(); i++) {
 //			 result += (list.get(i).getHome_points() - list.get(i).getAway_points() ) + ",";
 
@@ -69,9 +71,15 @@ public class ruantongTest2 {
 			}
 			gameplayed[indexofStr(list.get(i).getHome_team())]++;
 			gameplayed[indexofStr(list.get(i).getAway_team())]++;
+			if(list.get(i).getHome_points() - list.get(i).getAway_points() > 0){
+				sumofwin++;
+			}else{
+				sumofDefeats++;
+			}
 		}
 
 		System.out.println(win+"    "+lose);
+		System.out.println("胜率： "+sumofwin*1.0/list.size());
 //		try {
 //			ProcessBuilder pb = new ProcessBuilder("python",
 //					"Spider-NBA/test.py", result.substring(0,

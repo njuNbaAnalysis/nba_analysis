@@ -233,6 +233,7 @@ public class Matchvo implements Serializable {
 		String nameOfReboundsKing2 = secondRecordList.get(0).getPlayerName();
 		String IdOfReboundsKing2 = firstRecordList.get(0).getPid();
 		int rebounds2 = secondRecordList.get(0).getRebounds();
+		System.out.println("dadsdaSDa: "+nameOfPointsKing1+"  "+IdOfPointsKing1);
 		KingsOfMatchvo[] result = {
 				new KingsOfMatchvo(nameOfPointsKing1, IdOfPointsKing1, points1,
 						nameOfReboundsKing1, IdOfReboundsKing1, rebounds1,
