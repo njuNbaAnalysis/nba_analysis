@@ -46,6 +46,7 @@ public class MatchPanel extends JPanel {
 	String season = "13-14";
 	boolean isPlayOff;
 	int currentIndex = 0;
+	int currentFutureIndex = 0;
 	JPanel content;
 	MatchTablePanel table;
 	BLservice bl;
@@ -668,9 +669,10 @@ public class MatchPanel extends JPanel {
 			this.height = height;
 			this.match = match;
 			
-			String pathH = "Data" + File.separator +"teamImage"+File.separator+ match.getHome_team() + ".png";
-			String pathA = "Data" + File.separator +"teamImage"+File.separator+ match.getAway_team() + ".png";
+			String pathH = "Data" + File.separator +"teamImage"+File.separator+ match.getHome_team() + ".gif";
+			String pathA = "Data" + File.separator +"teamImage"+File.separator+ match.getAway_team() + ".gif";
 			try {
+				System.out.println(pathH);
 				imgH  = ImageIO.read(new File(pathH));
 				imgA  = ImageIO.read(new File(pathA));
 			} catch (IOException e) {
@@ -684,22 +686,10 @@ public class MatchPanel extends JPanel {
 
 		}
 
-		public void initButton() {
-			stat = new JButton("技术统计");
-			stat.setSize(100, 30);
-			stat.setLocation(0, height * 9 / 10);
-			stat.setContentAreaFilled(false);
-			stat.setBorderPainted(false);
-			stat.setIcon(null);
-			MouseHandle statListener = new MouseHandle(null, null, null, 3,
-					currentIndex);
-			currentIndex = (currentIndex+1)%matchList.size();
-			stat.addMouseListener(statListener);
-			this.add(stat);
-			
+		public void initButton() {						
 			live = new JButton("比赛直播");
 			live.setSize(100, 30);
-			live.setLocation(60, height * 9 / 10);
+			live.setLocation(0, height * 9 / 10);
 			live.setContentAreaFilled(false);
 			live.setBorderPainted(false);
 			live.setIcon(null);
@@ -708,9 +698,11 @@ public class MatchPanel extends JPanel {
 				
 				@Override
 				public void mouseReleased(MouseEvent arg0) {
+					System.out.println(match.getMid());
 					LivePanel panel = new LivePanel(MatchPanel.this.width, MatchPanel.this.height, MatchPanel.this.bl, match.getMid());
 					MatchPanel.this.removeAll();
 					MatchPanel.this.add(panel);
+					MatchPanel.this.updateUI();
 					panel.setLocation(0, 0);
 					
 				}
@@ -786,8 +778,7 @@ public class MatchPanel extends JPanel {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
 				}
-				System.out.println(proFix + df.format(date));
-				System.out.println(df.format(date));
+				
 				MatchPanel.this.removeAll();
 				MatchPanel.this.addChildren();
 				MatchPanel.this.updateUI();
