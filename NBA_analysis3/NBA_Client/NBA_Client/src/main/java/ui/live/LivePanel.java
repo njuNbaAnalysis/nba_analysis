@@ -49,6 +49,7 @@ public class LivePanel extends JPanel {
 		this.height = height;
 		this.bl = bl;
 		this.setSize(width, height);
+		this.mid = mid;
 		
 		
 		try {
@@ -384,6 +385,7 @@ public class LivePanel extends JPanel {
 				try {
 					System.out.println("得到事件"
 							+ "之前");
+					
 					eventList = bl.getLiveEvent(mid);
 					System.out.println("eventList" + eventList.size());
 					m = bl.getLiveMatchInfo(mid);
