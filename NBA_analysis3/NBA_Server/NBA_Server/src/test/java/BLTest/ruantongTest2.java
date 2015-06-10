@@ -28,64 +28,69 @@ public class ruantongTest2 {
 		double KD = 1.08;
 
 		MatchReader mr = new MatchReader();
-		ArrayList<match> list = mr.getMatchesBySeason("14-15", false);
+		ArrayList<match> list = mr.getMatchesBySeason("08-09", false);
 
 		int[] points = new int[list.size()];
-		// String result = "";
+//		 String result = "";
+		int win = 0;
+		int lose = 0;
 		for (int i = 0; i < list.size(); i++) {
-			// result += (list.get(i).getHome_points() ) + ",";
+//			 result += (list.get(i).getHome_points() - list.get(i).getAway_points() ) + ",";
 
-			OSW[indexofStr(list.get(i).getHome_team())] = lemada
-					* OSW[indexofStr(list.get(i).getHome_team())]
-					+ (1 - lemada) * KO
-					* DSW[indexofStr(list.get(i).getAway_team())]
-					/ OSW[indexofStr(list.get(i).getHome_team())];
-
-			DSW[indexofStr(list.get(i).getHome_team())] = lemada
-					* DSW[indexofStr(list.get(i).getHome_team())]
-					+ (1 - lemada) * KD
-					* OSW[indexofStr(list.get(i).getAway_team())]
-					/ DSW[indexofStr(list.get(i).getHome_team())];
-			
-			
-			OSW[indexofStr(list.get(i).getAway_team())] = lemada
-					* OSW[indexofStr(list.get(i).getAway_team())]
-					+ (1 - lemada) /KD
-					* DSW[indexofStr(list.get(i).getHome_team())]
-					/ OSW[indexofStr(list.get(i).getAway_team())];
-
-			DSW[indexofStr(list.get(i).getAway_team())] = lemada
-					* DSW[indexofStr(list.get(i).getAway_team())]
-					+ (1 - lemada) /KO
-					* OSW[indexofStr(list.get(i).getHome_team())]
-					/ DSW[indexofStr(list.get(i).getAway_team())];
-			
+//			OSW[indexofStr(list.get(i).getHome_team())] = lemada
+//					* OSW[indexofStr(list.get(i).getHome_team())]
+//					+ (1 - lemada) * KO
+//					* DSW[indexofStr(list.get(i).getAway_team())]
+//					/ OSW[indexofStr(list.get(i).getHome_team())];
+//
+//			DSW[indexofStr(list.get(i).getHome_team())] = lemada
+//					* DSW[indexofStr(list.get(i).getHome_team())]
+//					+ (1 - lemada) * KD
+//					* OSW[indexofStr(list.get(i).getAway_team())]
+//					/ DSW[indexofStr(list.get(i).getHome_team())];
+//			
+//			
+//			OSW[indexofStr(list.get(i).getAway_team())] = lemada
+//					* OSW[indexofStr(list.get(i).getAway_team())]
+//					+ (1 - lemada) /KD
+//					* DSW[indexofStr(list.get(i).getHome_team())]
+//					/ OSW[indexofStr(list.get(i).getAway_team())];
+//
+//			DSW[indexofStr(list.get(i).getAway_team())] = lemada
+//					* DSW[indexofStr(list.get(i).getAway_team())]
+//					+ (1 - lemada) /KO
+//					* OSW[indexofStr(list.get(i).getHome_team())]
+//					/ DSW[indexofStr(list.get(i).getAway_team())];
+//			
 			if(list.get(i).getHome_team().equals("GSW")){
-				System.out.println(OSW[indexofStr("GSW")] +"  "+ DSW[indexofStr("GSW")]  );
+				win+=list.get(i).getHome_points();
+			}else if( list.get(i).getAway_team().equals("GSW") ){
+				lose += list.get(i).getAway_points();
 			}
 			gameplayed[indexofStr(list.get(i).getHome_team())]++;
 			gameplayed[indexofStr(list.get(i).getAway_team())]++;
 		}
 
-		// try {
-		// ProcessBuilder pb = new ProcessBuilder("python",
-		// "Spider-NBA/test.py", result.substring(0, result.length()-1));
-		// Process p = pb.start();
-		// InputStreamReader isr = new InputStreamReader(p.getInputStream(),
-		// "GBK");
-		// BufferedReader in = new BufferedReader(isr);
-		// String line;
-		//
-		// ArrayList<String> res = new ArrayList<>();
-		// while ((line = in.readLine()) != null) {
-		// res.add(line);
-		// System.out.println(res);
-		// }
-		//
-		//
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		System.out.println(win+"    "+lose);
+//		try {
+//			ProcessBuilder pb = new ProcessBuilder("python",
+//					"Spider-NBA/test.py", result.substring(0,
+//							result.length() - 1));
+//			Process p = pb.start();
+//			InputStreamReader isr = new InputStreamReader(p.getInputStream(),
+//					"GBK");
+//			BufferedReader in = new BufferedReader(isr);
+//			String line;
+//
+//			ArrayList<String> res = new ArrayList<>();
+//			while ((line = in.readLine()) != null) {
+//				res.add(line);
+//				System.out.println(res);
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 
 	}
 
