@@ -447,6 +447,7 @@ public class MatchPanel extends JPanel {
 			this.add(b1);
 			
 			b2 = new JButton(kings[0].getNameOfPointsKing());
+			System.out.println(kings[0].getIdOfPointsKing());
 			b2.setForeground(Color.blue);
 			b2.setFont(new Font("default", Font.BOLD, 17));
 			b2.setContentAreaFilled(false);
@@ -671,7 +672,6 @@ public class MatchPanel extends JPanel {
 			String pathH = "Data" + File.separator +"teamImage"+File.separator+ match.getHome_team() + ".gif";
 			String pathA = "Data" + File.separator +"teamImage"+File.separator+ match.getAway_team() + ".gif";
 			try {
-				System.out.println(pathH);
 				imgH  = ImageIO.read(new File(pathH));
 				imgA  = ImageIO.read(new File(pathA));
 			} catch (IOException e) {
