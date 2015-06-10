@@ -65,7 +65,6 @@ public class NBALiveBLControllor {
 	private ArrayList<EventVo> NBALive(int period,String Mid) {
 		ArrayList<EventVo> result = new ArrayList<EventVo>();
 
-		System.out.println(Mid+"teststtst");
 		InvokeLive NBALive = new InvokeLive(period, Mid);
 		NBALive.run();
 		try {
@@ -95,7 +94,6 @@ public class NBALiveBLControllor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(result.size()+"teststtst2121");
 		return result;
 	}
 
