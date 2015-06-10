@@ -89,8 +89,7 @@ public class MatchPanel extends JPanel {
 			this.matchList = new ArrayList<Matchvo>(
 					bl.getTodayMatches(dateForMatch));
 			this.futureMatchList = bl.getFutureMatches(dateForFutureMatch);
-			System.out.println("");
-			System.out.println(futureMatchList.size());
+		
 		} catch (RemoteException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
