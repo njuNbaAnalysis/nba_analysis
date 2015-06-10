@@ -1,10 +1,12 @@
 package vo;
 
+import java.io.Serializable;
+
 
 /**
  * 未来比赛简要信息
  * */
-public class FutureMatchvo {
+public class FutureMatchvo  implements Serializable{
 	/**比赛唯一编号*/
 	private String Mid;
 	/**比赛日期*/
