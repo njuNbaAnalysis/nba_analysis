@@ -426,14 +426,14 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	//Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfReboundsKing());
-	            		Playervo p=null;
+	                	Playervo p = null;
 						try {
-							p = MatchPanel.this.bl.getPlayerById("104");
+							p = MatchPanel.this.bl.getPlayerById(kings[0].getIdOfReboundsKing());
 						} catch (RemoteException e1) {
 							// TODO 自动生成的 catch 块
 							e1.printStackTrace();
 						}
+	            		
 	            	
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content, season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
@@ -457,14 +457,14 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	//Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfPointsKing());
-	            	Playervo p=null;
+	            	Playervo p = null;
 					try {
-						p = MatchPanel.this.bl.getPlayerById("104");
+						p = MatchPanel.this.bl.getPlayerById(kings[0].getIdOfPointsKing());
 					} catch (RemoteException e1) {
 						// TODO 自动生成的 catch 块
 						e1.printStackTrace();
 					}
+					
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
@@ -487,14 +487,14 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	//Playervo p = MatchPanel.this.bl.getPlayerByName(kings[0].getNameOfAssistsKing());
-	            	Playervo p=null;
+	                Playervo p = null;
 					try {
-						p = MatchPanel.this.bl.getPlayerById("104");
+						p = MatchPanel.this.bl.getPlayerById(kings[0].getIdOfAssistsKing());
 					} catch (RemoteException e1) {
 						// TODO 自动生成的 catch 块
 						e1.printStackTrace();
 					}
+	            	
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
@@ -518,10 +518,9 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	//Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfPointsKing());
-	            	Playervo p=null;
+	                Playervo p= null;
 					try {
-						p = MatchPanel.this.bl.getPlayerById("104");
+						p = MatchPanel.this.bl.getPlayerById(kings[1].getIdOfPointsKing());
 					} catch (RemoteException e1) {
 						// TODO 自动生成的 catch 块
 						e1.printStackTrace();
@@ -549,14 +548,14 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	//Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfReboundsKing());
-	            	Playervo p=null;
+	                Playervo p=null;
 					try {
-						p = MatchPanel.this.bl.getPlayerById("104");
+						p = MatchPanel.this.bl.getPlayerById(kings[1].getNameOfReboundsKing());
 					} catch (RemoteException e1) {
 						// TODO 自动生成的 catch 块
 						e1.printStackTrace();
 					}
+					
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
@@ -580,14 +579,14 @@ public class MatchPanel extends JPanel {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
 	                
-	                	//Playervo p = MatchPanel.this.bl.getPlayerByName(kings[1].getNameOfAssistsKing());
-	            	Playervo p=null;
+	                Playervo p=null;
 					try {
-						p = MatchPanel.this.bl.getPlayerById("104");
+						p = MatchPanel.this.bl.getPlayerById(kings[1].getIdOfAssistsKing());
 					} catch (RemoteException e1) {
 						// TODO 自动生成的 catch 块
 						e1.printStackTrace();
 					}
+	            	
 	            		PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(MatchPanel.this.width,MatchPanel.this.height,p,MatchPanel.this.bl,MatchPanel.this.content,season, isPlayOff);
 	            		playerInfoPanel.setBounds(0, 0, MatchPanel.this.width, MatchPanel.this.height);
 	            		playerInfoPanel.startAnimation();
