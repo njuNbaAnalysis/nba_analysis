@@ -73,6 +73,22 @@ public class playerBLcontrollorTest {
 		boolean result = (list != null);
 		assertTrue(result);
 	}
+	
+	@Test
+	public void testgetPlayerById3() {
+		playerBLcontrollor pl = playerBLcontrollor.getInstance();
+		Playervo list = pl.getPlayerById("785", "12-13", false);
+		boolean result = (list != null);
+		assertTrue(result);
+	}
+	
+	@Test
+	public void testgetPlayerById4() {
+		playerBLcontrollor pl = playerBLcontrollor.getInstance();
+		Playervo list = pl.getPlayerById("2135", "12-13", false);
+		boolean result = (list != null);
+		assertTrue(result);
+	}
 
 	@Test
 	public void testgetPlayerById2() {

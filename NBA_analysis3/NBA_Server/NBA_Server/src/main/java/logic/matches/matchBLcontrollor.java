@@ -172,8 +172,8 @@ public class matchBLcontrollor {
 		ArrayList<match> list = checkisexit(season);
 		ArrayList<String> list2 = matchReader.getMatchesByTeam(teamNameEn,
 				season, isPlayOff, 10);
+		System.out.println(list2.size()+"dsadas");
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
-		System.out.println("testtest:"+list2.size());
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
 				if (list2.get(i).equals(list.get(j).getMid())){
