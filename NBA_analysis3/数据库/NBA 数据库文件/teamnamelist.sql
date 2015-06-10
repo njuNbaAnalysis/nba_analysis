@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2015-06-07 18:21:28
+-- Generation Time: 2015-06-10 04:34:55
 -- 服务器版本： 5.6.24
 -- PHP Version: 5.6.8
 
@@ -107,8 +107,8 @@ INSERT INTO `teamnamelist` (`teamNameEn`, `teamNameZh`, `conference`, `division`
 ('OKC', '俄克拉荷马雷霆', 'western', 'southwest', 'thunder', '雷霆', 'Chesapeake Energy Arena'),
 ('ORL', '奥兰多魔术', 'eastern', 'southeast', 'magic', '魔术', 'Amway Center'),
 ('PHI', '费城76人', 'eastern', 'atlantic', 'sixers', '76人', 'Wells Fargo Center'),
-('PHO', '菲尼克斯太阳', 'western', 'pacific', '', '太阳', ''),
 ('PHW', '费城勇士', '', '', '', '', ''),
+('PHX', '菲尼克斯太阳', 'western', 'pacific', '', '太阳', ''),
 ('PIT', '匹兹堡铁人', '', '', '', '', ''),
 ('POR', '波特兰开拓者', 'western', 'southwest', 'blazers', '开拓者', 'Moda Center'),
 ('PRO', '普罗登斯蒸汽', '', '', '', '', ''),
