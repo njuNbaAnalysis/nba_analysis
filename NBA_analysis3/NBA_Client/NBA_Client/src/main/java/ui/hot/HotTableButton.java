@@ -87,7 +87,7 @@ public class HotTableButton extends JButton {
 						}
 
 						((KingLabelPanel) HotTableButton.this.hotPanel)
-								.setTeams(teamlist);
+								.setTeams(teamlist,KingLabelPanel.transferField(field));
 						HotTableButton.this.hotPanel.repaint();
 					} catch (RemoteException e1) {
 						// TODO Auto-generated catch block

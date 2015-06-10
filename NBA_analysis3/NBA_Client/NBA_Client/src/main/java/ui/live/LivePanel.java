@@ -35,9 +35,7 @@ public class LivePanel extends JPanel {
 	private JScrollPane content;
 	private LiveButton[] btArray;
 	private ArrayList<EventVo> eventList = new ArrayList<EventVo>();
-	WordLivePanel wordLivePanel;
-	//JPanel infoPanel;
-	
+	WordLivePanel wordLivePanel;	
 	private String mid;
 	private Matchvo match;
 	private BLservice bl;

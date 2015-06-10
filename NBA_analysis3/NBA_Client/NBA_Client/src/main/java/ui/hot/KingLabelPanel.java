@@ -156,15 +156,15 @@ public class KingLabelPanel extends HotLabelPanel {
 
 	private void setTeamTableContent(Teamvo[] teams) {
 		tableContentLabel = new TeamTableContentLabel(teams, hotWidth,
-				hotHeight * 2 / 3);
+				hotHeight * 2 / 3,"point");
 		tableContentLabel.setBounds(0, hotHeight / 3, hotWidth,
 				hotHeight * 2 / 3);
 		this.add(tableContentLabel);
 
 	}
 
-	public void setTeams(Teamvo[] teams) {
-		((TeamTableContentLabel) tableContentLabel).setTeams(teams);
+	public void setTeams(Teamvo[] teams,String field) {
+		((TeamTableContentLabel) tableContentLabel).setTeams(teams,field);
 	}
 
 	public void setPlayers(Playervo[] players, String field) {
@@ -567,21 +567,8 @@ public class KingLabelPanel extends HotLabelPanel {
 					playerNames[i - 1].setText(players[i - 1].getName());
 
 					g.setColor(new Color(68, 68, 68));
-					/*
-					 * String str = players[i - 1].getNumber() + " " + players[i
-					 * - 1].getPosition();
-					 */
-
 					// 球队label
 					playerTeamNames[i - 1].setText(players[i - 1].getTeam());
-					// JLabel team = new JLabel(players[i - 1].getTeam());
-
-					/*
-					 * g.drawString(str, contentWidth * 13 / 20, contentHeight
-					 * (4 * i - 3) / 20);
-					 */
-
-					// 没有球队图片，没有球员得分
 					String data = getPlayerData(players[i - 1]);
 					g.setColor(new Color(68, 68, 68));
 					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
@@ -738,8 +725,9 @@ public class KingLabelPanel extends HotLabelPanel {
 			setTeamNameLabel();
 		}
 
-		public void setTeams(Teamvo[] teams) {
+		public void setTeams(Teamvo[] teams,String field) {
 			this.teams = teams;
+			this.field = field;
 			this.repaint();
 		}
 
@@ -756,21 +744,21 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.drawImage(action, 0, 0, this);
 			// 排名
 			g.setColor(new Color(190, 157, 83));
-			g.setFont(new Font("default", Font.BOLD, 50));
+			g.setFont(new Font("微软雅黑", Font.BOLD, 50));
 			g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
 			// 队名
 			teamNames[0].setText(teams[0].getName());
 
 			// 联盟
 			g.setColor(new Color(68, 68, 68));
-			g.setFont(new Font("default", Font.PLAIN, 20));
+			g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 			g.drawString(
 					teams[0].getConference() + "   " + teams[0].getDivision(),
 					contentWidth / 5, contentHeight * 3 / 5);
 
 			
 
-			g.drawString(getTeamData(teams[0]), contentWidth / 5,
+			g.drawString(getTeamData(teams[0]), contentWidth*5 / 20,
 					contentHeight * 3 / 5);
 
 			g.setColor(new Color(246, 246, 246));
@@ -779,7 +767,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 			for (int i = 2; i <= num; i++) {
 				g.setColor(new Color(146, 144, 144));
-				g.setFont(new Font("default", Font.BOLD, 20));
+				g.setFont(new Font("微软雅黑", Font.BOLD, 20));
 				g.drawString(i + "", contentWidth * 11 / 20, contentHeight
 						* (i - 1) / 5);
 
@@ -800,9 +788,9 @@ public class KingLabelPanel extends HotLabelPanel {
 						* (4 * i - 3) / 20);
 
 				// 没有球队得分
-				g.drawString(getTeamData(teams[0]), contentWidth * 18 / 20,
+				g.drawString(getTeamData(teams[i-1]), contentWidth * 18 / 20,
 						 contentHeight
-							* (4 * i - 3) / 20);
+							* (8 * i - 5) / 40);
 			}
 		}
 

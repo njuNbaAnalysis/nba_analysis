@@ -33,7 +33,7 @@ public class HotAndKingPanel extends JPanel {
 		UIUtils.createFont("font" + File.separator + "Oswald-Bold.otf");
 
 		try {
-			String[] playerColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽" };
+			String[] playerColumnName = {"场均得分", "场均篮板", "场均助攻", "场均抢断", "场均盖帽" };
 			playerKingPanel = new KingLabelPanel("P", "联盟数据王",
 					playerColumnName, width * 9 / 10, height / 4, bl, content,
 					season, isPlayOff,null);
@@ -50,7 +50,7 @@ public class HotAndKingPanel extends JPanel {
 			this.add(teamKingPanel);
 
 			
-			String[] kingColumnName = { "场均得分", "场均篮板", "场均助攻", "场均抢断", "场均盖帽" };
+			String[] kingColumnName = { "得分", "篮板", "助攻", "抢断", "盖帽" };
 			playerTodayPanel = new KingLabelPanel("TP", "每日数据王",
 					kingColumnName, width * 9 / 10, height / 4, bl, content,
 					season, isPlayOff,null);
