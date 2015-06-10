@@ -27,7 +27,7 @@ public interface BLservice extends Remote {
 	/**
 	 * 获得未来比赛预告
 	 * @param date 今日日期，格式为：2015-06-09
-	 * @return 返回值为一个FutureMatchvo的ArrayList，用于储存未来所有比赛预告
+	 * @return 返回值为一个FutureMatchvo的ArrayList，用于储存2015-06-09z之后未来所有比赛预告
 	 * @throws RemoteException rmi服务器连接异常
 	 * */
 	public ArrayList<FutureMatchvo> getFutureMatches(String date) throws RemoteException;
