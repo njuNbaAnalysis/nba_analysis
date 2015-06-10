@@ -79,8 +79,8 @@ public class HotTableButton extends JButton {
 					// 暂时为假数据,球队没有排序依据
 
 					try {
-						ArrayList<Teamvo> teams = HotTableButton.this.bl
-								.getAllTeams(season, isPlayOff);
+						ArrayList<Teamvo> teams = KingLabelPanel.getSortedTeam(HotTableButton.this.bl
+								.getAllTeams(season, isPlayOff),KingLabelPanel.transferField(field));
 						Teamvo[] teamlist = new Teamvo[5];
 						for (int i = 0; i < 5; i++) {
 							teamlist[i] = teams.get(i);
@@ -121,7 +121,7 @@ public class HotTableButton extends JButton {
 						SimpleDateFormat df = new SimpleDateFormat(
 								"yyyy-MM-dd HH:mm:ss");
 						String day = df.format(new Date());
-						String date = season + "_" + day.split(" ");
+						String date = season + "_" + day.split(" ")[0];
 						ArrayList<TodayPlayervo> playerList2;
 						playerList2 = HotTableButton.this.bl
 								.getTodayKingPlayer(date,

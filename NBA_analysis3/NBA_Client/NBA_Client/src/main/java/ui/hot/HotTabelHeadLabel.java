@@ -41,7 +41,7 @@ public class HotTabelHeadLabel extends JLabel {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(Color.white);
 		g.setFont(new Font("微软雅黑", Font.CENTER_BASELINE,  height /10));
-		g.drawString(text, width / 20, height / 10);
+		g.drawString(text, width / 40, height / 8);
 	}
 
 	private class LabelUI extends BasicLabelUI {

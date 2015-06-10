@@ -55,11 +55,12 @@ public class KingLabelPanel extends HotLabelPanel {
 	private String type;// "T","P","TP","TMP"
 	private int num = 5;
 	private JPanel content;
-	Playervo [] players;
+	Playervo[] players;
 
 	public KingLabelPanel(String type, String headName, String[] columnName,
 			int kingWidth, int kingHeight, BLservice bl, JPanel content,
-			String season, boolean isPlayOff,Playervo [] players) throws RemoteException {
+			String season, boolean isPlayOff, Playervo[] players)
+			throws RemoteException {
 		super(headName, columnName, kingWidth, kingHeight, bl, season,
 				isPlayOff);
 		this.type = type;
@@ -127,10 +128,10 @@ public class KingLabelPanel extends HotLabelPanel {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}else if (type.equals("TMP")){
-				
-				setPlayerTableContent(KingLabelPanel.this.players);
-		
+		} else if (type.equals("TMP")) {
+
+			setPlayerTableContent(KingLabelPanel.this.players);
+
 		}
 
 	}
@@ -175,8 +176,8 @@ public class KingLabelPanel extends HotLabelPanel {
 	public void setToday(TodayPlayervo[] players, String field) {
 		((TodayTableContentLabel) tableContentLabel).setPlayers(players, field);
 	}
-	
-	public Playervo[] getTeamPlayer(){
+
+	public Playervo[] getTeamPlayer() {
 		return players;
 	}
 
@@ -184,7 +185,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			String field) {
 		Comparator<Teamvo> comparator = new TeamAveragePointsComp();
 		switch (field) {
-		case "points":
+		case "point":
 			comparator = new TeamAveragePointsComp();
 			break;
 		case "rebound":
@@ -447,7 +448,6 @@ public class KingLabelPanel extends HotLabelPanel {
 				playerNames[i].setOpaque(false);
 				playerNames[i].setCursor(Cursor
 						.getPredefinedCursor(Cursor.HAND_CURSOR));
-				
 
 				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
 				playerTeamNames[i].setOpaque(false);
@@ -524,18 +524,19 @@ public class KingLabelPanel extends HotLabelPanel {
 				g.setFont(new Font("微软雅黑", Font.BOLD, 50));
 				g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
 				// 姓名
-
+				System.out.println(players[0].getName());
 				playerNames[0].setText(players[0].getName());
 
-				/*
-				 * // 号码 g.setColor(new Color(68, 68, 68)); g.setFont(new
-				 * Font("微软雅黑", Font.PLAIN, 20));
-				 * g.drawString(players[0].getNumber(), contentWidth / 5,
-				 * contentHeight * 3 / 5); // 位置 g.setColor(new Color(68, 68,
-				 * 68)); g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				 * g.drawString(players[0].getPosition(), contentWidth / 4,
-				 * contentHeight * 3 / 5);
-				 */
+				/*// 号码
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(players[0].getNumber(), contentWidth / 5,
+						contentHeight * 3 / 5); // 位置
+				g.setColor(new Color(68, 68, 68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				g.drawString(players[0].getPosition(), contentWidth / 4,
+						contentHeight * 3 / 5);
+*/
 				// 球队
 				playerTeamNames[0].setText(players[0].getTeam());
 				// 数据、球队图标暂无
