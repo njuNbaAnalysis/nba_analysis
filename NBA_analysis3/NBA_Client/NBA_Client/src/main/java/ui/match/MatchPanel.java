@@ -53,6 +53,7 @@ public class MatchPanel extends JPanel {
 	Date date;
 	String dateForMatch;
 	String dateForFutureMatch;
+	String proFix;
 	ArrayList<Matchvo> matchList;
 	ArrayList<FutureMatchvo> futureMatchList;
 	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -77,18 +78,19 @@ public class MatchPanel extends JPanel {
 		dateForFutureMatch = df.format(date);
 		int year = date.getYear()+1900;
 		int month = date.getMonth();
-		System.out.println("year:"+year+" month"+month);
 		if(month<=7){
-			dateForMatch = ((year-1)%100)+"-"+(year%100)+"_"+dateForFutureMatch;
+			proFix = ((year-1)%100)+"-"+(year%100)+"_";
 		}else{
-			dateForMatch = (year%100)+"-"+((year+1)%100)+"_"+dateForFutureMatch;
+			proFix = (year%100)+"-"+((year+1)%100)+"_";
 		}
-		System.out.println(dateForMatch);
-		System.out.println(dateForFutureMatch);		
+		dateForMatch = proFix+dateForFutureMatch;
+			
 		try {
 			this.matchList = new ArrayList<Matchvo>(
 					bl.getTodayMatches(dateForMatch));
 			this.futureMatchList = bl.getFutureMatches(dateForFutureMatch);
+			System.out.println("");
+			System.out.println(futureMatchList.size());
 		} catch (RemoteException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -779,11 +781,14 @@ public class MatchPanel extends JPanel {
 				head.currentLabel.setText(df.format(date));
 				try {
 					MatchPanel.this.matchList = new ArrayList<Matchvo>(
-							bl.getTodayMatches("13-14_" + df.format(date)));
+							bl.getTodayMatches(proFix + df.format(date)));
+					MatchPanel.this.futureMatchList = bl.getFutureMatches(df.format(date));
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
 				}
+				System.out.println(proFix + df.format(date));
+				System.out.println(df.format(date));
 				MatchPanel.this.removeAll();
 				MatchPanel.this.addChildren();
 				MatchPanel.this.updateUI();
@@ -793,7 +798,8 @@ public class MatchPanel extends JPanel {
 				head.currentLabel.setText(df.format(date));
 				try {
 					MatchPanel.this.matchList = new ArrayList<Matchvo>(
-							bl.getTodayMatches("13-14_" + df.format(date)));
+							bl.getTodayMatches(proFix + df.format(date)));
+					MatchPanel.this.futureMatchList = bl.getFutureMatches(df.format(date));
 				} catch (RemoteException e1) {
 					// TODO 自动生成的 catch 块
 					e1.printStackTrace();
