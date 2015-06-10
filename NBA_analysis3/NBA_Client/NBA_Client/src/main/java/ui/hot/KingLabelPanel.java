@@ -527,16 +527,15 @@ public class KingLabelPanel extends HotLabelPanel {
 				System.out.println(players[0].getName());
 				playerNames[0].setText(players[0].getName());
 
-				/*// 号码
-				g.setColor(new Color(68, 68, 68));
-				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(players[0].getNumber(), contentWidth / 5,
-						contentHeight * 3 / 5); // 位置
-				g.setColor(new Color(68, 68, 68));
-				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(players[0].getPosition(), contentWidth / 4,
-						contentHeight * 3 / 5);
-*/
+				/*
+				 * // 号码 g.setColor(new Color(68, 68, 68)); g.setFont(new
+				 * Font("微软雅黑", Font.PLAIN, 20));
+				 * g.drawString(players[0].getNumber(), contentWidth / 5,
+				 * contentHeight * 3 / 5); // 位置 g.setColor(new Color(68, 68,
+				 * 68)); g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+				 * g.drawString(players[0].getPosition(), contentWidth / 4,
+				 * contentHeight * 3 / 5);
+				 */
 				// 球队
 				playerTeamNames[0].setText(players[0].getTeam());
 				// 数据、球队图标暂无
@@ -728,12 +727,14 @@ public class KingLabelPanel extends HotLabelPanel {
 		private int contentHeight;
 		// JLabel teamName;
 		JLabel[] teamNames;
+		private String field;
 
 		public TeamTableContentLabel(Teamvo[] teams, int contentWidth,
-				int contentHeight) {
+				int contentHeight,String field) {
 			this.teams = teams;
 			this.contentWidth = contentWidth;
 			this.contentHeight = contentHeight;
+			this.field = field;
 			setTeamNameLabel();
 		}
 
@@ -767,7 +768,10 @@ public class KingLabelPanel extends HotLabelPanel {
 					teams[0].getConference() + "   " + teams[0].getDivision(),
 					contentWidth / 5, contentHeight * 3 / 5);
 
-			// 数据暂无
+			
+
+			g.drawString(getTeamData(teams[0]), contentWidth / 5,
+					contentHeight * 3 / 5);
 
 			g.setColor(new Color(246, 246, 246));
 			g.fillRect(contentWidth / 2, 0, contentWidth / 10,
@@ -796,6 +800,9 @@ public class KingLabelPanel extends HotLabelPanel {
 						* (4 * i - 3) / 20);
 
 				// 没有球队得分
+				g.drawString(getTeamData(teams[0]), contentWidth * 18 / 20,
+						 contentHeight
+							* (4 * i - 3) / 20);
 			}
 		}
 
@@ -832,8 +839,63 @@ public class KingLabelPanel extends HotLabelPanel {
 			}
 
 		}
+		
+		private String getTeamData(Teamvo t) {
+			DecimalFormat df = new DecimalFormat("#0.0");
+			double result = 0;
+			// System.out.println(field);
+			switch (field) {
+			case "point":
+			case "场均得分":
+			case "得分":
 
+				result = t.getAveragePoints();
+				break;
+			case "rebound":
+			case "场均篮板":
+			case "篮板":
+				result = t.getAverageRebounds();
+				break;
+			case "assist":
+			case "场均助攻":
+			case "助攻":
+				result = t.getAverageAssists();
+				break;
+			case "steal":
+			case "场均抢断":
+			case "抢断":
+				result = t.getAverageSteals();
+				break;
+			case "block":
+			case "blockShot":
+			case "场均盖帽":
+			case "盖帽":
+				result = t.getAverageBlockShots();
+				break;
+			case "三分%":
+			case "three":
+				result = t.getThreePointersPercentage() * 100;
+				break;
+
+			case "%":
+			case "shot":
+				result = t.getFieldGoalsPercentage() * 100;
+				break;
+			case "罚球%":
+			case "penalty":
+				result = t.getFreeThrowsPercentage() * 100;
+				break;
+			default:
+				System.out
+						.println("Error in ImprovefLabelPanel.paintComponent()!!!"
+								+ field);
+			}
+			return df.format(result);
+
+		}
 	}
+
+	
 
 	private class TeamMouseAdapter extends MouseAdapter {
 
