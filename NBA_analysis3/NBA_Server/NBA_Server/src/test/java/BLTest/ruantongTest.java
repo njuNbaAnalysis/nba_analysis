@@ -23,7 +23,8 @@ public class ruantongTest {
 
 		double k = 0.31;
 		double theta = 0.7;
-		double h = 3.97;
+//		double h = -2.95;
+		double h = -3.9;
 
 		// ArrayList<match> list2 = mr.getMatchesBySeason("13-14", false);
 		// for (int i = 0; i < list2.size(); i++) {
@@ -50,6 +51,14 @@ public class ruantongTest {
 				gameplayed[indexofStr(list.get(i).getHome_team())]++;
 				gameplayed[indexofStr(list.get(i).getAway_team())]++;
 
+				if (((list.get(i).getHome_points() - list.get(i)
+						.getAway_points()))
+						* ((points[indexofStr(list.get(i).getHome_team())]
+								- points[indexofStr(list.get(i).getAway_team())] + h)) > 0) {
+					result[indexofStr(list.get(i).getAway_team())]++;
+					result[indexofStr(list.get(i).getHome_team())]++;
+				}
+				
 				points[indexofStr(list.get(i).getHome_team())] += (Math
 						.expm1((-1) * k * (i + 1)) + 1)
 						* theta
@@ -67,13 +76,7 @@ public class ruantongTest {
 								.get(i).getHome_team())])
 								- points[indexofStr(list.get(i).getAway_team())] + h));
 
-				if (((list.get(i).getHome_points() - list.get(i)
-						.getAway_points()))
-						* ((points[indexofStr(list.get(i).getHome_team())]
-								- points[indexofStr(list.get(i).getAway_team())] + h)) > 0) {
-					result[indexofStr(list.get(i).getAway_team())]++;
-					result[indexofStr(list.get(i).getHome_team())]++;
-				}
+			
 				
 			}
 //			double[] calcu = new double[30];
