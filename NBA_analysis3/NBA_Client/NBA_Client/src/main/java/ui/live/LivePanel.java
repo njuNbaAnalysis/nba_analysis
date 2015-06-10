@@ -43,7 +43,7 @@ public class LivePanel extends JPanel {
 	private BLservice bl;
 	private InfoLabel infoLabel;
 
-	LivePanel(int width, int height, BLservice bl, String mid) {
+	public LivePanel(int width, int height, BLservice bl, String mid) {
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
@@ -420,7 +420,7 @@ public class LivePanel extends JPanel {
 
 		
 
-		LivePanel chart = new LivePanel(1280, 1080, bl, m);
+		LivePanel chart = new LivePanel(1280, 1080, bl, mid);
 		chart.setBounds(0, 0, 1280, 1080);
 
 		f.setLayout(null);
