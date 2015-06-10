@@ -16,98 +16,128 @@ public class ruantongTest {
 	public static void main(String[] args) {
 		MatchReader mr = new MatchReader();
 		ArrayList<match> list = mr.getMatchesBySeason("14-15", false);
-		// ArrayList<matchsimpleitem> result = new ArrayList<matchsimpleitem>();
 
-		int[] gameplayed = new int[30];
-		int[] result = new int[30];
 
-		double k = 0.31;
-		double theta = 0.7;
-//		double h = -2.95;
-		double h = -3.9;
+		double[] result = new double[30];
+//		int[] gameplayed = new int[30];
+		
+		double k = 0;
+		double theta = 0.052;
+		double h =2.4097560975609755;
+//		double h = 0;;
 
-		// ArrayList<match> list2 = mr.getMatchesBySeason("13-14", false);
-		// for (int i = 0; i < list2.size(); i++) {
-		// for (int j = 0; j < names.length; j++) {
-		// if (names[j].equals(list2.get(i).getHome_team())) {
-		// points[indexofStr(names[j])] += (list2.get(i)
-		// .getHome_points() - list2.get(i).getAway_points());
-		// } else if (names[j].equals(list2.get(i).getAway_team())) {
-		// points[indexofStr(names[j])] += (0 - list2.get(i)
-		// .getHome_points() + list2.get(i).getAway_points());
-		// }
-		// }
-		// }
+		int sum = 0;
 
-//		double min = 0;
-//		double temp = 0;
-//		
-//		for (h = -3; h <-2; h += 0.01) {
-//			for(int m = 0;m<30;m++){
-//				result[m] = 0;
-//			}
-			for (int i = 0; i < list.size(); i++) {
-
-				gameplayed[indexofStr(list.get(i).getHome_team())]++;
-				gameplayed[indexofStr(list.get(i).getAway_team())]++;
-
-				if (((list.get(i).getHome_points() - list.get(i)
-						.getAway_points()))
-						* ((points[indexofStr(list.get(i).getHome_team())]
-								- points[indexofStr(list.get(i).getAway_team())] + h)) > 0) {
-					result[indexofStr(list.get(i).getAway_team())]++;
-					result[indexofStr(list.get(i).getHome_team())]++;
-				}
-				
-				points[indexofStr(list.get(i).getHome_team())] += (Math
-						.expm1((-1) * k * (i + 1)) + 1)
-						* theta
-						* ((list.get(i).getHome_points() - list.get(i)
-								.getAway_points()) - ((points[indexofStr(list
-								.get(i).getHome_team())])
-								- points[indexofStr(list.get(i).getAway_team())] + h));
-
-				points[indexofStr(list.get(i).getAway_team())] += (Math
-						.expm1((-1) * k * (i + 1)) + 1)
-						* theta
-						* (-1)
-						* ((list.get(i).getHome_points() - list.get(i)
-								.getAway_points()) - ((points[indexofStr(list
-								.get(i).getHome_team())])
-								- points[indexofStr(list.get(i).getAway_team())] + h));
-
+		for (int i = 0; i < list.size()/4*3; i++) {
 			
-				
-			}
-//			double[] calcu = new double[30];
-//			for(int n=0;n<30;n++){
-//				calcu[n] = result[n]*1.0/82;
-//			}
-//			if(getFangcha(calcu)>min){
-//				min = getFangcha(calcu);
-//				temp = h;
-//				System.out.println("temp：" + temp);
-//			}
-//		}
+			points[indexofStr(list.get(i).getHome_team())] += (Math.expm1((-1)
+					* k * (i + 1)) + 1)
+					* theta
+					* ((list.get(i).getHome_points() - list.get(i)
+							.getAway_points()) - ((points[indexofStr(list
+							.get(i).getHome_team())])
+							- points[indexofStr(list.get(i).getAway_team())] + h));
 
-//		System.out.println(temp);
-			double temp = 0;
-		for (int i = 0; i < 30; i++) {
-			System.out.println(names[i] + " : " + result[i] * 1.0 / 82);
-			temp += result[i] * 1.0 / 82;
+			points[indexofStr(list.get(i).getAway_team())] += (Math.expm1((-1)
+					* k * (i + 1)) + 1)
+					* theta
+					* (-1)
+					* ((list.get(i).getHome_points() - list.get(i)
+							.getAway_points()) - ((points[indexofStr(list
+							.get(i).getHome_team())])
+							- points[indexofStr(list.get(i).getAway_team())] + h));
+
+			sum += (list.get(i).getHome_points() - list.get(i).getAway_points());
+//			h = sum/(i+1);
 		}
-		System.out.println(temp/30);
+		for(int i=list.size()/4*3;i<list.size();i++){
+			if (((list.get(i).getHome_points() - list.get(i).getAway_points()))
+					* ((points[indexofStr(list.get(i).getHome_team())]
+							- points[indexofStr(list.get(i).getAway_team())] + h)) > 0) {
+				result[indexofStr(list.get(i).getAway_team())]++;
+				result[indexofStr(list.get(i).getHome_team())]++;
+			}
+			points[indexofStr(list.get(i).getHome_team())] += (Math.expm1((-1)
+					* k * (i + 1)) + 1)
+					* theta
+					* ((list.get(i).getHome_points() - list.get(i)
+							.getAway_points()) - ((points[indexofStr(list
+							.get(i).getHome_team())])
+							- points[indexofStr(list.get(i).getAway_team())] + h));
+
+			points[indexofStr(list.get(i).getAway_team())] += (Math.expm1((-1)
+					* k * (i + 1)) + 1)
+					* theta
+					* (-1)
+					* ((list.get(i).getHome_points() - list.get(i)
+							.getAway_points()) - ((points[indexofStr(list
+							.get(i).getHome_team())])
+							- points[indexofStr(list.get(i).getAway_team())] + h));
+
+			sum += (list.get(i).getHome_points() - list.get(i).getAway_points());
+		}
+
+		double temp = 0;
+		for (int i = 0; i < 30; i++) {
+//			System.out.println(names[i] + " : " + result[i] * 1.0 / 82);
+			temp += result[i] * 1.0;
+		}
+		System.out.println(temp/ list.size()*2);
+
+		System.out.println("H: " + sum * 1.0 / list.size());
+		
+		double max = 1000000000;
+		double k1 = 0;
+		double theta1 = 0;
+		for( k = 0;k<0.2;k+=0.01){
+			for( theta = 0.051;theta<0.053;theta+=0.0001){
+				 temp = getFangcha(list, k, theta, 2.4097560975609755);
+				if(temp<max){
+					max = temp;
+					k1 = k;
+					theta1 = theta;
+				}
+			}
+		}
+
+		System.out.println("K: "+k1+" Theta:  "+theta1);
 	}
 
-	public static double getFangcha(double[] list) {
+	public static double getFangcha(ArrayList<match> list, double k,
+			double theta, double h) {
 		double result = 0;
 
-		for (int i = 0; i < list.length; i++) {
-			result += list[i];
+		double[] points = new double[30];
+		
+		for (int i = 0; i < list.size(); i++) {
+			result += (((list.get(i).getHome_points() - list.get(i)
+					.getAway_points())) - ((points[indexofStr(list.get(i)
+					.getHome_team())]
+					- points[indexofStr(list.get(i).getAway_team())] + h))) * (((list.get(i).getHome_points() - list.get(i)
+							.getAway_points())) - ((points[indexofStr(list.get(i)
+									.getHome_team())]
+									- points[indexofStr(list.get(i).getAway_team())] + h)));
+
+			points[indexofStr(list.get(i).getHome_team())] += (Math.expm1((-1)
+					* k * (i + 1)) + 1)
+					* theta
+					* ((list.get(i).getHome_points() - list.get(i)
+							.getAway_points()) - ((points[indexofStr(list
+							.get(i).getHome_team())])
+							- points[indexofStr(list.get(i).getAway_team())] + h));
+
+			points[indexofStr(list.get(i).getAway_team())] += (Math.expm1((-1)
+					* k * (i + 1)) + 1)
+					* theta
+					* (-1)
+					* ((list.get(i).getHome_points() - list.get(i)
+							.getAway_points()) - ((points[indexofStr(list
+							.get(i).getHome_team())])
+							- points[indexofStr(list.get(i).getAway_team())] + h));
 
 		}
 		System.out.println("result:" + result);
-		return result / list.length;
+		return result / list.size();
 	}
 
 	public static int indexofStr(String name) {

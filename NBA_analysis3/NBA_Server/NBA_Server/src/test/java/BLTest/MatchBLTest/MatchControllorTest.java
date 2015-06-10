@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import vo.EventVo;
 import vo.FutureMatchvo;
+import vo.KingsOfMatchvo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 
@@ -81,6 +82,8 @@ public class MatchControllorTest {
 		System.out.println(list.size());
 		for(int i=0;i<list.size();i++){
 			System.out.println(list.iterator().next().isIsplayoff());
+			KingsOfMatchvo[] kings = list.iterator().next().getKingsOfMatch();
+			System.out.println(kings[0].getIdOfPointsKing()+"  "+kings[0].getNameOfPointsKing());
 		}
 		Boolean result = (list.size()!=0);
 		assertTrue(result);

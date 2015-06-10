@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import logic.players.PlayerNameList;
 import data.matches.MatchItemReader;
 import data.matches.MatchReader;
 import data.matches.pointsItemReader;
@@ -70,9 +71,11 @@ public class matchBLcontrollor {
 		ArrayList<RecordOfPlayervo> secondRecordList = new ArrayList<RecordOfPlayervo>();
 		for (int i = 0; i < m.getMatchItemList().size(); i++) {
 			matchItem temp = m.getMatchItemList().get(i);
+			PlayerNameList list = PlayerNameList.getIntance();
+			String PlayerName = list.getEnAbbrById(temp.getPid());
 			if (temp.isIshome()) {
-				firstRecordList.add(new RecordOfPlayervo(temp.getPid(), temp
-						.getPid(), temp.getTime(), temp.getFieldGoalsHit(),
+				firstRecordList.add(new RecordOfPlayervo(temp.getPid(),
+						PlayerName, temp.getTime(), temp.getFieldGoalsHit(),
 						temp.getFieldGoalsAttempt(), temp.getThreepointHit(),
 						temp.getThreepointAttempt(), temp.getFreethrowHit(),
 						temp.getFreethrowAttempt(), temp.getOffenseRebounds(),
@@ -84,8 +87,8 @@ public class matchBLcontrollor {
 								.getFreethrowpercent(), temp
 								.getFieldGoalspercent()));
 			} else {
-				secondRecordList.add(new RecordOfPlayervo(temp.getPid(), temp
-						.getPid(), temp.getTime(), temp.getFieldGoalsHit(),
+				secondRecordList.add(new RecordOfPlayervo(temp.getPid(),
+						PlayerName, temp.getTime(), temp.getFieldGoalsHit(),
 						temp.getFieldGoalsAttempt(), temp.getThreepointHit(),
 						temp.getThreepointAttempt(), temp.getFreethrowHit(),
 						temp.getFreethrowAttempt(), temp.getOffenseRebounds(),
@@ -121,7 +124,7 @@ public class matchBLcontrollor {
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
 				if (list2.get(i).equals(list.get(j).getMid()))
-					result.add(changematchToMatchvo(list.get(j),true));
+					result.add(changematchToMatchvo(list.get(j), true));
 			}
 		}
 		return result;
@@ -172,11 +175,11 @@ public class matchBLcontrollor {
 		ArrayList<match> list = checkisexit(season);
 		ArrayList<String> list2 = matchReader.getMatchesByTeam(teamNameEn,
 				season, isPlayOff, 10);
-		System.out.println(list2.size()+"dsadas");
+		System.out.println(list2.size() + "dsadas");
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
-				if (list2.get(i).equals(list.get(j).getMid())){
+				if (list2.get(i).equals(list.get(j).getMid())) {
 					result.add(changematchToMatchvo(list.get(i), false));
 					break;
 				}
