@@ -175,7 +175,7 @@ public class TeamInfoPanel extends JPanel {
 					case 2:
 						try {
 							LineUpPanel lineUp = new LineUpPanel(width,
-									height * 2 / 3, team.getPlayerList(), bl,
+									height * 2 / 3, playerList, bl,
 									content, season, isPlayOff);
 							lineUp.setBounds(0, 0, width, height * 2 / 3);
 							js.removeAll();

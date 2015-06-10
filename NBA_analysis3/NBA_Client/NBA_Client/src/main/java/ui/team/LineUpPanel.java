@@ -40,7 +40,7 @@ import vo.Playervo;
 public class LineUpPanel extends JPanel {
 	private int width;
 	private int height;
-	private ArrayList<String> playersName;
+	private ArrayList<Playervo> players;
 	private JButton info;
 	private JButton data;
 	private int state = 0;
@@ -50,10 +50,10 @@ public class LineUpPanel extends JPanel {
 	private String season;
 	private boolean isPlayOff;
 
-	LineUpPanel(int width, int height, ArrayList<String> playersName,BLservice bl,JPanel content,String season,boolean isPlayOff) throws RemoteException {
+	LineUpPanel(int width, int height, ArrayList<Playervo> players,BLservice bl,JPanel content,String season,boolean isPlayOff) throws RemoteException {
 		this.width = width;
 		this.height = height;
-		this.playersName = playersName;
+		this.players = players;
 		this.bl = bl;
 		this.content= content;
 		this.season = season;
@@ -65,7 +65,7 @@ public class LineUpPanel extends JPanel {
 	}
 
 	private void setTabelPanel() throws RemoteException {
-		LineUpTable table = new LineUpTable(playersName, 0,bl,content);
+		LineUpTable table = new LineUpTable(players, 0,bl,content);
 		js = new JScrollPane(table);
 		js.setBounds(0, height * 1 / 20, width, height * 19 / 20);
 		this.add(js);
@@ -147,7 +147,7 @@ public class LineUpPanel extends JPanel {
 			data.setBackground(new Color(26, 71, 123));
 			if (state != 0) {
 				//js.removeAll();
-				LineUpTable table = new LineUpTable(playersName, 0,bl,content);
+				LineUpTable table = new LineUpTable(players, 0,bl,content);
 				table.setBounds(0, 0, width, height*9/10);
 				js.setViewportView(table);
 				js.updateUI();
@@ -160,7 +160,7 @@ public class LineUpPanel extends JPanel {
 
 			if (state != 1) {
 				//js.removeAll();
-				LineUpTable table = new LineUpTable(playersName, 1,bl,content);
+				LineUpTable table = new LineUpTable(players, 1,bl,content);
 				table.setBounds(0, 0, width, height*9/10);
 				js.setViewportView(table);
 				js.updateUI();
@@ -187,7 +187,7 @@ public class LineUpPanel extends JPanel {
 		private JPanel content;
 
 		// type :0表示信息，1表示数据
-		public LineUpTable(ArrayList<String> playersName, int type,BLservice bl,JPanel content) throws RemoteException {
+		public LineUpTable(ArrayList<Playervo> players, int type,BLservice bl,JPanel content) throws RemoteException {
 			this.bl = bl;
 			this.content = content;
 			this.setShowGrid(false);
@@ -207,11 +207,11 @@ public class LineUpPanel extends JPanel {
 	                if ((column=LineUpTable.this.getSelectedColumn()) == 0) {
 	                	int row = LineUpTable.this.getSelectedRow();
 	                	String playerName = (String)LineUpTable.this.getValueAt(row, column);
-
+	                	
 	                	
 						try {
-							Playervo p;
-							p = LineUpTable.this.bl.getPlayerByNameAndTeam(playerName);
+							Playervo p = getPlayervoByName(LineUpPanel.this.players,playerName);
+							p = LineUpTable.this.bl.getPlayerById(p.getPid(),season,isPlayOff);
 							PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(width,height*3/2,p,LineUpTable.this.bl,LineUpTable.this.content,season,isPlayOff);
 		            		
 		            		playerInfoPanel.setBounds(0, 0, width, height*3/2);
@@ -230,7 +230,17 @@ public class LineUpPanel extends JPanel {
 	               
 	            }
 	            
-	            public void mouseEntered(MouseEvent e){
+	            private Playervo getPlayervoByName(
+						ArrayList<Playervo> playersName, String playerName) {
+					for(Playervo p:playersName){
+						if(playersName.equals(p.getName())){
+							return p;
+						}
+					}
+					return null;
+				}
+
+				public void mouseEntered(MouseEvent e){
 	            	 if ((LineUpTable.this.getSelectedColumn()) == 0) {
 	            		 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
@@ -253,16 +263,16 @@ public class LineUpPanel extends JPanel {
 				columnName = dataColumnName;
 			}
 			DefaultTableModel model = new DefaultTableModel(null, columnName);
-			int size = playersName.size();
+			int size = players.size();
 			System.out.println("球员列表"+size);
 			imageList = new ArrayList<Image>();
 			//存疑
 			for (int i = 0; i < size; i++) {
 				String[] s = null;
-				Playervo player = bl.getPlayerByNameAndTeam(playersName.get(i));
+				Playervo player = bl.getPlayerById(players.get(i).getPid(),season,isPlayOff);
 				if(player==null){
 					s = new String[1];
-					s[0] = playersName.get(i);
+					s[0] = players.get(i).getName();
 					continue;
 				}
 				
