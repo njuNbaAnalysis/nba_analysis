@@ -56,8 +56,10 @@ public class matchBLcontrollor {
 		m.setPointsItemList(pointlist);
 	}
 
-	private Matchvo changematchToMatchvo(match m) {
-		SetPointList(m);
+	private Matchvo changematchToMatchvo(match m, boolean issetPointList) {
+		if (issetPointList) {
+			SetPointList(m);
+		}
 		int[] points = { m.getHome_points(), m.getAway_points() };
 		String[] teams = { m.getHome_team(), m.getAway_team() };
 		ArrayList<int[]> pointsList = new ArrayList<int[]>();
@@ -103,7 +105,7 @@ public class matchBLcontrollor {
 	}
 
 	private ArrayList<match> getAllMatchBySeason(String season) {
-		ArrayList<match> result =  matchReader.getMatchesBySeason(season);
+		ArrayList<match> result = matchReader.getMatchesBySeason(season);
 		return result;
 	}
 
@@ -119,7 +121,7 @@ public class matchBLcontrollor {
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
 				if (list2.get(i).equals(list.get(j).getMid()))
-					result.add(changematchToMatchvo(list.get(j)));
+					result.add(changematchToMatchvo(list.get(j),true));
 			}
 		}
 		return result;
@@ -129,7 +131,8 @@ public class matchBLcontrollor {
 			String season) {
 		// TODO Auto-generated method stub
 		ArrayList<MatchSimpleInfovo> result = new ArrayList<MatchSimpleInfovo>();
-		ArrayList<match> list = matchReader.getMatchSimpleByTeam(teamName, season);
+		ArrayList<match> list = matchReader.getMatchSimpleByTeam(teamName,
+				season);
 		for (int i = 0; i < list.size(); i++) {
 			int[] points = new int[2];
 			boolean isWin = false;
@@ -150,7 +153,7 @@ public class matchBLcontrollor {
 			result.add(new MatchSimpleInfovo(list.get(i).getDate(), isWin,
 					points, teamName, isAtHome));
 		}
-		
+
 		return result;
 	}
 
@@ -174,7 +177,7 @@ public class matchBLcontrollor {
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
 				if (list2.get(i).equals(list.get(j).getMid())){
-					result.add(changematchToMatchvo(list.get(j)));
+					result.add(changematchToMatchvo(list.get(i), false));
 					break;
 				}
 			}
