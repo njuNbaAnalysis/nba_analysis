@@ -171,9 +171,10 @@ public class playerBLcontrollor {
 		PlayerNameList namelist = PlayerNameList.getIntance();
 		String Pid = namelist.getIdByEnAbbr(playerName);
 		if (Pid == null) {
-			return null;
-
+			Pid  = namelist.getIdByEnFull(playerName);
 		}
+		if(Pid == null)
+			return null;
 		return getPlayerById(Pid);
 	}
 
@@ -213,7 +214,6 @@ public class playerBLcontrollor {
 			String transferField, int number) {
 		ArrayList<Matchvo> list = matchBLcontrollor.getInstance()
 				.getTodayMatched(date);
-		System.out.println(date);
 		while (list.size() == 0) {
 			date = DeclarationTime(date);
 			list = matchBLcontrollor.getInstance().getTodayMatched(date);
@@ -223,8 +223,9 @@ public class playerBLcontrollor {
 			ArrayList<RecordOfPlayervo> temp1 = list.get(i)
 					.getFirstRecordList();
 			ArrayList<RecordOfPlayervo> temp2 = list.get(i)
-					.getFirstRecordList();
+					.getSecondRecordList();
 			for (int j = 0; j < temp1.size(); j++) {
+				System.out.println(temp1.get(j).getPid()+"    adadas  "+ temp1.get(j).getPlayerName());
 				result.add(new TodayPlayervo(temp1.get(i).getPid(), temp1
 						.get(j).getPlayerName(), list.get(i).getTeams()[0],
 						temp1.get(j).getPoints(), temp1.get(j).getRebounds(),

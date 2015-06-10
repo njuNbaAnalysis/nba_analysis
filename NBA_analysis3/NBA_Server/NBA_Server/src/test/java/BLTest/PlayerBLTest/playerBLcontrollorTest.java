@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import po.player;
 import vo.Playervo;
+import vo.TodayPlayervo;
 
 public class playerBLcontrollorTest {
 
@@ -117,4 +118,15 @@ public class playerBLcontrollorTest {
 		assertTrue(true);
 	}
 
+
+	@Test
+	public void testgetTodayPlayervo() {
+		playerBLcontrollor pl = playerBLcontrollor.getInstance();
+		ArrayList<TodayPlayervo>list = pl.getTodayKingPlayer("13-14_2014-05-04", "point", 10);
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i).getName()+"   "+list.get(i).getPid());
+		}
+		assertTrue(true);
+	}
+	
 }
