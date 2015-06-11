@@ -305,7 +305,7 @@ public class MatchReader {
 							+ season
 							+ "赛季' and isplayoff = "
 							+ isPlayOff
-							+ " group by date desc limit " + number);
+							+ " order by date desc limit " + number);
 			while (rs.next()) {
 				result.add(rs.getString(1));
 			}

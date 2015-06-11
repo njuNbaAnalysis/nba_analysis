@@ -17,6 +17,7 @@ import vo.HotZonevo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.Playervo;
+import vo.RecordOfPlayervo;
 import vo.Teamvo;
 import vo.TodayPlayervo;
 import BLservice.BLservice;
@@ -121,6 +122,15 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		return playerBLcontro.getAlliancePlayerAverageData(season, isPlayOff);
 	}
 
+
+	@Override
+	public ArrayList<RecordOfPlayervo> getRecordOfPlayerById(String Pid)
+			throws RemoteException {
+		// TODO Auto-generated method stub
+		matchBLcontrollor mbl  = matchBLcontrollor.getInstance();
+		return mbl.getRecordOfPlayerById(Pid);
+	}
+	
 	@Override
 	public Collection<? extends Matchvo> getTodayMatches(String string)
 			throws RemoteException {

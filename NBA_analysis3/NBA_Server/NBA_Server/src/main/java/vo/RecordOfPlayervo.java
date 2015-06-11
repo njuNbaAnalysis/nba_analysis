@@ -50,6 +50,12 @@ public class RecordOfPlayervo implements Serializable {
 	private double freeThrowsPercentage; // 罚球命中率
 	/**该球员的投篮命中率*/
 	private double fieldGoalsPercentage; // 投篮命中率
+	/**对应比赛的Mid*/
+	private String Mid;
+	/**对应比赛的date*/
+	private String date;
+	/**对应比赛的对手对位*/
+	private String away_Team;
 
 	/**
 	 * 对该类的所有属性进行构造
@@ -204,4 +210,31 @@ public class RecordOfPlayervo implements Serializable {
 		return efficiency;
 	}
 
+	/**返回该比赛唯一标识符Mid*/
+	public String getMid() {
+		return Mid;
+	}
+
+	public void setMid(String mid) {
+		Mid = mid;
+	}
+
+	/**返回该比赛的日期*/
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	/**返回该比赛的对手队伍名*/
+	public String getAway_Team() {
+		return away_Team;
+	}
+
+	public void setAway_Team(String away_Team) {
+		this.away_Team = away_Team;
+	}
+	
 }

@@ -24,6 +24,9 @@ public class ruantongTest {
 		double k = 0;
 		double theta = 0.052;
 		double h =2.4097560975609755;
+		double sigma = 181.3264088836008;
+		
+		System.out.println("方差为： "+ getSigma(list,h));
 //		double h = 0;;
 
 		int sum = 0;
@@ -138,6 +141,14 @@ public class ruantongTest {
 		}
 		System.out.println("result:" + result);
 		return result / list.size();
+	}
+	
+	public static double getSigma( ArrayList<match> list, double x){
+		double result = 0;
+		for( int i= 0; i<list.size() ; i++ ){
+			result += ( list.get(i).getHome_points() - list.get(i).getAway_points() - x) * ( list.get(i).getHome_points() - list.get(i).getAway_points() - x);
+		}
+		return result/list.size();
 	}
 
 	public static int indexofStr(String name) {

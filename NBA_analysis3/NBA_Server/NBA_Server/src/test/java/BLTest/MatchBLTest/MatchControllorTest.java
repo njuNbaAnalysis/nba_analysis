@@ -22,6 +22,7 @@ import vo.FutureMatchvo;
 import vo.KingsOfMatchvo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
+import vo.RecordOfPlayervo;
 
 public class MatchControllorTest {
 
@@ -123,6 +124,17 @@ public class MatchControllorTest {
 		}
 		Boolean result = (list.size()!=0);
 		assertTrue(result);
+	}
+	
+	@Test
+	public void testgetRecordOfPlayerById(){
+		matchBLcontrollor m = matchBLcontrollor.getInstance();
+		ArrayList<RecordOfPlayervo> list = m.getRecordOfPlayerById("195");
+		System.out.println(list.size()+"   dasdasdsadas");
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i).getDate()+"  "+list.get(i).getAway_Team()+"  "+list.get(i).getMid());;
+		}
+		assertTrue(true);
 	}
 
 }
