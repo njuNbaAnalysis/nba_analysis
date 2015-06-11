@@ -1,9 +1,7 @@
 package logic.matches;
 
-import java.awt.List;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import logic.players.PlayerNameList;
 import data.matches.MatchItemReader;
@@ -21,12 +19,14 @@ public class matchBLcontrollor {
 	private ArrayList<MatchBuff> BuffList;
 	private MatchReader matchReader = null;
 	private pointsItemReader pointsItemReader = null;
+	private MatchItemReader matchItemReader = null;
 
 	private static matchBLcontrollor matchController = null;
 
 	private matchBLcontrollor() {
 		matchReader = new MatchReader();
 		pointsItemReader = new pointsItemReader();
+		matchItemReader = new MatchItemReader();
 		BuffList = new ArrayList<MatchBuff>();
 		BuffList.add(new MatchBuff("14-15", getAllMatchBySeason("14-15")));
 	}
@@ -211,5 +211,11 @@ public class matchBLcontrollor {
 			e.printStackTrace();
 		}
 
+	}
+
+	public ArrayList<RecordOfPlayervo> getRecordOfPlayerById(String pid) {
+		// TODO Auto-generated method stub
+		
+		return matchItemReader.getRecordOfPlayerById(pid);
 	}
 }
