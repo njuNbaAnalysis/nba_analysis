@@ -241,6 +241,10 @@ public class KingLabelPanel extends HotLabelPanel {
 			return "rebound";
 		case "场均助攻":
 			return "assist";
+		case "场均抢断":
+			return "steal";
+		case "场均盖帽":
+			return "blockShot";
 		default:
 			return "point";
 		}
@@ -275,7 +279,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			// 头像
 			if (players[0] != null) {
 				BufferedImage action = UIUtils.resize(players[0].getAction(),
-						contentWidth / 8, contentHeight);
+						contentWidth / 12, contentHeight);
 				g.drawImage(action, 0, 0, this);
 				// 排名
 				g.setColor(new Color(190, 157, 83));
@@ -434,12 +438,12 @@ public class KingLabelPanel extends HotLabelPanel {
 							15));
 					playerNames[i].setBounds(contentWidth * 13 / 20,
 							contentHeight * (16 * i - 13) / 80,
-							contentWidth * 1 / 15, contentHeight * (1) / 5);
+							contentWidth * 1 / 10, contentHeight * 1 / 5);
 
 					playerTeamNames[i].setForeground(Color.black);
 					playerTeamNames[i].setFont(new Font("微软雅黑",
 							Font.PLAIN, 15));
-					playerTeamNames[i].setBounds(contentWidth * 52 / 80,
+					playerTeamNames[i].setBounds(contentWidth * 59 / 80,
 							(contentHeight * (8 * i - 3) / 40),
 							contentWidth * 1 / 20, contentHeight * (1) / 5);
 
@@ -517,7 +521,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			// 头像
 			if (players[0] != null) {
 				BufferedImage action = UIUtils.resize(players[0].getAction(),
-						contentWidth / 10, contentHeight);
+						contentWidth / 12, contentHeight);
 				g.drawImage(action, 0, 0, this);
 				// 排名
 				g.setColor(new Color(190, 157, 83));
@@ -740,7 +744,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 队标
 			BufferedImage action = UIUtils.resize(teams[0].getLogo(),
-					contentWidth / 8, contentHeight);
+					contentWidth / 6, contentHeight);
 			g.drawImage(action, 0, 0, this);
 			// 排名
 			g.setColor(new Color(190, 157, 83));
@@ -758,7 +762,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 			
 
-			g.drawString(getTeamData(teams[0]), contentWidth*7 / 20,
+			g.drawString(getTeamData(teams[0]), contentWidth*6 / 20,
 					contentHeight * 3 / 5);
 
 			g.setColor(new Color(246, 246, 246));
@@ -767,7 +771,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 			for (int i = 2; i <= num; i++) {
 				g.setColor(new Color(146, 144, 144));
-				g.setFont(new Font("微软雅黑", Font.BOLD, 20));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 				g.drawString(i + "", contentWidth * 11 / 20, contentHeight
 						* (i - 1) / 5);
 
@@ -777,13 +781,13 @@ public class KingLabelPanel extends HotLabelPanel {
 				g.drawImage(image, contentWidth * 3 / 5, contentHeight
 						* (8 * i - 13) / 40, this);
 
-				g.setColor(Color.black);
-				g.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+				g.setColor(new Color(68,68,68));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 
 				teamNames[i - 1].setText(teams[i - 1].getName());
 
 				String str = teams[i - 1].getConference()
-						+ teams[i - 1].getDivision();
+						+  " "+teams[i - 1].getDivision();
 				g.drawString(str, contentWidth * 13 / 20, contentHeight
 						* (4 * i - 3) / 20);
 
@@ -803,7 +807,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				teamNames[i] = new JLabel();
 				if (i == 0) {
 					teamNames[i].setForeground(new Color(68, 68, 68));
-					teamNames[i].setFont(new Font("微软雅黑", Font.ROMAN_BASELINE,
+					teamNames[i].setFont(new Font("微软雅黑", Font.PLAIN,
 							25));
 					teamNames[i].setBounds(contentWidth / 4,
 							contentHeight * 1 / 4, contentWidth / 8,
@@ -814,7 +818,7 @@ public class KingLabelPanel extends HotLabelPanel {
 					teamNames[i].setForeground(Color.black);
 					teamNames[i]
 							.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-					teamNames[i].setBounds(contentWidth * 12 / 20,
+					teamNames[i].setBounds(contentWidth * 13 / 20,
 							contentHeight * (16 * i - 13) / 80,
 							contentWidth * 1 / 15, contentHeight * (1) / 5);
 
