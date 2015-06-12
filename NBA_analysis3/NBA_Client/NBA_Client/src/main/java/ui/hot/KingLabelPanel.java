@@ -275,7 +275,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			// 头像
 			if (players[0] != null) {
 				BufferedImage action = UIUtils.resize(players[0].getAction(),
-						contentWidth / 10, contentHeight);
+						contentWidth / 8, contentHeight);
 				g.drawImage(action, 0, 0, this);
 				// 排名
 				g.setColor(new Color(190, 157, 83));
@@ -312,7 +312,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			for (int i = 2; i <= num; i++) {
 				if (players[i - 1] != null) {
 					g.setColor(new Color(146, 144, 144));
-					g.setFont(new Font("Oswald-Bold", Font.PLAIN, 20));
+					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 					g.drawString(i + "", contentWidth * 11 / 20, contentHeight
 							* (i - 1) / 5);
 
@@ -336,7 +336,7 @@ public class KingLabelPanel extends HotLabelPanel {
 					g.drawString(str, contentWidth * 13 / 20, contentHeight
 							* (4 * i - 3) / 20);
 
-					// 没有球队图片，没有球员得分
+					
 					String data = getPlayerData(players[i - 1]);
 					g.setColor(new Color(68, 68, 68));
 					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
@@ -430,16 +430,16 @@ public class KingLabelPanel extends HotLabelPanel {
 							contentHeight * 3 / 20);
 				} else {
 					playerNames[i].setForeground(Color.black);
-					playerNames[i].setFont(new Font("Oswald-Bold", Font.PLAIN,
+					playerNames[i].setFont(new Font("微软雅黑", Font.PLAIN,
 							15));
 					playerNames[i].setBounds(contentWidth * 13 / 20,
 							contentHeight * (16 * i - 13) / 80,
 							contentWidth * 1 / 15, contentHeight * (1) / 5);
 
 					playerTeamNames[i].setForeground(Color.black);
-					playerTeamNames[i].setFont(new Font("Oswald-Bold",
+					playerTeamNames[i].setFont(new Font("微软雅黑",
 							Font.PLAIN, 15));
-					playerTeamNames[i].setBounds(contentWidth * 55 / 80,
+					playerTeamNames[i].setBounds(contentWidth * 52 / 80,
 							(contentHeight * (8 * i - 3) / 40),
 							contentWidth * 1 / 20, contentHeight * (1) / 5);
 
@@ -553,12 +553,12 @@ public class KingLabelPanel extends HotLabelPanel {
 			for (int i = 2; i <= num; i++) {
 				if (players[i - 1] != null) {
 					g.setColor(new Color(146, 144, 144));
-					g.setFont(new Font("Oswald-Bold", Font.PLAIN, 20));
+					g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 					g.drawString(i + "", contentWidth * 11 / 20, contentHeight
 							* (i - 1) / 5);
 
 					BufferedImage image = UIUtils.resize(
-							players[i - 1].getAction(), contentWidth / 30,
+							players[i - 1].getPortrait(), contentWidth / 30,
 							contentHeight / 5);
 
 					g.drawImage(image, contentWidth * 3 / 5, contentHeight
@@ -649,14 +649,14 @@ public class KingLabelPanel extends HotLabelPanel {
 							contentHeight * 3 / 20);
 				} else {
 					playerNames[i].setForeground(Color.black);
-					playerNames[i].setFont(new Font("Oswald-Bold", Font.PLAIN,
+					playerNames[i].setFont(new Font("微软雅黑", Font.PLAIN,
 							15));
 					playerNames[i].setBounds(contentWidth * 13 / 20,
 							contentHeight * (16 * i - 13) / 80,
 							contentWidth * 1 / 15, contentHeight * (1) / 5);
 
 					playerTeamNames[i].setForeground(Color.black);
-					playerTeamNames[i].setFont(new Font("Oswald-Bold",
+					playerTeamNames[i].setFont(new Font("微软雅黑",
 							Font.PLAIN, 15));
 					playerTeamNames[i].setBounds(contentWidth * 55 / 80,
 							(contentHeight * (8 * i - 3) / 40),
@@ -740,7 +740,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.fillRect(0, 0, contentWidth, contentHeight);
 			// 队标
 			BufferedImage action = UIUtils.resize(teams[0].getLogo(),
-					contentWidth / 12, contentHeight);
+					contentWidth / 8, contentHeight);
 			g.drawImage(action, 0, 0, this);
 			// 排名
 			g.setColor(new Color(190, 157, 83));
@@ -772,13 +772,13 @@ public class KingLabelPanel extends HotLabelPanel {
 						* (i - 1) / 5);
 
 				BufferedImage image = UIUtils.resize(teams[i - 1].getLogo(),
-						contentWidth / 30, contentHeight*2 / 5);
+						contentWidth / 30, contentHeight*1 / 5);
 
 				g.drawImage(image, contentWidth * 3 / 5, contentHeight
 						* (8 * i - 13) / 40, this);
 
 				g.setColor(Color.black);
-				g.setFont(new Font("default", Font.PLAIN, 15));
+				g.setFont(new Font("微软雅黑", Font.PLAIN, 15));
 
 				teamNames[i - 1].setText(teams[i - 1].getName());
 
@@ -787,8 +787,8 @@ public class KingLabelPanel extends HotLabelPanel {
 				g.drawString(str, contentWidth * 13 / 20, contentHeight
 						* (4 * i - 3) / 20);
 
-				// 没有球队得分
-				g.drawString(getTeamData(teams[i-1]), contentWidth * 18 / 20,
+
+				g.drawString(getTeamData(teams[i-1]), contentWidth * 17 / 20,
 						 contentHeight
 							* (8 * i - 5) / 40);
 			}
@@ -813,8 +813,8 @@ public class KingLabelPanel extends HotLabelPanel {
 
 					teamNames[i].setForeground(Color.black);
 					teamNames[i]
-							.setFont(new Font("Oswald-Bold", Font.PLAIN, 15));
-					teamNames[i].setBounds(contentWidth * 13 / 20,
+							.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+					teamNames[i].setBounds(contentWidth * 12 / 20,
 							contentHeight * (16 * i - 13) / 80,
 							contentWidth * 1 / 15, contentHeight * (1) / 5);
 
