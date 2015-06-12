@@ -73,7 +73,7 @@ public class matchBLcontrollor {
 			matchItem temp = m.getMatchItemList().get(i);
 			PlayerNameList list = PlayerNameList.getIntance();
 			String PlayerName = list.getEnAbbrById(temp.getPid());
-			if(PlayerName == null){
+			if (PlayerName == null) {
 				PlayerName = list.getEnfullById(temp.getPid());
 			}
 			if (temp.isIshome()) {
@@ -143,13 +143,16 @@ public class matchBLcontrollor {
 			int[] points = new int[2];
 			boolean isWin = false;
 			boolean isAtHome = false;
+			String nameOfRival = "";
 			if (teamName.equals(list.get(i).getHome_team())) {
+				nameOfRival = list.get(i).getAway_team();
 				isAtHome = true;
 				points[0] = list.get(i).getHome_points();
 				points[1] = list.get(i).getAway_points();
 				if (points[0] > points[1])
 					isWin = true;
 			} else {
+				nameOfRival = list.get(i).getHome_team();
 				isAtHome = false;
 				points[1] = list.get(i).getHome_points();
 				points[0] = list.get(i).getAway_points();
@@ -157,7 +160,7 @@ public class matchBLcontrollor {
 					isWin = true;
 			}
 			result.add(new MatchSimpleInfovo(list.get(i).getDate(), isWin,
-					points, teamName, isAtHome));
+					points, teamName, nameOfRival, isAtHome));
 		}
 
 		return result;
@@ -202,7 +205,7 @@ public class matchBLcontrollor {
 			ProcessBuilder pb = new ProcessBuilder("python",
 					"Spider-NBA/NBAUpdate.py", time);
 			Process p = pb.start();
-			File log = new File("log.txt");
+			File log = new File("log123.txt");
 			pb.redirectErrorStream(true);
 			pb.redirectOutput(ProcessBuilder.Redirect.to(log));
 			System.out.println(p.waitFor());
@@ -215,7 +218,38 @@ public class matchBLcontrollor {
 
 	public ArrayList<RecordOfPlayervo> getRecordOfPlayerById(String pid) {
 		// TODO Auto-generated method stub
-		
+
 		return matchItemReader.getRecordOfPlayerById(pid);
+	}
+
+	public ArrayList<MatchSimpleInfovo> getLatestMatchSimpleInfo(
+			String teamName1, String teamName2) {
+		// TODO Auto-generated method stub
+		ArrayList<MatchSimpleInfovo> result = new ArrayList<MatchSimpleInfovo>();
+		ArrayList<match> list = matchReader.getMatchSimpleByTwoteams(teamName1,
+				teamName2);
+		if (list.size() >= 5) {
+			for (int i = 0; i < 5; i++) {
+				int[] points = new int[2];
+				points[0] = list.get(i).getHome_points();
+				points[1] = list.get(i).getAway_points();
+				boolean isWin = false;
+				boolean isAtHome = false;
+				if (teamName1.equals(list.get(i).getHome_team())) {
+					isAtHome = true;
+					if (points[0] > points[1])
+						isWin = true;
+				} else {
+					isAtHome = false;
+					if (points[1] > points[0])
+						isWin = true;
+				}
+				result.add(new MatchSimpleInfovo(list.get(i).getDate(), isWin,
+						points, list.get(i).getHome_team(), list.get(i)
+								.getAway_team(), isAtHome));
+			}
+		}
+
+		return result;
 	}
 }

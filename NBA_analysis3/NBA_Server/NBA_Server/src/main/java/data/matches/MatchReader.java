@@ -367,7 +367,47 @@ public class MatchReader {
 							+ team
 							+ "' or `away-team` = '"
 							+ team
-							+ "') and season = '" + season+"赛季'");
+							+ "') and season = '" + season + "赛季'");
+			while (rs.next()) {
+				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs
+						.getString(3).substring(0, 5));
+				String away_team = list.getEnAbbrByZhAbbr(rs.getString(5), rs
+						.getString(3).substring(0, 5));
+				result.add(new match(rs.getString(1), rs.getString(2), rs
+						.getString(3), home_team, away_team, rs.getBoolean(6),
+						rs.getInt(7), rs.getInt(8)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// GetConnection.free(rs, conn, statement);
+
+		return result;
+	}
+
+	public ArrayList<match> getMatchSimpleByTwoteams(String teamName1,
+			String teamName2) {
+		// TODO Auto-generated method stub
+		ArrayList<match> result = new ArrayList<match>();
+		Connection conn = GetConnection.getConnection();
+		ResultSet rs = null;
+		Statement statement = null;
+		TeamNameList list = TeamNameList.getIntance();
+		String team1 = list.getZhAbbrByEnAbbr(teamName1);
+		String team2 = list.getZhAbbrByEnAbbr(teamName2);
+		try {
+			statement = conn.createStatement();
+			rs = statement
+					.executeQuery("select * from  matchlist where( (`home-team` =  '"
+							+ team1
+							+ "' and `away-team` = '"
+							+ team2
+							+ "') or (`home-team` =  '"
+							+ team2
+							+ "' and `away-team` = '"
+							+ team1
+							+ "') ) order by date desc");
 			while (rs.next()) {
 				String home_team = list.getEnAbbrByZhAbbr(rs.getString(4), rs
 						.getString(3).substring(0, 5));
