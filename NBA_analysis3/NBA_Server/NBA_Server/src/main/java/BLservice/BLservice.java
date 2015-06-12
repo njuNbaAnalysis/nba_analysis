@@ -324,6 +324,20 @@ public interface BLservice extends Remote {
 	 */
 	public ArrayList<MatchSimpleInfovo> getMatchSimpleInfo(String teamName,
 			String season) throws RemoteException;
+	
+	/**
+	 * 根据球队名返回两队近5场比赛简略信息
+	 * 
+	 * @param teamName1
+	 *            三个大写英文字母
+	 * @param teamName2
+	 *            三个大写英文字母
+	 * @return 一个  MatchSimpleInfovo包含一场比赛的简要信息
+	 * 
+	 * @throws RemoteException 	rmi服务器连接异常
+	 */
+	public ArrayList<MatchSimpleInfovo> getLatestMatchSimpleInfo(String teamName1,
+			String teamName2) throws RemoteException;
 
 	
 }
