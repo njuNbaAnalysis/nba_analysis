@@ -7,8 +7,9 @@ import vo.Playervo;
 public class PlayerStealsComp implements Comparator<Playervo> {
 
 	@Override
-	public int compare(Playervo o1, Playervo o2) {
+	public int compare(Playervo p1, Playervo p2) {
 		// TODO Auto-generated method stub
-		return (int) (o2.getAverageSteals() - o1.getAverageSteals());
+		return p2.getAverageSteals()  == p1.getAverageSteals() ? 0 : (p2
+				.getAverageSteals()  > p1.getAverageSteals() ? 1 : -1);
 	}
 }
