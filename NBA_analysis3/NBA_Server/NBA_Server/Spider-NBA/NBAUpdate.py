@@ -14,7 +14,7 @@ class Spider_Model:
       
     def __init__(self):
         self.result = ""
-        self.IP = '172.26.215.62'
+        self.IP = '192.168.253.1'
 
 
     def GetNewMatch(self,currentTime):
