@@ -186,4 +186,12 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		return TeamController.getInstance().getTeamAbility(teamNameEn, season, isplayoff);
 	}
 
+	@Override
+	public ArrayList<MatchSimpleInfovo> getLatestMatchSimpleInfo(
+			String teamName1, String teamName2) throws RemoteException {
+		// TODO Auto-generated method stub
+		matchBLcontrollor m = matchBLcontrollor.getInstance();
+		return m.getLatestMatchSimpleInfo(teamName1, teamName2);
+	}
+
 }

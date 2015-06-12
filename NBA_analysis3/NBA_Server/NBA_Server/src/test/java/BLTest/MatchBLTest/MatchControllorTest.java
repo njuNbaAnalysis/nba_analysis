@@ -52,56 +52,60 @@ public class MatchControllorTest {
 	@Test
 	public void testLiveMatchInfo() {
 		NBALiveBLControllor mb = NBALiveBLControllor.getInstance();
-//		Matchvo m = mb.getLiveMatchInfo();
-//		Boolean result = (m!=null);
+		// Matchvo m = mb.getLiveMatchInfo();
+		// Boolean result = (m!=null);
 		assertTrue(true);
 	}
-	
-//	@Test
-//	public void testLoadNewMatchvo() {
-//		matchBLcontrollor m = matchBLcontrollor.getInstance();
-//		m.loadNewMatchvo(0);
-//		assertTrue(true);
-//	}
-	
+
+	@Test
+	public void testLoadNewMatchvo() {
+		matchBLcontrollor m = matchBLcontrollor.getInstance();
+//		m.updateNewMatch("2015-06-11");;
+		assertTrue(true);
+	}
+
 	@Test
 	public void testgetLast10Matches() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
 		ArrayList<Matchvo> list = m.getLast10Matches("CLE", "12-13", false);
 		System.out.println(list.size());
-		for(int i=0;i<list.size();i++){
+		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.iterator().next().getDate());
 		}
-		Boolean result = (list.size()!=0);
+		Boolean result = (list.size() != 0);
 		assertTrue(result);
 	}
-	
+
 	@Test
 	public void testgetTodayMatch() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
-		Collection<? extends Matchvo> list = m.getTodayMatched("14-15_2015-04-25");
+		Collection<? extends Matchvo> list = m
+				.getTodayMatched("14-15_2015-04-25");
 		System.out.println(list.size());
-		for(int i=0;i<list.size();i++){
+		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.iterator().next().isIsplayoff());
 			KingsOfMatchvo[] kings = list.iterator().next().getKingsOfMatch();
-			System.out.println(kings[0].getIdOfPointsKing()+"  "+kings[0].getNameOfPointsKing());
+			System.out.println(kings[0].getIdOfPointsKing() + "  "
+					+ kings[0].getNameOfPointsKing());
 		}
-		Boolean result = (list.size()!=0);
+		Boolean result = (list.size() != 0);
 		assertTrue(result);
 	}
 
 	@Test
 	public void testgetSimpleMatchInfo() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
-		ArrayList<MatchSimpleInfovo> list = m.getMatchSimpleInfo("LAC", "14-15");
+		ArrayList<MatchSimpleInfovo> list = m
+				.getMatchSimpleInfo("LAC", "14-15");
 		System.out.println(list.size());
-		for(int i=0;i<list.size();i++){
-			System.out.println(list.iterator().next().getNameOfRival()+" simple"+"  ");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.iterator().next().getNameOfRival()
+					+ " simple" + "  ");
 		}
-		Boolean result = (list.size()!=0);
+		Boolean result = (list.size() != 0);
 		assertTrue(result);
 	}
-	
+
 	@Test
 	public void testgetFutureMatches() {
 		BLController bl = null;
@@ -119,20 +123,34 @@ public class MatchControllorTest {
 			e.printStackTrace();
 		}
 		System.out.println(list.size());
-		for(int i=0;i<list.size();i++){
-			System.out.println(list.get(i).getMid()+" future"+"  ");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getMid() + " future" + "  ");
 		}
-		Boolean result = (list.size()!=0);
+		Boolean result = (list.size() != 0);
 		assertTrue(result);
 	}
-	
+
 	@Test
-	public void testgetRecordOfPlayerById(){
+	public void testgetRecordOfPlayerById() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
 		ArrayList<RecordOfPlayervo> list = m.getRecordOfPlayerById("195");
-		System.out.println(list.size()+"   dasdasdsadas");
-		for(int i=0;i<list.size();i++){
-			System.out.println(list.get(i).getDate()+"  "+list.get(i).getAway_Team()+"  "+list.get(i).getMid());;
+		System.out.println(list.size() + "   dasdasdsadas");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getDate() + "  "
+					+ list.get(i).getAway_Team() + "  " + list.get(i).getMid());
+			;
+		}
+		assertTrue(true);
+	}
+
+	@Test
+	public void testgetLatestMatchSimpleInfo() {
+		matchBLcontrollor m = matchBLcontrollor.getInstance();
+		ArrayList<MatchSimpleInfovo> list = m.getLatestMatchSimpleInfo("CLE", "GSW");
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getDate() + "  "
+					+ list.get(i).getNameOfTeam() + "  " + list.get(i).getNameOfRival());
+			
 		}
 		assertTrue(true);
 	}
