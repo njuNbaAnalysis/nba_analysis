@@ -11,6 +11,7 @@ import vo.HotZonevo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.Playervo;
+import vo.RecordOfPlayervo;
 import vo.Teamvo;
 import vo.TodayPlayervo;
 
@@ -27,7 +28,7 @@ public interface BLservice extends Remote {
 	/**
 	 * 获得未来比赛预告
 	 * @param date 今日日期，格式为：2015-06-09
-	 * @return 返回值为一个FutureMatchvo的ArrayList，用于储存2015-06-09z之后未来所有比赛预告
+	 * @return 返回值为一个FutureMatchvo的ArrayList，用于储存2015-06-09当日的未进行比赛简要信息
 	 * @throws RemoteException rmi服务器连接异常
 	 * */
 	public ArrayList<FutureMatchvo> getFutureMatches(String date) throws RemoteException;
@@ -177,6 +178,21 @@ public interface BLservice extends Remote {
 	 */
 	public Playervo getPlayerByNameAndTeam(String playerName)
 			throws RemoteException;
+	
+	
+	
+	/**
+	 * 根据球员Pid返回该球员近五场比赛信息RecordOfPlayervo
+	 * 
+	 * @param Pid
+	 *            球员唯一标识符Pid
+	 * @return 返回的RecordOfplayervo 的 ArrayList
+	 * 
+	 * @throws RemoteException	rmi服务器连接异常
+	 */
+	public ArrayList<RecordOfPlayervo> getRecordOfPlayerById(String Pid)
+			throws RemoteException;
+	
 	
 	
 	/**
