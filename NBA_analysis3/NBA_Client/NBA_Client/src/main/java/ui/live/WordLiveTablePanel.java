@@ -78,7 +78,7 @@ public class WordLiveTablePanel extends JPanel {
 
 		for (EventVo event : eventList) {
 			if (event.getSection() == sectionNum) {
-				System.out.println(event.getTeamName() + event.getPoints());
+				//System.out.println(event.getTeamName() + event.getPoints());
 				list.add(event);
 			}
 		}

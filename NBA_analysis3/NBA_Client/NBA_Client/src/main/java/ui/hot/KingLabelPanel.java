@@ -758,7 +758,7 @@ public class KingLabelPanel extends HotLabelPanel {
 
 			
 
-			g.drawString(getTeamData(teams[0]), contentWidth*5 / 20,
+			g.drawString(getTeamData(teams[0]), contentWidth*7 / 20,
 					contentHeight * 3 / 5);
 
 			g.setColor(new Color(246, 246, 246));
@@ -772,7 +772,7 @@ public class KingLabelPanel extends HotLabelPanel {
 						* (i - 1) / 5);
 
 				BufferedImage image = UIUtils.resize(teams[i - 1].getLogo(),
-						contentWidth / 30, contentHeight / 5);
+						contentWidth / 30, contentHeight*2 / 5);
 
 				g.drawImage(image, contentWidth * 3 / 5, contentHeight
 						* (8 * i - 13) / 40, this);
