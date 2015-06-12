@@ -22,6 +22,8 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private Teamvo t1;
 	private Teamvo t2;
 	private BLservice bl;
+	private String season;
+	private boolean isPlayOff;
 	private int seg;
 	private int limit;
 	private DecimalFormat df = new DecimalFormat("#0.0");
@@ -29,7 +31,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private Color a_color;
 	private Color b_color;
 	LineChartPanelForTeamCompare(int width, int height, String type, Teamvo t1,
-			Teamvo t2, Color a_color,Color b_color,BLservice bl) {
+			Teamvo t2, Color a_color,Color b_color,BLservice bl,String season,boolean isPlayOff) {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
@@ -38,6 +40,8 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		this.setSize(width, height);
 		this.a_color = a_color;
 		this.b_color = b_color;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 		init(type);
 		LineChart chart = new LineChart(x_name.length, seg, width, height,
@@ -83,7 +87,29 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		y_name[1] = "lose";
 		y_name[2] = "win";
 		y_name[3] = "";
-		// t1_value = t1.getLatestWinOrLose();
+		
+		boolean[] t_value = t1.getLatestWinOrLose();
+		for(int i=0;i<t_value.length;i++){
+			if(t_value[i]){
+				t1_value[i] = 2;
+			}else{
+				t1_value[i] = 1;
+			}
+			
+		}
+		
+		t_value = t2.getLatestWinOrLose();
+		for(int i=0;i<t_value.length;i++){
+			if(t_value[i]){
+				t2_value[i] = 2;
+			}else{
+				t2_value[i] = 1;
+			}
+			
+		}
+		
+		
+		//bl.getLatestPoints(t1,t2);
 		// labelContent_t1 = t1.getLatestPoints(t1,t2);
 		for (int i = 0; i < t1_value.length; i++) {
 			t1_value[i] = (i + 1) % 2 + 1;
@@ -103,40 +129,53 @@ public class LineChartPanelForTeamCompare extends JPanel {
 
 	private void initStandinds() {
 		y_name = new String[4];
-		y_name[0] = "low";
+		y_name[0] = "";
 		y_name[1] = "lose";
 		y_name[2] = "win";
-		y_name[3] = "above";
+		y_name[3] = "";
 		//t1_value = t1.getLatestWinOrLose();
 		// labelContent_t1 = t1.getLatestPoints(t1,t2);
-		for (int i = 0; i < t1_value.length; i++) {
-			t1_value[i] = (i + 1) % 2 + 1;
-			labelContent_t1[i] = "101-100";
+	//	 t1.getLatestPoints(t1,t2);
+		boolean[] t_value = t1.getLatestWinOrLose();
+		for(int i=0;i<t_value.length;i++){
+			if(t_value[i]){
+				t1_value[i] = 2;
+			}else{
+				t1_value[i] = 1;
+			}
+			
 		}
-
-		// t2_value = t1.getLatestWinOrLose();
-		// labelContent_t2 = t2.getLatestPoints(t1,t2);
-		for (int i = 0; i < t2_value.length; i++) {
-			t2_value[i] = (i) % 2 + 1;
-			labelContent_t2[i] = "101-100";
-		}// TODO Auto-generated method stub
+		
+		t_value = t2.getLatestWinOrLose();
+		for(int i=0;i<t_value.length;i++){
+			if(t_value[i]){
+				t2_value[i] = 2;
+			}else{
+				t2_value[i] = 1;
+			}
+			
+		}
+		
+		labelContent_t1 = t1.getLatestRecord();
+		labelContent_t2 = t2.getLatestRecord();
+		
 		seg = 3;
 		limit = 3;
 
 	}
 
 	private void initOffendThanDefend() {
-		// t1_value = t1.getLatestOffendThanDefend();
-		for (int i = 0; i < t1_value.length; i++) {
-			t1_value[i] = i * 1.0 / (i + 1);
+		t1_value = t1.getLatestOffendThanDefend();
+		
+		for(int i=0;i<t1_value.length;i++){
 			labelContent_t1[i] = df.format(t1_value[i]);
 		}
-
-		// t2_value = t2.getLatestOffendThanDefend();
-		for (int i = 0; i < t2_value.length; i++) {
-			t2_value[i] = (i + 1) * 1.0 / (i);
+		
+		t2_value = t2.getLatestOffendThanDefend();
+		for(int i=0;i<t2_value.length;i++){
 			labelContent_t2[i] = df.format(t2_value[i]);
-		}// TODO Auto-generated method stub
+		}
+		
 		seg = 10;
 		limit = 2;
 

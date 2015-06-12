@@ -1,10 +1,12 @@
 package ui.team;
 
 import java.awt.Color;
+import java.rmi.RemoteException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import BLservice.BLservice;
 import ui.chart.RadarChart;
 import vo.Teamvo;
 
@@ -12,16 +14,22 @@ import vo.Teamvo;
 public class RadarChartForTeamCompare extends JPanel {
 	private Teamvo t1;
 	private Teamvo t2;
+	private BLservice bl;
+	private String season;
+	private boolean isPlayOff;
 	private double[] value_a;
 	private double[] value_b;
 	private String[] attr = { "内线", "外线", "配合", "进攻", "得分" };
 	int limit = 10;
 
-	RadarChartForTeamCompare(int width, int height, Teamvo t1, Teamvo t2) {
+	RadarChartForTeamCompare(int width, int height, Teamvo t1, Teamvo t2,BLservice bl,String season,boolean isPlayOff) {
 		this.setLayout(null);
 		this.t1 = t1;
 		this.t2 = t2;
 		this.setSize(width, height);
+		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		init();
 		RadarChart chart = new RadarChart(5, 5, width, width, value_a, value_b,
 				limit, attr);
@@ -33,14 +41,14 @@ public class RadarChartForTeamCompare extends JPanel {
 	private void init() {
 		value_a = new double[5];
 		value_b = new double[5];
-		// value_a = bl.getAbility();
-		// 都是假数据
-		for (int i = 0; i < 5; i++) {
-			value_a[i] = 2 * i % 10 + 1;
+		try {
+			value_a = bl.getTeamAbility(t1.getAbbreviation(), season, isPlayOff);
+			value_b = bl.getTeamAbility(t2.getAbbreviation(), season, isPlayOff);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		for (int i = 0; i < 5; i++) {
-			value_b[i] = 3 * i % 10 + 1;
-		}
+	
 	}
 
 	/*public static void main(String[] args) {
