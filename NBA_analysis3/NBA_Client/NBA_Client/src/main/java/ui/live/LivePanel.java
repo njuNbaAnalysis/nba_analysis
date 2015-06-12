@@ -35,7 +35,7 @@ public class LivePanel extends JPanel {
 	private JScrollPane content;
 	private LiveButton[] btArray;
 	private ArrayList<EventVo> eventList = new ArrayList<EventVo>();
-	WordLivePanel wordLivePanel;	
+	WordLivePanel wordLivePanel; 	
 	private String mid;
 	private Matchvo match;
 	private BLservice bl;
@@ -93,7 +93,7 @@ public class LivePanel extends JPanel {
 	}
 
 	private class InfoLabel extends JLabel {
-		private int labelWidth;
+ 		private int labelWidth;
 		private int labelHeight;
 		private Teamvo[] teams;
 
@@ -353,16 +353,18 @@ public class LivePanel extends JPanel {
 					}
 				}
 			}
+		
 		//	System.out.println("latestTime:" + latestTime);
 
 			// 最新的事件在newEventList的第一个
+			//加事件时需要遍历
 			for (int i = newEventList.size() - 1; i >= 0; i--) {
 				EventVo event = newEventList.get(i);
 				if (event.getTimeInSecond() >= latestTime) {
 					if (latestEvent == null
-							|| !event.getDescription().equals(
-									latestEvent.getDescription())) {
+							|| !isExistEvent(event)) {
 						//System.out.println(event.getDescription());
+						System.out.println("增加了一个事件:"+event.getDescription());
 						eventList.add(event);
 					}
 				}
@@ -372,10 +374,22 @@ public class LivePanel extends JPanel {
 		}
 
 	}
+	
+	
+	private boolean isExistEvent(EventVo e){
+		for(EventVo event:eventList){
+			if(event.getTimeInSecond()==e.getTimeInSecond()&&e.getDescription().equals(e.getDescription())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 
 	private class LiveThread implements Runnable {
 
-		@Override
+		@Override 
 		public void run() {
 			while (true) {
 				ArrayList<EventVo> eventList = null;
@@ -387,7 +401,7 @@ public class LivePanel extends JPanel {
 					eventList = bl.getLiveEvent(mid);
 					System.out.println("eventList" + eventList.size());
 					m = bl.getLiveMatchInfo(mid);
-					System.out.println(m.getPoints()[0]+":"+m.getPoints()[1]);
+					//System.out.println(m.getPoints()[0]+":"+m.getPoints()[1]);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -401,7 +415,9 @@ public class LivePanel extends JPanel {
 				infoPanel.updateUI();
 				infoPanel.repaint();*/
 				setMatch(m);
-				repaint();
+				//infoLabel.repaint();
+				infoLabel.updateUI();
+				infoLabel.repaint();
 
 				try {
 					Thread.sleep(200);
