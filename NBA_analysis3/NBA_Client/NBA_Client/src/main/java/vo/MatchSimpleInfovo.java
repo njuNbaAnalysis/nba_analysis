@@ -13,7 +13,9 @@ public class MatchSimpleInfovo implements Serializable{
     private boolean isWin;
     /**比赛得分 （球队得分以及对手得分）2元数组,该球队在前，对手在后*/
     private int[] points;//2元数组,传入的球队在前
-    /**该球队名（英文缩写*/
+    /**该球队名（英文缩写）*/
+    private String nameOfTeam;
+    /**该球队对手名（英文缩写）*/
     private String nameOfRival;//缩写
     /**球队名是否在主场，true表示在主场，false表示不再主场*/
     private boolean isAtHome;//是否主场
@@ -24,11 +26,12 @@ public class MatchSimpleInfovo implements Serializable{
     /**
 	 * 对该类的所有属性进行构造
 	 * */
-    public MatchSimpleInfovo(String date, boolean isWin, int[] points, String nameOfRival, boolean isAtHome) {
+    public MatchSimpleInfovo(String date, boolean isWin, int[] points, String nameOfTeam,String nameOfRival, boolean isAtHome) {
         super();
         this.date = date;
         this.isWin = isWin;
         this.points = points;
+        this.nameOfTeam = nameOfTeam;
         this.nameOfRival = nameOfRival;
         this.isAtHome = isAtHome;
     }
@@ -53,7 +56,7 @@ public class MatchSimpleInfovo implements Serializable{
     public void setPoints(int[] points) {
         this.points = points;
     }
-    /**得到该比赛球队英文名缩写*/
+    /**得到该比赛球队对手英文名缩写*/
     public String getNameOfRival() {
         return nameOfRival;
     }
@@ -67,6 +70,14 @@ public class MatchSimpleInfovo implements Serializable{
     public void setAtHome(boolean isAtHome) {
         this.isAtHome = isAtHome;
     }
-    
+
+    /**得到该球队名*/
+	public String getNameOfTeam() {
+		return nameOfTeam;
+	}
+
+	public void setNameOfTeam(String nameOfTeam) {
+		this.nameOfTeam = nameOfTeam;
+	}
     
 }
