@@ -52,6 +52,8 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	HotZonePanel hotZonePanel;
 	private RadarChartForTeamCompare radar;
 	BLservice bl;
+	private String season;
+	private boolean isPlayOff;
 	int width;
 	int height;
 
@@ -112,12 +114,14 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	}
 
 	public TeamComparePanel(Teamvo team1, Teamvo team2, int width, int height,
-			BLservice bl) {
+			BLservice bl,String season,boolean isPlayOff) {
 		this.team1 = team1;
 		this.team2 = team2;
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		try {
 			allteams = bl.getAllTeams(team1.getSeason(), team1.isPlayOff());
 		} catch (RemoteException e) {
@@ -137,7 +141,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 
 	private void initRadar() {
 
-		radar = new RadarChartForTeamCompare(654, 562, team1, team2);
+		radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
 		radar.setBounds(539, 130, 654, 562);
 		this.add(radar);
 		radar.setVisible(true);
@@ -147,7 +151,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 
 	private void initPanels() {
 	    lineChartPanel = new LineChartPanel(width, 730, team1,
-				team2, bl);
+				team2, bl,season,isPlayOff);
 		lineChartPanel.setLocation(0, 808);
 		panels.add(lineChartPanel);
 		this.add(lineChartPanel);
@@ -405,7 +409,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 			if(isLeft){
 				TeamComparePanel.this.team1 = team;
 				TeamComparePanel.this.repaint();
-				radar = new RadarChartForTeamCompare(654, 562, team1, team2);
+				radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
 			}else{
 				TeamComparePanel.this.team2 = team;
 				TeamComparePanel.this.repaint();
@@ -468,6 +472,8 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 	private LineChartPanelForTeamCompare lineChart;
 	Teamvo team1;
 	Teamvo team2;
+	String season;
+	boolean isPlayOff;
 
 	int currentChosen = 0;
 
@@ -507,13 +513,15 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 	}
 
 	public LineChartPanel(int width, int height, Teamvo team1, Teamvo team2,
-			BLservice bl) {
+			BLservice bl,String season,boolean isPlayOff) {
 		super();
 		this.width = width;
 		this.height = height;
 		this.team1 = team1;
 		this.team2 = team2;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 		this.setSize(width, height);
 
@@ -524,7 +532,7 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 	private void initChart() {
 
 		lineChart = new LineChartPanelForTeamCompare(1180, height, "进攻", team1,
-				team2, new Color(221, 61, 66), new Color(6, 74, 150), bl);
+				team2, new Color(221, 61, 66), new Color(6, 74, 150), bl,season,isPlayOff);
 		lineChart.setBounds(295, 0, 1180, height);
 		this.add(lineChart);
 
@@ -565,7 +573,7 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 		currentChosen = index;
 		this.remove(lineChart);
 		lineChart = new LineChartPanelForTeamCompare(1180, height, module,
-				team1, team2, new Color(221, 61, 66), new Color(6, 74, 150), bl);
+				team1, team2, new Color(221, 61, 66), new Color(6, 74, 150), bl,season,isPlayOff);
 		lineChart.setBounds(295, 0, 1180, height);
 		this.add(lineChart);
 		this.repaint();

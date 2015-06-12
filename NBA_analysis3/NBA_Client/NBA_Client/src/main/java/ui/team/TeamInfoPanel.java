@@ -193,7 +193,7 @@ public class TeamInfoPanel extends JPanel {
 					
 						TeamComparePanel matchPanel = null;
 						try {
-							matchPanel = new TeamComparePanel(bl.getAllTeams(season,false).get(0), bl.getAllTeams(season,false).get(1),width, height * 2 / 3,bl);
+							matchPanel = new TeamComparePanel(bl.getAllTeams(season,false).get(0), bl.getAllTeams(season,false).get(1),width, height * 2 / 3,bl,season,isPlayOff);
 						} catch (RemoteException e2) {
 							// TODO 自动生成的 catch 块
 							e2.printStackTrace();
