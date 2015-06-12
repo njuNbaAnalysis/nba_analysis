@@ -43,7 +43,7 @@ public class NBALiveList {
 	public static ArrayList<FutureMatchvo> getFutureMatches(String date) {
 		ArrayList<FutureMatchvo> result = new ArrayList<FutureMatchvo>();
 		for(int i=0;i<NBAMatchLiveList.size();i++){
-			if(NBAMatchLiveList.get(i).getDate().compareTo(date)>=0){
+			if(NBAMatchLiveList.get(i).getDate().compareTo(date)==0){
 				result.add(NBAMatchLiveList.get(i));
 			}
 		}
