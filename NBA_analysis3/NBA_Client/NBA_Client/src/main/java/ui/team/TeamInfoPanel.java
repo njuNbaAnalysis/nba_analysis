@@ -62,7 +62,7 @@ public class TeamInfoPanel extends JPanel {
 
 			players[i] = bl.getPlayerById(idList.get(i),season,isPlayOff);
 
-			playerList.add(bl.getPlayerById(idList.get(i)));
+			playerList.add(bl.getPlayerById(idList.get(i),season,isPlayOff));
 
 		}
 
