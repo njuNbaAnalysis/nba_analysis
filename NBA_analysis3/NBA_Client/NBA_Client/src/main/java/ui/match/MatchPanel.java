@@ -124,9 +124,15 @@ public class MatchPanel extends JPanel {
 			this.add(info);
 			
 		}
-		
-		this.setPreferredSize(new Dimension(width, 200 + (size+sizeF) * 320));
-
+		if(size+sizeF==0){
+			JLabel zhangganwei = new JLabel("今日无比赛");
+			zhangganwei.setFont(new Font("微软雅黑", Font.PLAIN, 100));
+			zhangganwei.setBounds((width-500)/2, (height-300)/2, 500, 200);
+			this.add(zhangganwei);
+			this.setPreferredSize(new Dimension(width, 500));
+		}else{
+			this.setPreferredSize(new Dimension(width, 200 + (size+sizeF) * 320));
+		}
 	}
 
 	public void unfold(final int index) {
