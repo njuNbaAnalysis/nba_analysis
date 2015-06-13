@@ -2,23 +2,30 @@ package ui.main;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import ui.hot.HotAndKingPanel;
 import ui.match.MatchPanel;
@@ -26,6 +33,9 @@ import ui.player.PlayerInfoPanel;
 import ui.statistics.PlayerStatTablePanel;
 import ui.statistics.TeamStatTablePanel;
 import ui.team.AllTeamPanel;
+import ui.team.RadarChartForTeamCompare;
+import ui.team.TeamComparePanel;
+import vo.Teamvo;
 import BLservice.BLservice;
 
 
@@ -78,7 +88,8 @@ public class MenuPanel extends JPanel {
 	JButton fresh;
 	JButton exit;
 	JPanel content;
-	
+	SeclectLabel select;
+	ResultLabel result;
 	MouseHandle freshListener;
 
 	public void paintComponent(Graphics g) {
@@ -98,6 +109,11 @@ public class MenuPanel extends JPanel {
 		this.isPlayOff = isPlayOff;
 		loadImage();
 		initButton();
+		select = new SeclectLabel(200, 40);
+		select.setBounds(0, 116, 200, 40);
+		Thread sl = new Thread(select);
+		sl.start();
+		this.add(select);
 		Thread fresh = new Thread(new Refresh());
 		fresh.start();
 	}
@@ -353,6 +369,7 @@ public class MenuPanel extends JPanel {
 		this.add(exit);
 
 	}
+	
 
 	class MouseHandle extends MouseAdapter {
 
@@ -661,5 +678,180 @@ public class MenuPanel extends JPanel {
 		}
 
 	}
+	
+	class SeclectLabel extends JButton implements Runnable {
+
+		int width;
+		int height;
+		JTextField text;
+		final String initStr = "选择赛季";
+		String old;
+
+		public void paintComponent(Graphics g2) {
+			super.paintComponent(g2);
+			Graphics2D g = (Graphics2D) g2.create();
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+
+		}
+
+		public SeclectLabel(int width, int height) {
+			this.width = width;
+			this.height = height;
+			this.setLayout(null);
+			this.setSize(width, height);
+			this.setBorder(null);
+			text = new JTextField();
+			text.setBorder(null);
+			text.setForeground(Color.gray);
+			text.setFont(new Font("微软雅黑", Font.PLAIN, 20));
+			text.addFocusListener(new FocusListener() {
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					JTextField src = (JTextField) e.getSource();
+					src.setForeground(Color.gray);
+					if (src.getText().trim().isEmpty()) {
+						src.setText(initStr);
+						src.setForeground(Color.LIGHT_GRAY);
+					}
+
+				}
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					JTextField src = (JTextField) e.getSource();
+					src.setForeground(Color.black);
+					if (src.getText().equals(initStr)) {
+						src.setText(null);
+					}
+
+				}
+			});
+			text.setText(initStr);
+			text.setBounds(0, 0, 200, 40);
+			this.add(text);
+
+		}
+
+		@Override
+		public void run() {
+
+			while (true) {
+				if (text.getText() != null) {
+					if ((!text.getText().trim().equals(initStr))
+							&& (!text.getText().trim().equals(""))) {
+						if (!text.getText().trim().equals(old)) {
+							old = text.getText().trim();
+							ArrayList<String> items = new ArrayList<String>(); //猜测结果
+							int begin = 84;
+							int end   = 85;
+							String beginStr,endStr,tmpSeason;
+							for (int i=0;i<29;i++) {
+								begin = (begin+1)%100;
+								end = 	(begin+1)%100;
+								beginStr = begin<10?("0"+begin):(""+begin);
+								endStr = end<10?("0"+end):(""+end);
+								tmpSeason = beginStr+"-"+endStr;
+								
+								if(tmpSeason.contains(old)||
+											(old.length()>=2&&tmpSeason.contains(old.substring(old.length()-2, old.length())))){
+									items.add(tmpSeason);
+								}
+							}
+							if (items.size() > 0) {
+									if (result != null) {
+										MenuPanel.this.remove(result);
+									}
+									result = new ResultLabel(items);
+									result.setLocation(0, 156);
+									result.setLayout(null);
+									result.setOpaque(true);
+									MenuPanel.this.add(result);
+									MenuPanel.this.updateUI();
+							} else {
+									result.setVisible(false);
+									
+							}
+
+						}
+
+					}
+				}
+
+			}
+
+		}
+	}
+	
+	/**
+	 * 
+	 * @author NJUYuanRui 搜索结果展示框
+	 */
+	class ResultLabel extends JLabel {
+		public ResultLabel(ArrayList<String> results) {
+			int height = 35 * results.size();
+			this.setSize(200, height);
+			this.setOpaque(true);
+			this.setBackground(Color.white);
+			for (int i = 0; i < results.size(); i++) {
+				ResultItemLabel itemLabel = new ResultItemLabel(results.get(i));
+				itemLabel.setLocation(0, 35 * i + 5);
+				this.add(itemLabel);
+			}
+
+		}
+	}
+
+	/**
+	 * 
+	 * @author NJUYuanRui 搜索结果展示条目
+	 */
+	class ResultItemLabel extends JLabel implements MouseListener {
+		String team;
+		public ResultItemLabel(String item) {
+			this.team = item;
+			this.setOpaque(true);
+			this.setSize(200, 30);
+			this.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+			this.setForeground(Color.black);
+			this.setText(item);
+			this.setBackground(Color.white);
+			this.setHorizontalAlignment(LEFT);
+			this.addMouseListener(this);
+
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO 自动生成的方法存根
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			this.setBackground(Color.gray);
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			this.setBackground(Color.white);
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			//更新方法
+		
+		}
+	}
+	
+	
 
 }
