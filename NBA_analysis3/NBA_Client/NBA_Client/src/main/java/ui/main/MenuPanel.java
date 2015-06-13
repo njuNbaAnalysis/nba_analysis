@@ -769,9 +769,25 @@ public class MenuPanel extends JPanel {
 									result.setOpaque(true);
 									MenuPanel.this.add(result);
 									MenuPanel.this.updateUI();
-							} else {
-									result.setVisible(false);
+								    statistics.setVisible(false);
+									player.setVisible(false);
+									team.setVisible(false);
+									playerStat.setVisible(false);
+									teamStat.setVisible(false);
+									match.setVisible(false);
+									hotPlayer.setVisible(false);
 									
+							} else {
+								if (result != null) {
+									result.setVisible(false);
+								}
+									statistics.setVisible(true);
+									player.setVisible(true);
+									team.setVisible(true);
+									playerStat.setVisible(true);
+									teamStat.setVisible(true);
+									match.setVisible(true);
+									hotPlayer.setVisible(true);
 							}
 
 						}
@@ -848,7 +864,15 @@ public class MenuPanel extends JPanel {
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			//更新方法
-		
+			result.setVisible(false);
+			statistics.setVisible(true);
+			player.setVisible(true);
+			MenuPanel.this.team.setVisible(true);
+			playerStat.setVisible(true);
+			teamStat.setVisible(true);
+			match.setVisible(true);
+			hotPlayer.setVisible(true);
+			select.text.setText(team+"赛季");
 		}
 	}
 	
