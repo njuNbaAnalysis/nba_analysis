@@ -50,6 +50,8 @@ public class StatTablePanel extends JPanel{
 		g.setColor(Color.white);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, 25));
 		g.drawString(season+(isPlayOff?"季后赛":"常规赛"), 20, 30);
+		System.out.println(season);
+		System.out.println((isPlayOff?"季后赛":"常规赛"));
 		g.drawImage(filter, 0, 50 * height / (1080), this);
 		g.setFont(new Font("STHUPO", Font.PLAIN, 40 * 2 / 3));
 	}
