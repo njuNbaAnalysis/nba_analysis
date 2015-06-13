@@ -81,7 +81,6 @@ public class PlayerJTable extends StatJTable {
 			String season, boolean isPlayOff) throws RemoteException {
 		super();
 		list = bl.getAllPlayers(season, isPlayOff);
-		System.out.println("list:"+list.size());
 		this.bl = bl;
 		this.portraitWidth = 80;
 		this.portraitHeight = 70;
@@ -106,8 +105,8 @@ public class PlayerJTable extends StatJTable {
 							row, 2);
 					Playervo p;
 					try {
-						p = PlayerJTable.this.bl.getPlayerByNameAndTeam(
-								playerName);
+						p = PlayerJTable.this.bl.getPlayerById(PlayerJTable.this.bl.getPlayerByNameAndTeam(
+								playerName).getPid(), PlayerJTable.this.season, PlayerJTable.this.isPlayOff);
 						PlayerInfoPanel playerInfoPanel = new PlayerInfoPanel(
 								width, height * 10 / 9, p,
 								PlayerJTable.this.bl,

@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ import javax.swing.table.TableColumnModel;
 
 import BLservice.BLservice;
 import ui.statistics.BaseJTable;
+import util.UIUtils;
 import vo.Matchvo;
 import vo.RecordOfPlayervo;
 
@@ -27,17 +29,21 @@ public class MatchTablePanel extends JPanel {
 	protected Matchvo match;
 	protected MatchJTable matchTable;
 	private BLservice bl;
+	private String season;
+	private boolean isPlayOff;
 	private int width;
 	private int height;
 	private static String[] columnName = { "姓名", "分钟", "%", "命中", "出手",
 			"三分%", "三分命中", "三分出手", "罚球%", "罚球命中", "罚球出手", "+/-", "进攻", "防守",
 			"篮板", "助攻", "犯规", "抢断", "失误", "盖帽", "得分" };
 
-	public MatchTablePanel(int width, int height, Matchvo match, BLservice bl) {
+	public MatchTablePanel(int width, int height, Matchvo match, BLservice bl,String season,boolean isPlayOff) {
 		this.width = width;
 		this.height = height;
 		this.match = match;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 
 		MatchJTable firstTeamRecord = new MatchJTable(
@@ -57,25 +63,39 @@ public class MatchTablePanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-		g.setColor(new Color(238, 238, 238));
-		g.fillRect(width / 20, 0, width * 9 / 10, height / 20);
+		g.setColor(new Color(255,255,255));
+		g.fillRect(0, 0, width, height / 10);
 		// 第一个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
-		/*g.drawString(match.getTeams()[0], width / 20, height / 20);
+		g.drawString(match.getTeams()[0], width / 20, height / 20);
 
-		Image teamImage1 = bl.getTeamByTeamName(match.getTeams()[0]).getLogo();
-		g.drawImage(teamImage1, 0, 0, this);*/
+		Image teamImage1;
+		try {
+			teamImage1 = bl.getTeamByTeamName(match.getTeams()[0],season,isPlayOff).getLogo();
+			g.drawImage(UIUtils.resize(teamImage1, width/10, height/10), 0, 0, this);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
-		g.setColor(new Color(238, 238, 238));
-		g.fillRect(width / 20, height * 9 / 20, width * 9 / 10, height * 2 / 20);
+		g.setColor(new Color(255,255,255));
+		g.fillRect(0, height * 9 / 20, width, height * 2 / 20);
 		// 第二个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
-	/*	g.drawString(match.getTeams()[1], width / 20, height * 11 / 20);
+		g.drawString(match.getTeams()[1], width / 20, height * 11 / 20);
 
-		Image teamImage2 = bl.getTeamByTeamName(match.getTeams()[1]).getLogo();
-		g.drawImage(teamImage2, 0, height * 10 / 20, this);*/
+		Image teamImage2;
+		try {
+			teamImage2 = bl.getTeamByTeamName(match.getTeams()[1],season,isPlayOff).getLogo();
+			g.drawImage(teamImage2, 0, height * 10 / 20, this);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	private class MatchJTable extends BaseJTable {
@@ -125,7 +145,8 @@ public class MatchTablePanel extends JPanel {
 
 			String[] data = new String[22];
 			data[0] = recordOfPlayer.getPlayerName();
-			data[1] = df.format(recordOfPlayer.getMinutes() / 60);
+			data[1] = df.format(recordOfPlayer.getMinutes());
+			
 			data[2] = df.format(recordOfPlayer.getFieldGoalPercentage() * 100);
 			data[3] = Integer.toString(recordOfPlayer.getFieldGoalHits());
 			data[4] = Integer.toString(recordOfPlayer.getFieldGoalAttempts());
@@ -145,6 +166,20 @@ public class MatchTablePanel extends JPanel {
 			data[18] = Integer.toString(recordOfPlayer.getTurnOver());
 			data[19] = Integer.toString(recordOfPlayer.getBlocks());
 			data[20] = Integer.toString(recordOfPlayer.getPoints());
+			
+			
+			if(recordOfPlayer.getFieldGoalPercentage()==-1){
+				data[2] = "-";
+			}
+			
+			if(recordOfPlayer.getThreePointPercentage()==-1){
+				data[5] = "-";
+			}
+			
+			if(recordOfPlayer.getFreeThrowPercentage()==-1){
+				data[8] = "-";
+			}
+			
 			return data;
 		}
 

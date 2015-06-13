@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -18,45 +19,51 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import BLservice.BLservice;
 import ui.statistics.BaseJTable;
 import vo.Playervo;
+import vo.RecordOfPlayervo;
 
 public class PlayerDetailTablePanel extends JPanel {
 	private Playervo player;
 	private int width;
 	private int height;
 	private SeasonJTable seasonTable;
-	//private LatestJTable latestTable;
+	private LatestJTable latestTable;
 	private JScrollPane seasonJspane;
 	private JScrollPane latestJspane;
+	private BLservice bl;
+	private String season;
 	private DecimalFormat df = new DecimalFormat("#0.0");
 
-	public PlayerDetailTablePanel(Playervo player, int width, int height) {
+	public PlayerDetailTablePanel(Playervo player, int width, int height,BLservice bl,String season) throws RemoteException {
 		this.player = player;
 		this.width = width;
 		this.height = height;
+		this.bl = bl;
+		this.season = season;
 		this.setLayout(null);
 
 		setTable();
 	}
 
-	private void setTable() {
+	private void setTable() throws RemoteException {
 		seasonJspane = new JScrollPane();
 		seasonJspane.setBounds(0, height / 10, width, height / 4);
-		seasonTable = new SeasonJTable(player);
+		seasonTable = new SeasonJTable(bl.getPlayerById(player.getPid(), season, false),season);
 		seasonJspane.setViewportView(seasonTable);
 		this.add(seasonJspane);
 		//seasonTable.refreshElement();
 		
 		
 		//迭代三中没有近五场数据
-		/*latestJspane = new JScrollPane();
+		latestJspane = new JScrollPane();
 		latestJspane.setBounds(0, height * 1 / 2, width, height * 35 / 80);
-		latestTable = new LatestJTable(player.getListOfRecord());
+		latestTable = new LatestJTable(bl.getRecordOfPlayerById(player.getPid()));
 		latestJspane.setViewportView(latestTable);
 
-		this.add(latestJspane);*/
-		//latestTable.refreshElement();
+		this.add(latestJspane);
+		latestTable.refreshElement();
 
 	}
 
@@ -116,12 +123,14 @@ public class PlayerDetailTablePanel extends JPanel {
 
 	private class SeasonJTable extends DetailJTable {
 		Playervo player;
+		String season;
 		private String[] columnName = { "年度", "球队", "场数", "先发", "分钟", "%",
 				"三分%", "进攻", "防守", "篮板", "助攻", "抢断", "盖帽", "失误", "犯规", "得分" };
 
-		public SeasonJTable(Playervo player) {
+		public SeasonJTable(Playervo player,String season) {
 			super();
 			this.player = player;
+			this.season = season;
 			this.setModel(new DefaultTableModel(null, columnName));
 			refreshElement();
 		}
@@ -191,7 +200,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		//没有分赛季展现
 		private String[] getSeasonAverageData(Playervo player) {
 			String[] result = new String[16];
-			result[0] = "12-13";
+			result[0] = season;
 			result[1] = player.getTeam();
 			result[2] = player.getGamePlayed()+"";
 			
@@ -217,7 +226,7 @@ public class PlayerDetailTablePanel extends JPanel {
 		//没有分赛季展现
 		private String[] getSeasonTotalData(Playervo player) {
 			String[] result = new String[16];
-			result[0] = "12-13";
+			result[0] = season;
 			result[1] = player.getTeam();
 			result[2] = player.getGamePlayed()+"";
 			
@@ -241,15 +250,16 @@ public class PlayerDetailTablePanel extends JPanel {
 		}
 	}
 
-	/*private class LatestJTable extends DetailJTable {
+	private class LatestJTable extends DetailJTable {
 		protected DecimalFormat df = new DecimalFormat("#0");
 		private String[] columnName = { "日期", "对手", "得分", "篮板",
 				"助攻",  "抢断", "盖帽" };
 		
-		private ArrayList<playerData> arrayListOfPlayerData;
-		public LatestJTable(ArrayList<playerData> arrayList) {
+		private ArrayList<RecordOfPlayervo> arrayListOfPlayerData;
+		public LatestJTable(ArrayList<RecordOfPlayervo> arrayList) {
 			this.setModel(new DefaultTableModel(null, columnName));
 			arrayListOfPlayerData = arrayList;
+			System.out.println("最近五场："+arrayListOfPlayerData.size());
 			refreshElement();
 		}
 
@@ -338,12 +348,12 @@ public class PlayerDetailTablePanel extends JPanel {
 		private String[] getSeasonData(int numberOfMatches) {
 			String[] result = new String[7];
 			result[0] = arrayListOfPlayerData.get(numberOfMatches).getDate();
-			result[1] = arrayListOfPlayerData.get(numberOfMatches).getEnemy();
+			result[1] = arrayListOfPlayerData.get(numberOfMatches).getAway_Team();
 			result[2] = df.format(arrayListOfPlayerData.get(numberOfMatches).getPoints());
 			result[3] = df.format(arrayListOfPlayerData.get(numberOfMatches).getRebounds());
 			result[4] = df.format(arrayListOfPlayerData.get(numberOfMatches).getAssists());
-			result[5] = df.format(arrayListOfPlayerData.get(numberOfMatches).getSteal());
-			result[6] = df.format(arrayListOfPlayerData.get(numberOfMatches).getBlock());
+			result[5] = df.format(arrayListOfPlayerData.get(numberOfMatches).getSteals());
+			result[6] = df.format(arrayListOfPlayerData.get(numberOfMatches).getBlocks());
 			return result;
 		}
 		private String[] getAverageData() {
@@ -359,8 +369,8 @@ public class PlayerDetailTablePanel extends JPanel {
 				points+=arrayListOfPlayerData.get(i).getPoints();
 				rebounds+=arrayListOfPlayerData.get(i).getRebounds();
 				assists+=arrayListOfPlayerData.get(i).getAssists();
-				steal+=arrayListOfPlayerData.get(i).getSteal();
-				block+=arrayListOfPlayerData.get(i).getBlock();
+				steal+=arrayListOfPlayerData.get(i).getSteals();
+				block+=arrayListOfPlayerData.get(i).getBlocks();
 			}
 			result[2] = Double.toString(points/5.0);
 			result[3] = Double.toString(rebounds/5.0);
@@ -369,6 +379,6 @@ public class PlayerDetailTablePanel extends JPanel {
 			result[6] = Double.toString(block/5.0);
 			return result;
 		}
-	}*/
+	}
 
 }

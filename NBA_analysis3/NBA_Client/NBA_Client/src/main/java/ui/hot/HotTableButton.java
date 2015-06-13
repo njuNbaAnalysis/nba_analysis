@@ -97,6 +97,10 @@ public class HotTableButton extends JButton {
 					break;
 				case "P":
 					try {
+						
+						System.out.println("点击了"+field);
+						System.out.println("转码:"+KingLabelPanel.transferField(field));
+						
 						ArrayList<Playervo> playerList1 = HotTableButton.this.bl
 								.getSeasonKingPlayer(
 										KingLabelPanel.transferField(field), 5,
@@ -104,7 +108,7 @@ public class HotTableButton extends JButton {
 						Playervo[] players1 = new Playervo[5];
 						for (int i = 0; i < 5; i++) {
 							players1[i] = playerList1.get(i);
-							System.out.println(playerList1.get(i).getName());
+						//	System.out.println(playerList1.get(i).getName());
 						}
 						((KingLabelPanel) HotTableButton.this.hotPanel)
 								.setPlayers(players1,
@@ -148,8 +152,7 @@ public class HotTableButton extends JButton {
 					for(int i=0;i<players.length;i++){
 						playerList.add(players[i]);
 					}
-					System.out.println("点击了"+field);
-					System.out.println("转码:"+KingLabelPanel.transferField(field));
+
 					Collections.sort(playerList,PlayerJTable.getComparator(KingLabelPanel.transferField(field), true));
 					
 					

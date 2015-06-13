@@ -531,10 +531,16 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 
 	private void initChart() {
 
-		lineChart = new LineChartPanelForTeamCompare(1180, height, "进攻", team1,
-				team2, new Color(221, 61, 66), new Color(6, 74, 150), bl,season,isPlayOff);
-		lineChart.setBounds(295, 0, 1180, height);
-		this.add(lineChart);
+		try {
+			lineChart = new LineChartPanelForTeamCompare(1180, height, "进攻", team1,
+					team2, new Color(221, 61, 66), new Color(6, 74, 150), bl,season,isPlayOff);
+			lineChart.setBounds(295, 0, 1180, height);
+			this.add(lineChart);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
@@ -572,10 +578,16 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 
 		currentChosen = index;
 		this.remove(lineChart);
-		lineChart = new LineChartPanelForTeamCompare(1180, height, module,
-				team1, team2, new Color(221, 61, 66), new Color(6, 74, 150), bl,season,isPlayOff);
-		lineChart.setBounds(295, 0, 1180, height);
-		this.add(lineChart);
+		try {
+			lineChart = new LineChartPanelForTeamCompare(1180, height, module,
+					team1, team2, new Color(221, 61, 66), new Color(6, 74, 150), bl,season,isPlayOff);
+			lineChart.setBounds(295, 0, 1180, height);
+			this.add(lineChart);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.repaint();
 
 	}

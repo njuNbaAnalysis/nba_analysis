@@ -213,9 +213,9 @@ public class AgendaPanel extends JPanel{
 				s[1] = "@ "+info.getNameOfRival();
 			}
 			if(info.isWin()){
-				s[2] = "是";
+				s[2] = "win";
 			}else{
-				s[2] = "否";
+				s[2] = "lose";
 			}
 
 			s[3] = info.getPoints()[0]+"-"+info.getPoints()[1];
