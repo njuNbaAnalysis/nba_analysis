@@ -1,6 +1,7 @@
 package ui.team;
 
 import java.awt.Color;
+import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
@@ -31,12 +32,12 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private Color a_color;
 	private Color b_color;
 	LineChartPanelForTeamCompare(int width, int height, String type, Teamvo t1,
-			Teamvo t2, Color a_color,Color b_color,BLservice bl,String season,boolean isPlayOff) {
+			Teamvo t2, Color a_color,Color b_color,BLservice bl,String season,boolean isPlayOff) throws RemoteException {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
-		this.t1 = t1;
-		this.t2 = t2;
+		this.t1 = bl.getTeamWithLatest10Data(t1.getAbbreviation(), season, isPlayOff);
+		this.t2 = bl.getTeamWithLatest10Data(t2.getAbbreviation(), season, isPlayOff);
 		this.setSize(width, height);
 		this.a_color = a_color;
 		this.b_color = b_color;

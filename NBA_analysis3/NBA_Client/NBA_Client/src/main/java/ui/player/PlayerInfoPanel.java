@@ -51,9 +51,15 @@ public class PlayerInfoPanel extends JPanel {
 		
 		
 		
-		playerDetailTablePanel = new PlayerDetailTablePanel(player, width, height/2);
-		playerDetailTablePanel.setBounds(0, height/2, width, height/2);
-		this.add(playerDetailTablePanel);
+		try {
+			playerDetailTablePanel = new PlayerDetailTablePanel(player, width, height/2,bl,season);
+			playerDetailTablePanel.setBounds(0, height/2, width, height/2);
+			this.add(playerDetailTablePanel);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 	

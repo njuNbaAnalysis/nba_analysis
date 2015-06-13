@@ -470,7 +470,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				String content = ((JLabel) e.getSource()).getText();
 				Playervo p;
 				try {
-					p = KingLabelPanel.this.bl.getPlayerByNameAndTeam(content);
+					p = bl.getPlayerById(bl.getPlayerByNameAndTeam(content).getPid(),season,isPlayOff);
 					PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(
 							hotWidth, hotHeight * 3, p, KingLabelPanel.this.bl,
 							KingLabelPanel.this.content,
@@ -691,7 +691,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				Playervo p;
 				try {
 					p = KingLabelPanel.this.bl.getPlayerById(idNameMap
-							.get(content));
+							.get(content),season,isPlayOff);
 					PlayerInfoPanel playInfoPanel = new PlayerInfoPanel(
 							hotWidth, hotHeight * 3, p, KingLabelPanel.this.bl,
 							KingLabelPanel.this.content,
@@ -751,7 +751,7 @@ public class KingLabelPanel extends HotLabelPanel {
 			g.setFont(new Font("微软雅黑", Font.BOLD, 50));
 			g.drawString(1 + "", contentWidth / 5, contentHeight * 2 / 5);
 			// 队名
-			teamNames[0].setText(teams[0].getName());
+			teamNames[0].setText(teams[0].getAbbreviation());
 
 			// 联盟
 			g.setColor(new Color(68, 68, 68));
@@ -784,7 +784,7 @@ public class KingLabelPanel extends HotLabelPanel {
 				g.setColor(new Color(68,68,68));
 				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 
-				teamNames[i - 1].setText(teams[i - 1].getName());
+				teamNames[i - 1].setText(teams[i - 1].getAbbreviation());
 
 				String str = teams[i - 1].getConference()
 						+  " "+teams[i - 1].getDivision();

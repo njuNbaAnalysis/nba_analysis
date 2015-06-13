@@ -37,15 +37,19 @@ public class LivePanel extends JPanel {
 	private ArrayList<EventVo> eventList = new ArrayList<EventVo>();
 	WordLivePanel wordLivePanel; 	
 	private String mid;
+	private String season;
+	private boolean isPlayOff;
 	private Matchvo match;
 	private BLservice bl;
 	private InfoLabel infoLabel;
 
-	public LivePanel(int width, int height, BLservice bl, String mid) {
+	public LivePanel(int width, int height, BLservice bl, String mid,String season,boolean isPlayOff) {
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 		this.setSize(width, height);
 		this.mid = mid;
 		
@@ -284,7 +288,7 @@ public class LivePanel extends JPanel {
 			if (type == 0) {
 
 				MatchTablePanel table = new MatchTablePanel(width,
-						height * 13 / 20, match, bl);
+						height * 13 / 20, match, bl,season,isPlayOff);
 				table.setBounds(0, 0, width, height * 13 / 20);
 				content.removeAll();
 				content.updateUI();
