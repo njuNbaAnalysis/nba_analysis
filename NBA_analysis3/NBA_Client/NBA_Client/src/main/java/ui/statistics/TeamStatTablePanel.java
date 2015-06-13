@@ -11,7 +11,7 @@ import BLservice.BLservice;
 public class TeamStatTablePanel extends StatTablePanel {
 
 	public TeamStatTablePanel(int width, int height, BLservice bl,JPanel content,String season,boolean isPlayOff) {
-		super(width, height, bl);
+		super(width, height, bl,season,isPlayOff);
 
 		jspane = new JScrollPane();
 		jspane.setBounds(0, 50 * height / (1080), width * 9 / 10, height - 50

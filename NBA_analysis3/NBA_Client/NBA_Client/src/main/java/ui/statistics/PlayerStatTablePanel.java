@@ -36,7 +36,7 @@ public class PlayerStatTablePanel extends StatTablePanel {
 	
 
 	public PlayerStatTablePanel(int width, int height, BLservice bl,JPanel content,String season,boolean isPlayOff) {
-		super(width, height, bl);
+		super(width, height, bl,season,isPlayOff);
 		
 		
 		selectPanel = new SelectPanel(width, 66 * height / (1080), this);
