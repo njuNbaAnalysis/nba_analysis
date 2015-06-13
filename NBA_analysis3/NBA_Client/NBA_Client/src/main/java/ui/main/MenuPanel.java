@@ -747,7 +747,7 @@ public class MenuPanel extends JPanel {
 							int begin = 84;
 							int end   = 85;
 							String beginStr,endStr,tmpSeason;
-							for (int i=0;i<29;i++) {
+							for (int i=0;i<30;i++) {
 								begin = (begin+1)%100;
 								end = 	(begin+1)%100;
 								beginStr = begin<10?("0"+begin):(""+begin);
@@ -756,7 +756,8 @@ public class MenuPanel extends JPanel {
 								
 								if(tmpSeason.contains(old)||
 											(old.length()>=2&&tmpSeason.contains(old.substring(old.length()-2, old.length())))){
-									items.add(tmpSeason);
+									items.add(tmpSeason+"常规赛");
+									items.add(tmpSeason+"季后赛");
 								}
 							}
 							if (items.size() > 0) {
@@ -872,7 +873,7 @@ public class MenuPanel extends JPanel {
 			teamStat.setVisible(true);
 			match.setVisible(true);
 			hotPlayer.setVisible(true);
-			select.text.setText(team+"赛季");
+			select.text.setText(team);
 		}
 	}
 	
