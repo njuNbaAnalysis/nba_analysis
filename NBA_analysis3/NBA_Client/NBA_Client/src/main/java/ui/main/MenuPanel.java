@@ -874,6 +874,7 @@ public class MenuPanel extends JPanel {
 			match.setVisible(true);
 			hotPlayer.setVisible(true);
 			select.text.setText(team);
+			ContentPanel.changeSeason(team);
 		}
 	}
 	

@@ -7,13 +7,13 @@ import BLservice.BLservice;
 
 public class ContentPanel extends JPanel {
 	private MenuPanel menu;
-	private JPanel content;
-	private int width;
-	private int height;
-	BLservice bl;
-	private PlayerStatTablePanel teamRankTablePanel;
-	String season="14-15";
-	boolean isPlayOff=false;
+	private static JPanel content;
+	private static int width;
+	private static int height;
+	static BLservice bl;
+	private static PlayerStatTablePanel teamRankTablePanel;
+	static String season="14-15";
+	static boolean isPlayOff=false;
 	
 	public ContentPanel(int width,int height, BLservice bl) {
 		setLayout(null);
@@ -34,8 +34,8 @@ public class ContentPanel extends JPanel {
 		
 	}
 	
-	public void changeSeason(String seasonInfo){
-		season = seasonInfo.substring(0,6);
+	public static void changeSeason(String seasonInfo){
+		season = seasonInfo.substring(0,5);
 		isPlayOff  = seasonInfo.contains("季");
 		content.removeAll();
 		teamRankTablePanel = new PlayerStatTablePanel(width,height,bl,content,season,isPlayOff);
