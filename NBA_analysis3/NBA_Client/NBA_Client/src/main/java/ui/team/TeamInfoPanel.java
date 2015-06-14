@@ -193,7 +193,7 @@ public class TeamInfoPanel extends JPanel {
 					
 						TeamComparePanel matchPanel = null;
 						try {
-							matchPanel = new TeamComparePanel(bl.getAllTeams(season,false).get(0), bl.getAllTeams(season,false).get(1),1728, 1080,bl,season,isPlayOff);
+							matchPanel = new TeamComparePanel(team, bl.getAllTeams(season,false).get((int)Math.random()*30),1728, 1080,bl,season,isPlayOff);
 							//matchPanel.setBounds(0,0,width,height);
 						} catch (RemoteException e2) {
 							// TODO 自动生成的 catch 块
@@ -212,6 +212,7 @@ public class TeamInfoPanel extends JPanel {
 						content.repaint();
 						content.updateUI();
 						repaint();
+						
 						break;
 					}
 				}

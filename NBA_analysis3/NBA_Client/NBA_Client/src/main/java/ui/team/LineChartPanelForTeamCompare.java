@@ -36,8 +36,12 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		this.width = width;
 		this.height = height;
 		this.bl = bl;
+		System.out.println(t1.getAbbreviation()+" "+season+" "+isPlayOff);
 		this.t1 = bl.getTeamWithLatest10Data(t1.getAbbreviation(), season, isPlayOff);
+		//System.out.println("1:"+t1.getLatestDefend()[0]+" "+t1.getLatestDefend()[1]);
+		System.out.println(t2.getAbbreviation()+" "+season+" "+isPlayOff);
 		this.t2 = bl.getTeamWithLatest10Data(t2.getAbbreviation(), season, isPlayOff);
+		//System.out.println("2:"+t2.getLatestDefend()[0]+" "+t2.getLatestDefend()[1]);
 		this.setSize(width, height);
 		this.a_color = a_color;
 		this.b_color = b_color;
@@ -202,14 +206,14 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		t1_value = t1.getLatestDefend();
 		for (int i = 0; i < t1_value.length; i++) {
 			t1_value[i] = t1_value[i]*100;
-			labelContent_t1[i] = df.format(t1_value[i]*100);
+			labelContent_t1[i] = df.format(t1_value[i]);
 			System.out.println("t1_value:"+t1_value[i]);
 		}
 
 		t2_value = t2.getLatestDefend();
 		for (int i = 0; i < t2_value.length; i++) {
 			t2_value[i] = t2_value[i]*100;
-			labelContent_t2[i] = df.format(t2_value[i]*100);
+			labelContent_t2[i] = df.format(t2_value[i]);
 			System.out.println("t2_value:"+t2_value[i]);
 		}// TODO Auto-generated method stub
 		seg = 10;
@@ -221,14 +225,14 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		
 		for (int i = 0; i < t1_value.length; i++) {
 			t1_value[i] = t1_value[i]*100;
-			labelContent_t1[i] = df.format(t1_value[i]*100);
+			labelContent_t1[i] = df.format(t1_value[i]);
 
 		}
 
 		t2_value = t2.getLatestOffend();
 		for (int i = 0; i < t2_value.length; i++) {
 			t2_value[i] = t2_value[i]*100;
-			labelContent_t2[i] = df.format(t2_value[i]*100);
+			labelContent_t2[i] = df.format(t2_value[i]);
 		}
 		seg = 10;
 		limit = 200;
