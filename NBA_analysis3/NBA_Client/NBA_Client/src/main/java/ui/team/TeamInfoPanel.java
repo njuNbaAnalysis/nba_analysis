@@ -210,6 +210,7 @@ public class TeamInfoPanel extends JPanel {
 						content.add(js);
 					//	js.updateUI();
 						content.repaint();
+						content.updateUI();
 						repaint();
 						break;
 					}
