@@ -15,8 +15,11 @@ public class Main {
         
         /*TeamvoGenerator generator = TeamvoGenerator.getInstance();
         Teamvo vo = generator.getTeamvo("CHI", "14-15", false);*/
+        
+        
         //TeamController controller = TeamController.getInstance();
-        //Teamvo vo = TeamvoGenerator.getInstance().getTeamvoWithLatest10Data("ATL", "14-15", false);
+        Teamvo vo = TeamvoGenerator.getInstance().getTeamvoWithLatest10Data("ATL", "14-15", false);
+        System.out.println(vo);
         //ArrayList<Teamvo> voList = controller.getAllTeams("14-15", false);
 /*        for(Teamvo vo:voList){
             System.out.println(vo.toString());
