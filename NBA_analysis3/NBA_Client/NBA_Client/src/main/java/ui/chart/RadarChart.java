@@ -2,6 +2,7 @@ package ui.chart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -139,8 +140,9 @@ public class RadarChart extends JPanel {
 					* Math.sin(offset * i * rad + Math.PI / 2));
 
 			g2.drawLine(anchor_x, anchor_y, x4, y4);
+			g2.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 			int x3 = (int) (anchor_x + (max + 15)
-					* Math.cos(offset * i * rad + Math.PI / 2));
+					* Math.cos(offset * i * rad + Math.PI / 2)) - 20;
 			int y3 = (int) (anchor_y - (max + 15)
 					* Math.sin(offset * i * rad + Math.PI / 2));
 			g2.drawString(attr[i] + "", x3, y3);
