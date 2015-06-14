@@ -54,11 +54,11 @@ public class StarContrastPanel extends JPanel {
 			"UTA", "PHX", "DEN", "MIN", "OKC", "DAL", "SAS", "HOU", "NOP",
 			"MEM", "MIL", "DET", "IND", "CLE", "ATL", "BOS", "NYK", "BKN",
 			"WAS", "CHA", "ORL", "MIA", "PHI", "CHI", "TOR" };
-	public static String[] starId = { "203081", "202326", "201939", "977",
-			"101108", "202330", "202339", "201951", "203952", "201566", "1717",
-			"202695", "201935", "203076", "201188", "203114", "202704",
-			"201588", "2544", "201952", "202738", "2546", "201572", "202322",
-			"2744", "202696", "2548", "203100", "201565", "201942" };
+	public static String[] starId = { "Damian Lillard", "DeMarcus Cousins", "Stephen Curry", "Kobe Bryant",
+			"Chris Paul", "Gordon Hayward", "Eric Bledsoe", "Ty Lawson", "Andrew Wiggins", "Russell Westbrook", "Dirk Nowitzki",
+			"Kawhi Leonard", "James Harden", "Anthony Davis", "Marc Gasol", "Khris Middleton", "Reggie Jackson",
+			"George Hill", "LeBron James", "Jeff Teague", "Isaiah Thomas", "Carmelo Anthony", "Brook Lopez", "John Wall",
+			"Al Jefferson", "Nikola Vucevic", "Dwyane Wade", "Tony Wroten", "Derrick Rose", "DeMar DeRozan" };
 
 	StarContrastPanel(int width, int height, String[] attributeNames,
 			Teamvo team1, Teamvo team2, BLservice bl, String season,
@@ -70,10 +70,11 @@ public class StarContrastPanel extends JPanel {
 		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 		this.setSize(width, height);
+		
 		this.player1 = bl.getPlayerById(
-				starId[indexofStr(team1.getAbbreviation())], season, isPlayOff);
+				bl.getPlayerByNameAndTeam(starId[indexofStr(team1.getAbbreviation())]).getPid(), season, isPlayOff);
 		this.player2 = bl.getPlayerById(
-				starId[indexofStr(team2.getAbbreviation())], season, isPlayOff);
+				bl.getPlayerByNameAndTeam(starId[indexofStr(team2.getAbbreviation())]).getPid(), season, isPlayOff);
 		init();
 		loadImage();
 		setButton();
@@ -101,14 +102,14 @@ public class StarContrastPanel extends JPanel {
 
 	private double[] getValue(Playervo p) {
 		double[] teamData = new double[attributeNames.length];
-		teamData[1] = p.getAveragePoints();
-		teamData[2] = p.getAverageAssists();
-		teamData[3] = p.getAverageRebounds();
-		teamData[4] = p.getFieldGoalsPercentage();
-		teamData[5] = p.getThreePointersPercentage();
-		teamData[6] = p.getFreeThrowsPercentage();
-		teamData[7] = p.getAverageBlockShots();
-		teamData[8] = p.getAverageTurnOver();
+		teamData[0] = p.getAveragePoints();
+		teamData[1] = p.getAverageAssists();
+		teamData[2] = p.getAverageRebounds();
+		teamData[3] = p.getFieldGoalsPercentage();
+		teamData[4] = p.getThreePointersPercentage();
+		teamData[5] = p.getFreeThrowsPercentage();
+		teamData[6] = p.getAverageBlockShots();
+		teamData[7] = p.getAverageTurnOver();
 
 		return teamData;
 	}
@@ -489,13 +490,15 @@ public class StarContrastPanel extends JPanel {
 	public static void main(String[] args) {
 
 		final BLservice bl = DataFactoryMySql.getInstance().getBLservice();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(null);
-		setBounds(0, 0, 1920, 1080);
-		contentPane = new JPanel();
+		JFrame j = new JFrame();
+		j.setBounds(0, 0,1920,1080);
+		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		j.setLayout(null);
+		j.setBounds(0, 0, 1920, 1080);
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
-		setContentPane(contentPane);
+		j.setContentPane(contentPane);
 
 		// contentPane.add(new TeamBasicInfoLabel(bl.getAllTeams().get(0),
 		// 192*9, 200));
