@@ -164,7 +164,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		this.add(hotZonePanel);
 		hotZonePanel.setVisible(false);
 		
-		String[] column = { "得分", "助攻", "篮板", "篮板", "命中率", "三分%", "罚球%",
+		String[] column = { "得分", "助攻", "篮板", "命中率", "三分%", "罚球%",
 				"盖帽", "犯规"};
 		StarContrastPanel comparePanel = null;
 		try {
