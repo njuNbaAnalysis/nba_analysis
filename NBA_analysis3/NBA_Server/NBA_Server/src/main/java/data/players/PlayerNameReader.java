@@ -69,8 +69,8 @@ public class PlayerNameReader {
 		try {
 			statement = conn.createStatement();
 			rs = statement
-					.executeQuery("select pid from playerlist where name = "
-							+ playerName);
+					.executeQuery("select pid from playerlist where name = '"
+							+ playerName+"'");
 			while (rs.next()) {
 				result = rs.getString(1);
 			}

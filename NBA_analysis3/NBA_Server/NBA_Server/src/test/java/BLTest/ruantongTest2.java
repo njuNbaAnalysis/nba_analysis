@@ -1,67 +1,57 @@
 package BLTest;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import po.match;
-import data.matches.MatchReader;
+import vo.Teamvo;
+import logic.BLController;
+
 
 public class ruantongTest2 {
 
-	static String[] names = { "POR", "SAC", "GSW", "LAL", "LAC", "UTA", "PHX",
-			"DEN", "MIN", "OKC", "DAL", "SAS", "HOU", "NOP", "MEM", "MIL",
-			"DET", "IND", "CLE", "ATL", "BOS", "NYK", "BKN", "WAS", "CHA",
-			"ORL", "MIA", "PHI", "CHI", "TOR" };
-
-	static int pingshu[] = new int[13];
 
 	public static void main(String[] args) {
-
-		MatchReader mr = new MatchReader();
-		ArrayList<match> list = mr.getMatchesBySeason("14-15", false);
-
-		// String result = "";
-		int max = -100;
-		int min = 100;
-		String result = "";
-		for (int i = 0; i < list.size(); i++) {
-			result += (list.get(i).getHome_points() - list.get(i)
-					.getAway_points()) + ",";
-			if ((list.get(i).getHome_points() - list.get(i).getAway_points()) > max) {
-				max = (list.get(i).getHome_points() - list.get(i)
-						.getAway_points());
+		String result1 = "";
+		String result2 = "";
+		String result3 = "";
+		String result4 = "";
+		String result5 = "";
+		String result6 = "";
+		String result7 = "";
+		String result8 = "";
+		String result9 = "";
+		String result10 = "";
+		BLController bl  = null;
+		try {
+			bl = BLController.getInstance();
+			ArrayList<Teamvo> list = bl.getAllTeams("14-15", false);
+			for(int i=0;i<list.size();i++){
+				result1 += list.get(i).getAveragePoints()+",";
+				result2 += list.get(i).getFieldGoalsPercentage()+",";
+				result3 += list.get(i).getThreePointersPercentage()+",";
+				result4 += list.get(i).getFreeThrowsPercentage()+",";
+				result5 += list.get(i).getAverageRebounds()+",";
+				result6 += list.get(i).getAverageBlockShots()+",";
+				result7 += list.get(i).getAverageAssists()+",";
+				result8 += list.get(i).getAverageSteals()+",";
+				result9 += list.get(i).getAverageTurnOver()+",";
+				result10 += list.get(i).getAverageFouls()+",";
 			}
-			if ((list.get(i).getHome_points() - list.get(i).getAway_points()) < min) {
-				min = (list.get(i).getHome_points() - list.get(i)
-						.getAway_points());
-			}
-
-		}
-		int c = (max - min) / 13;
-		System.out.println(result);
-		System.out.println("MAX: " + max + "   MIN: " + min + "     "
-				+ (max - min) / 13);
-
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < 13; j++)
-				if (((list.get(i).getHome_points() - list.get(i)
-						.getAway_points()) > min + j * c)
-						&& ((list.get(i).getHome_points() - list.get(i)
-								.getAway_points()) < min + j * c + c)) {
-					pingshu[j]++;
-				}
+			System.out.println(result1);
+			System.out.println(result2);
+			System.out.println(result3);
+			System.out.println(result4);
+			System.out.println(result5);
+			System.out.println(result6);
+			System.out.println(result7);
+			System.out.println(result8);
+			System.out.println(result9);
+			System.out.println(result10);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		for( int i=0;i<13;i++){
-			System.out.println(pingshu[i]);
-		}
-		System.out.println(list.size());
-	}
-
-	public static int indexofStr(String name) {
-		for (int i = 0; i < names.length; i++) {
-			if (names[i].equals(name))
-				return i;
-		}
-		return 30;
+		
 	}
 }
