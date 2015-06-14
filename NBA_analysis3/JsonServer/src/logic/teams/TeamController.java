@@ -5,13 +5,14 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import logic.players.playerBLcontrollor;
 import po.HotZone;
-import po.TeamListItem;
 import po.TeamRecordItem;
 import util.Tools;
 import vo.HotZonevo;
-import vo.Teamvo;
 import vo.HotZonevo.Data;
+import vo.Playervo;
+import vo.Teamvo;
 import data.teams.HotZoneData;
 import data.teams.TeamRecordItemData;
 
@@ -109,5 +110,67 @@ public class TeamController implements Serializable{
         Teamvo vo = TeamvoGenerator.getInstance().getTeamvo(teamNameEn, season, isPlayOff);
         
         return vo;
+    }
+
+    /**
+     * in abeyance,waiting for the formulas
+     * 
+     * @param teamNameEn  三个大写英文字母
+     * @param season  赛季数 例如：13-14赛季
+     * @param isplayoff  是否为季后赛
+     * @return 内线(中锋加上大前锋能力综合(综合能力即为playervo中的getREP()))、外线(其他位置能力综合(综合能力即为playervo中的getREP()))、
+     * 配合（场均助攻命中（除去罚球命中数）比）、进攻（平均得分）、防守（平均失分）
+     *
+     * @throws RemoteException  rmi服务器连接异常
+     */
+    public double[] getTeamAbility(String teamNameEn,String season,boolean isplayoff) throws RemoteException {
+        TeamvoGenerator generator = TeamvoGenerator.getInstance();
+        Teamvo vo = generator.getTeamvo(teamNameEn, season, isplayoff);
+        
+        ArrayList<Playervo> playerList = playerBLcontrollor.getInstance().getAllPlayers(season, isplayoff);
+        ArrayList<String> playerIdList = vo.getPlayerList();
+        
+        double forward = getAbility(playerList,playerIdList,"前锋");
+        double center = getAbility(playerList,playerIdList,"中锋");
+        double guard = getAbility(playerList,playerIdList,"后卫");
+        
+        double[] result = new double[5];
+        result[0] = forward + center;
+        result[1] = center + guard;
+        
+        result[2] = vo.getAssists() * 1.0 / vo.getFieldGoalHits();
+        result[3] = vo.getPoints() / vo.getNumOfMatches();
+        result[4] = vo.getPointsRival() / vo.getNumOfMatches();
+        
+        return result; 
+    }
+    
+    /**
+     * @param playerList
+     * @param playerIdList
+     * @param role 示例：前锋，中锋，后卫
+     * @return
+     */
+    private double getAbility(ArrayList<Playervo> playerList,ArrayList<String> playerIdList,String role){
+        int totalMinites = 0;
+        double ability = 0;//能力值乘以打的时间
+        
+        for(String id:playerIdList){
+            Playervo vo = null;
+            //得到id对应的playervo
+            for(Playervo token:playerList){
+                if(token.getPid().equals(id)){
+                    vo = token;
+                    break;
+                }
+            }
+            
+            if(vo.getPosition().contains(role)){
+                totalMinites += vo.getMinutes();
+                ability = vo.getEfficiency() * vo.getMinutes();
+            }
+        }
+        
+        return ability / totalMinites;
     }
 }

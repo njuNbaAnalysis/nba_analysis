@@ -24,7 +24,7 @@ public class InvokeLiveMatchItem {
 			if (ishome)
 				temp = 1;
 			ProcessBuilder pb = new ProcessBuilder("python",
-					"C://Users/Lionel's PC/Desktop/NBA_analysis/NBA_analysis3/NBA_Server/NBA_Server/Spider-NBA/NBALiveMatchItem.py", ID, "" + temp);
+					"C://Users/lionel233/Desktop/NBA_analysis/NBA_analysis3/JsonServer/Spider-NBA/NBALiveMatchItem.py", ID, "" + temp);
 			Process p = pb.start();
 			InputStreamReader isr = new InputStreamReader(p.getInputStream(),
 					"GBK");
@@ -38,7 +38,7 @@ public class InvokeLiveMatchItem {
 			queue.put(res);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 

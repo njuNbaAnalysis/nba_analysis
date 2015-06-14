@@ -38,4 +38,15 @@ public class PlayerNameList {
 		}
 		return null;
 	}
+
+	public String getEnfullById(String pid) {
+		// TODO Auto-generated method stub
+		
+		return nameReader.getPlayerNameById(pid);
+	}
+
+	public String getIdByEnFull(String playerName) {
+		// TODO Auto-generated method stub
+		return nameReader.getIdByPlayerName(playerName);
+	}
 }

@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import vo.EventVo;
+import vo.FutureMatchvo;
 import vo.HotZonevo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
 import vo.Playervo;
+import vo.RecordOfPlayervo;
 import vo.Teamvo;
 import vo.TodayPlayervo;
 
@@ -24,6 +26,14 @@ public interface BLservice extends Remote {
 	 * */
 	
 	/**
+	 * 获得未来比赛预告
+	 * @param date 今日日期，格式为：2015-06-09
+	 * @return 返回值为一个FutureMatchvo的ArrayList，用于储存2015-06-09当日的未进行比赛简要信息
+	 * @throws RemoteException rmi服务器连接异常
+	 * */
+	public ArrayList<FutureMatchvo> getFutureMatches(String date) throws RemoteException;
+	
+	/**
 	 * 直播前调用的通信（初始化）
 	 * @return 返回值为true，代表初始化完毕，接受直播调用请求，false则表示请求失败
 	 * @throws RemoteException rmi服务器连接异常
@@ -33,18 +43,20 @@ public interface BLservice extends Remote {
 	
 	/**
 	 * 得到当前正在直播的比赛即时信息，调用前先调用initNBALive（），并确认返回值为true
+	 * @param Mid 比赛唯一标号
 	 * @return 返回值为一个Matchvo对象，里面存储了一场比赛的各种数据
 	 * @throws RemoteException	rmi服务器连接异常
 	 */
-	public Matchvo getLiveMatchInfo() throws RemoteException;
+	public Matchvo getLiveMatchInfo(String Mid) throws RemoteException;
 
 	
 	/**
 	 * 得到当前正在直播的即时直播事件（即为文字直播时所见到的描述），调用前先调用initNBALive（），并确认返回值为true
+	 * @param Mid 比赛唯一标号
 	 * @return 返回值为一个EventVo对象，里面存储了一条描述所对应的各种属性
 	 * @throws RemoteException	rmi服务器连接异常
 	 */
-	public ArrayList<EventVo> getLiveEvent() throws RemoteException;
+	public ArrayList<EventVo> getLiveEvent(String Mid) throws RemoteException;
 	
 	
 	
@@ -169,6 +181,19 @@ public interface BLservice extends Remote {
 	
 	
 	
+	/**
+	 * 根据球员Pid返回该球员近五场比赛信息RecordOfPlayervo
+	 * 
+	 * @param Pid
+	 *            球员唯一标识符Pid
+	 * @return 返回的RecordOfplayervo 的 ArrayList
+	 * 
+	 * @throws RemoteException	rmi服务器连接异常
+	 */
+	public ArrayList<RecordOfPlayervo> getRecordOfPlayerById(String Pid)
+			throws RemoteException;
+	
+	
 	
 	/**
 	 * 球队所用接口
@@ -211,11 +236,14 @@ public interface BLservice extends Remote {
 	 * in abeyance,waiting for the formulas
 	 * 
 	 * @param teamNameEn  三个大写英文字母
-	 * @return 内线(中锋加上大前锋能力综合)、外线(其他位置能力综合)、配合（每百回合的传球次数）、进攻（得分）、防守（失分）
+	 * @param season  赛季数 例如：13-14赛季
+	 * @param isplayoff  是否为季后赛
+	 * @return 内线(中锋加上大前锋能力综合(综合能力即为playervo中的getREP()))、外线(其他位置能力综合(综合能力即为playervo中的getREP()))、
+	 * 配合（场均助攻命中（除去罚球命中数）比）、进攻（平均得分）、防守（平均失分）
 	 *
 	 * @throws RemoteException	rmi服务器连接异常
 	 */
-	public double[] getTeamAbility(String teamNameEn) throws RemoteException;
+	public double[] getTeamAbility(String teamNameEn,String season,boolean isplayoff) throws RemoteException;
 
 	
 	/**
@@ -296,6 +324,20 @@ public interface BLservice extends Remote {
 	 */
 	public ArrayList<MatchSimpleInfovo> getMatchSimpleInfo(String teamName,
 			String season) throws RemoteException;
+	
+	/**
+	 * 根据球队名返回两队近5场比赛简略信息
+	 * 
+	 * @param teamName1
+	 *            三个大写英文字母
+	 * @param teamName2
+	 *            三个大写英文字母
+	 * @return 一个  MatchSimpleInfovo包含一场比赛的简要信息
+	 * 
+	 * @throws RemoteException 	rmi服务器连接异常
+	 */
+	public ArrayList<MatchSimpleInfovo> getLatestMatchSimpleInfo(String teamName1,
+			String teamName2) throws RemoteException;
 
 	
 }
