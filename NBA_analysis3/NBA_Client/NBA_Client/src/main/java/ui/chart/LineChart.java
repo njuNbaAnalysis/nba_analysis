@@ -153,9 +153,9 @@ public class LineChart extends JPanel {
 		for (int i = 0; i < num; i++) {
 
 			g2.drawLine((int) x_separator * (i + 1) + width / 20,
-					(int) (height * 19 / 20) - 5, (int) x_separator * (i + 1)
+					(int) (height * 19 / 20) , (int) x_separator * (i + 1)
 							+ width / 20, (int) (height * 19 / 20));
-			g2.drawString(x_name[i], (int) x_separator * (i + 1) + width / 20,
+			g2.drawString(x_name[i], (int) x_separator * (i + 1) + width / 20 -20,
 					height * 39 / 40);
 		}
 
@@ -171,7 +171,7 @@ public class LineChart extends JPanel {
 		}
 		
 		
-		Stroke blod = new BasicStroke(2.0f);
+		Stroke blod = new BasicStroke(4.0f);
 		g2.setStroke(blod);
 		
 		synchronized (this) {
