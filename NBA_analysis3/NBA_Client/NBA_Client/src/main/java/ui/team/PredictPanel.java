@@ -53,6 +53,8 @@ public class PredictPanel extends JPanel {
 	
 	private Teamvo team1;
 	private Teamvo team2;
+	
+	private BLservice bl;
 
 
 	protected DecimalFormat df = new DecimalFormat("#0.0");
@@ -68,6 +70,7 @@ public class PredictPanel extends JPanel {
 		this.isPlayOff = isPlayOff;
 		this.team1 = team1;
 		this.team2 = team2;
+		this.bl = bl;
 		this.setLayout(null);
 		this.setSize(width, height);
 		
@@ -86,6 +89,7 @@ public class PredictPanel extends JPanel {
 		chartPanel.setLocation(0, 0);
 		content.add(chartPanel);
 		this.add(content);
+		
 		repaint();
 	}
 
@@ -114,7 +118,7 @@ public class PredictPanel extends JPanel {
 			} else {
 				attribute[i] = false;
 			}
-			cof[i] = 100;
+			cof[i] = 120;
 		}
 
 	}
@@ -128,54 +132,55 @@ public class PredictPanel extends JPanel {
 		
 		
 		g.drawImage(UIUtils.resize(team1.getLogo(), width/10, height*4/20), 0, 0, this);
+		g.drawImage(UIUtils.resize(team2.getLogo(), width/10, height*4/20), width*9/10, 0, this);
 		
 		g.setColor(new Color(190, 157, 83));
 		g.setFont(new Font("微软雅黑", Font.BOLD, 50));
 		g.drawString(team1.getAbbreviation() + "", 420, 60);
-		/*g.setColor(new Color(218, 218, 218));
-		g.drawLine(550, 20, 550, 80);*/
+		
+		g.setColor(new Color(218, 218, 218));
+		g.drawLine(550, 20, 550, 120);
 
+		
+		
 		g.setColor((new Color(68, 68, 68)));
 		g.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
-		g.drawString(team1.getNumOfVictory() + "胜-"
-				+ (team1.getNumOfMatches() - team1.getNumOfVictory()) + "负", 555,
-				40);
+
+
 		
+		try {
 		
+			g.drawString(df.format(bl.getWinPercentage(team1.getAbbreviation(), team2.getAbbreviation(), season, isPlayOff)),width*7/20,
+					height/20);
+			g.drawString(df.format((1-bl.getWinPercentage(team1.getAbbreviation(),team2.getAbbreviation(), season, isPlayOff))),width*13/20,
+					height/20);
+			
+			
+			
+			
+			g.drawString(df.format(bl.getTeamPoints(team1.getAbbreviation(), season, isPlayOff)),width*7/20,height*3/20);
+			g.drawString(df.format(bl.getTeamPoints(team2.getAbbreviation(), season, isPlayOff)),width*13/20,height*3/20);
+			
+			
+			
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		
-		
-		//g.drawString(team1.getAbbreviation(), 555, 45);
-		
-		
-		
-		
-		
-		g.drawImage(UIUtils.resize(team2.getLogo(), width/10, height*4/20), width*9/10, 0, this);
-		
-		
-	/*	g.setColor(new Color(218, 218, 218));
-		g.drawLine(width*14/20-10, 20, width*14/20-10, 80);*/
-		
-		
-		g.setColor(new Color(68, 68, 68));
-		g.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
-		
-		
-		g.drawString(team2.getAbbreviation(), width*12/20, 45);
+
 		
 		
 		g.setColor(new Color(190, 157, 83));
 		g.setFont(new Font("微软雅黑", Font.BOLD, 50));
-		g.drawString(team2.getAbbreviation() + "", 420, 60);
+		g.drawString(team2.getAbbreviation() + "",  width*14/20, 60);
 		g.setColor(new Color(218, 218, 218));
 		g.drawLine(550, 20, 550, 80);
-
-		g.setColor((new Color(68, 68, 68)));
-		g.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
-		g.drawString(team1.getNumOfVictory() + "胜-"
-				+ (team1.getNumOfMatches() - team1.getNumOfVictory()) + "负", 555,
-				40);
+		
+	
+		
+		g.setColor(new Color(218, 218, 218));
+		g.drawLine(width*14/20-10, 20, width*14/20-10, 120);
 		
 		
 		
@@ -191,6 +196,19 @@ public class PredictPanel extends JPanel {
 		int strHeight = g.getFontMetrics().getHeight();
 		g2.drawString("赛季数据", width / 2 - strWidth / 2, height *9/ 40 + strHeight
 				/ 4);
+		
+		
+		content = "预测胜率";
+		strWidth = g.getFontMetrics().stringWidth(content);
+		strHeight = g.getFontMetrics().getHeight();
+		g2.drawString(content, width / 2 - strWidth / 2, height *1/ 20 + strHeight
+				/ 4-10);
+		
+		content = "预测比分";
+		strWidth = g.getFontMetrics().stringWidth(content);
+		strHeight = g.getFontMetrics().getHeight();
+		g2.drawString(content, width / 2 - strWidth / 2, height *3/ 20 + strHeight
+				/ 4-10);
 	}
 
 	public void loadImage() {
@@ -431,11 +449,6 @@ public class PredictPanel extends JPanel {
 
 	}
 
-	private class RadioButtonPanel {
-		RadioButtonPanel() {
-
-		}
-	}
 
 	private class CompareBarChartPanel extends JPanel {
 		private int width;
@@ -530,38 +543,6 @@ public class PredictPanel extends JPanel {
 			}
 
 		}
-
-	}
-
-	public static void main(String[] args) {
-
-		/*final BLservice bl = DataFactoryMySql.getInstance().getBLservice();
-		JFrame j = new JFrame();
-		j.setBounds(0, 0,1920,1080);
-		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		j.setLayout(null);
-		j.setBounds(0, 0, 1920, 1080);
-		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(null);
-		j.setContentPane(contentPane);
-
-
-		PredictPanel matchPanel = null;
-		try {
-			matchPanel = new PredictPanel(bl.getAllTeams("14-15", false)
-					.get(0), bl.getAllTeams("14-15", false).get(1), 1728, 1080,
-					bl, "14-15", false);
-		} catch (RemoteException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
-		JScrollPane scrollPane = new JScrollPane(matchPanel);
-		scrollPane.setBounds(0, 0, 1728, 1080);
-		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		contentPane.add(scrollPane);*/
-
-
 
 	}
 
