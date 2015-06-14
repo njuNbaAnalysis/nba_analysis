@@ -430,11 +430,11 @@ public class TeamComparePanel extends JPanel {
 					Color b;
 
 					if (a_value[i] > b_value[i]) {
-						a = colorArray[0];
-						b = colorArray[1];
-					} else {
 						a = colorArray[1];
 						b = colorArray[0];
+					} else {
+						a = colorArray[0];
+						b = colorArray[1];
 					}
 					// 左长方形
 					int leftBarWidth = (int) (a_value[i] / coefficient[i] * barWidth);

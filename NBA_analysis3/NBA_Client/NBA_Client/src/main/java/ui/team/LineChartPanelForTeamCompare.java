@@ -173,11 +173,13 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		t1_value = t1.getLatestOffendThanDefend();
 		
 		for(int i=0;i<t1_value.length;i++){
+			System.out.println(t1_value[i]);
 			labelContent_t1[i] = df.format(t1_value[i]);
 		}
 		
 		t2_value = t2.getLatestOffendThanDefend();
 		for(int i=0;i<t2_value.length;i++){
+			System.out.println(t2_value[i]);
 			labelContent_t2[i] = df.format(t2_value[i]);
 		}
 		
@@ -205,16 +207,16 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private void initDefend() {
 		t1_value = t1.getLatestDefend();
 		for (int i = 0; i < t1_value.length; i++) {
-			t1_value[i] = t1_value[i]*100;
+			t1_value[i] = t1_value[i];
 			labelContent_t1[i] = df.format(t1_value[i]);
-			System.out.println("t1_value:"+t1_value[i]);
+			System.out.println("Defend t1_value:"+t1_value[i]);
 		}
 
 		t2_value = t2.getLatestDefend();
 		for (int i = 0; i < t2_value.length; i++) {
-			t2_value[i] = t2_value[i]*100;
+			t2_value[i] = t2_value[i];
 			labelContent_t2[i] = df.format(t2_value[i]);
-			System.out.println("t2_value:"+t2_value[i]);
+			System.out.println("Defend t2_value:"+t2_value[i]);
 		}// TODO Auto-generated method stub
 		seg = 10;
 		limit = 200;
@@ -224,14 +226,16 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		t1_value = t1.getLatestOffend();
 		
 		for (int i = 0; i < t1_value.length; i++) {
-			t1_value[i] = t1_value[i]*100;
+			t1_value[i] = t1_value[i];
+			System.out.println(t1_value[i] );
 			labelContent_t1[i] = df.format(t1_value[i]);
 
 		}
 
 		t2_value = t2.getLatestOffend();
 		for (int i = 0; i < t2_value.length; i++) {
-			t2_value[i] = t2_value[i]*100;
+			t2_value[i] = t2_value[i];
+			System.out.println(t2_value[i] );
 			labelContent_t2[i] = df.format(t2_value[i]);
 		}
 		seg = 10;
