@@ -2,7 +2,6 @@ package ui.team;
 
 import javax.swing.JPanel;
 
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -50,19 +49,20 @@ public class PredictPanel extends JPanel {
 	ImageIcon settingIconB;
 	boolean selected = false;
 	private JScrollPane content;
-	
+
 	private Teamvo team1;
 	private Teamvo team2;
-	
+
 	private BLservice bl;
 
+	private double win;
+	private double[] points;
 
 	protected DecimalFormat df = new DecimalFormat("#0.0");
 
-
-	PredictPanel(int width, int height, String[] attributeNames,
-			Teamvo team1, Teamvo team2, BLservice bl, String season,
-			boolean isPlayOff) throws RemoteException {
+	PredictPanel(int width, int height, String[] attributeNames, Teamvo team1,
+			Teamvo team2, BLservice bl, String season, double win,
+			double[] points, boolean isPlayOff) throws RemoteException {
 		this.width = width;
 		this.height = height;
 		this.attributeNames = attributeNames;
@@ -70,38 +70,38 @@ public class PredictPanel extends JPanel {
 		this.isPlayOff = isPlayOff;
 		this.team1 = team1;
 		this.team2 = team2;
+		this.win = win;
+		this.points = points;
 		this.bl = bl;
 		this.setLayout(null);
 		this.setSize(width, height);
-		
 
 		init();
 		loadImage();
 		setButton();
 		content = new JScrollPane();
-		content.setBounds(0, height*5 / 20, width, height * 15 / 20);
+		content.setBounds(0, height * 5 / 20, width, height * 15 / 20);
 
 		content.setLayout(null);
-
+		content.getVerticalScrollBar().setUnitIncrement(20);
 		CompareBarChartPanel chartPanel = new CompareBarChartPanel(width,
 				height * 12 / 20, attribute, attributeNames, getValue(team1),
 				getValue(team2), cof);
 		chartPanel.setLocation(0, 0);
 		content.add(chartPanel);
 		this.add(content);
-		
+
 		repaint();
 	}
-
 
 	private double[] getValue(Teamvo t1) {
 		double[] teamData = new double[attributeNames.length];
 		teamData[0] = t1.getAveragePoints();
 		teamData[1] = t1.getAverageAssists();
 		teamData[2] = t1.getAverageRebounds();
-		teamData[3] = t1.getFieldGoalsPercentage()*100;
-		teamData[4] = t1.getThreePointersPercentage()*100;
-		teamData[5] = t1.getFreeThrowsPercentage()*100;
+		teamData[3] = t1.getFieldGoalsPercentage() * 100;
+		teamData[4] = t1.getThreePointersPercentage() * 100;
+		teamData[5] = t1.getFreeThrowsPercentage() * 100;
 		teamData[6] = t1.getAverageBlockShots();
 		teamData[7] = t1.getAverageTurnOver();
 
@@ -126,67 +126,43 @@ public class PredictPanel extends JPanel {
 	public void paintComponent(Graphics g2) {
 		Graphics2D g = (Graphics2D) g2;
 
-		
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		
-		
-		g.drawImage(UIUtils.resize(team1.getLogo(), width/10, height*4/20), 0, 0, this);
-		g.drawImage(UIUtils.resize(team2.getLogo(), width/10, height*4/20), width*9/10, 0, this);
-		
+
+		g.drawImage(
+				UIUtils.resize(team1.getLogo(), width / 10, height * 4 / 20),
+				0, 0, this);
+		g.drawImage(
+				UIUtils.resize(team2.getLogo(), width / 10, height * 4 / 20),
+				width * 9 / 10, 0, this);
+
 		g.setColor(new Color(190, 157, 83));
 		g.setFont(new Font("微软雅黑", Font.BOLD, 50));
 		g.drawString(team1.getAbbreviation() + "", 420, 60);
-		
+
 		g.setColor(new Color(218, 218, 218));
 		g.drawLine(550, 20, 550, 120);
 
-		
-		
 		g.setColor((new Color(68, 68, 68)));
 		g.setFont(new Font("微软雅黑", Font.ROMAN_BASELINE, 25));
 
+		g.drawString(df.format(win), width * 7 / 20, height / 20);
+		g.drawString(df.format((1 - win)), width * 13 / 20, height / 20);
 
-		
-		try {
-		
-			g.drawString(df.format(bl.getWinPercentage(team1.getAbbreviation(), team2.getAbbreviation(), season, isPlayOff)),width*7/20,
-					height/20);
-			g.drawString(df.format((1-bl.getWinPercentage(team1.getAbbreviation(),team2.getAbbreviation(), season, isPlayOff))),width*13/20,
-					height/20);
-			
-			
-			
-			
-			g.drawString(df.format(bl.getTeamPoints(team1.getAbbreviation(), season, isPlayOff)),width*7/20,height*3/20);
-			g.drawString(df.format(bl.getTeamPoints(team2.getAbbreviation(), season, isPlayOff)),width*13/20,height*3/20);
-			
-			
-			
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		g.drawString(df.format(points[0]), width * 7 / 20, height * 3 / 20);
+		g.drawString(df.format(points[1]), width * 13 / 20, height * 3 / 20);
 
-		
-		
 		g.setColor(new Color(190, 157, 83));
 		g.setFont(new Font("微软雅黑", Font.BOLD, 50));
-		g.drawString(team2.getAbbreviation() + "",  width*14/20, 60);
+		g.drawString(team2.getAbbreviation() + "", width * 14 / 20, 60);
 		g.setColor(new Color(218, 218, 218));
 		g.drawLine(550, 20, 550, 80);
-		
-	
-		
+
 		g.setColor(new Color(218, 218, 218));
-		g.drawLine(width*14/20-10, 20, width*14/20-10, 120);
-		
-		
-		
-		
+		g.drawLine(width * 14 / 20 - 10, 20, width * 14 / 20 - 10, 120);
+
 		g2.setColor(new Color(218, 218, 218));
-		g2.fillRect(0, height*4 / 20, width * 29 / 30, height / 20);
+		g2.fillRect(0, height * 4 / 20, width * 29 / 30, height / 20);
 		// 球队对比
 
 		g2.setColor(Color.BLACK);
@@ -194,21 +170,20 @@ public class PredictPanel extends JPanel {
 		String content = "赛季数据";
 		int strWidth = g.getFontMetrics().stringWidth(content);
 		int strHeight = g.getFontMetrics().getHeight();
-		g2.drawString("赛季数据", width / 2 - strWidth / 2, height *9/ 40 + strHeight
-				/ 4);
-		
-		
+		g2.drawString("赛季数据", width / 2 - strWidth / 2, height * 9 / 40
+				+ strHeight / 4);
+
 		content = "预测胜率";
 		strWidth = g.getFontMetrics().stringWidth(content);
 		strHeight = g.getFontMetrics().getHeight();
-		g2.drawString(content, width / 2 - strWidth / 2, height *1/ 20 + strHeight
-				/ 4-10);
-		
+		g2.drawString(content, width / 2 - strWidth / 2, height * 1 / 20
+				+ strHeight / 4 - 10);
+
 		content = "预测比分";
 		strWidth = g.getFontMetrics().stringWidth(content);
 		strHeight = g.getFontMetrics().getHeight();
-		g2.drawString(content, width / 2 - strWidth / 2, height *3/ 20 + strHeight
-				/ 4-10);
+		g2.drawString(content, width / 2 - strWidth / 2, height * 3 / 20
+				+ strHeight / 4 - 10);
 	}
 
 	public void loadImage() {
@@ -250,7 +225,8 @@ public class PredictPanel extends JPanel {
 		setting.setBorderPainted(false);
 		setting.setIcon(settingIcon);
 		setting.addMouseListener(mouseHandler);
-		setting.setBounds(width * 29 / 30, height * 4 / 20, width / 30, height / 20);
+		setting.setBounds(width * 29 / 30, height * 4 / 20, width / 30,
+				height / 20);
 		this.add(setting);
 
 	}
@@ -295,7 +271,7 @@ public class PredictPanel extends JPanel {
 				CompareBarChartPanel chartPanel = new CompareBarChartPanel(
 						width, height * 12 / 20, attribute, attributeNames,
 						getValue(team1), getValue(team2), cof);
-				chartPanel.setLocation(0,0);
+				chartPanel.setLocation(0, 0);
 
 				content.removeAll();
 
@@ -449,7 +425,6 @@ public class PredictPanel extends JPanel {
 
 	}
 
-
 	private class CompareBarChartPanel extends JPanel {
 		private int width;
 		private int height;
@@ -506,9 +481,10 @@ public class PredictPanel extends JPanel {
 					g2.setFont(new Font("微软雅黑", Font.PLAIN, height / 30));
 					int strHeight = g.getFontMetrics().getHeight();
 					g2.setColor(Color.black);
-					g2.drawString(df.format(a_value[i]) + "", half - leftBarWidth - width
-							/ 20, (int) (barHeight * (j + 1.5)
-							+ barHeightSeparator * (j + 1) - strHeight / 2));
+					g2.drawString(df.format(a_value[i]) + "", half
+							- leftBarWidth - width / 20,
+							(int) (barHeight * (j + 1.5) + barHeightSeparator
+									* (j + 1) - strHeight / 2));
 
 					g2.setColor(a);
 					g2.fillRect(half - leftBarWidth, (int) (barHeight
@@ -524,9 +500,10 @@ public class PredictPanel extends JPanel {
 
 					g2.setFont(new Font("微软雅黑", Font.PLAIN, height / 30));
 					g2.setColor(Color.black);
-					g2.drawString(df.format(b_value[i]) + "", width - half + rightBarWidth
-							+ width / 20, (int) (barHeight * (j + 1.5)
-							+ barHeightSeparator * (j + 1) - strHeight / 2));
+					g2.drawString(df.format(b_value[i]) + "", width - half
+							+ rightBarWidth + width / 20,
+							(int) (barHeight * (j + 1.5) + barHeightSeparator
+									* (j + 1) - strHeight / 2));
 
 					// 中间属性名
 					g2.setColor(Color.black);
@@ -547,4 +524,3 @@ public class PredictPanel extends JPanel {
 	}
 
 }
-
