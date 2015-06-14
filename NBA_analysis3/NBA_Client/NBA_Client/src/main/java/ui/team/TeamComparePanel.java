@@ -178,7 +178,20 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		panels.add(comparePanel);
 		this.add(comparePanel);
 		comparePanel.setVisible(false);
-
+		
+		
+		PredictPanel predictPanel = null;
+		try {
+			predictPanel = new PredictPanel(width, 700, column, team1, team2, bl, season, isPlayOff);
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		
+		predictPanel.setLocation(0, 808);
+		panels.add(predictPanel);
+		this.add(predictPanel);
+		predictPanel.setVisible(false);
 	}
 
 	private void initButtons() {
@@ -215,18 +228,21 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 
 	@Override
 	public void update(String module) {
+		
 		int index; // 匹配名称和序号
 		for (index = 0; index < modules.length; index++) {
 			if (modules[index] == module) {
 				break;
 			}
 		}
+		
+		
 
 		if (currentChosen != index) {
 			buttons.get(currentChosen).recover();
 		}
 		currentChosen = index;
-
+		
 		for (int i = 0; i < panels.size(); i++) {
 			JPanel each = panels.get(i);
 			if (i != index) {
@@ -425,12 +441,25 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 			if(isLeft){
 				result_l.setVisible(false);
 				TeamComparePanel.this.team1 = team;
-				TeamComparePanel.this.repaint();
 				radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
+				panels.clear();
+				initPanels();
+				TeamComparePanel.this.remove(radar);
+				TeamComparePanel.this.add(radar);
+				radar.setBounds(539, 130, 654, 562);
+				TeamComparePanel.this.updateUI();
+				
 			}else{
 				result_r.setVisible(false);
 				TeamComparePanel.this.team2 = team;
 				TeamComparePanel.this.repaint();
+				radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
+				panels.clear();
+				initPanels();
+				TeamComparePanel.this.remove(radar);
+				TeamComparePanel.this.add(radar);
+				radar.setBounds(539, 130, 654, 562);
+				TeamComparePanel.this.updateUI();
 			}
 		}
 	}
@@ -510,7 +539,7 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 		g.fillRect(280, 0, 20, height);
 
 		Stroke stroke = g.getStroke();
-		Stroke lineStroke = new BasicStroke(1f);
+		Stroke lineStroke = new BasicStroke(4f);
 		g.setStroke(lineStroke);
 		g.setColor(new Color(221, 61, 66));
 		g.drawLine(1480, 154, 1509, 126);
@@ -525,8 +554,8 @@ class LineChartPanel extends JPanel implements ModuleButtonListener {
 
 		g.setFont(new Font("微软雅黑", Font.PLAIN, 30));
 		g.setColor(Color.white);
-		g.drawString(team1.getName(), 1610, 147);
-		g.drawString(team2.getName(), 1610, 507);
+		g.drawString(team1.getAbbreviation(), 1610, 147);
+		g.drawString(team2.getAbbreviation(), 1610, 507);
 
 	}
 

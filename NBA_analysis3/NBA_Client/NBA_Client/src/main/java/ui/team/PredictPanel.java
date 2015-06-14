@@ -535,7 +535,7 @@ public class PredictPanel extends JPanel {
 
 	public static void main(String[] args) {
 
-		final BLservice bl = DataFactoryMySql.getInstance().getBLservice();
+		/*final BLservice bl = DataFactoryMySql.getInstance().getBLservice();
 		JFrame j = new JFrame();
 		j.setBounds(0, 0,1920,1080);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -559,7 +559,7 @@ public class PredictPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(matchPanel);
 		scrollPane.setBounds(0, 0, 1728, 1080);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-		contentPane.add(scrollPane);
+		contentPane.add(scrollPane);*/
 
 
 
