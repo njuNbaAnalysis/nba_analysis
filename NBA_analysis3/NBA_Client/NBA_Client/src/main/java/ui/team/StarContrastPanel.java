@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.text.DecimalFormat;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -49,6 +50,7 @@ public class StarContrastPanel extends JPanel {
 
 	private Playervo player1;
 	private Playervo player2;
+	protected DecimalFormat df = new DecimalFormat("#0.0");
 
 	public static String[] teamName = { "POR", "SAC", "GSW", "LAL", "LAC",
 			"UTA", "PHX", "DEN", "MIN", "OKC", "DAL", "SAS", "HOU", "NOP",
@@ -79,12 +81,12 @@ public class StarContrastPanel extends JPanel {
 		loadImage();
 		setButton();
 		content = new JScrollPane();
-		content.setBounds(0, height / 20, width, height * 19 / 20);
+		content.setBounds(0, height*5 / 20, width, height * 15 / 20);
 
 		content.setLayout(null);
 
 		CompareBarChartPanel chartPanel = new CompareBarChartPanel(width,
-				height * 17 / 20, attribute, attributeNames, getValue(player1),
+				height * 12 / 20, attribute, attributeNames, getValue(player1),
 				getValue(player2), cof);
 		chartPanel.setLocation(0, 0);
 		content.add(chartPanel);
@@ -105,9 +107,9 @@ public class StarContrastPanel extends JPanel {
 		teamData[0] = p.getAveragePoints();
 		teamData[1] = p.getAverageAssists();
 		teamData[2] = p.getAverageRebounds();
-		teamData[3] = p.getFieldGoalsPercentage();
-		teamData[4] = p.getThreePointersPercentage();
-		teamData[5] = p.getFreeThrowsPercentage();
+		teamData[3] = p.getFieldGoalsPercentage()*100;
+		teamData[4] = p.getThreePointersPercentage()*100;
+		teamData[5] = p.getFreeThrowsPercentage()*100;
 		teamData[6] = p.getAverageBlockShots();
 		teamData[7] = p.getAverageTurnOver();
 
@@ -129,21 +131,69 @@ public class StarContrastPanel extends JPanel {
 
 	}
 
-	public void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(getBackground());
-		g2.fillRect(0, 0, width, height);
-		g2.setColor(new Color(218, 218, 218));
-		g2.fillRect(0, 0, width * 29 / 30, height / 20);
-		// 球队对比
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	public void paintComponent(Graphics g2) {
+		Graphics2D g = (Graphics2D) g2;
+
+		
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+		
+		
+		g.drawImage(UIUtils.resize(player1.getPortrait(), width/10, height*4/20), 0, 0, this);
+		
+		g.setColor(new Color(190, 157, 83));
+		g.setFont(new Font("default", Font.BOLD, 50));
+		String num[] = player1.getNumber().split(",");
+		
+		g.drawString(num[num.length-1] + "", 490, 60);
+		g.setColor(new Color(218, 218, 218));
+		g.drawLine(550, 20, 550, 80);
+		g.setColor(new Color(68, 68, 68));
+		g.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
+		
+		
+		g.drawString(player1.getName(), 555, 45);
+		
+		
+		g.setFont(new Font("default", Font.PLAIN, 20));
+		g.drawString(player1.getPosition()+"-", 555, 80);
+		
+		
+		
+		g.drawImage(UIUtils.resize(player2.getPortrait(), width/10, height*4/20), width*9/10, 0, this);
+		
+		g.setColor(new Color(190, 157, 83));
+		g.setFont(new Font("default", Font.BOLD, 50));
+		num = player2.getNumber().split(",");
+		
+		g.drawString(num[num.length-1] + "", width*14/20, 60);
+		g.setColor(new Color(218, 218, 218));
+		g.drawLine(width*14/20-10, 20, width*14/20-10, 80);
+		
+		
+		g.setColor(new Color(68, 68, 68));
+		g.setFont(new Font("default", Font.ROMAN_BASELINE, 25));
+		
+		
+		g.drawString(player2.getName(), width*12/20, 45);
+		
+		
+		g.setFont(new Font("default", Font.PLAIN, 20));
+		g.drawString(player2.getPosition()+"-", width*12/20, 80);
+		
+		
+		
+		
+		g2.setColor(new Color(218, 218, 218));
+		g2.fillRect(0, height*4 / 20, width * 29 / 30, height / 20);
+		// 球队对比
+
 		g2.setColor(Color.BLACK);
 		g2.setFont(new Font("微软雅黑", Font.PLAIN, height / 30));
-		String content = "球队对比";
+		String content = "赛季数据";
 		int strWidth = g.getFontMetrics().stringWidth(content);
 		int strHeight = g.getFontMetrics().getHeight();
-		g2.drawString("球队对比", width / 2 - strWidth / 2, height / 40 + strHeight
+		g2.drawString("赛季数据", width / 2 - strWidth / 2, height *9/ 40 + strHeight
 				/ 4);
 	}
 
@@ -186,7 +236,7 @@ public class StarContrastPanel extends JPanel {
 		setting.setBorderPainted(false);
 		setting.setIcon(settingIcon);
 		setting.addMouseListener(mouseHandler);
-		setting.setBounds(width * 29 / 30, 0, width / 30, height / 20);
+		setting.setBounds(width * 29 / 30, height * 4 / 20, width / 30, height / 20);
 		this.add(setting);
 
 	}
@@ -212,7 +262,7 @@ public class StarContrastPanel extends JPanel {
 				setting.setIcon(selIcon);
 
 				CompareBarChartPanel chartPanel = new CompareBarChartPanel(
-						width, height * 17 / 20, attribute, attributeNames,
+						width, height * 12 / 20, attribute, attributeNames,
 						getValue(player1), getValue(player2), cof);
 				chartPanel.setLocation(0, height * 3 / 20);
 				ChoosePanel choose = new ChoosePanel(width, height * 3 / 20);
@@ -229,9 +279,9 @@ public class StarContrastPanel extends JPanel {
 				setting.setIcon(oldIcon);
 
 				CompareBarChartPanel chartPanel = new CompareBarChartPanel(
-						width, height * 17 / 20, attribute, attributeNames,
+						width, height * 12 / 20, attribute, attributeNames,
 						getValue(player1), getValue(player2), cof);
-				chartPanel.setLocation(0, 0);
+				chartPanel.setLocation(0,0);
 
 				content.removeAll();
 
@@ -367,7 +417,7 @@ public class StarContrastPanel extends JPanel {
 			public void mousePressed(MouseEvent e) {
 				sel = !sel;
 				attribute[num] = sel;
-				StarContrastPanel.this.repaint();
+				StarContrastPanel.this.content.repaint();
 			}
 
 			public void mouseEntered(MouseEvent e) {
@@ -426,7 +476,7 @@ public class StarContrastPanel extends JPanel {
 
 			int half = 9 * width / 20;
 			int barWidth = width * 8 / 20;
-			int barHeight = height / 16;
+			int barHeight = height / 12;
 			int barHeightSeparator = height / 40;
 			for (int i = 0, j = 0; i < attr_name.length; i++) {
 				if (attr[i]) {
@@ -435,11 +485,11 @@ public class StarContrastPanel extends JPanel {
 					Color b;
 
 					if (a_value[i] > b_value[i]) {
-						a = colorArray[0];
-						b = colorArray[1];
-					} else {
 						a = colorArray[1];
 						b = colorArray[0];
+					} else {
+						a = colorArray[0];
+						b = colorArray[1];
 					}
 					// 左长方形
 					int leftBarWidth = (int) (a_value[i] / coefficient[i] * barWidth);
@@ -447,7 +497,7 @@ public class StarContrastPanel extends JPanel {
 					g2.setFont(new Font("微软雅黑", Font.PLAIN, height / 30));
 					int strHeight = g.getFontMetrics().getHeight();
 					g2.setColor(Color.black);
-					g2.drawString(a_value[i] + "", half - leftBarWidth - width
+					g2.drawString(df.format(a_value[i]) + "", half - leftBarWidth - width
 							/ 20, (int) (barHeight * (j + 1.5)
 							+ barHeightSeparator * (j + 1) - strHeight / 2));
 
@@ -465,7 +515,7 @@ public class StarContrastPanel extends JPanel {
 
 					g2.setFont(new Font("微软雅黑", Font.PLAIN, height / 30));
 					g2.setColor(Color.black);
-					g2.drawString(b_value[i] + "", width - half + rightBarWidth
+					g2.drawString(df.format(b_value[i]) + "", width - half + rightBarWidth
 							+ width / 20, (int) (barHeight * (j + 1.5)
 							+ barHeightSeparator * (j + 1) - strHeight / 2));
 
