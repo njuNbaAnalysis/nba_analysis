@@ -204,7 +204,7 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 	}
 
 	@Override
-	public double getWinPercentage(String teamName1, String season,
+	public double getTeamPoints(String teamName1, String season,
 			boolean isPlayOff) throws RemoteException {
 		// TODO Auto-generated method stub
 		Teamvo v1 = getTeamByTeamName(teamName1, season, isPlayOff);
