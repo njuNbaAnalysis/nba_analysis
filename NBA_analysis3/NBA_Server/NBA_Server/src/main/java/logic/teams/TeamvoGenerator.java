@@ -369,7 +369,7 @@ public class TeamvoGenerator {
         {
             double[] latestOffend = new double[10];
             for(int i = 0;i < 10;i ++){
-                latestOffend[i] = points[i]/offensiveRounds[i];
+                latestOffend[i] = points[i]/offensiveRounds[i] * 100;
             }
             vo.setLatestOffend(latestOffend);
         }
@@ -379,7 +379,7 @@ public class TeamvoGenerator {
         {
             double[] latestDefend = new double[10];
             for(int i = 0;i < 10;i ++){
-                latestDefend[i] = pointsRival[i]/defensiveRounds[i];
+                latestDefend[i] = pointsRival[i]/defensiveRounds[i] * 100;
             }
             vo.setLatestDefend(latestDefend);
         }

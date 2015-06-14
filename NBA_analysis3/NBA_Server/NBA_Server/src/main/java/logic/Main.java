@@ -32,7 +32,8 @@ public class Main {
         System.out.println(vo.toJSONObject());*/
         
         //BLController.getInstance().getTeamAbility("ATL", "14-15", false);
-        BLController.getInstance().getAllPlayers("14-15", false);
+        //BLController.getInstance().getAllPlayers("14-15", false);
+        
  
         long end =  System.currentTimeMillis();
         
