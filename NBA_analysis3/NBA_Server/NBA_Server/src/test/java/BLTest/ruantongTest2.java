@@ -27,9 +27,9 @@ public class ruantongTest2 {
 			ArrayList<Teamvo> list = bl.getAllTeams("14-15", false);
 			for(int i=0;i<list.size();i++){
 				result1 += list.get(i).getAveragePoints()+",";
-				result2 += list.get(i).getFieldGoalsPercentage()+",";
-				result3 += list.get(i).getThreePointersPercentage()+",";
-				result4 += list.get(i).getFreeThrowsPercentage()+",";
+				result2 += list.get(i).getFieldGoalsPercentage()*100+",";
+				result3 += list.get(i).getThreePointersPercentage()*100+",";
+				result4 += list.get(i).getFreeThrowsPercentage()*100+",";
 				result5 += list.get(i).getAverageRebounds()+",";
 				result6 += list.get(i).getAverageBlockShots()+",";
 				result7 += list.get(i).getAverageAssists()+",";
@@ -52,6 +52,21 @@ public class ruantongTest2 {
 			e.printStackTrace();
 		}
 		
+		try {
+			System.out.println(bl.getTeamPoints("GSW", "14-15", false));
+			System.out.println(bl.getTeamPoints("HOU", "14-15", false));
+			System.out.println(bl.getTeamPoints("CLE", "14-15", false));
+			System.out.println(bl.getTeamPoints("PHX", "14-15", false));
+			System.out.println(bl.getTeamPoints("ATL", "14-15", false));
+			System.out.println(bl.getTeamPoints("WAS", "14-15", false));
+			System.out.println(bl.getTeamPoints("MEM", "14-15", false));
+			System.out.println(bl.getTeamPoints("BOS", "14-15", false));
+			System.out.println(bl.getTeamPoints("MIA", "14-15", false));
+			System.out.println(bl.getTeamPoints("TOR", "14-15", false));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

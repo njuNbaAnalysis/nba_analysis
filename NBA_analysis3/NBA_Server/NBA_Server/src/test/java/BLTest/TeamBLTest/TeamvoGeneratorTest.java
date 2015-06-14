@@ -42,4 +42,11 @@ public class TeamvoGeneratorTest {
         assertTrue(true);
     }
     
+    @Test
+    public void testGet() {
+        Teamvo vo = generator.getTeamvo("CHI", "14-15", false);
+        System.out.println(vo.toString());
+        
+        assertTrue(true);
+    }
 }
