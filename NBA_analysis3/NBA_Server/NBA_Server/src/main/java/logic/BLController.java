@@ -209,15 +209,16 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		// TODO Auto-generated method stub
 		Teamvo v1 = getTeamByTeamName(teamName1, season, isPlayOff);
 		double result = 0;
-		result = v1.getFieldGoalsPercentage() * 0.3932
-				+ v1.getThreePointersPercentage() * (-1.2581)
-				+ v1.getFreeThrowsPercentage() * (2.1271)
-				+ v1.getAverageRebounds() * (-0.1592)
-				+v1.getAverageBlockShots()*(-0.9521)
-				+v1.getAverageAssists()*(1.3477)
-				+v1.getAverageSteals()*(24.6545)
-				+v1.getAverageTurnOver()*(53.1659)
-				+v1.getAverageFouls()*(114.0270) - 45.4872;
+		result = v1.getFieldGoalsPercentage() * 7.88
+				+ v1.getThreePointersPercentage() * (44.61)
+				+ v1.getFreeThrowsPercentage() * (138)
+//				+ v1.getAverageRebounds() * (-0.1592)
+//				+v1.getAverageBlockShots()*(-0.9521)
+//				+v1.getAverageAssists()*(1.3477)
+//				+v1.getAverageSteals()*(24.6545)
+//				+v1.getAverageTurnOver()*(53.1659)
+//				+v1.getAverageFouls()*(114.0270) - 45.4872;
+				-20.672;
 		return result;
 	}
 }
