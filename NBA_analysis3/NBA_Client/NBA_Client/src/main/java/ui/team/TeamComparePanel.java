@@ -142,8 +142,8 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 
 	private void initRadar() {
 
-		radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
-		radar.setBounds(539, 130, 654, 562);
+		radar = new RadarChartForTeamCompare(654, 525, team1, team2,bl,season,isPlayOff);
+		radar.setBounds(539, 130, 654, 525);
 		this.add(radar);
 		radar.setVisible(true);
 		this.repaint();
@@ -157,7 +157,8 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		panels.add(lineChartPanel);
 		this.add(lineChartPanel);
 		lineChartPanel.setVisible(true);
-
+		
+		
 	    hotZonePanel = new HotZonePanel(width, 700,bl,team1.getAbbreviation(),team2.getAbbreviation(),isPlayOff,false);
 		hotZonePanel.setLocation(0, 808);
 		panels.add(hotZonePanel);
@@ -441,24 +442,31 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 			if(isLeft){
 				result_l.setVisible(false);
 				TeamComparePanel.this.team1 = team;
-				radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
+				TeamComparePanel.this.remove(radar);
+				radar = new RadarChartForTeamCompare(654, 525, team1, team2,bl,season,isPlayOff);
+			
+				for(JPanel each:panels){
+					TeamComparePanel.this.remove(each);
+				}
 				panels.clear();
 				initPanels();
-				TeamComparePanel.this.remove(radar);
+				
 				TeamComparePanel.this.add(radar);
-				radar.setBounds(539, 130, 654, 562);
+				radar.setBounds(539, 130, 654, 525);
 				TeamComparePanel.this.updateUI();
 				
 			}else{
 				result_r.setVisible(false);
 				TeamComparePanel.this.team2 = team;
-				TeamComparePanel.this.repaint();
-				radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
+				TeamComparePanel.this.remove(radar);
+				radar = new RadarChartForTeamCompare(654, 525, team1, team2,bl,season,isPlayOff);
+				for(JPanel each:panels){
+					TeamComparePanel.this.remove(each);
+				}
 				panels.clear();
 				initPanels();
-				TeamComparePanel.this.remove(radar);
 				TeamComparePanel.this.add(radar);
-				radar.setBounds(539, 130, 654, 562);
+				radar.setBounds(539, 130, 654, 525);
 				TeamComparePanel.this.updateUI();
 			}
 		}
@@ -830,15 +838,17 @@ class HotZonePanel extends JPanel {
 			boolean isTotal) {
 		
 		this.bl = bl;
-	
+		
 		try {
-			hot_l = bl.getHotZone(teamNameEn_l, isSeason, isTotal);
+			hot_l = bl.getHotZone(teamNameEn_l, true, isTotal);
 			
-			hot_r = bl.getHotZone(teamNameEn_r, isSeason, isTotal);
+			hot_r = bl.getHotZone(teamNameEn_r, true, isTotal);
 		} catch (RemoteException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 		}
+		System.out.println(hot_l.getTotal());
+		System.out.println(hot_r.getTotal());
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;

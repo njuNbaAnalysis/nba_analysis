@@ -32,7 +32,7 @@ public class RadarChartForTeamCompare extends JPanel {
 		this.season = season;
 		this.isPlayOff = isPlayOff;
 		init();
-		RadarChart chart = new RadarChart(5, 5, width, width, value_a, value_b,
+		RadarChart chart = new RadarChart(5, 5, width, height, value_a, value_b,
 				limit, attr);
 		chart.setLocation(0, 0);
 		this.add(chart);
