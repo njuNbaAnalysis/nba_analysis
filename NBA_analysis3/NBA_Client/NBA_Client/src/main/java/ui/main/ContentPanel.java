@@ -42,6 +42,7 @@ public class ContentPanel extends JPanel {
 		teamRankTablePanel.setBounds(0, 0, width-width/10, height);
 		content.add(teamRankTablePanel);
 		content.updateUI();
+		
 	}
 
 	
