@@ -21,7 +21,7 @@ public class RadarChartForTeamCompare extends JPanel {
 	private double[] value_b;
 	private String[] attr = { "内线", "外线", "配合", "进攻", "防守" };
 	int limit = 10;
-	private double [] coefficient = {1,1,0.1,1.2,80};
+	private double [] coefficient = {1,1,0.1,12,80};
 
 	RadarChartForTeamCompare(int width, int height, Teamvo t1, Teamvo t2,BLservice bl,String season,boolean isPlayOff) {
 		this.setLayout(null);
