@@ -364,7 +364,7 @@ public class TeamvoGenerator {
         {
             double[] latestOffendThanDefend = new double[10];
             for(int i = 0;i < 10;i ++){
-                latestOffendThanDefend[i] = points[i]/pointsRival[i];
+                latestOffendThanDefend[i] = points[i]*1.0/pointsRival[i];
             }
             vo.setLatestOffendThanDefend(latestOffendThanDefend);
         }
