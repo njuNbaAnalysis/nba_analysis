@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -50,30 +52,33 @@ public class MatchTablePanel extends JPanel {
 				match.getFirstRecordList());
 		// firstTeamRecord.setBounds(0, height / 20, width, height*8/20);
 		JScrollPane js = new JScrollPane(firstTeamRecord);
-		js.setBounds(0, height / 20, width, height * 8 / 20);
+		js.setBounds(0, height / 10, width, height * 8 / 20);
 		this.add(js);
 
 		MatchJTable secondTeamRecord = new MatchJTable(
 				match.getSecondRecordList());
 		// secondTeamPanel.setBounds(0, height*11 / 20, width, height*8/20);
 		JScrollPane secondTeamPanel = new JScrollPane(secondTeamRecord);
-		secondTeamPanel.setBounds(0, height * 11 / 20, width, height * 8 / 20);
+		secondTeamPanel.setBounds(0, height * 12 / 20, width, height * 8 / 20);
 		this.add(secondTeamPanel);
 
 	}
 
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g2) {
+		Graphics2D g = (Graphics2D) g2;
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setColor(new Color(255,255,255));
 		g.fillRect(0, 0, width, height / 10);
 		// 第一个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
-		g.drawString(match.getTeams()[0], width / 20, height / 20);
+		g.drawString(match.getTeams()[0], width / 10, height / 20);
 
 		Image teamImage1;
 		try {
 			teamImage1 = bl.getTeamByTeamName(match.getTeams()[0],season,isPlayOff).getLogo();
-			g.drawImage(UIUtils.resize(teamImage1, width/10, height/10), 0, 0, this);
+			g.drawImage(UIUtils.resize(teamImage1, width/20, height/15), 0, 0, this);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,12 +90,12 @@ public class MatchTablePanel extends JPanel {
 		// 第二个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
-		g.drawString(match.getTeams()[1], width / 20, height * 11 / 20);
+		g.drawString(match.getTeams()[1], width / 10, height * 11 / 20);
 
 		Image teamImage2;
 		try {
 			teamImage2 = bl.getTeamByTeamName(match.getTeams()[1],season,isPlayOff).getLogo();
-			g.drawImage(teamImage2, 0, height * 10 / 20, this);
+			g.drawImage(UIUtils.resize(teamImage2, width/20, height/15), 0, height * 10 / 20, this);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,15 +119,12 @@ public class MatchTablePanel extends JPanel {
 
 			DefaultTableModel model = new DefaultTableModel(null, columnName);
 			int size = recordList.size();
-			for (int i = 0; i < size + 2; i++) {
+			for (int i = 0; i < size; i++) {
 				String[] s = new String[22];
-				if (i == size) {
-					s[0] = "总计";
-				} else if (i == size + 1) {
-					s = getTotalData();
-				} else {
-					s = getIndividualDataRow(recordList.get(i));
-				}
+				
+				
+				s = getIndividualDataRow(recordList.get(i));
+				
 
 				model.addRow(s);
 
@@ -147,13 +149,13 @@ public class MatchTablePanel extends JPanel {
 			data[0] = recordOfPlayer.getPlayerName();
 			data[1] = df.format(recordOfPlayer.getMinutes());
 			
-			data[2] = df.format(recordOfPlayer.getFieldGoalPercentage() * 100);
+			data[2] = df.format(recordOfPlayer.getFieldGoalPercentage());
 			data[3] = Integer.toString(recordOfPlayer.getFieldGoalHits());
 			data[4] = Integer.toString(recordOfPlayer.getFieldGoalAttempts());
-			data[5] = df.format(recordOfPlayer.getThreePointPercentage() * 100);
+			data[5] = df.format(recordOfPlayer.getThreePointPercentage());
 			data[6] = Integer.toString(recordOfPlayer.getThreePointHits());
 			data[7] = Integer.toString(recordOfPlayer.getThreePointAttemps());
-			data[8] = df.format(recordOfPlayer.getFreeThrowPercentage() * 100);
+			data[8] = df.format(recordOfPlayer.getFreeThrowPercentage());
 			data[9] = Integer.toString(recordOfPlayer.getFreeThrowHits());
 			data[10] = Integer.toString(recordOfPlayer.getFreeThrowAttemps());
 			data[11] = df.format(recordOfPlayer.getEfficiency());
