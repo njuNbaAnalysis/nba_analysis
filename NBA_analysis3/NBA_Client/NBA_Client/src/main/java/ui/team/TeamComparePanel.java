@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import util.UIUtils;
+import vo.HotZonevo;
 import vo.Teamvo;
 import BLservice.BLservice;
 
@@ -157,7 +158,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		this.add(lineChartPanel);
 		lineChartPanel.setVisible(true);
 
-	    hotZonePanel = new HotZonePanel(width, 700);
+	    hotZonePanel = new HotZonePanel(width, 700,bl,team1.getName(),team2.getName(),isPlayOff,false);
 		hotZonePanel.setLocation(0, 808);
 		panels.add(hotZonePanel);
 		this.add(hotZonePanel);
@@ -407,10 +408,12 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		public void mouseReleased(MouseEvent arg0) {
 			//更新方法
 			if(isLeft){
+				result_l.setVisible(false);
 				TeamComparePanel.this.team1 = team;
 				TeamComparePanel.this.repaint();
 				radar = new RadarChartForTeamCompare(654, 562, team1, team2,bl,season,isPlayOff);
 			}else{
+				result_r.setVisible(false);
 				TeamComparePanel.this.team2 = team;
 				TeamComparePanel.this.repaint();
 			}
@@ -747,6 +750,9 @@ class HotZonePanel extends JPanel {
 	JLabel position_r;
 	JLabel seasonHitRate_r;
 	JLabel latest5HitRate_r;
+	BLservice bl;
+	HotZonevo hot_l;
+	HotZonevo hot_r;
 	ArrayList<HotZone> hotZones = new ArrayList<HotZone>();
 
 	Position positions[] = { Position.l24Plus, Position.l1624_1,
@@ -776,8 +782,11 @@ class HotZonePanel extends JPanel {
 
 	}
 
-	public HotZonePanel(int width, int height) {
-
+	public HotZonePanel(int width, int height,BLservice bl,String teamNameEn_l,String teamNameEn_r, boolean isSeason,
+			boolean isTotal) {
+		
+		this.bl = bl;
+		
 		// 自己做桩
 		int tem[] = { 10, 20 };
 		hotZones.add(new HotZone(Position.c08_4, 0.5, tem, 0.5, tem));
@@ -795,7 +804,14 @@ class HotZonePanel extends JPanel {
 		hotZones.add(new HotZone(Position.rc1624_1, 0.5, tem, 0.5, tem));
 		hotZones.add(new HotZone(Position.rc24Plus_1, 0.5, tem, 0.5, tem));
 		// 以上是假数据
-
+	
+		try {
+			hot_l = bl.getHotZone(teamNameEn_l, isSeason, isTotal);
+			hot_r = bl.getHotZone(teamNameEn_l, isSeason, isTotal);
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
