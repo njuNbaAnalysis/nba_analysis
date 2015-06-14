@@ -67,10 +67,10 @@ public class MatchControllorTest {
 	@Test
 	public void testgetLast10Matches() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
-		ArrayList<Matchvo> list = m.getLast10Matches("CLE", "12-13", false);
+		ArrayList<Matchvo> list = m.getLast10Matches("HOU", "14-15", false);
 		System.out.println(list.size());
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.iterator().next().getDate());
+			System.out.println(list.get(i).getDate()+"  last 10 matches:  "+list.get(i).getMid() + "  "+list.get(i).getTeams()[0]+"  "+list.get(i).getTeams()[1]);
 		}
 		Boolean result = (list.size() != 0);
 		assertTrue(result);
@@ -96,11 +96,11 @@ public class MatchControllorTest {
 	public void testgetSimpleMatchInfo() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
 		ArrayList<MatchSimpleInfovo> list = m
-				.getMatchSimpleInfo("LAC", "14-15");
+				.getMatchSimpleInfo("CLE", "14-15");
 		System.out.println(list.size());
 		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.iterator().next().getNameOfRival()
-					+ " simple" + "  ");
+			System.out.println(list.get(i).getNameOfRival()
+					+ " simple" + "  "+list.get(i).getNameOfTeam()+"   "+list.get(i).getNameOfRival());
 		}
 		Boolean result = (list.size() != 0);
 		assertTrue(result);
@@ -146,10 +146,10 @@ public class MatchControllorTest {
 	@Test
 	public void testgetLatestMatchSimpleInfo() {
 		matchBLcontrollor m = matchBLcontrollor.getInstance();
-		ArrayList<MatchSimpleInfovo> list = m.getLatestMatchSimpleInfo("CLE", "GSW");
+		ArrayList<MatchSimpleInfovo> list = m.getLatestMatchSimpleInfo("CLE", "HOU");
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i).getDate() + "  "
-					+ list.get(i).getNameOfTeam() + "  " + list.get(i).getNameOfRival());
+					+ list.get(i).getNameOfTeam() + "  " + list.get(i).getNameOfRival()+" lastMatches");
 			
 		}
 		assertTrue(true);

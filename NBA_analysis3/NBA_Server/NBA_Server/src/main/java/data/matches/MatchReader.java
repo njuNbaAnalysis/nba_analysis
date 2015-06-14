@@ -26,7 +26,7 @@ public class MatchReader {
 		try {
 			statement = conn.createStatement();
 			rs = statement
-					.executeQuery("select * from matchlist group by date desc");
+					.executeQuery("select * from matchlist order by date desc");
 			while (rs.next()) {
 				result.add(rs.getString(1));
 			}

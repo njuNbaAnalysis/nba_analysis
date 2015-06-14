@@ -1,7 +1,5 @@
 package BLTest;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import po.match;
@@ -9,97 +7,54 @@ import data.matches.MatchReader;
 
 public class ruantongTest2 {
 
-	static String[] names = { "POR", "SAC", "GSW", "LAL", "LAC", "UTA", "PHO",
+	static String[] names = { "POR", "SAC", "GSW", "LAL", "LAC", "UTA", "PHX",
 			"DEN", "MIN", "OKC", "DAL", "SAS", "HOU", "NOP", "MEM", "MIL",
 			"DET", "IND", "CLE", "ATL", "BOS", "NYK", "BKN", "WAS", "CHA",
 			"ORL", "MIA", "PHI", "CHI", "TOR" };
-	static double[] OSW = new double[30];
-	static double[] DSW = new double[30];
-	static int[] gameplayed = new int[30];
+
+	static int pingshu[] = new int[13];
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 30; i++) {
-			OSW[i] = 1;
-			DSW[i] = 1;
-		}
-
-		double lemada = 0.5;
-		double KO = 1.08;
-		double KD = 1.08;
 
 		MatchReader mr = new MatchReader();
 		ArrayList<match> list = mr.getMatchesBySeason("14-15", false);
 
-		int[] points = new int[list.size()];
-//		 String result = "";
-		int win = 0;
-		int lose = 0;
-		int sumofwin = 0;
-		int sumofDefeats = 0;
+		// String result = "";
+		int max = -100;
+		int min = 100;
+		String result = "";
 		for (int i = 0; i < list.size(); i++) {
-//			 result += (list.get(i).getHome_points() - list.get(i).getAway_points() ) + ",";
+			result += (list.get(i).getHome_points() - list.get(i)
+					.getAway_points()) + ",";
+			if ((list.get(i).getHome_points() - list.get(i).getAway_points()) > max) {
+				max = (list.get(i).getHome_points() - list.get(i)
+						.getAway_points());
+			}
+			if ((list.get(i).getHome_points() - list.get(i).getAway_points()) < min) {
+				min = (list.get(i).getHome_points() - list.get(i)
+						.getAway_points());
+			}
 
-//			OSW[indexofStr(list.get(i).getHome_team())] = lemada
-//					* OSW[indexofStr(list.get(i).getHome_team())]
-//					+ (1 - lemada) * KO
-//					* DSW[indexofStr(list.get(i).getAway_team())]
-//					/ OSW[indexofStr(list.get(i).getHome_team())];
-//
-//			DSW[indexofStr(list.get(i).getHome_team())] = lemada
-//					* DSW[indexofStr(list.get(i).getHome_team())]
-//					+ (1 - lemada) * KD
-//					* OSW[indexofStr(list.get(i).getAway_team())]
-//					/ DSW[indexofStr(list.get(i).getHome_team())];
-//			
-//			
-//			OSW[indexofStr(list.get(i).getAway_team())] = lemada
-//					* OSW[indexofStr(list.get(i).getAway_team())]
-//					+ (1 - lemada) /KD
-//					* DSW[indexofStr(list.get(i).getHome_team())]
-//					/ OSW[indexofStr(list.get(i).getAway_team())];
-//
-//			DSW[indexofStr(list.get(i).getAway_team())] = lemada
-//					* DSW[indexofStr(list.get(i).getAway_team())]
-//					+ (1 - lemada) /KO
-//					* OSW[indexofStr(list.get(i).getHome_team())]
-//					/ DSW[indexofStr(list.get(i).getAway_team())];
-//			
-			if(list.get(i).getHome_team().equals("GSW")){
-				win+=list.get(i).getHome_points();
-			}else if( list.get(i).getAway_team().equals("GSW") ){
-				lose += list.get(i).getAway_points();
-			}
-			gameplayed[indexofStr(list.get(i).getHome_team())]++;
-			gameplayed[indexofStr(list.get(i).getAway_team())]++;
-			if(list.get(i).getHome_points() - list.get(i).getAway_points() > 0){
-				sumofwin++;
-			}else{
-				sumofDefeats++;
-			}
 		}
+		int c = (max - min) / 13;
+		System.out.println(result);
+		System.out.println("MAX: " + max + "   MIN: " + min + "     "
+				+ (max - min) / 13);
 
-		System.out.println(win+"    "+lose);
-		System.out.println("胜率： "+sumofwin*1.0/list.size());
-//		try {
-//			ProcessBuilder pb = new ProcessBuilder("python",
-//					"Spider-NBA/test.py", result.substring(0,
-//							result.length() - 1));
-//			Process p = pb.start();
-//			InputStreamReader isr = new InputStreamReader(p.getInputStream(),
-//					"GBK");
-//			BufferedReader in = new BufferedReader(isr);
-//			String line;
-//
-//			ArrayList<String> res = new ArrayList<>();
-//			while ((line = in.readLine()) != null) {
-//				res.add(line);
-//				System.out.println(res);
-//			}
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = 0; j < 13; j++)
+				if (((list.get(i).getHome_points() - list.get(i)
+						.getAway_points()) > min + j * c)
+						&& ((list.get(i).getHome_points() - list.get(i)
+								.getAway_points()) < min + j * c + c)) {
+					pingshu[j]++;
+				}
+		}
+		
+		for( int i=0;i<13;i++){
+			System.out.println(pingshu[i]);
+		}
+		System.out.println(list.size());
 	}
 
 	public static int indexofStr(String name) {
