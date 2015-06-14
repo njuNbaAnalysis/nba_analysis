@@ -163,6 +163,21 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		panels.add(hotZonePanel);
 		this.add(hotZonePanel);
 		hotZonePanel.setVisible(false);
+		
+		String[] column = { "得分", "助攻", "篮板", "篮板", "命中率", "三分%", "罚球%",
+				"盖帽", "犯规"};
+		StarContrastPanel comparePanel = null;
+		try {
+			comparePanel = new StarContrastPanel(width,
+					height * 13 / 20, column, team1,team2,bl,season,isPlayOff);
+		} catch (RemoteException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		comparePanel.setLocation(0, 808);
+		panels.add(comparePanel);
+		this.add(comparePanel);
+		comparePanel.setVisible(false);
 
 	}
 
