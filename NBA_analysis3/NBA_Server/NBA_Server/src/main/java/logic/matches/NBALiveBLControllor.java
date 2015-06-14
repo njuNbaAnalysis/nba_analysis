@@ -109,6 +109,9 @@ public class NBALiveBLControllor {
 				String[] data1 = Live.get(i).split(",");
 				// String[] data2 = Live.get(i + 2).split(",");
 				String[] data3 = Live.get(i + 4).split(",");
+				if(data1[4].substring(0, 4).equals("J.R.")){
+					data1[4] = "J.R. Smith";
+				}
 				list.add(new RecordOfPlayervo(data1[4], data1[16],
 						Integer.parseInt(data3[10]) * 60
 								+ Integer.parseInt(data3[14]), Integer

@@ -251,4 +251,11 @@ public class matchBLcontrollor {
 
 		return result;
 	}
+
+	public double getWinPercentage(String teamName1, String teamName2,
+			String season, boolean isplayoff) {
+		// TODO Auto-generated method stub
+		
+		return MatchWinPercentage.getWinPercent(teamName1, teamName2, season, isplayoff);
+	}
 }

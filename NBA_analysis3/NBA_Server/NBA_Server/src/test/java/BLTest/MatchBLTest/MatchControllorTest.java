@@ -154,5 +154,15 @@ public class MatchControllorTest {
 		}
 		assertTrue(true);
 	}
+	
+	@Test
+	public void testgetWinPercentage() {
+		matchBLcontrollor m = matchBLcontrollor.getInstance();
+		double temp = m.getWinPercentage("GSW", "HOU", "14-15", false);
+			System.out.println(temp+"  WinPercentage!");
+
+		assertTrue(true);
+	}
+	
 
 }
