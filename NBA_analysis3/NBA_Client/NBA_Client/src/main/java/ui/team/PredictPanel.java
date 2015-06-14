@@ -70,9 +70,10 @@ public class PredictPanel extends JPanel {
 		this.team1 = team1;
 		this.team2 = team2;
 		this.bl = bl;
+		this.points = new double[2];
 		this.win = bl.getWinPercentage(team1.getAbbreviation(), team2.getAbbreviation(), season, isPlayOff);
 		this.points[0] = bl.getTeamPoints(team1.getAbbreviation(), season, isPlayOff);
-		this.points[1] = bl.getTeamPoints(team1.getAbbreviation(), season, isPlayOff);
+		this.points[1] = bl.getTeamPoints(team2.getAbbreviation(), season, isPlayOff);
 		
 		this.setLayout(null);
 		this.setSize(width, height);
