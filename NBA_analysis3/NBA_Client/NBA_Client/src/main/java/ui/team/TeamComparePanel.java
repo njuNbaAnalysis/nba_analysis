@@ -180,10 +180,22 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 		this.add(comparePanel);
 		comparePanel.setVisible(false);
 		
+		double winPer = 0;
+		double points[] = new double[2];
+		
+		try {
+			winPer=bl.getWinPercentage(team1.getAbbreviation(), team2.getAbbreviation(), season, isPlayOff);
+			points[0]=bl.getTeamPoints(team1.getAbbreviation(), season, isPlayOff);
+			points[1]=bl.getTeamPoints(team2.getAbbreviation(), season, isPlayOff);
+		} catch (RemoteException e1) {
+			// TODO 自动生成的 catch 块
+			e1.printStackTrace();
+		}
+	
 		
 		PredictPanel predictPanel = null;
 		try {
-			predictPanel = new PredictPanel(width, 700, column, team1, team2, bl, season, isPlayOff);
+			predictPanel = new PredictPanel(width, 700, column, team1, team2, bl, season,winPer,points,isPlayOff);
 		} catch (RemoteException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
