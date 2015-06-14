@@ -5,8 +5,6 @@ import sys
 import CsvHelper
 
 def find_live(game_id, period):
-    reload(sys)
-    sys.setdefaultencoding('utf-8')
     # http://china.nba.com/wap/static/data/game/playbyplay_0041400311_4.json
     aim = 'http://china.nba.com/wap/static/data/game/playbyplay_' \
           + str(game_id) + \

@@ -4,12 +4,15 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import logic.BLController;
+import logic.matches.NBALiveBLControllor;
+import logic.matches.NBALiveList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import util.JSONGenerator;
 import vo.EventVo;
+import vo.FutureMatchvo;
 import vo.HotZonevo;
 import vo.MatchSimpleInfovo;
 import vo.Matchvo;
@@ -30,7 +33,35 @@ public class GetJsonData {
 		return getJsonData;
 	}
 	
-
+	public JSONObject getFutureMatches(String date){
+		ArrayList<FutureMatchvo> result = null;
+		
+		try {
+			result = BLController.getInstance().getFutureMatches(date);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JSONObject object = new JSONObject();
+		
+		if(result == null){
+			object.put("result", "没有获取到比赛");
+		}
+		else if(result.size() == 0){
+			object.put("result", "没有获取到比赛");
+		}
+		else{
+			JSONArray array = new JSONArray();
+			for(FutureMatchvo vo:result){
+				array.put(JSONGenerator.getJSONObject(vo));
+			}
+			object.put("result", array);
+		}
+		return object;
+	}
+	
+	
 	public JSONObject initNBALive(){
 		boolean result = false;
 		try {
@@ -43,27 +74,27 @@ public class GetJsonData {
 		return object;
 	}
 
-	public JSONObject getLiveMatchInfo(){
+	public JSONObject getLiveMatchInfo(String Mid){
 		Matchvo result = null;
 		try {
-			result = BLController.getInstance().getLiveMatchInfo();
+			result = BLController.getInstance().getLiveMatchInfo(Mid);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		JSONObject object = new JSONObject();
 		if(result == null){
-			object.put("result", "今天没有比赛");
+			object.put("result", "未找到该比赛");
 		}
 		else{
 			object = JSONGenerator.getJSONObject(result);
 		}
 		return object;
 	}
-
-	public JSONObject getLiveEvent(){
+	
+	public JSONObject getLiveEvent(String Mid){
 		ArrayList<EventVo> result = null;
 		try {
-			result = BLController.getInstance().getLiveEvent();
+			result = BLController.getInstance().getLiveEvent(Mid);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -374,10 +405,10 @@ public class GetJsonData {
 		return object;
 	}
 
-	public JSONObject getTeamAbility(String teamNameEn){ 
+	public JSONObject getTeamAbility(String teamNameEn,String season,String isPlayOff){ 
 		double[] result = null;
 		try {
-			result = BLController.getInstance().getTeamAbility(teamNameEn);
+			result = BLController.getInstance().getTeamAbility(teamNameEn, season, Boolean.parseBoolean(isPlayOff));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

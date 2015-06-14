@@ -12,8 +12,6 @@ import vo.Teamvo;
 
 import compare.WinningPercentageComp;
 
-import data.teams.TeamRecordItemData;
-
 public class TeamvoGenerator {
     
     private static TeamvoGenerator teamvoGenerator = null;
@@ -23,7 +21,7 @@ public class TeamvoGenerator {
     
     private TeamvoGenerator(){}
     
-    public static TeamvoGenerator getInstance(){
+    public synchronized static TeamvoGenerator getInstance(){
         if(teamvoGenerator == null){
             teamvoGenerator = new TeamvoGenerator();
         }
@@ -31,6 +29,7 @@ public class TeamvoGenerator {
     }
     
     public Teamvo getTeamvo(String teamNameEn, String season, boolean isPlayOff){
+        System.out.println("getTeamvo");
         Teamvo vo = new Teamvo();
         
         
@@ -185,7 +184,7 @@ public class TeamvoGenerator {
     
     public Teamvo getTeamvoWithLatest10Data(String teamNameEn, String season, boolean isPlayOff){
         Teamvo vo = this.getTeamvo(teamNameEn, season, isPlayOff);
-        
+
       //计算球队近十场的各种数据
         computeLatest10Data(vo,teamNameEn, season, isPlayOff);
         
@@ -241,6 +240,12 @@ public class TeamvoGenerator {
     private void computeLatest10Data(Teamvo vo,String teamNameEn, String season, boolean isPlayOff){
         matchBLcontrollor matchController = matchBLcontrollor.getInstance();
         ArrayList<Matchvo> voList = matchController.getLast10Matches(teamNameEn, season, isPlayOff);
+        
+        System.out.println(teamNameEn);;
+        for(Matchvo token:voList){
+            System.out.print(token.getMid()+ " ");
+        }
+        System.out.println();
         
         //for debug
         //如果voList为null或为空则不进行任何计算

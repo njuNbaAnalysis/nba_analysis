@@ -33,6 +33,7 @@ public class TodayPlayervo implements Serializable{
 	 * */
 	public TodayPlayervo(String pid,String name, String team, int Points,
 			int Rebounds, int Assists, int steals, int blockShots) {
+		this.pid = pid;
 		this.name = name;
 		this.team = team;
 		this.Assists = Assists;
@@ -88,7 +89,7 @@ public class TodayPlayervo implements Serializable{
 		return blockShots;
 	}
 
-	/**返回该球员的头像，如果头像不存在，则返回null*/
+	/**返回该球员的动作图，如果头像不存在，则返回null*/
 	public Image getAction() {
 		Image image = null;
 		try {
@@ -98,6 +99,22 @@ public class TodayPlayervo implements Serializable{
 				name = temp[0]+" "+temp[temp.length-1];
 			}
 			image = ImageIO.read(new File("./Data/PlayerAction/" + name
+					+ ".png"));
+		} catch (IOException e) {
+		}
+		return image;
+	}
+	
+	/**返回该球员的头像，如果头像不存在，则返回null*/
+	public Image getPortrait() {
+		Image image = null;
+		try {
+			String name = getName();
+			String[] temp = name.split(" ");
+			if(temp.length>2){
+				name = temp[0]+" "+temp[temp.length-1];
+			}
+			image = ImageIO.read(new File("./Data/PlayerImage/" + name
 					+ ".png"));
 		} catch (IOException e) {
 		}
