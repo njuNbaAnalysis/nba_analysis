@@ -242,7 +242,7 @@ public class PlayerJTable extends StatJTable {
 		s[4] = p.getGameStarted() + "";
 		s[5] = df.format(p.getAverageRebounds()) + "";
 		s[6] = df.format(p.getAverageAssists()) + "";
-		s[7] = df.format(p.getAverageMinutes()) + "";
+		s[7] = df.format(p.getAverageMinutes()*60) + "";
 		s[8] = df.format(p.getAverageEfficiency()) + "";
 		s[9] = df.format(p.getAverageGmSc()) + "";
 		s[10] = df.format(p.getFieldGoalsPercentage() * 100) + "";
@@ -279,7 +279,7 @@ public class PlayerJTable extends StatJTable {
 		s[4] = p.getGameStarted() + "";
 		s[5] = p.getRebounds() + "";
 		s[6] = p.getAssists() + "";
-		s[7] = p.getMinutes() / 60 + "";
+		s[7] = p.getMinutes()+ "";
 		s[8] = df.format(p.getFieldGoalsPercentage() * 100) + "";
 		s[9] = df.format(p.getThreePointersPercentage() * 100) + "";
 		s[10] = df.format(p.getFreeThrowsPercentage() * 100) + "";
