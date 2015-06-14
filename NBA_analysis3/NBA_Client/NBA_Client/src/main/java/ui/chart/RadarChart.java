@@ -97,10 +97,11 @@ public class RadarChart extends JPanel {
 
 		}
 		// 画多边形，最后一位透明度
-		g2.setColor(new Color(6, 74, 150, 255));
+		
+		g2.setColor(new Color(221, 61, 66, 255));
 
 		g2.fillPolygon(ax_now, ay_now, dimension);
-		g2.setColor(new Color(221, 61, 66, 127));
+		g2.setColor(new Color(6, 74, 150, 127));
 		g2.fillPolygon(bx_now, by_now, dimension);
 		// 画多边形边界
 

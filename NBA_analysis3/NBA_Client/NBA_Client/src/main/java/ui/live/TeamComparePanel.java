@@ -76,7 +76,6 @@ public class TeamComparePanel extends JPanel {
 		teamData[0] = m.getFieldGoalsPercentage()[0];
 		teamData[1] = m.getThreePointersPercentage()[0];
 		teamData[2] = m.getFreeThrowsPercentage()[0];
-		//System.out.println("Rebound0:"+m.getRebounds()[0]);
 		teamData[3] = m.getRebounds()[0];
 		teamData[4] = m.getAssists()[0];
 		teamData[5] = m.getBlocks()[0];

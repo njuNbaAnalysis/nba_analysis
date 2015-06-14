@@ -3,12 +3,14 @@ package ui.team;
 import java.awt.Color;
 import java.rmi.RemoteException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import BLservice.BLservice;
 import ui.chart.LineChart;
+import vo.MatchSimpleInfovo;
 import vo.Teamvo;
 
 public class LineChartPanelForTeamCompare extends JPanel {
@@ -25,6 +27,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private BLservice bl;
 	private String season;
 	private boolean isPlayOff;
+	private int num = 10;
 	private int seg;
 	private int limit;
 	private DecimalFormat df = new DecimalFormat("#0.0");
@@ -49,7 +52,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		this.isPlayOff = isPlayOff;
 		this.setLayout(null);
 		init(type);
-		LineChart chart = new LineChart(x_name.length, seg, width, height,
+		LineChart chart = new LineChart(num, seg, width, height,
 				limit, x_name, y_name, t1_value, t2_value, labelContent_t1,
 				labelContent_t2,a_color,b_color);
 		chart.setBounds(0, 0, width, height);
@@ -80,6 +83,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 			break;
 		case "交手":
 			initGrips();
+			num = 5;
 			break;
 		}
 
@@ -93,40 +97,30 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		y_name[2] = "win";
 		y_name[3] = "";
 		
-		boolean[] t_value = t1.getLatestWinOrLose();
-		for(int i=0;i<t_value.length;i++){
-			if(t_value[i]){
-				t1_value[i] = 2;
-			}else{
-				t1_value[i] = 1;
+		
+		try {
+			ArrayList<MatchSimpleInfovo> matchList = bl.getLatestMatchSimpleInfo(t1.getAbbreviation(),t2.getAbbreviation());
+			
+		//	boolean[] t_value = t1.getLatestWinOrLose();
+			for(int i=0;i<matchList.size();i++){
+				MatchSimpleInfovo match = matchList.get(i);
+				if(match.isWin()){
+					t1_value[i] = 2;
+					t2_value[i] = 1;
+					
+				}else{
+					t1_value[i] = 1;
+					t2_value[i] = 2;
+				}
+				labelContent_t1[i] = match.getPoints()[0]+"-"+match.getPoints()[1];
+				labelContent_t2[i] = match.getPoints()[1]+"-"+match.getPoints()[0];
 			}
 			
-		}
-		
-		t_value = t2.getLatestWinOrLose();
-		for(int i=0;i<t_value.length;i++){
-			if(t_value[i]){
-				t2_value[i] = 2;
-			}else{
-				t2_value[i] = 1;
-			}
-			
-		}
-		
-		
-		//bl.getLatestPoints(t1,t2);
-		// labelContent_t1 = t1.getLatestPoints(t1,t2);
-		for (int i = 0; i < t1_value.length; i++) {
-			t1_value[i] = (i + 1) % 2 + 1;
-			labelContent_t1[i] = "101-100";
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		// t2_value = t1.getLatestWinOrLose();
-		// labelContent_t2 = t2.getLatestPoints(t1,t2);
-		for (int i = 0; i < t2_value.length; i++) {
-			t2_value[i] = (i) % 2;
-			labelContent_t2[i] = "101-100";
-		}// TODO Auto-generated method stub
 		seg = 3;
 		limit = 3;
 

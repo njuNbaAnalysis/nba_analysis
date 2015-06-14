@@ -51,7 +51,7 @@ public class RadarChartForTeamCompare extends JPanel {
 					value_a[i] = value_a[i]/coefficient[i];
 				}
 				
-				
+				System.out.println(value_a[i]);
 			}
 			
 			
@@ -63,6 +63,8 @@ public class RadarChartForTeamCompare extends JPanel {
 				}else{
 					value_b[i] = value_b[i]/coefficient[i];
 				}
+				
+				System.out.println(value_b[i]);
 			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

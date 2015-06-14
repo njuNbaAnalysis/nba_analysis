@@ -704,7 +704,7 @@ public class MatchPanel extends JPanel {
 				@Override
 				public void mouseReleased(MouseEvent arg0) {
 					System.out.println(match.getMid());
-					LivePanel panel = new LivePanel(MatchPanel.this.width, MatchPanel.this.height, MatchPanel.this.bl, match.getMid(),season,isPlayOff);
+					LivePanel panel = new LivePanel(MatchPanel.this.width, MatchPanel.this.height, MatchPanel.this.bl, match.getMid(),content,season,isPlayOff);
 					MatchPanel.this.removeAll();
 					MatchPanel.this.add(panel);
 					MatchPanel.this.updateUI();
@@ -809,7 +809,7 @@ public class MatchPanel extends JPanel {
 					
 					fold(index);
 				} else {
-					table = new MatchTablePanel(width, 800, matchList.get(index), bl,season,isPlayOff);
+					table = new MatchTablePanel(width, 800, matchList.get(index), bl,season,isPlayOff,false);
 					unfold(index);
 
 				}

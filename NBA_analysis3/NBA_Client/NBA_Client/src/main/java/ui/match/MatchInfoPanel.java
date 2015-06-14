@@ -29,7 +29,7 @@ public class MatchInfoPanel extends JPanel {
 		
 		this.add(info);
 		
-		MatchTablePanel table =  new MatchTablePanel(width, 800, match, b,season,isPlayOff);
+		MatchTablePanel table =  new MatchTablePanel(width, 800, match, b,season,isPlayOff,false);
 		table.setBounds(0, 300, width, 1000);
 		this.add(table);
 		

@@ -26,6 +26,7 @@ import util.Tools;
 import util.UIUtils;
 import vo.EventVo;
 import vo.Matchvo;
+import vo.RecordOfPlayervo;
 import vo.Teamvo;
 
 public class LivePanel extends JPanel {
@@ -35,15 +36,17 @@ public class LivePanel extends JPanel {
 	private JScrollPane content;
 	private LiveButton[] btArray;
 	private ArrayList<EventVo> eventList = new ArrayList<EventVo>();
-	WordLivePanel wordLivePanel; 	
+	WordLivePanel wordLivePanel;
 	private String mid;
 	private String season;
 	private boolean isPlayOff;
 	private Matchvo match;
 	private BLservice bl;
 	private InfoLabel infoLabel;
+	private JPanel con;
 
-	public LivePanel(int width, int height, BLservice bl, String mid,String season,boolean isPlayOff) {
+	public LivePanel(int width, int height, BLservice bl, String mid,JPanel con,
+			String season, boolean isPlayOff) {
 		this.setLayout(null);
 		this.width = width;
 		this.height = height;
@@ -52,8 +55,8 @@ public class LivePanel extends JPanel {
 		this.isPlayOff = isPlayOff;
 		this.setSize(width, height);
 		this.mid = mid;
-		
-		
+		this.con = con;
+
 		try {
 			bl.initNBALive();
 		} catch (RemoteException e2) {
@@ -67,7 +70,7 @@ public class LivePanel extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		setLabel();
 		setButton();
 		setContent();
@@ -81,7 +84,7 @@ public class LivePanel extends JPanel {
 		content = new JScrollPane();
 		content.setBounds(0, height * 6 / 20, width, height * 14 / 20);
 		content.setLayout(null);
-		wordLivePanel = new WordLivePanel(width, height * 13 / 20, eventList);
+		wordLivePanel = new WordLivePanel(width, height * 13 / 20, eventList,bl,con,season,isPlayOff);
 		wordLivePanel.setLocation(0, 0);
 		content.add(wordLivePanel);
 		this.add(content);
@@ -97,10 +100,9 @@ public class LivePanel extends JPanel {
 	}
 
 	private class InfoLabel extends JLabel {
- 		private int labelWidth;
+		private int labelWidth;
 		private int labelHeight;
 		private Teamvo[] teams;
-
 
 		InfoLabel(int width, int height) {
 			this.labelWidth = width;
@@ -127,8 +129,7 @@ public class LivePanel extends JPanel {
 					RenderingHints.VALUE_ANTIALIAS_ON);
 			g.setColor(new Color(246, 246, 246));
 			g.fillRect(0, 0, labelWidth, labelHeight / 10);
-			g.setColor(new Color(122, 122, 122));
-			g.fillRect(labelWidth * 5 / 12, 0, labelWidth / 6, labelHeight / 10);
+
 			g.setColor(new Color(190, 157, 83));
 			g.drawLine(0, labelHeight / 10, labelWidth, labelHeight / 10);
 
@@ -136,11 +137,6 @@ public class LivePanel extends JPanel {
 			g.fillRect(0, labelHeight / 10 + 1, labelWidth,
 					labelHeight * 9 / 10 - 1);
 
-			g.setColor(Color.BLACK);
-			g.setFont(new Font("default", Font.BOLD, 20));
-			int strWidth = g.getFontMetrics(g.getFont()).stringWidth("结束");
-			g.drawString("结束", labelWidth / 2 - strWidth / 2,
-					labelHeight * 1 / 10 - 8);// 这个结束需要修改
 
 			g.drawImage(UIUtils.resize(teams[0].getLogo(), labelWidth / 10,
 					labelHeight * 3 / 10), labelWidth * 12 / 36,
@@ -174,7 +170,7 @@ public class LivePanel extends JPanel {
 					labelHeight * 7 / 12);
 
 			g.setFont(new Font("default", Font.PLAIN, 80));
-			strWidth = g.getFontMetrics(g.getFont()).stringWidth("VS");
+			int strWidth = g.getFontMetrics(g.getFont()).stringWidth("VS");
 			g.drawString("VS", labelWidth / 2 - strWidth / 2,
 					labelHeight * 7 / 12);
 
@@ -288,7 +284,7 @@ public class LivePanel extends JPanel {
 			if (type == 0) {
 
 				MatchTablePanel table = new MatchTablePanel(width,
-						height * 13 / 20, match, bl,season,isPlayOff);
+						height * 13 / 20, match, bl, season, isPlayOff,true);
 				table.setBounds(0, 0, width, height * 13 / 20);
 				content.removeAll();
 				content.updateUI();
@@ -299,7 +295,7 @@ public class LivePanel extends JPanel {
 
 			if (type == 1) {
 				wordLivePanel = new WordLivePanel(width, height * 13 / 20,
-						eventList);
+						eventList,bl,con,season,isPlayOff);
 				wordLivePanel.setLocation(0, 0);
 				content.removeAll();
 				content.updateUI();
@@ -311,6 +307,9 @@ public class LivePanel extends JPanel {
 			if (type == 2) {
 				String[] column = { "%", "三分%", "罚球%", "篮板", "助攻", "盖帽", "失误",
 						"快攻得分", "禁区得分", "对方失误得分", "最多领先分数" };
+			
+				
+				
 				TeamComparePanel comparePanel = new TeamComparePanel(width,
 						height * 13 / 20, column, match);
 				comparePanel.setLocation(0, 0);
@@ -341,10 +340,11 @@ public class LivePanel extends JPanel {
 
 		}
 	}
-	
-	public void setMatch(Matchvo match){
+
+	public void setMatch(Matchvo match) {
 		this.match = match;
 	}
+
 	public void refresh(ArrayList<EventVo> newEventList) {
 		if (wordLivePanel != null && newEventList.size() > 0) {
 			int latestTime = 0;
@@ -357,18 +357,15 @@ public class LivePanel extends JPanel {
 					}
 				}
 			}
-		
-		//	System.out.println("latestTime:" + latestTime);
 
 			// 最新的事件在newEventList的第一个
-			//加事件时需要遍历
+			// 加事件时需要遍历
 			for (int i = newEventList.size() - 1; i >= 0; i--) {
 				EventVo event = newEventList.get(i);
 				if (event.getTimeInSecond() >= latestTime) {
-					if (latestEvent == null
-							|| !isExistEvent(event)) {
-						//System.out.println(event.getDescription());
-						System.out.println("增加了一个事件:"+event.getDescription());
+					if (latestEvent == null || !isExistEvent(event)) {
+						// System.out.println(event.getDescription());
+						System.out.println("增加了一个事件:" + event.getDescription());
 						eventList.add(event);
 					}
 				}
@@ -378,48 +375,39 @@ public class LivePanel extends JPanel {
 		}
 
 	}
-	
-	
-	private boolean isExistEvent(EventVo e){
-		for(EventVo event:eventList){
-			if(event.getTimeInSecond()==e.getTimeInSecond()&&e.getDescription().equals(e.getDescription())){
+
+	private boolean isExistEvent(EventVo e) {
+		for (EventVo event : eventList) {
+			if (event.getTimeInSecond() == e.getTimeInSecond()
+					&& e.getDescription().equals(e.getDescription())) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	
 
 	private class LiveThread implements Runnable {
 
-		@Override 
+		@Override
 		public void run() {
 			while (true) {
 				ArrayList<EventVo> eventList = null;
 				Matchvo m = null;
 				try {
-					System.out.println("得到事件"
-							+ "之前");
-					
+					System.out.println("得到事件" + "之前");
+
 					eventList = bl.getLiveEvent(mid);
 					System.out.println("eventList" + eventList.size());
 					m = bl.getLiveMatchInfo(mid);
-					//System.out.println(m.getPoints()[0]+":"+m.getPoints()[1]);
+					// System.out.println(m.getPoints()[0]+":"+m.getPoints()[1]);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
 				LivePanel.this.refresh(eventList);
-				//infoPanel.removeAll();
-				//InfoLabel infoLabel = new InfoLabel(width, height / 4, m);
-				//infoLabel.setLocation(0, 0);
-				/*infoPanel.add(infoLabel);
-				infoPanel.updateUI();
-				infoPanel.repaint();*/
 				setMatch(m);
-				//infoLabel.repaint();
+				// infoLabel.repaint();
 				infoLabel.updateUI();
 				infoLabel.repaint();
 
@@ -432,24 +420,6 @@ public class LivePanel extends JPanel {
 			}
 
 		}
-
-	}
-	
-	public static void main(String[] args) {
-		/*final JFrame f = new JFrame();
-		f.setBounds(0, 0, 1280, 1080);
-		DataFactory factory = DataFactoryMySql.getInstance();
-		final BLservice bl = factory.getBLservice();
-
-		
-
-		LivePanel chart = new LivePanel(1280, 1080, bl, mid);
-		chart.setBounds(0, 0, 1280, 1080);
-
-		f.setLayout(null);
-		f.add(chart);
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 
 	}
 
