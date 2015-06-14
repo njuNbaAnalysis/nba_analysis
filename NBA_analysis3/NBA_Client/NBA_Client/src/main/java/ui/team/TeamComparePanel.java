@@ -63,7 +63,7 @@ public class TeamComparePanel extends JPanel implements ModuleButtonListener {
 	ArrayList<ModuleButton> buttons = new ArrayList<ModuleButton>();
 	ArrayList<Teamvo> allteams;
 
-	String modules[] = { "近期表现", "热区对比", "当家球星", "神预测" };
+	String modules[] = { "近期表现", "热区对比", "当家球星", "对阵预测" };
 
 	public void paintComponent(Graphics g2) {
 		super.paintComponent(g2);
@@ -999,10 +999,10 @@ class HotZonePanel extends JPanel {
 
 	class HotZonePicPanel extends JPanel implements MouseMotionListener {
 		Position positions[] = { Position.l24Plus, Position.l1624_1,
-				Position.l816_1, Position.c08_4, Position.r816_1, Position.r1624_1,
-				Position.r24Plus_1, Position.lc1624_1, Position.c816_2,
-				Position.c1624_2, Position.rc1624_1, Position.lc24Plus_1,
-				Position.c24Plus_1, Position.rc24Plus_1 };
+		Position.l816_1, Position.c08_4, Position.r816_1, Position.r1624_1,
+		Position.r24Plus_1, Position.lc1624_1, Position.c816_2,
+		Position.c1624_2, Position.rc1624_1, Position.lc24Plus_1,
+		Position.c24Plus_1, Position.rc24Plus_1 };
 		
 		int width;
 		int height;
