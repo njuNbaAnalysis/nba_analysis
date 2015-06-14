@@ -29,7 +29,6 @@ public class TeamvoGenerator {
     }
     
     public Teamvo getTeamvo(String teamNameEn, String season, boolean isPlayOff){
-        System.out.println("getTeamvo");
         Teamvo vo = new Teamvo();
         
         
