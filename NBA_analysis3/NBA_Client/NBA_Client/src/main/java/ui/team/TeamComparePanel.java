@@ -786,24 +786,6 @@ class HotZonePanel extends JPanel {
 			boolean isTotal) {
 		
 		this.bl = bl;
-		
-		// 自己做桩
-		int tem[] = { 10, 20 };
-		hotZones.add(new HotZone(Position.c08_4, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.c1624_2, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.c24Plus_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.c816_2, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.l1624_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.l24Plus, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.l816_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.lc1624_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.lc24Plus_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.r1624_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.r24Plus_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.r816_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.rc1624_1, 0.5, tem, 0.5, tem));
-		hotZones.add(new HotZone(Position.rc24Plus_1, 0.5, tem, 0.5, tem));
-		// 以上是假数据
 	
 		try {
 			hot_l = bl.getHotZone(teamNameEn_l, isSeason, isTotal);
@@ -818,7 +800,7 @@ class HotZonePanel extends JPanel {
 		this.height = height;
 		this.setSize(width, height);
 		this.setBackground(new Color(46, 46, 46));
-		JPanel hotZonePic = new HotZonePicPanel(686, 678, this);
+		JPanel hotZonePic = new HotZonePicPanel(686, 678, this,hot_l,hot_r);
 		this.add(hotZonePic);
 		hotZonePic.setSize(686, 678);
 		hotZonePic.setLocation((width - 686) / 2, 0);
@@ -899,21 +881,7 @@ class HotZonePanel extends JPanel {
 		seasonHitRate_r.setText(hot_r.getTotal().get(positions[index].toString().split("_")[0]).getPct()  + "%");
 		latest5HitRate_r.setText(hot_r.getLast5().get(positions[index].toString().split("_")[0]).getPct() + "%");
 		
-		
-		/*for (HotZone each : hotZones) {
-			if (each.position == positions[index]) {
-				position_l.setText(posNames[index]);
-				position_l.setLocation(
-						450 - position_l.getFontMetrics(position_l.getFont())
-								.stringWidth(posNames[index]), 100);
-				seasonHitRate_l.setText(each.latest5HitRate * 100 + "%");
-				latest5HitRate_l.setText(each.latest5HitRate * 100 + "%");
-				position_r.setText(posNames[index]);
-				seasonHitRate_r.setText(each.latest5HitRate * 100 + "%");
-				latest5HitRate_r.setText(each.latest5HitRate * 100 + "%");
-			}
-		}
-*/
+
 	}
 
 	public class HotZone {
@@ -922,7 +890,8 @@ class HotZonePanel extends JPanel {
 		int[] seasonHitsShots; // 璧涘鍛戒腑鏁板拰鍑烘墜锟??
 		double latest5HitRate; // 杩戜簲鍦哄懡涓巼
 		int[] latest5HitsShots; // 杩戜簲鍦哄懡涓暟鍜屽嚭鎵嬫暟
-
+		
+		
 		public HotZone(Position position, double seasonHitRate,
 				int[] seasonHitsShots, double latest5HitRate,
 				int[] latest5HitsShots) {
@@ -975,14 +944,22 @@ class HotZonePanel extends JPanel {
 	}
 
 	class HotZonePicPanel extends JPanel implements MouseMotionListener {
-
+		Position positions[] = { Position.l24Plus, Position.l1624_1,
+				Position.l816_1, Position.c08_4, Position.r816_1, Position.r1624_1,
+				Position.r24Plus_1, Position.lc1624_1, Position.c816_2,
+				Position.c1624_2, Position.rc1624_1, Position.lc24Plus_1,
+				Position.c24Plus_1, Position.rc24Plus_1 };
+		
 		int width;
 		int height;
+		HotZonevo hot_l;
+		HotZonevo hot_r;
 		HotZonePanel hotZonePanel;
 		ArrayList<BufferedImage> imageList = new ArrayList<BufferedImage>(); // 原图片组件
 		ArrayList<BufferedImage> imageList_highlight = new ArrayList<BufferedImage>(); // 高亮图片组件
 		ArrayList<BufferedImage> imageToDraw = new ArrayList<BufferedImage>(); // 待绘图片组件
-
+		ArrayList<BufferedImage> imageListr = new ArrayList<BufferedImage>(); // 原图片组件red
+		ArrayList<BufferedImage> imageListb = new ArrayList<BufferedImage>(); // 原图片组件blue
 		int currentHighLight; // 当前高亮的组件1~14，如果为0则表示没有高亮
 
 		public void paintComponent(Graphics g2) {
@@ -999,17 +976,33 @@ class HotZonePanel extends JPanel {
 
 		}
 
-		public HotZonePicPanel(int width, int height, HotZonePanel hotZonePanel) {
+		public HotZonePicPanel(int width, int height, HotZonePanel hotZonePanel, HotZonevo hot_l, HotZonevo hot_r) {
 			this.hotZonePanel = hotZonePanel;
-
+			this.hot_l = hot_l;
+			this.hot_r = hot_r;
 			this.setLayout(null);
 			this.addMouseMotionListener(this);
 
 			ImageReader reader = ImageReader.getInstance();
-			imageList = reader.getHot_imageList();
+			//imageList = reader.getHot_imageList();
 			imageList_highlight = reader.getHot_imageList_highlight();
-			imageToDraw = reader.getHot_imageToDraw();
-
+			//imageToDraw = reader.getHot_imageToDraw();
+			imageListr = reader.getHotr_imageList();
+			imageListb = reader.getHotb_imageList();
+			imageList.clear();
+			imageToDraw.clear();
+			for(int i = 0;i<14;i++){
+				if(hot_l.getTotal().get(positions[i].toString().split("_")[0]).getPct()>
+					hot_r.getTotal().get(positions[i].toString().split("_")[0]).getPct()){
+					imageList.add(imageListr.get(i));
+					imageToDraw.add(imageListr.get(i));
+					
+				}else{
+					imageList.add(imageListb.get(i));
+					imageToDraw.add(imageListb.get(i));
+				}
+			}
+			
 		}
 
 		@Override

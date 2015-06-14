@@ -21,9 +21,23 @@ public class ImageReader implements Runnable{
 	ArrayList<BufferedImage> hot_imageList_highlight = new ArrayList<BufferedImage>(); // 高亮图片组件
 	ArrayList<BufferedImage> hot_imageToDraw = new ArrayList<BufferedImage>(); // 待绘图片组件
 
+	ArrayList<BufferedImage> hotr_imageList = new ArrayList<BufferedImage>(); // 原图片组件红
+	
+	ArrayList<BufferedImage> hotb_imageList = new ArrayList<BufferedImage>(); // 原图片组件蓝
+
 	private static ImageReader reader = null;
 	
 	
+	public ArrayList<BufferedImage> getHotr_imageList() {
+		return hotr_imageList;
+	}
+
+
+	public ArrayList<BufferedImage> getHotb_imageList() {
+		return hotb_imageList;
+	}
+
+
 	public static ImageReader getInstance(){
         if(reader == null){
         	reader = new ImageReader();
@@ -105,6 +119,11 @@ public class ImageReader implements Runnable{
 				// 读取高亮图片
 				path = "image" + File.separator + "p" + i + ".png";
 				hot_imageList_highlight.add(ImageIO.read(new File(path)));
+				
+				path = "image" + File.separator + "b" + i + ".png";
+				hotb_imageList.add(ImageIO.read(new File(path)));
+				path = "image" + File.separator + "r" + i + ".png";
+				hotr_imageList.add(ImageIO.read(new File(path)));
 				
 				progress=6+(i+1)/5;
 				
