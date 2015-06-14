@@ -354,4 +354,16 @@ public interface BLservice extends Remote {
 	 */
 	public double getWinPercentage(String teamName1,
 			String teamName2,String season,boolean isPlayOff) throws RemoteException;
+	
+	/**
+	 * 根据球队名返回估计得分
+	 * 
+	 * @param teamName1
+	 *            三个大写英文字母
+	 * @return 第一个队得分
+	 * 
+	 * @throws RemoteException 	rmi服务器连接异常
+	 */
+	public double getWinPercentage(String teamName1,
+			String season,boolean isPlayOff) throws RemoteException;
 }
