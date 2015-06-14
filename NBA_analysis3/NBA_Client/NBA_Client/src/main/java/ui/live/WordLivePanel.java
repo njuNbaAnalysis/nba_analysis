@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import BLservice.BLservice;
 import util.UIUtils;
 import vo.EventVo;
 
@@ -38,20 +39,28 @@ public class WordLivePanel extends JPanel {
 	ImageIcon chartIconD;
 	ImageIcon chartIconB;
 	private ArrayList<EventVo> eventList = new ArrayList<EventVo>();
+	private BLservice bl;
+	private String season;
+	private boolean isPlayOff;
+	private JPanel con;
 
-	WordLivePanel(int width, int height, ArrayList<EventVo> eventList) {
+	WordLivePanel(int width, int height, ArrayList<EventVo> eventList,BLservice bl,JPanel con,String season,boolean isPlayOff) {
 		this.setLayout(null);
 		this.setSize(width, height);
 		this.width = width;
 		this.height = height;
 		this.eventList = eventList;
+		this.con = con;
+		this.bl = bl;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
 
 		loadImage();
 		setButton();
 
 		String[] columnNames = { "时间", "比分", "参与球员", "文字直播", "球队" };
 		WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(columnNames,width,
-				height * 9 / 10, eventList);
+				height * 9 / 10, eventList,bl,con,season,isPlayOff);
 		wordLivePanel.setLocation(0, 0);
 
 		this.content = new JScrollPane();
@@ -189,7 +198,8 @@ public class WordLivePanel extends JPanel {
 				String[] columnNames = { "时间", "比分", "参与球员", "文字直播", "球队" };
 
 				WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(
-						columnNames, width, height * 9 / 10, eventList);
+						columnNames,width,
+						height * 9 / 10, eventList,bl,con,season,isPlayOff);
 				wordLivePanel.setLocation(0, 0);
 				content.removeAll();
 				content.add(wordLivePanel);
@@ -240,7 +250,7 @@ public class WordLivePanel extends JPanel {
 			String[] columnNames = { "时间", "比分", "参与球员", "文字直播", "球队" };
 
 			WordLiveTablePanel wordLivePanel = new WordLiveTablePanel(
-					columnNames, width, height * 9 / 10, eventList);
+					columnNames, width, height * 9 / 10, eventList,bl,con,season,isPlayOff);
 			wordLivePanel.setLocation(0, 0);
 			content.removeAll();
 			content.add(wordLivePanel);

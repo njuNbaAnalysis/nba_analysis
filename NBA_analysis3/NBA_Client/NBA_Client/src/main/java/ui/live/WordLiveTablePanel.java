@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import BLservice.BLservice;
 import ui.statistics.PlayerJTable;
 import util.Tools;
 import vo.EventVo;
@@ -25,15 +26,23 @@ public class WordLiveTablePanel extends JPanel {
 	private int selected = 0;
 	private ArrayList<EventVo> eventList;
 	private JPanel content;
+	private JPanel con;
+	private String season;
+	private boolean isPlayOff;
+	private BLservice bl;
 
 	public WordLiveTablePanel(String[] columnNames, int width, int height,
-			ArrayList<EventVo> eventList) {
+			ArrayList<EventVo> eventList,BLservice bl,JPanel con,String season,boolean isPlayOff) {
 		this.setLayout(null);
 		this.setSize(width, height);
 		this.columnNames = columnNames;
 		this.width = width;
 		this.height = height;
 		this.eventList = eventList;
+		this.con = con;
+		this.season = season;
+		this.isPlayOff = isPlayOff;
+		this.bl = bl;
 		setButton();
 
 		content = new JPanel();
@@ -43,8 +52,8 @@ public class WordLiveTablePanel extends JPanel {
 		JScrollPane jspane = new JScrollPane();
 		jspane.setBounds(0,0, width, height * 9 / 10);
 
-		WordLiveTable eventTable = new WordLiveTable(width, columnNames,
-				Tools.reverse(getSectionEvent(Tools.getSectionNum(eventList))));
+		WordLiveTable eventTable = new WordLiveTable(width,height * 9 / 10, columnNames,
+				Tools.reverse(getSectionEvent(Tools.getSectionNum(eventList))),bl,con,season,isPlayOff);
 
 		jspane.setViewportView(eventTable);
 		content.add(jspane);
@@ -99,8 +108,8 @@ public class WordLiveTablePanel extends JPanel {
 				JScrollPane jspane = new JScrollPane();
 
 				jspane.setBounds(0, 0, width, height * 9 / 10);
-				WordLiveTable eventTable = new WordLiveTable(width,
-						columnNames, Tools.reverse(getSectionEvent(type + 1)));
+				WordLiveTable eventTable = new WordLiveTable(width,height,
+						columnNames, Tools.reverse(getSectionEvent(type + 1)),bl,con,season,isPlayOff);
 
 				jspane.setViewportView(eventTable);
 

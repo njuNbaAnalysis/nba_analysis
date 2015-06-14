@@ -2,6 +2,7 @@ package ui.live;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -581,7 +582,7 @@ public class WordLiveLineChartPanel extends JPanel {
 					NodeLabel node;
 					int node_x = 0;
 					int node_y = 0;
-					int node_width = width / 5;
+					int node_width = width / 4;
 					int node_height = height / 8;
 					if (record < a_num) {
 						node = new NodeLabel(a_color, a_value.get(record));
@@ -673,7 +674,8 @@ public class WordLiveLineChartPanel extends JPanel {
 
 				g2.setColor(new Color(220, 220, 223, 127));
 				g2.fillPolygon(x_point, y_point, n);
-
+				
+				g2.setFont(new Font("微软雅黑",Font.PLAIN,10));
 				Stroke stroke = g2.getStroke();
 				g2.setStroke(new BasicStroke(2f));
 				g2.setColor(borderColor);
@@ -689,6 +691,8 @@ public class WordLiveLineChartPanel extends JPanel {
 				g2.drawString(content, lableWidth / 2 - strWidth / 2,
 						lableHeight * 2 / 5);
 				content = event.getDescription();
+				
+				
 				strWidth = g2.getFontMetrics(g2.getFont()).stringWidth(content);
 				g2.drawString(content, lableWidth / 2 - strWidth / 2,
 						lableHeight * 4 / 5);

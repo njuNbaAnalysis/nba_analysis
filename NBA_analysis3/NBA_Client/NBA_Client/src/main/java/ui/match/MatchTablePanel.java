@@ -35,17 +35,19 @@ public class MatchTablePanel extends JPanel {
 	private boolean isPlayOff;
 	private int width;
 	private int height;
+	private boolean isLive = false;
 	private static String[] columnName = { "姓名", "分钟", "%", "命中", "出手",
 			"三分%", "三分命中", "三分出手", "罚球%", "罚球命中", "罚球出手", "+/-", "进攻", "防守",
 			"篮板", "助攻", "犯规", "抢断", "失误", "盖帽", "得分" };
 
-	public MatchTablePanel(int width, int height, Matchvo match, BLservice bl,String season,boolean isPlayOff) {
+	public MatchTablePanel(int width, int height, Matchvo match, BLservice bl,String season,boolean isPlayOff,boolean isLive) {
 		this.width = width;
 		this.height = height;
 		this.match = match;
 		this.bl = bl;
 		this.season = season;
 		this.isPlayOff = isPlayOff;
+		this.isLive = isLive;
 		this.setLayout(null);
 
 		MatchJTable firstTeamRecord = new MatchJTable(
@@ -86,7 +88,7 @@ public class MatchTablePanel extends JPanel {
 		
 
 		g.setColor(new Color(255,255,255));
-		g.fillRect(0, height * 9 / 20, width, height * 2 / 20);
+		g.fillRect(0, height * 9 / 20, width, height * 3 / 20);
 		// 第二个球队姓名
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("微软雅黑", Font.PLAIN, height / 20));
@@ -147,7 +149,11 @@ public class MatchTablePanel extends JPanel {
 
 			String[] data = new String[22];
 			data[0] = recordOfPlayer.getPlayerName();
-			data[1] = df.format(recordOfPlayer.getMinutes());
+			data[1] = df.format(recordOfPlayer.getMinutes()/60);
+			if(!isLive){
+				data[1] = df.format(recordOfPlayer.getMinutes());
+			}
+			
 			
 			data[2] = df.format(recordOfPlayer.getFieldGoalPercentage());
 			data[3] = Integer.toString(recordOfPlayer.getFieldGoalHits());
