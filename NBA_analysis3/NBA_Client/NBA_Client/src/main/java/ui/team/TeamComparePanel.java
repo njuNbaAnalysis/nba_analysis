@@ -886,7 +886,19 @@ class HotZonePanel extends JPanel {
 	}
 
 	public void update(int index) {
-		for (HotZone each : hotZones) {
+	
+		position_l.setText(posNames[index]);
+		position_l.setLocation(
+				450 - position_l.getFontMetrics(position_l.getFont())
+						.stringWidth(posNames[index]), 100);
+		seasonHitRate_l.setText(hot_l.getTotal().get(posNames[index]).getPct() * 100 + "%");
+		latest5HitRate_l.setText(hot_l.getLast5().get(posNames[index]).getPct() * 100 + "%");
+		position_r.setText(posNames[index]);
+		seasonHitRate_r.setText(hot_r.getTotal().get(posNames[index]).getPct() * 100 + "%");
+		latest5HitRate_r.setText(hot_r.getLast5().get(posNames[index]).getPct() * 100 * 100 + "%");
+		
+		
+		/*for (HotZone each : hotZones) {
 			if (each.position == positions[index]) {
 				position_l.setText(posNames[index]);
 				position_l.setLocation(
@@ -898,7 +910,7 @@ class HotZonePanel extends JPanel {
 				seasonHitRate_r.setText(each.latest5HitRate * 100 + "%");
 				latest5HitRate_r.setText(each.latest5HitRate * 100 + "%");
 			}
-		}
+		}*/
 
 	}
 
