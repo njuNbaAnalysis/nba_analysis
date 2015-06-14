@@ -120,7 +120,7 @@ public class LineChartPanelForTeamCompare extends JPanel {
 		// t2_value = t1.getLatestWinOrLose();
 		// labelContent_t2 = t2.getLatestPoints(t1,t2);
 		for (int i = 0; i < t2_value.length; i++) {
-			t2_value[i] = (i) % 2 + 1;
+			t2_value[i] = (i) % 2;
 			labelContent_t2[i] = "101-100";
 		}// TODO Auto-generated method stub
 		seg = 3;
@@ -201,32 +201,37 @@ public class LineChartPanelForTeamCompare extends JPanel {
 	private void initDefend() {
 		t1_value = t1.getLatestDefend();
 		for (int i = 0; i < t1_value.length; i++) {
-
-			labelContent_t1[i] = df.format(t1_value[i]);
+			t1_value[i] = t1_value[i]*100;
+			labelContent_t1[i] = df.format(t1_value[i]*100);
+			System.out.println("t1_value:"+t1_value[i]);
 		}
 
 		t2_value = t2.getLatestDefend();
 		for (int i = 0; i < t2_value.length; i++) {
-			labelContent_t2[i] = df.format(t2_value[i]);
+			t2_value[i] = t2_value[i]*100;
+			labelContent_t2[i] = df.format(t2_value[i]*100);
+			System.out.println("t2_value:"+t2_value[i]);
 		}// TODO Auto-generated method stub
-		seg = 12;
-		limit = 120;
+		seg = 10;
+		limit = 200;
 	}
 
 	private void initOffend() {
 		t1_value = t1.getLatestOffend();
+		
 		for (int i = 0; i < t1_value.length; i++) {
+			t1_value[i] = t1_value[i]*100;
+			labelContent_t1[i] = df.format(t1_value[i]*100);
 
-			labelContent_t1[i] = df.format(t1_value[i]);
 		}
 
 		t2_value = t2.getLatestOffend();
 		for (int i = 0; i < t2_value.length; i++) {
-
-			labelContent_t2[i] = df.format(t2_value[i]);
+			t2_value[i] = t2_value[i]*100;
+			labelContent_t2[i] = df.format(t2_value[i]*100);
 		}
-		seg = 12;
-		limit = 120;
+		seg = 10;
+		limit = 200;
 
 	}
 

@@ -193,20 +193,24 @@ public class TeamInfoPanel extends JPanel {
 					
 						TeamComparePanel matchPanel = null;
 						try {
-							matchPanel = new TeamComparePanel(bl.getAllTeams(season,false).get(0), bl.getAllTeams(season,false).get(1),width, height,bl,season,isPlayOff);
-							matchPanel.setBounds(0,0,width,height);
+							matchPanel = new TeamComparePanel(bl.getAllTeams(season,false).get(0), bl.getAllTeams(season,false).get(1),1728, 1080,bl,season,isPlayOff);
+							//matchPanel.setBounds(0,0,width,height);
 						} catch (RemoteException e2) {
 							// TODO 自动生成的 catch 块
 							e2.printStackTrace();
 						}
 						//js.removeAll();;
 						//scrollPane.setBounds(0, 0, 1728, 1080);
-						matchPanel.setPreferredSize(new Dimension(width,1080));
-						//js.getVerticalScrollBar().setUnitIncrement(20);
+					//	matchPanel.setPreferredSize(new Dimension(width,2000));
+						JScrollPane js = new JScrollPane(matchPanel);
+						js.setBounds(0, 0, 1728, 1080);
+						js.getVerticalScrollBar().setUnitIncrement(20);
+
 						content.removeAll();
-						content.add(matchPanel);
+						content.add(js);
 					//	js.updateUI();
 						content.repaint();
+						repaint();
 						break;
 					}
 				}

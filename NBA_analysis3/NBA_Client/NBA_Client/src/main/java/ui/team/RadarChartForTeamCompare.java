@@ -19,8 +19,9 @@ public class RadarChartForTeamCompare extends JPanel {
 	private boolean isPlayOff;
 	private double[] value_a;
 	private double[] value_b;
-	private String[] attr = { "内线", "外线", "配合", "进攻", "得分" };
+	private String[] attr = { "内线", "外线", "配合", "进攻", "防守" };
 	int limit = 10;
+	private double [] coefficient = {1,1,0.1,1.2,80};
 
 	RadarChartForTeamCompare(int width, int height, Teamvo t1, Teamvo t2,BLservice bl,String season,boolean isPlayOff) {
 		this.setLayout(null);
@@ -43,7 +44,26 @@ public class RadarChartForTeamCompare extends JPanel {
 		value_b = new double[5];
 		try {
 			value_a = bl.getTeamAbility(t1.getAbbreviation(), season, isPlayOff);
+			for(int i=0;i<5;i++){
+				if(i==4){
+					value_a[i] = 10 - 10*(value_a[i]-coefficient[4])/coefficient[4];
+				}else{
+					value_a[i] = value_a[i]/coefficient[i];
+				}
+				
+				
+			}
+			
+			
+			
 			value_b = bl.getTeamAbility(t2.getAbbreviation(), season, isPlayOff);
+			for(int i=0;i<5;i++){
+				if(i==4){
+					value_b[i] = 10 - 10*(value_b[i]-coefficient[4])/coefficient[4];
+				}else{
+					value_b[i] = value_b[i]/coefficient[i];
+				}
+			}
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
