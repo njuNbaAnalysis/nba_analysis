@@ -61,8 +61,7 @@ public class PredictPanel extends JPanel {
 	protected DecimalFormat df = new DecimalFormat("#0.0");
 
 	PredictPanel(int width, int height, String[] attributeNames, Teamvo team1,
-			Teamvo team2, BLservice bl, String season, double win,
-			double[] points, boolean isPlayOff) throws RemoteException {
+			Teamvo team2, BLservice bl, String season, boolean isPlayOff) throws RemoteException {
 		this.width = width;
 		this.height = height;
 		this.attributeNames = attributeNames;
@@ -70,8 +69,9 @@ public class PredictPanel extends JPanel {
 		this.isPlayOff = isPlayOff;
 		this.team1 = team1;
 		this.team2 = team2;
-		this.win = win;
-		this.points = points;
+		this.win = bl.getWinPercentage(team1.getAbbreviation(), team2.getAbbreviation(), season, isPlayOff);
+		this.points[0] = bl.getTeamPoints(team1.getAbbreviation(), season, isPlayOff);
+		this.points[1] = bl.getTeamPoints(team1.getAbbreviation(), season, isPlayOff);
 		this.bl = bl;
 		this.setLayout(null);
 		this.setSize(width, height);
