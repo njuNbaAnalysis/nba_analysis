@@ -8,7 +8,7 @@ import java.util.HashMap;
  *  键值为zone,zone可取值为total,c08,c1624,c24Plus,c816,l1624,l24Plus,l816,lc1624,lc24Plus,r1624,r24Plus,r816,rc1624,rc24Plus
  *  当键值取total时，值为所有区域的总和，其中只有attempted是有定义的。
  */
-public class HotZonevo  implements Serializable{
+public class HotZonevo implements Serializable{
 	/**球队名称（为3个英文大写的缩写）*/
     private String teamNameEn;
     /**是否为常规赛（true表示常规赛，false表示季后赛）*/
@@ -51,7 +51,7 @@ public class HotZonevo  implements Serializable{
     /**
 	 * HotZonevo的内部类，用于计算和存储热区信息的具体信息
 	 * */
-    public class Data{
+    public class Data implements Serializable{
         private int attempted;
         private int made;
         private double pct;

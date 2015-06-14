@@ -51,7 +51,7 @@ public class HotZonevo  implements Serializable{
     /**
 	 * HotZonevo的内部类，用于计算和存储热区信息的具体信息
 	 * */
-    public class Data{
+    public class Data implements Serializable{
         private int attempted;
         private int made;
         private double pct;
