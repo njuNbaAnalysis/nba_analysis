@@ -52,7 +52,7 @@ public class PlayerBasicInfoLabel extends JLabel {
 		
 		
 		g.setFont(new Font("default", Font.PLAIN, 20));
-		g.drawString(player.getPosition()+"-", 555, 80);
+		g.drawString(player.getPosition().split("-")[0]+"-", 555, 80);
 		
 		
 		
