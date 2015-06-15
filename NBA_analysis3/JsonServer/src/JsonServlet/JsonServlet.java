@@ -81,6 +81,7 @@ public class JsonServlet extends HttpServlet {
 				if(token.getName().equals(methodName)
 						&& token.getParameterCount() == paraNames.length){
 					method = token;
+					break;
 				}
 			}
 			JSONObject result = null;
