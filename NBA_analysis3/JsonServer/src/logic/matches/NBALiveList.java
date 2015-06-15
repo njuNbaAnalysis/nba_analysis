@@ -25,7 +25,7 @@ public class NBALiveList {
 		listofTeam = nr.getAllNBALiveTeam();
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader(new File("C://Users/lionel233/Desktop/NBA_analysis/NBA_analysis3/JsonServer/Spider-NBA"+File.separator+"FutrueMatches"+File.separator+"FutureMatches.txt")));
+			br = new BufferedReader(new FileReader(new File("Spider-NBA"+File.separator+"FutrueMatches"+File.separator+"FutureMatches.txt")));
 			String data = br.readLine();
 			while(data!=null){
 				String[] temp = data.split(",");

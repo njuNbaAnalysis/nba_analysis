@@ -147,5 +147,15 @@ public class HotZonevo implements Serializable{
     public void setTotal(boolean isTotal) {
         this.isTotal = isTotal;
     }
+
+
+
+
+
+    @Override
+    public String toString() {
+        return "HotZonevo [teamNameEn=" + teamNameEn + ", isSeason=" + isSeason + ", isTotal=" + isTotal + ", last5="
+                + last5 + ", total=" + total + "]";
+    }
     
 }

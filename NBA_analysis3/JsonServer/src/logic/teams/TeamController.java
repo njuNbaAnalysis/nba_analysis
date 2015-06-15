@@ -119,6 +119,7 @@ public class TeamController implements Serializable{
      * @param season  赛季数 例如：13-14赛季
      * @param isplayoff  是否为季后赛
      * @return 内线(中锋加上大前锋能力综合(综合能力即为playervo中的getREP()))、外线(其他位置能力综合(综合能力即为playervo中的getREP()))、
+     * 内线外线值强行保证不大于10
      * 配合（场均助攻命中（除去罚球命中数）比）、进攻（平均得分）、防守（平均失分）
      *
      * @throws RemoteException  rmi服务器连接异常
@@ -137,6 +138,12 @@ public class TeamController implements Serializable{
         double[] result = new double[5];
         result[0] = forward + center;
         result[1] = center + guard;
+        if(result[0] >= 10){
+            result[0] = 10;
+        }
+        if(result[1] >= 10){
+            result[1] = 10;
+        }
         
         result[2] = vo.getAssists() * 1.0 / vo.getFieldGoalHits();
         result[3] = vo.getPoints() / vo.getNumOfMatches();

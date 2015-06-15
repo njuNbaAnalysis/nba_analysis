@@ -181,12 +181,11 @@ public class matchBLcontrollor {
 		ArrayList<match> list = checkisexit(season);
 		ArrayList<String> list2 = matchReader.getMatchesByTeam(teamNameEn,
 				season, isPlayOff, 10);
-		System.out.println(list2.size() + "dsadas");
 		ArrayList<Matchvo> result = new ArrayList<Matchvo>();
 		for (int i = 0; i < list2.size(); i++) {
 			for (int j = 0; j < list.size(); j++) {
 				if (list2.get(i).equals(list.get(j).getMid())) {
-					result.add(changematchToMatchvo(list.get(i), false));
+					result.add(changematchToMatchvo(list.get(j), false));
 					break;
 				}
 			}
@@ -251,5 +250,12 @@ public class matchBLcontrollor {
 		}
 
 		return result;
+	}
+
+	public double getWinPercentage(String teamName1, String teamName2,
+			String season, boolean isplayoff) {
+		// TODO Auto-generated method stub
+		
+		return MatchWinPercentage.getWinPercent(teamName1, teamName2, season, isplayoff);
 	}
 }

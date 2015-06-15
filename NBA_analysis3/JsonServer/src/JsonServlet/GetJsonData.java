@@ -424,5 +424,32 @@ public class GetJsonData {
 		return object;
 	}
 	
+	public JSONObject getWinPercentage(String teamName1, String teamName2,
+			String season, String isplayoff){
+		double result = 0;
+		try {
+			result = BLController.getInstance().getWinPercentage(teamName1, teamName2, season, Boolean.parseBoolean(isplayoff));
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		JSONObject object = new JSONObject();
+		object.put("result", result);
+		return object;
+	}
+	
+	public JSONObject getTeamPoints(String teamName1,
+			String season,String isPlayOff){
+		double result = 0;
+		try {
+			result = BLController.getInstance().getTeamPoints(teamName1, season, Boolean.parseBoolean(isPlayOff));
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		JSONObject object = new JSONObject();
+		object.put("result", result);
+		return object;
+	}
+
+	
 	
 }
