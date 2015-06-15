@@ -2,10 +2,8 @@ package logic;
 
 import java.rmi.RemoteException;
 
-
-import logic.teams.TeamController;
-import logic.teams.TeamvoGenerator;
-import vo.Teamvo;
+import po.HotZone;
+import vo.HotZonevo;
 
 
 public class Main {
@@ -13,13 +11,10 @@ public class Main {
         
         long start = System.currentTimeMillis();
         
-
+        //cha,mia
         
-        Teamvo vo = TeamvoGenerator.getInstance().getTeamvoWithLatest10Data("ATL", "14-15", false);
-        Teamvo vo1 = TeamvoGenerator.getInstance().getTeamvoWithLatest10Data("BKN", "14-15", false);
-        
-        System.out.println(vo);
-        System.out.println(vo1);
+        HotZonevo hotZone = BLController.getInstance().getHotZone("CHI", false, false);
+        System.out.println(hotZone);
         
         long end =  System.currentTimeMillis();
         

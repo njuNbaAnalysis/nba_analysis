@@ -122,15 +122,14 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		return playerBLcontro.getAlliancePlayerAverageData(season, isPlayOff);
 	}
 
-
 	@Override
 	public ArrayList<RecordOfPlayervo> getRecordOfPlayerById(String Pid)
 			throws RemoteException {
 		// TODO Auto-generated method stub
-		matchBLcontrollor mbl  = matchBLcontrollor.getInstance();
+		matchBLcontrollor mbl = matchBLcontrollor.getInstance();
 		return mbl.getRecordOfPlayerById(Pid);
 	}
-	
+
 	@Override
 	public Collection<? extends Matchvo> getTodayMatches(String string)
 			throws RemoteException {
@@ -182,8 +181,10 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 	}
 
 	@Override
-	public double[] getTeamAbility(String teamNameEn,String season,boolean isplayoff) throws RemoteException {
-		return TeamController.getInstance().getTeamAbility(teamNameEn, season, isplayoff);
+	public double[] getTeamAbility(String teamNameEn, String season,
+			boolean isplayoff) throws RemoteException {
+		return TeamController.getInstance().getTeamAbility(teamNameEn, season,
+				isplayoff);
 	}
 
 	@Override
@@ -194,4 +195,30 @@ public class BLController extends UnicastRemoteObject implements BLservice {
 		return m.getLatestMatchSimpleInfo(teamName1, teamName2);
 	}
 
+	@Override
+	public double getWinPercentage(String teamName1, String teamName2,
+			String season, boolean isplayoff) throws RemoteException {
+		// TODO Auto-generated method stub
+		matchBLcontrollor m = matchBLcontrollor.getInstance();
+		return m.getWinPercentage(teamName1, teamName2, season, isplayoff);
+	}
+
+	@Override
+	public double getTeamPoints(String teamName1, String season,
+			boolean isPlayOff) throws RemoteException {
+		// TODO Auto-generated method stub
+		Teamvo v1 = getTeamByTeamName(teamName1, season, isPlayOff);
+		double result = 0;
+		result = v1.getFieldGoalsPercentage() * 7.88
+				+ v1.getThreePointersPercentage() * (44.61)
+				+ v1.getFreeThrowsPercentage() * (138)
+//				+ v1.getAverageRebounds() * (-0.1592)
+//				+v1.getAverageBlockShots()*(-0.9521)
+//				+v1.getAverageAssists()*(1.3477)
+//				+v1.getAverageSteals()*(24.6545)
+//				+v1.getAverageTurnOver()*(53.1659)
+//				+v1.getAverageFouls()*(114.0270) - 45.4872;
+				-20.672;
+		return result;
+	}
 }
