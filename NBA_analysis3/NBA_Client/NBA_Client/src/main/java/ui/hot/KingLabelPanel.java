@@ -255,7 +255,7 @@ public class KingLabelPanel extends HotLabelPanel {
 		private int contentWidth;
 		private int contentHeight;
 		private JLabel[] playerNames;
-		private JLabel[] playerTeamNames;
+	//	private JLabel[] playerTeamNames;
 		private String field;
 
 		public PlayerTableContentLabel(Playervo[] players, int contentWidth,
@@ -292,15 +292,15 @@ public class KingLabelPanel extends HotLabelPanel {
 				// 号码
 				g.setColor(new Color(68, 68, 68));
 				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(players[0].getNumber(), contentWidth / 5,
+				g.drawString(players[0].getNumber().split(",")[0], contentWidth / 5,
 						contentHeight * 3 / 5);
 				// 位置
 				g.setColor(new Color(68, 68, 68));
 				g.setFont(new Font("微软雅黑", Font.PLAIN, 20));
-				g.drawString(players[0].getPosition(), contentWidth / 4,
+				g.drawString(players[0].getPosition().split(",")[0], contentWidth / 4,
 						contentHeight * 3 / 5);
 				// 球队
-				playerTeamNames[0].setText(players[0].getTeam());
+			//	playerTeamNames[0].setText(players[0].getTeam());
 				// 数据、球队图标暂无
 
 				String data = getPlayerData(players[0]);
@@ -330,11 +330,11 @@ public class KingLabelPanel extends HotLabelPanel {
 					playerNames[i - 1].setText(players[i - 1].getName());
 
 					g.setColor(new Color(68, 68, 68));
-					String str = players[i - 1].getNumber() + " "
-							+ players[i - 1].getPosition();
+					String str = players[i - 1].getNumber().split(",")[0] + " "
+							+ players[i - 1].getPosition().split(",")[0];
 
 					// 球队label
-					playerTeamNames[i - 1].setText(players[i - 1].getTeam());
+				//	playerTeamNames[i - 1].setText(players[i - 1].getTeam());
 					// JLabel team = new JLabel(players[i - 1].getTeam());
 
 					g.drawString(str, contentWidth * 13 / 20, contentHeight
@@ -413,11 +413,11 @@ public class KingLabelPanel extends HotLabelPanel {
 
 		private void setPlayerNameLabel() {
 			playerNames = new JLabel[5];
-			playerTeamNames = new JLabel[5];
+		//	playerTeamNames = new JLabel[5];
 
 			for (int i = 0; i < 5; i++) {
 				playerNames[i] = new JLabel();
-				playerTeamNames[i] = new JLabel();
+		//		playerTeamNames[i] = new JLabel();
 				if (i == 0) {
 					playerNames[i].setForeground(new Color(68, 68, 68));
 					playerNames[i].setFont(new Font("微软雅黑",
@@ -426,12 +426,12 @@ public class KingLabelPanel extends HotLabelPanel {
 							contentHeight * 1 / 4, contentWidth / 8,
 							contentHeight * 3 / 20);
 
-					playerTeamNames[i].setForeground(new Color(68, 68, 68));
+				/*	playerTeamNames[i].setForeground(new Color(68, 68, 68));
 					playerTeamNames[i]
 							.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 					playerTeamNames[i].setBounds(contentWidth * 3 / 10,
 							contentHeight * 19 / 40, contentWidth / 8,
-							contentHeight * 3 / 20);
+							contentHeight * 3 / 20);*/
 				} else {
 					playerNames[i].setForeground(Color.black);
 					playerNames[i].setFont(new Font("微软雅黑", Font.PLAIN,
@@ -440,12 +440,12 @@ public class KingLabelPanel extends HotLabelPanel {
 							contentHeight * (16 * i - 13) / 80,
 							contentWidth * 1 / 10, contentHeight * 1 / 5);
 
-					playerTeamNames[i].setForeground(Color.black);
+					/*playerTeamNames[i].setForeground(Color.black);
 					playerTeamNames[i].setFont(new Font("微软雅黑",
 							Font.PLAIN, 15));
 					playerTeamNames[i].setBounds(contentWidth * 59 / 80,
 							(contentHeight * (8 * i - 3) / 40),
-							contentWidth * 1 / 20, contentHeight * (1) / 5);
+							contentWidth * 1 / 20, contentHeight * (1) / 5);*/
 
 				}
 				playerNames[i].addMouseListener(new PlayerMouseAdapter());
@@ -453,12 +453,12 @@ public class KingLabelPanel extends HotLabelPanel {
 				playerNames[i].setCursor(Cursor
 						.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-				playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
+				/*playerTeamNames[i].addMouseListener(new TeamMouseAdapter());
 				playerTeamNames[i].setOpaque(false);
 				playerTeamNames[i].setCursor(Cursor
-						.getPredefinedCursor(Cursor.HAND_CURSOR));
+						.getPredefinedCursor(Cursor.HAND_CURSOR));*/
 				this.add(playerNames[i]);
-				this.add(playerTeamNames[i]);
+				//this.add(playerTeamNames[i]);
 			}
 
 		}
