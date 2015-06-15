@@ -286,6 +286,7 @@ public class Playervo implements Serializable {
 			image = ImageIO.read(new File("./Data/PlayerImage/" + name
 					+ ".png"));
 		} catch (IOException e) {
+			image = getAction();
 		}
 		return image;
 	}
@@ -301,6 +302,12 @@ public class Playervo implements Serializable {
 			image = ImageIO.read(new File("./Data/PlayerAction/" + name
 					+ ".png"));
 		} catch (IOException e) {
+			try {
+				image = ImageIO.read(new File("./image/" + "logo.png"));
+			} catch (IOException e1) {
+				// TODO 自动生成的 catch 块
+				e1.printStackTrace();
+			}
 		}
 		return image;
 	}
