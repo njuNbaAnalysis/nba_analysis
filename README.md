@@ -20,4 +20,12 @@
     1.3 创建一个用户名为admin，密码为123的用户并给予他最大权限
   2.RMI服务器系统部署说明：
     2.1 将项目导入后，进入data包中的GetConnection.java文件，修改getIP()方法修改为得到数据库系统部署的机器IP（我们这儿默认数据库和服务器在同一台机子上，如果是同一台机器就不需要修改）
+    2.2 项目需要安装python及依赖库（python 2.7,requests,csv包）,java(jdk8)
   3.NBA_analysis客户端部署说明：
+    3.1 将项目导入后，进入nba_analysis/NBA_analysis3/NBA_Client/NBA_Client/src/main/java/ui/ 
+包中的DataFactoyMySql.java文件，将getBLService()方法修改为得到服务器系统部署的机器IP（我们这儿默认服务器和客户端器在同一台机子上，如果是同一台机器就不需要修改）
+    3.2 建议使用默认分辨率1920*1080，否则可能会有适配问题。
+    3.3 建议使用内存4G，时间紧张，图片较多，没有做好优化，深感抱歉。
+
+迭代三NBA功能说明：
+  3.1 见nba_analysis/documents/23组/文档/NAS NBA数据分析系统 需求规格说明文档V1.0.docx
